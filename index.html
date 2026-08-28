@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HSKRC | مرکز دانش و تحقیقات حسن صباح</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Tahoma, sans-serif;
+      background: #0f1115;
+      color: #f5f5f5;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #151922;
+      border-bottom: 1px solid #292e38;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #42d392;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+    }
+
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #42d392;
+    }
+
+    .hero {
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      background:
+        radial-gradient(circle at top, #1c2930, #0f1115 60%);
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .hero h1 span {
+      color: #42d392;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #b8bec8;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+    }
+
+    .primary {
+      background: #42d392;
+      color: #07110c;
+    }
+
+    .secondary {
+      background: transparent;
+      border: 1px solid #42d392;
+      color: #42d392;
+    }
+
+    section {
+      padding: 70px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 45px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #171a21;
+      border: 1px solid #292e38;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .card h3 {
+      color: #42d392;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #aeb4bd;
+    }
+
+    .about {
+      background: #13161c;
+    }
+
+    .about-box {
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+      color: #c5cad2;
+      font-size: 18px;
+    }
+
+    footer {
+      background: #090b0f;
+      border-top: 1px solid #292e38;
+      padding: 30px;
+      text-align: center;
+      color: #858b95;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">HSKRC</div>
+
+    <nav>
+      <a href="#home">خانه</a>
+      <a href="#books">کتابخانه</a>
+      <a href="#articles">مقالات</a>
+      <a href="#about">درباره ما</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero" id="home">
+      <div class="hero-content">
+
+        <h1>
+          مرکز دانش و تحقیقات
+          <span>حسن صباح</span>
+        </h1>
+
+        <p>
+          HSKRC یک مرکز دیجیتال برای نگهداری،
+          مطالعه و دسترسی به منابع علمی، تاریخی و فرهنگی است.
+        </p>
+
+        <div class="buttons">
+          <a href="#books" class="btn primary">
+            ورود به کتابخانه
+          </a>
+
+          <a href="#about" class="btn secondary">
+            درباره HSKRC
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="books">
+      <h2 class="section-title">کتابخانه دیجیتال</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>کتاب‌ها</h3>
+          <p>
+            دسترسی به مجموعه کتاب‌های دیجیتال مرکز.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>کتاب‌های تاریخی</h3>
+          <p>
+            منابع مرتبط با تاریخ و فرهنگ.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>پژوهش‌ها</h3>
+          <p>
+            مقالات و تحقیقات منتشرشده.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>درخواست کتاب</h3>
+          <p>
+            درخواست اضافه‌شدن منابع جدید به کتابخانه.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="articles">
+      <h2 class="section-title">مقالات و پژوهش‌ها</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>مقالات علمی</h3>
+          <p>
+            مجموعه مقالات و مطالب پژوهشی.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>اخبار و به‌روزرسانی‌ها</h3>
+          <p>
+            آخرین فعالیت‌ها و مطالب HSKRC.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>منابع پژوهشی</h3>
+          <p>
+            منابع مورد استفاده برای تحقیقات.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="about" id="about">
+
+      <h2 class="section-title">
+        درباره HSKRC
+      </h2>
+
+      <div class="about-box">
+        <p>
+          Hassan Sabbah Knowledge & Research Centre
+          یک پروژه دانش و تحقیقات دیجیتال است که هدف آن
+          فراهم‌کردن محیطی برای نگهداری و دسترسی آسان
+          به کتاب‌ها، مقالات و منابع پژوهشی می‌باشد.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 HSKRC — Hassan Sabbah Knowledge & Research Centre
+  </footer>
+
+</body>
+</html>
