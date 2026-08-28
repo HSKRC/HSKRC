@@ -131,12 +131,18 @@
       cursor: pointer;
     }
 
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
     .message {
       display: none;
       margin-top: 18px;
       padding: 12px;
       border-radius: 8px;
       text-align: center;
+      line-height: 1.6;
     }
 
     .success {
@@ -163,323 +169,520 @@
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <div class="logo">HSKRC</div>
+    <div class="logo">HSKRC</div>
 
-  <div class="subtitle">
-    Hassan Sabbah Knowledge & Research Centre
-  </div>
+    <div class="subtitle">
+      Hassan Sabbah Knowledge & Research Centre
+    </div>
 
-  <button class="language" onclick="changeLanguage()" id="languageButton">
-    🌐 English
-  </button>
-
-  <div class="tabs">
-
-    <button class="tab active" id="registerTab" onclick="showRegister()">
-      ثبت‌نام
+    <button class="language" onclick="changeLanguage()" id="languageButton">
+      🌐 English
     </button>
 
-    <button class="tab" id="loginTab" onclick="showLogin()">
-      ورود
-    </button>
+    <div class="tabs">
 
-  </div>
+      <button
+        type="button"
+        class="tab active"
+        id="registerTab"
+        onclick="showRegister()">
+        ثبت‌نام
+      </button>
 
-  <form id="authForm" novalidate>
+      <button
+        type="button"
+        class="tab"
+        id="loginTab"
+        onclick="showLogin()">
+        ورود
+      </button>
 
-    <div id="registerFields">
+    </div>
 
-      <div class="form-group">
-        <label>نام</label>
-        <input type="text" id="firstName">
+    <form id="authForm" novalidate>
+
+      <div id="registerFields">
+
+        <div class="form-group">
+          <label>نام</label>
+          <input type="text" id="firstName">
+        </div>
+
+        <div class="form-group">
+          <label>نام خانوادگی</label>
+          <input type="text" id="lastName">
+        </div>
+
+        <div class="form-group">
+          <label>شماره تلفن (اختیاری)</label>
+          <input type="tel" id="phone">
+        </div>
+
       </div>
 
       <div class="form-group">
-        <label>نام خانوادگی</label>
-        <input type="text" id="lastName">
+
+        <label>ایمیل</label>
+
+        <input
+          type="email"
+          id="email"
+          required>
+
       </div>
 
       <div class="form-group">
-        <label>شماره تلفن (اختیاری)</label>
-        <input type="tel" id="phone">
+
+        <label>رمز عبور</label>
+
+        <input
+          type="password"
+          id="password"
+          required
+          minlength="6">
+
       </div>
 
-    </div>
+      <div class="checkbox" id="consentBox">
 
-    <div class="form-group">
+        <input
+          type="checkbox"
+          id="emailConsent">
 
-      <label>ایمیل</label>
+        <span>
+          مایل به دریافت ایمیل‌های HSKRC هستم.
+        </span>
 
-      <input
-        type="email"
-        id="email"
-        required>
+      </div>
 
-    </div>
+      <button
+        type="submit"
+        class="submit"
+        id="submitButton">
 
-    <div class="form-group">
+        ایجاد حساب
 
-      <label>رمز عبور</label>
+      </button>
 
-      <input
-        type="password"
-        id="password"
-        required
-        minlength="6">
+    </form>
 
-    </div>
+    <div
+      class="forgot"
+      id="forgotButton"
+      onclick="forgotPassword()">
 
-    <div class="checkbox" id="consentBox">
-
-      <input
-        type="checkbox"
-        id="emailConsent">
-
-      <span>
-        مایل به دریافت ایمیل‌های HSKRC هستم.
-      </span>
+      فراموشی رمز عبور
 
     </div>
 
-    <button
-      type="submit"
-      class="submit"
-      id="submitButton">
+    <div
+      class="message"
+      id="message">
+    </div>
 
-      ایجاد حساب
+    <a
+      href="index.html"
+      class="back">
 
-    </button>
+      ← بازگشت به صفحه اصلی
 
-  </form>
-
-  <div
-    class="forgot"
-    id="forgotButton"
-    onclick="forgotPassword()">
-
-    فراموشی رمز عبور
+    </a>
 
   </div>
 
-  <div
-    class="message"
-    id="message">
-  </div>
 
-  <a
-    href="index.html"
-    class="back">
+  <script>
 
-    ← بازگشت به صفحه اصلی
+    /* =========================================
+       SUPABASE
+       ========================================= */
 
-  </a>
+    const SUPABASE_URL =
+      "https://uwuklryzxexpofcxrbnm.supabase.co";
 
-</div>
+    const SUPABASE_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3d2tscnl6eGV4cG9mY3hyYm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MTE0NzAsImV4cCI6MjEwMzQ4NzQ3MH0.DIdf0mBhkQmo4snY9ti7xZNjyXeEafwfHsVfUWSYphE";
 
-
-<script>
-
-/* =========================================
-   SUPABASE
-   ========================================= */
-
-const SUPABASE_URL =
-  "https://uwuklryzxexpofcxrbnm.supabase.co";
-
-const SUPABASE_KEY =
-  "اینجا anon public key خودت را Paste کن";
-
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* =========================================
-   LANGUAGE
-   ========================================= */
-
-let currentLanguage = "fa";
-
-
-function changeLanguage() {
-
-  if (currentLanguage === "fa") {
-
-    currentLanguage = "en";
-
-    document.documentElement.lang = "en";
-    document.documentElement.dir = "ltr";
-
-    document.getElementById("registerTab").textContent =
-      "Register";
-
-    document.getElementById("loginTab").textContent =
-      "Login";
-
-    document.getElementById("languageButton").textContent =
-      "🌐 فارسی";
-
-    document.getElementById("forgotButton").textContent =
-      "Forgot Password";
-
-  } else {
-
-    currentLanguage = "fa";
-
-    document.documentElement.lang = "fa";
-    document.documentElement.dir = "rtl";
-
-    document.getElementById("registerTab").textContent =
-      "ثبت‌نام";
-
-    document.getElementById("loginTab").textContent =
-      "ورود";
-
-    document.getElementById("languageButton").textContent =
-      "🌐 English";
-
-    document.getElementById("forgotButton").textContent =
-      "فراموشی رمز عبور";
-  }
-
-}
-
-
-/* =========================================
-   REGISTER
-   ========================================= */
-
-function showRegister() {
-
-  document.getElementById("registerFields").style.display =
-    "block";
-
-  document.getElementById("consentBox").style.display =
-    "flex";
-
-  document.getElementById("registerTab")
-    .classList.add("active");
-
-  document.getElementById("loginTab")
-    .classList.remove("active");
-
-  document.getElementById("submitButton").textContent =
-    currentLanguage === "fa"
-      ? "ایجاد حساب"
-      : "Create Account";
-}
-
-
-/* =========================================
-   LOGIN
-   ========================================= */
-
-function showLogin() {
-
-  document.getElementById("registerFields").style.display =
-    "none";
-
-  document.getElementById("consentBox").style.display =
-    "none";
-
-  document.getElementById("registerTab")
-    .classList.remove("active");
-
-  document.getElementById("loginTab")
-    .classList.add("active");
-
-  document.getElementById("submitButton").textContent =
-    currentLanguage === "fa"
-      ? "ورود"
-      : "Login";
-}
-
-
-/* =========================================
-   MESSAGE
-   ========================================= */
-
-function showMessage(text, type) {
-
-  const box =
-    document.getElementById("message");
-
-  box.textContent = text;
-
-  box.className =
-    "message " + type;
-
-  box.style.display = "block";
-}
-
-
-/* =========================================
-   AUTH FORM
-   ========================================= */
-
-document
-  .getElementById("authForm")
-  .addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-
-    const email =
-      document.getElementById("email")
-        .value
-        .trim();
-
-    const password =
-      document.getElementById("password")
-        .value;
-
-
-    if (!email || !password) {
-
-      showMessage(
-        currentLanguage === "fa"
-          ? "ایمیل و رمز عبور را وارد کنید."
-          : "Please enter email and password.",
-        "error"
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
       );
 
-      return;
+
+    /* =========================================
+       LANGUAGE
+       ========================================= */
+
+    let currentLanguage = "fa";
+
+
+    function changeLanguage() {
+
+      if (currentLanguage === "fa") {
+
+        currentLanguage = "en";
+
+        document.documentElement.lang = "en";
+        document.documentElement.dir = "ltr";
+
+        document.getElementById("registerTab").textContent =
+          "Register";
+
+        document.getElementById("loginTab").textContent =
+          "Login";
+
+        document.getElementById("languageButton").textContent =
+          "🌐 فارسی";
+
+        document.getElementById("forgotButton").textContent =
+          "Forgot Password";
+
+      } else {
+
+        currentLanguage = "fa";
+
+        document.documentElement.lang = "fa";
+        document.documentElement.dir = "rtl";
+
+        document.getElementById("registerTab").textContent =
+          "ثبت‌نام";
+
+        document.getElementById("loginTab").textContent =
+          "ورود";
+
+        document.getElementById("languageButton").textContent =
+          "🌐 English";
+
+        document.getElementById("forgotButton").textContent =
+          "فراموشی رمز عبور";
+      }
     }
 
 
-    /* ==============================
-       LOGIN
-       ============================== */
+    /* =========================================
+       REGISTER
+       ========================================= */
 
-    if (
-      document
-        .getElementById("loginTab")
-        .classList
-        .contains("active")
-    ) {
+    function showRegister() {
 
-      showMessage(
+      document.getElementById("registerFields").style.display =
+        "block";
+
+      document.getElementById("consentBox").style.display =
+        "flex";
+
+      document.getElementById("registerTab")
+        .classList.add("active");
+
+      document.getElementById("loginTab")
+        .classList.remove("active");
+
+      document.getElementById("submitButton").textContent =
         currentLanguage === "fa"
-          ? "در حال ورود..."
-          : "Logging in...",
-        "success"
-      );
+          ? "ایجاد حساب"
+          : "Create Account";
+
+      document.getElementById("message").style.display =
+        "none";
+    }
 
 
-      const { data, error } =
+    /* =========================================
+       LOGIN
+       ========================================= */
+
+    function showLogin() {
+
+      document.getElementById("registerFields").style.display =
+        "none";
+
+      document.getElementById("consentBox").style.display =
+        "none";
+
+      document.getElementById("registerTab")
+        .classList.remove("active");
+
+      document.getElementById("loginTab")
+        .classList.add("active");
+
+      document.getElementById("submitButton").textContent =
+        currentLanguage === "fa"
+          ? "ورود"
+          : "Login";
+
+      document.getElementById("message").style.display =
+        "none";
+    }
+
+
+    /* =========================================
+       MESSAGE
+       ========================================= */
+
+    function showMessage(text, type) {
+
+      const box =
+        document.getElementById("message");
+
+      box.textContent = text;
+
+      box.className =
+        "message " + type;
+
+      box.style.display = "block";
+    }
+
+
+    /* =========================================
+       AUTH FORM
+       ========================================= */
+
+    document
+      .getElementById("authForm")
+      .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email =
+          document.getElementById("email")
+            .value
+            .trim();
+
+        const password =
+          document.getElementById("password")
+            .value;
+
+
+        if (!email || !password) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "ایمیل و رمز عبور را وارد کنید."
+              : "Please enter email and password.",
+            "error"
+          );
+
+          return;
+        }
+
+
+        const button =
+          document.getElementById("submitButton");
+
+        button.disabled = true;
+
+
+        /* ==============================
+           LOGIN
+           ============================== */
+
+        if (
+          document
+            .getElementById("loginTab")
+            .classList
+            .contains("active")
+        ) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "در حال ورود..."
+              : "Logging in...",
+            "success"
+          );
+
+
+          try {
+
+            const { data, error } =
+              await supabaseClient.auth
+                .signInWithPassword({
+                  email: email,
+                  password: password
+                });
+
+
+            if (error) {
+
+              showMessage(
+                error.message,
+                "error"
+              );
+
+              button.disabled = false;
+
+              return;
+            }
+
+
+            if (data && data.session) {
+
+              showMessage(
+                currentLanguage === "fa"
+                  ? "ورود موفق بود. در حال انتقال..."
+                  : "Login successful. Redirecting...",
+                "success"
+              );
+
+
+              setTimeout(function() {
+
+                window.location.href =
+                  "index.html";
+
+              }, 1000);
+
+            }
+
+          } catch (error) {
+
+            showMessage(
+              error.message,
+              "error"
+            );
+
+            button.disabled = false;
+          }
+
+          return;
+        }
+
+
+        /* ==============================
+           REGISTER
+           ============================== */
+
+        const firstName =
+          document.getElementById("firstName")
+            .value
+            .trim();
+
+        const lastName =
+          document.getElementById("lastName")
+            .value
+            .trim();
+
+        const phone =
+          document.getElementById("phone")
+            .value
+            .trim();
+
+        const emailConsent =
+          document.getElementById("emailConsent")
+            .checked;
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "در حال ایجاد حساب..."
+            : "Creating account...",
+          "success"
+        );
+
+
+        try {
+
+          const { data, error } =
+            await supabaseClient.auth.signUp({
+
+              email: email,
+
+              password: password,
+
+              options: {
+
+                emailRedirectTo:
+                  window.location.origin +
+                  "/HSKRC/auth.html",
+
+                data: {
+
+                  first_name: firstName,
+
+                  last_name: lastName,
+
+                  phone: phone,
+
+                  email_consent: emailConsent
+
+                }
+
+              }
+
+            });
+
+
+          if (error) {
+
+            showMessage(
+              error.message,
+              "error"
+            );
+
+            button.disabled = false;
+
+            return;
+          }
+
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "حساب ساخته شد. لطفاً ایمیل خود را باز کنید و لینک تأیید را بزنید."
+              : "Account created. Please check your email and confirm your account.",
+            "success"
+          );
+
+        } catch (error) {
+
+          showMessage(
+            error.message,
+            "error"
+          );
+        }
+
+
+        button.disabled = false;
+
+      });
+
+
+    /* =========================================
+       FORGOT PASSWORD
+       ========================================= */
+
+    async function forgotPassword() {
+
+      const email =
+        document.getElementById("email")
+          .value
+          .trim();
+
+
+      if (!email) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "ابتدا ایمیل خود را وارد کنید."
+            : "Please enter your email first.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      const { error } =
         await supabaseClient.auth
-          .signInWithPassword({
-
-            email: email,
-
-            password: password
-
-          });
+          .resetPasswordForEmail(
+            email,
+            {
+              redirectTo:
+                window.location.origin +
+                "/HSKRC/auth.html"
+            }
+          );
 
 
       if (error) {
@@ -493,171 +696,15 @@ document
       }
 
 
-      if (data.session) {
-
-        showMessage(
-          currentLanguage === "fa"
-            ? "ورود موفق بود. در حال انتقال..."
-            : "Login successful. Redirecting...",
-          "success"
-        );
-
-
-        setTimeout(function() {
-
-          window.location.href =
-            "index.html";
-
-        }, 1000);
-
-      }
-
-      return;
-    }
-
-
-    /* ==============================
-       REGISTER
-       ============================== */
-
-    const firstName =
-      document.getElementById("firstName")
-        .value
-        .trim();
-
-    const lastName =
-      document.getElementById("lastName")
-        .value
-        .trim();
-
-    const phone =
-      document.getElementById("phone")
-        .value
-        .trim();
-
-    const emailConsent =
-      document.getElementById("emailConsent")
-        .checked;
-
-
-    showMessage(
-      currentLanguage === "fa"
-        ? "در حال ایجاد حساب..."
-        : "Creating account...",
-      "success"
-    );
-
-
-    const { error } =
-      await supabaseClient.auth.signUp({
-
-        email: email,
-
-        password: password,
-
-        options: {
-
-          emailRedirectTo:
-            window.location.origin +
-            window.location.pathname,
-
-          data: {
-
-            first_name: firstName,
-
-            last_name: lastName,
-
-            phone: phone,
-
-            email_consent: emailConsent
-
-          }
-
-        }
-
-      });
-
-
-    if (error) {
-
       showMessage(
-        error.message,
-        "error"
+        currentLanguage === "fa"
+          ? "لینک تغییر رمز به ایمیل شما ارسال شد."
+          : "Password reset email sent.",
+        "success"
       );
-
-      return;
     }
 
-
-    showMessage(
-      currentLanguage === "fa"
-        ? "حساب ساخته شد. ایمیل خود را برای تأیید بررسی کنید."
-        : "Account created. Please check your email.",
-      "success"
-    );
-
-  });
-
-
-/* =========================================
-   FORGOT PASSWORD
-   ========================================= */
-
-async function forgotPassword() {
-
-  const email =
-    document.getElementById("email")
-      .value
-      .trim();
-
-
-  if (!email) {
-
-    showMessage(
-      currentLanguage === "fa"
-        ? "ابتدا ایمیل خود را وارد کنید."
-        : "Please enter your email first.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  const { error } =
-    await supabaseClient.auth
-      .resetPasswordForEmail(
-
-        email,
-
-        {
-          redirectTo:
-            window.location.href
-        }
-
-      );
-
-
-  if (error) {
-
-    showMessage(
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    currentLanguage === "fa"
-      ? "لینک تغییر رمز به ایمیل شما ارسال شد."
-      : "Password reset email sent.",
-    "success"
-  );
-}
-
-</script>
+  </script>
 
 </body>
 </html>
