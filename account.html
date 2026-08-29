@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HSKRC | حساب من</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Tahoma, sans-serif;
+      background: #0d1117;
+      color: white;
+      min-height: 100vh;
+      padding: 25px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 40px auto;
+      background: #151a22;
+      border: 1px solid #29313c;
+      border-radius: 18px;
+      padding: 35px;
+    }
+
+    .logo {
+      text-align: center;
+      color: #42d392;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      text-align: center;
+      color: #42d392;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .profile {
+      background: #0d1117;
+      border: 1px solid #29313c;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 25px;
+    }
+
+    .row {
+      padding: 14px 0;
+      border-bottom: 1px solid #29313c;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #8f98a5;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .value {
+      color: white;
+      font-size: 16px;
+      word-break: break-word;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 12px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .library {
+      background: #42d392;
+      color: #07110c;
+    }
+
+    .home {
+      border: 1px solid #42d392;
+      color: #42d392;
+    }
+
+    .logout {
+      background: #3d1717;
+      color: #ff9999;
+      border: 1px solid #6b2525;
+    }
+
+    .message {
+      display: none;
+      text-align: center;
+      padding: 13px;
+      border-radius: 9px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .error {
+      display: block;
+      background: #3d1717;
+      color: #ff9999;
+    }
+
+    .loading {
+      text-align: center;
+      color: #aeb6c2;
+      padding: 30px;
+    }
+
+    .language {
+      display: block;
+      margin: 0 auto 25px;
+      padding: 8px 15px;
+      background: transparent;
+      border: 1px solid #42d392;
+      color: #42d392;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        margin: 15px auto;
+        padding: 22px;
+      }
+
+      .title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">
+      HSKRC
+    </div>
+
+    <button
+      class="language"
+      id="languageButton"
+      onclick="changeLanguage()">
+      🌐 English
+    </button>
+
+    <h1
+      class="title"
+      id="pageTitle">
+      حساب من
+    </h1>
+
+    <div
+      id="message"
+      class="message">
+    </div>
+
+    <div
+      id="loading"
+      class="loading">
+      در حال بارگذاری اطلاعات حساب...
+    </div>
+
+    <div
+      id="profile"
+      class="profile"
+      style="display:none;">
+
+      <div class="row">
+
+        <div
+          class="label"
+          id="firstNameLabel">
+          نام
+        </div>
+
+        <div
+          class="value"
+          id="firstName">
+          -
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div
+          class="label"
+          id="lastNameLabel">
+          نام خانوادگی
+        </div>
+
+        <div
+          class="value"
+          id="lastName">
+          -
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div
+          class="label"
+          id="emailLabel">
+          ایمیل
+        </div>
+
+        <div
+          class="value"
+          id="email">
+          -
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div
+          class="label"
+          id="phoneLabel">
+          شماره تلفن
+        </div>
+
+        <div
+          class="value"
+          id="phone">
+          -
+        </div>
+
+      </div>
+
+    </div>
+
+    <a
+      href="library.html"
+      class="button library"
+      id="libraryButton">
+      📚 رفتن به کتابخانه
+    </a>
+
+    <a
+      href="index.html"
+      class="button home"
+      id="homeButton">
+      ← بازگشت به صفحه اصلی
+    </a>
+
+    <button
+      class="button logout"
+      id="logoutButton"
+      onclick="logout()">
+      خروج از حساب
+    </button>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       SUPABASE
+       ========================================= */
+
+    const SUPABASE_URL =
+      "https://uwuklryzxexpofcxrbnm.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /* =========================================
+       LANGUAGE
+       ========================================= */
+
+    let currentLanguage = "fa";
+
+
+    function changeLanguage() {
+
+      currentLanguage =
+        currentLanguage === "fa"
+          ? "en"
+          : "fa";
+
+
+      document.documentElement.lang =
+        currentLanguage;
+
+      document.documentElement.dir =
+        currentLanguage === "fa"
+          ? "rtl"
+          : "ltr";
+
+
+      if (currentLanguage === "en") {
+
+        document.title =
+          "HSKRC | My Account";
+
+        document.getElementById("pageTitle").textContent =
+          "My Account";
+
+        document.getElementById("firstNameLabel").textContent =
+          "First Name";
+
+        document.getElementById("lastNameLabel").textContent =
+          "Last Name";
+
+        document.getElementById("emailLabel").textContent =
+          "Email";
+
+        document.getElementById("phoneLabel").textContent =
+          "Phone";
+
+        document.getElementById("libraryButton").textContent =
+          "📚 Go to Library";
+
+        document.getElementById("homeButton").textContent =
+          "← Back to Home";
+
+        document.getElementById("logoutButton").textContent =
+          "Logout";
+
+        document.getElementById("languageButton").textContent =
+          "🌐 فارسی";
+
+      } else {
+
+        document.title =
+          "HSKRC | حساب من";
+
+        document.getElementById("pageTitle").textContent =
+          "حساب من";
+
+        document.getElementById("firstNameLabel").textContent =
+          "نام";
+
+        document.getElementById("lastNameLabel").textContent =
+          "نام خانوادگی";
+
+        document.getElementById("emailLabel").textContent =
+          "ایمیل";
+
+        document.getElementById("phoneLabel").textContent =
+          "شماره تلفن";
+
+        document.getElementById("libraryButton").textContent =
+          "📚 رفتن به کتابخانه";
+
+        document.getElementById("homeButton").textContent =
+          "← بازگشت به صفحه اصلی";
+
+        document.getElementById("logoutButton").textContent =
+          "خروج از حساب";
+
+        document.getElementById("languageButton").textContent =
+          "🌐 English";
+      }
+
+    }
+
+
+    /* =========================================
+       LOAD USER
+       ========================================= */
+
+    async function loadUser() {
+
+      const loading =
+        document.getElementById("loading");
+
+      const profile =
+        document.getElementById("profile");
+
+      const message =
+        document.getElementById("message");
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        if (error || !data.user) {
+
+          window.location.href =
+            "auth.html";
+
+          return;
+        }
+
+
+        const user =
+          data.user;
+
+
+        const metadata =
+          user.user_metadata || {};
+
+
+        document.getElementById("firstName").textContent =
+          metadata.first_name || "-";
+
+
+        document.getElementById("lastName").textContent =
+          metadata.last_name || "-";
+
+
+        document.getElementById("email").textContent =
+          user.email || "-";
+
+
+        document.getElementById("phone").textContent =
+          metadata.phone || "-";
+
+
+        loading.style.display =
+          "none";
+
+        profile.style.display =
+          "block";
+
+
+      } catch (error) {
+
+        loading.style.display =
+          "none";
+
+        message.textContent =
+          currentLanguage === "fa"
+            ? "خطا در دریافت اطلاعات حساب."
+            : "Unable to load account information.";
+
+        message.className =
+          "message error";
+
+      }
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+       ========================================= */
+
+    async function logout() {
+
+      const button =
+        document.getElementById("logoutButton");
+
+      button.disabled =
+        true;
+
+
+      const {
+        error
+      } =
+        await supabaseClient.auth.signOut();
+
+
+      if (error) {
+
+        button.disabled =
+          false;
+
+        const message =
+          document.getElementById("message");
+
+        message.textContent =
+          currentLanguage === "fa"
+            ? "خروج از حساب انجام نشد."
+            : "Logout failed.";
+
+        message.className =
+          "message error";
+
+        return;
+      }
+
+
+      window.location.href =
+        "auth.html";
+
+    }
+
+
+    /* =========================================
+       START
+       ========================================= */
+
+    loadUser();
+
+  </script>
+
+</body>
+</html>
