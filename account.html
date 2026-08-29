@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HSKRC | حساب من</title>
+  <title>HSKRC | My Account</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -139,6 +139,11 @@
       cursor: pointer;
     }
 
+    .language:hover {
+      background: #42d392;
+      color: #07110c;
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 12px;
@@ -168,13 +173,13 @@
       class="language"
       id="languageButton"
       onclick="changeLanguage()">
-      🌐 English
+      🌐 Persian
     </button>
 
     <h1
       class="title"
       id="pageTitle">
-      حساب من
+      My Account
     </h1>
 
     <div
@@ -185,7 +190,7 @@
     <div
       id="loading"
       class="loading">
-      در حال بارگذاری اطلاعات حساب...
+      Loading account information...
     </div>
 
     <div
@@ -198,7 +203,7 @@
         <div
           class="label"
           id="firstNameLabel">
-          نام
+          First Name
         </div>
 
         <div
@@ -214,7 +219,7 @@
         <div
           class="label"
           id="lastNameLabel">
-          نام خانوادگی
+          Last Name
         </div>
 
         <div
@@ -230,7 +235,7 @@
         <div
           class="label"
           id="emailLabel">
-          ایمیل
+          Email
         </div>
 
         <div
@@ -246,7 +251,7 @@
         <div
           class="label"
           id="phoneLabel">
-          شماره تلفن
+          Phone
         </div>
 
         <div
@@ -263,21 +268,21 @@
       href="library.html"
       class="button library"
       id="libraryButton">
-      📚 رفتن به کتابخانه
+      📚 Go to Library
     </a>
 
     <a
       href="index.html"
       class="button home"
       id="homeButton">
-      ← بازگشت به صفحه اصلی
+      ← Back to Home
     </a>
 
     <button
       class="button logout"
       id="logoutButton"
       onclick="logout()">
-      خروج از حساب
+      Logout
     </button>
 
   </div>
@@ -306,15 +311,15 @@
        LANGUAGE
        ========================================= */
 
-    let currentLanguage = "fa";
+    let currentLanguage = "en";
 
 
     function changeLanguage() {
 
       currentLanguage =
-        currentLanguage === "fa"
-          ? "en"
-          : "fa";
+        currentLanguage === "en"
+          ? "fa"
+          : "en";
 
 
       document.documentElement.lang =
@@ -326,39 +331,7 @@
           : "ltr";
 
 
-      if (currentLanguage === "en") {
-
-        document.title =
-          "HSKRC | My Account";
-
-        document.getElementById("pageTitle").textContent =
-          "My Account";
-
-        document.getElementById("firstNameLabel").textContent =
-          "First Name";
-
-        document.getElementById("lastNameLabel").textContent =
-          "Last Name";
-
-        document.getElementById("emailLabel").textContent =
-          "Email";
-
-        document.getElementById("phoneLabel").textContent =
-          "Phone";
-
-        document.getElementById("libraryButton").textContent =
-          "📚 Go to Library";
-
-        document.getElementById("homeButton").textContent =
-          "← Back to Home";
-
-        document.getElementById("logoutButton").textContent =
-          "Logout";
-
-        document.getElementById("languageButton").textContent =
-          "🌐 فارسی";
-
-      } else {
+      if (currentLanguage === "fa") {
 
         document.title =
           "HSKRC | حساب من";
@@ -389,6 +362,44 @@
 
         document.getElementById("languageButton").textContent =
           "🌐 English";
+
+        document.getElementById("loading").textContent =
+          "در حال بارگذاری اطلاعات حساب...";
+
+      } else {
+
+        document.title =
+          "HSKRC | My Account";
+
+        document.getElementById("pageTitle").textContent =
+          "My Account";
+
+        document.getElementById("firstNameLabel").textContent =
+          "First Name";
+
+        document.getElementById("lastNameLabel").textContent =
+          "Last Name";
+
+        document.getElementById("emailLabel").textContent =
+          "Email";
+
+        document.getElementById("phoneLabel").textContent =
+          "Phone";
+
+        document.getElementById("libraryButton").textContent =
+          "📚 Go to Library";
+
+        document.getElementById("homeButton").textContent =
+          "← Back to Home";
+
+        document.getElementById("logoutButton").textContent =
+          "Logout";
+
+        document.getElementById("languageButton").textContent =
+          "🌐 Persian";
+
+        document.getElementById("loading").textContent =
+          "Loading account information...";
       }
 
     }
@@ -461,6 +472,8 @@
 
       } catch (error) {
 
+        console.error(error);
+
         loading.style.display =
           "none";
 
@@ -520,6 +533,22 @@
         "auth.html";
 
     }
+
+
+    /* =========================================
+       AUTH STATE
+       ========================================= */
+
+    supabaseClient.auth.onAuthStateChange(
+      function(event, session) {
+
+        if (!session) {
+          window.location.href =
+            "auth.html";
+        }
+
+      }
+    );
 
 
     /* =========================================
