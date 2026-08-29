@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HSKRC | ورود و ثبت‌نام</title>
+  <title>HSKRC | Login & Register</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -63,6 +63,11 @@
       font-size: 14px;
     }
 
+    .language:hover {
+      background: #42d392;
+      color: #07110c;
+    }
+
     .tabs {
       display: flex;
       border-bottom: 1px solid #303846;
@@ -96,7 +101,7 @@
 
     .required {
       color: #ff7777;
-      margin-right: 4px;
+      margin-left: 4px;
     }
 
     input {
@@ -193,14 +198,14 @@
   <div class="logo">HSKRC</div>
 
   <div class="subtitle" id="subtitle">
-    مرکز دانش و تحقیقات حسن صباح
+    Hassan Sabbah Knowledge & Research Centre
   </div>
 
   <button
     class="language"
     onclick="changeLanguage()"
     id="languageButton">
-    🌐 English
+    🌐 Persian
   </button>
 
   <div class="tabs">
@@ -210,7 +215,7 @@
       class="tab active"
       id="registerTab"
       onclick="showRegister()">
-      ثبت‌نام
+      Register
     </button>
 
     <button
@@ -218,7 +223,7 @@
       class="tab"
       id="loginTab"
       onclick="showLogin()">
-      ورود
+      Login
     </button>
 
   </div>
@@ -230,7 +235,7 @@
       <div class="form-group">
 
         <label id="firstNameLabel">
-          نام <span class="required">*</span>
+          First Name <span class="required">*</span>
         </label>
 
         <input
@@ -240,11 +245,10 @@
 
       </div>
 
-
       <div class="form-group">
 
         <label id="lastNameLabel">
-          نام خانوادگی <span class="required">*</span>
+          Last Name <span class="required">*</span>
         </label>
 
         <input
@@ -254,11 +258,10 @@
 
       </div>
 
-
       <div class="form-group">
 
         <label id="phoneLabel">
-          شماره تلفن (اختیاری)
+          Phone (Optional)
         </label>
 
         <input
@@ -270,11 +273,10 @@
 
     </div>
 
-
     <div class="form-group">
 
       <label id="emailLabel">
-        ایمیل <span class="required">*</span>
+        Email <span class="required">*</span>
       </label>
 
       <input
@@ -284,11 +286,10 @@
 
     </div>
 
-
     <div class="form-group">
 
       <label id="passwordLabel">
-        رمز عبور <span class="required">*</span>
+        Password <span class="required">*</span>
       </label>
 
       <input
@@ -299,7 +300,6 @@
 
     </div>
 
-
     <div
       class="checkbox"
       id="consentBox">
@@ -309,46 +309,42 @@
         id="emailConsent">
 
       <span id="consentText">
-        مایل به دریافت ایمیل‌های HSKRC هستم.
+        I would like to receive HSKRC email updates.
       </span>
 
     </div>
-
 
     <button
       type="submit"
       class="submit"
       id="submitButton">
 
-      ایجاد حساب
+      Create Account
 
     </button>
 
   </form>
-
 
   <div
     class="forgot"
     id="forgotButton"
     onclick="forgotPassword()">
 
-    فراموشی رمز عبور
+    Forgot Password
 
   </div>
-
 
   <div
     class="message"
     id="message">
   </div>
 
-
   <a
     href="index.html"
     class="back"
     id="backButton">
 
-    ← بازگشت به صفحه اصلی
+    ← Back to Home
 
   </a>
 
@@ -378,60 +374,12 @@ const supabaseClient =
    LANGUAGE
    ========================================= */
 
-let currentLanguage = "fa";
+let currentLanguage = "en";
 
 
 function changeLanguage() {
 
-  if (currentLanguage === "fa") {
-
-    currentLanguage = "en";
-
-    document.documentElement.lang = "en";
-    document.documentElement.dir = "ltr";
-
-    document.title =
-      "HSKRC | Login & Register";
-
-    document.getElementById("subtitle").textContent =
-      "Hassan Sabbah Knowledge & Research Centre";
-
-    document.getElementById("registerTab").textContent =
-      "Register";
-
-    document.getElementById("loginTab").textContent =
-      "Login";
-
-    document.getElementById("firstNameLabel").innerHTML =
-      'First Name <span class="required">*</span>';
-
-    document.getElementById("lastNameLabel").innerHTML =
-      'Last Name <span class="required">*</span>';
-
-    document.getElementById("phoneLabel").textContent =
-      "Phone (Optional)";
-
-    document.getElementById("emailLabel").innerHTML =
-      'Email <span class="required">*</span>';
-
-    document.getElementById("passwordLabel").innerHTML =
-      'Password <span class="required">*</span>';
-
-    document.getElementById("consentText").textContent =
-      "I would like to receive HSKRC email updates.";
-
-    document.getElementById("forgotButton").textContent =
-      "Forgot Password";
-
-    document.getElementById("backButton").textContent =
-      "← Back to Home";
-
-    document.getElementById("languageButton").textContent =
-      "🌐 فارسی";
-
-    updateButtonText();
-
-  } else {
+  if (currentLanguage === "en") {
 
     currentLanguage = "fa";
 
@@ -477,11 +425,60 @@ function changeLanguage() {
     document.getElementById("languageButton").textContent =
       "🌐 English";
 
-    updateButtonText();
+  } else {
+
+    currentLanguage = "en";
+
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+
+    document.title =
+      "HSKRC | Login & Register";
+
+    document.getElementById("subtitle").textContent =
+      "Hassan Sabbah Knowledge & Research Centre";
+
+    document.getElementById("registerTab").textContent =
+      "Register";
+
+    document.getElementById("loginTab").textContent =
+      "Login";
+
+    document.getElementById("firstNameLabel").innerHTML =
+      'First Name <span class="required">*</span>';
+
+    document.getElementById("lastNameLabel").innerHTML =
+      'Last Name <span class="required">*</span>';
+
+    document.getElementById("phoneLabel").textContent =
+      "Phone (Optional)";
+
+    document.getElementById("emailLabel").innerHTML =
+      'Email <span class="required">*</span>';
+
+    document.getElementById("passwordLabel").innerHTML =
+      'Password <span class="required">*</span>';
+
+    document.getElementById("consentText").textContent =
+      "I would like to receive HSKRC email updates.";
+
+    document.getElementById("forgotButton").textContent =
+      "Forgot Password";
+
+    document.getElementById("backButton").textContent =
+      "← Back to Home";
+
+    document.getElementById("languageButton").textContent =
+      "🌐 Persian";
   }
 
+  updateButtonText();
 }
 
+
+/* =========================================
+   BUTTON TEXT
+   ========================================= */
 
 function updateButtonText() {
 
@@ -492,12 +489,16 @@ function updateButtonText() {
 
   document.getElementById("submitButton").textContent =
     loginActive
-      ? (currentLanguage === "fa"
-          ? "ورود"
-          : "Login")
-      : (currentLanguage === "fa"
-          ? "ایجاد حساب"
-          : "Create Account");
+      ? (
+          currentLanguage === "fa"
+            ? "ورود"
+            : "Login"
+        )
+      : (
+          currentLanguage === "fa"
+            ? "ایجاد حساب"
+            : "Create Account"
+        );
 }
 
 
@@ -667,20 +668,20 @@ document
       const email =
         document.getElementById("email")
           .value
-          .trim();
+          .trim()
+          .toLowerCase();
 
       const password =
         document.getElementById("password")
           .value;
 
-
       const button =
         document.getElementById("submitButton");
 
 
-      /* ==============================
+      /* =====================================
          LOGIN
-         ============================== */
+         ===================================== */
 
       if (
         document.getElementById("loginTab")
@@ -702,7 +703,6 @@ document
 
 
         button.disabled = true;
-
 
         showMessage(
           currentLanguage === "fa"
@@ -752,12 +752,13 @@ document
               window.location.href =
                 "index.html";
 
-            }, 1000);
-
+            }, 800);
           }
 
 
         } catch (error) {
+
+          console.error(error);
 
           showMessage(
             currentLanguage === "fa"
@@ -774,9 +775,9 @@ document
       }
 
 
-      /* ==============================
+      /* =====================================
          REGISTER
-         ============================== */
+         ===================================== */
 
       if (!validateRegisterFields()) {
         return;
@@ -839,7 +840,7 @@ document
                     lastName,
 
                   phone:
-                    phone,
+                    phone || null,
 
                   email_consent:
                     emailConsent
@@ -861,7 +862,8 @@ document
           if (
             errorText.includes("already registered") ||
             errorText.includes("already exists") ||
-            errorText.includes("user already")
+            errorText.includes("user already") ||
+            errorText.includes("already been registered")
           ) {
 
             showMessage(
@@ -874,7 +876,9 @@ document
           } else {
 
             showMessage(
-              error.message,
+              currentLanguage === "fa"
+                ? "خطا در ایجاد حساب: " + error.message
+                : "Error creating account: " + error.message,
               "error"
             );
 
@@ -887,15 +891,34 @@ document
         }
 
 
-        showMessage(
-          currentLanguage === "fa"
-            ? "حساب ساخته شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
-            : "Account created. Please check your email to confirm your account.",
-          "success"
-        );
+        /*
+          اگر Supabase حساب موجود را تشخیص دهد،
+          ممکن است به جای error یک user برگرداند.
+        */
+
+        if (data && data.user) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "حساب ایجاد شد. لطفاً ایمیل خود را برای تأیید حساب بررسی کنید."
+              : "Account created. Please check your email to confirm your account.",
+            "success"
+          );
+
+        } else {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "لطفاً ایمیل خود را برای ادامه بررسی کنید."
+              : "Please check your email to continue.",
+            "success"
+          );
+        }
 
 
       } catch (error) {
+
+        console.error(error);
 
         showMessage(
           currentLanguage === "fa"
@@ -922,7 +945,8 @@ async function forgotPassword() {
   const email =
     document.getElementById("email")
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
 
 
   if (!email) {
@@ -955,7 +979,9 @@ async function forgotPassword() {
     if (error) {
 
       showMessage(
-        error.message,
+        currentLanguage === "fa"
+          ? "خطا در ارسال لینک بازیابی: " + error.message
+          : "Error sending reset link: " + error.message,
         "error"
       );
 
@@ -965,13 +991,15 @@ async function forgotPassword() {
 
     showMessage(
       currentLanguage === "fa"
-        ? "لینک تغییر رمز به ایمیل شما ارسال شد."
-        : "A password reset link has been sent to your email.",
+        ? "اگر این ایمیل دارای حساب باشد، لینک تغییر رمز برای آن ارسال می‌شود. ایمیل خود را بررسی کنید."
+        : "If an account exists for this email, a password reset link has been sent. Please check your email.",
       "success"
     );
 
 
   } catch (error) {
+
+    console.error(error);
 
     showMessage(
       currentLanguage === "fa"
