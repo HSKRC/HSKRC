@@ -14,6 +14,10 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, Tahoma, sans-serif;
       background: #0d1117;
@@ -43,7 +47,7 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
       flex-wrap: wrap;
     }
 
@@ -95,6 +99,7 @@
     .hero h1 {
       font-size: 48px;
       margin-bottom: 20px;
+      line-height: 1.35;
     }
 
     .hero h1 .green {
@@ -132,6 +137,10 @@
     .btn-primary {
       background: #42d392;
       color: #07110c;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
     }
 
     .btn-secondary {
@@ -198,6 +207,27 @@
       font-size: 18px;
     }
 
+    .quick-links {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .quick-link {
+      color: #42d392;
+      border: 1px solid #29313c;
+      background: #151a22;
+      padding: 10px 18px;
+      border-radius: 9px;
+      text-decoration: none;
+    }
+
+    .quick-link:hover {
+      border-color: #42d392;
+    }
+
     footer {
       background: #080a0d;
       border-top: 1px solid #252c36;
@@ -233,6 +263,11 @@
         font-size: 14px;
       }
 
+      .hero {
+        min-height: 75vh;
+        padding: 55px 18px;
+      }
+
       .hero h1 {
         font-size: 34px;
       }
@@ -248,6 +283,15 @@
       section {
         padding: 55px 5%;
       }
+
+      .section-title {
+        font-size: 28px;
+      }
+
+      .about-text {
+        font-size: 16px;
+      }
+
     }
   </style>
 </head>
@@ -263,28 +307,39 @@
 
   <nav>
 
-    <a href="#home"
-       data-fa="خانه"
-       data-en="Home">
-       خانه
+    <a
+      href="index.html"
+      data-fa="خانه"
+      data-en="Home">
+      خانه
     </a>
 
-    <a href="#library"
-       data-fa="کتابخانه"
-       data-en="Library">
-       کتابخانه
+    <a
+      href="library.html"
+      data-fa="کتابخانه"
+      data-en="Library">
+      کتابخانه
     </a>
 
-    <a href="#articles"
-       data-fa="مقالات"
-       data-en="Articles">
-       مقالات
+    <a
+      href="#articles"
+      data-fa="مقالات"
+      data-en="Articles">
+      مقالات
     </a>
 
-    <a href="#about"
-       data-fa="درباره ما"
-       data-en="About">
-       درباره ما
+    <a
+      href="#about"
+      data-fa="درباره ما"
+      data-en="About">
+      درباره ما
+    </a>
+
+    <a
+      href="auth.html"
+      data-fa="ورود / ثبت‌نام"
+      data-en="Login / Register">
+      ورود / ثبت‌نام
     </a>
 
     <button
@@ -308,6 +363,7 @@
   <div class="hero-content">
 
     <h1>
+
       <span
         data-fa="مرکز دانش و تحقیقات"
         data-en="Hassan Sabbah Knowledge & Research Centre">
@@ -322,6 +378,7 @@
         data-en="HSKRC">
         حسن صباح
       </span>
+
     </h1>
 
 
@@ -349,12 +406,12 @@
     <div class="buttons">
 
       <a
-        href="#library"
+        href="library.html"
         class="btn btn-primary"
-        data-fa="ورود به کتابخانه"
-        data-en="Enter Library">
+        data-fa="📚 ورود به کتابخانه"
+        data-en="📚 Enter Library">
 
-        ورود به کتابخانه
+        📚 ورود به کتابخانه
 
       </a>
 
@@ -409,10 +466,10 @@
       </h3>
 
       <p
-        data-fa="مجموعه کتاب‌های دیجیتال و منابع مطالعاتی."
-        data-en="A collection of digital books and reading resources.">
+        data-fa="مجموعه کتاب‌های دیجیتال و منابع مطالعاتی HSKRC."
+        data-en="A collection of digital books and reading resources from HSKRC.">
 
-        مجموعه کتاب‌های دیجیتال و منابع مطالعاتی.
+        مجموعه کتاب‌های دیجیتال و منابع مطالعاتی HSKRC.
 
       </p>
 
@@ -453,23 +510,48 @@
       </div>
 
       <h3
-        data-fa="درخواست کتاب"
-        data-en="Request a Book">
+        data-fa="مطالعه آنلاین"
+        data-en="Online Reading">
 
-        درخواست کتاب
+        مطالعه آنلاین
 
       </h3>
 
       <p
-        data-fa="اعضا می‌توانند کتاب موردنظر خود را درخواست کنند."
-        data-en="Members can request books they would like to see in the library.">
+        data-fa="مطالعه کتاب‌های موجود مستقیماً از طریق کتابخانه دیجیتال."
+        data-en="Read available books directly through the digital library.">
 
-        اعضا می‌توانند کتاب موردنظر خود را درخواست کنند.
+        مطالعه کتاب‌های موجود مستقیماً از طریق کتابخانه دیجیتال.
 
       </p>
 
     </div>
 
+
+  </div>
+
+
+  <div class="quick-links">
+
+    <a
+      href="library.html"
+      class="quick-link"
+      data-fa="📚 مشاهده کتابخانه"
+      data-en="📚 Open Library">
+
+      📚 مشاهده کتابخانه
+
+    </a>
+
+    <a
+      href="auth.html"
+      class="quick-link"
+      data-fa="🔐 ورود به حساب"
+      data-en="🔐 Login">
+
+      🔐 ورود به حساب
+
+    </a>
 
   </div>
 
@@ -619,9 +701,10 @@
     Founded by Kamal Barlas
   </p>
 
-  <p class="copyright"
-     data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است."
-     data-en="© 2026 HSKRC - All rights reserved.">
+  <p
+    class="copyright"
+    data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است."
+    data-en="© 2026 HSKRC - All rights reserved.">
 
     © 2026 HSKRC - تمامی حقوق محفوظ است.
 
