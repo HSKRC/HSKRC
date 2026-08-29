@@ -10,7 +10,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -113,8 +112,7 @@
       max-width: 1150px;
       margin: auto;
       display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 22px;
     }
 
@@ -226,18 +224,15 @@
       font-size: 13px;
     }
 
-
-    /* =========================================
-       PDF VIEWER
-       ========================================= */
+    /* PDF VIEWER */
 
     .pdf-modal {
       display: none;
       position: fixed;
       z-index: 9999;
       inset: 0;
-      background: rgba(0, 0, 0, 0.92);
-      padding: 20px;
+      background: rgba(0, 0, 0, 0.94);
+      padding: 12px;
     }
 
     .pdf-modal.active {
@@ -247,13 +242,74 @@
     }
 
     .pdf-box {
-      width: 96%;
-      height: 96%;
+      width: 98%;
+      height: 97%;
       background: #151a22;
       border: 1px solid #29313c;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pdf-header {
+      min-height: 58px;
+      background: #151a22;
+      border-bottom: 1px solid #29313c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 12px;
+    }
+
+    .pdf-title {
+      color: #42d392;
+      font-weight: bold;
+      font-size: 17px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pdf-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .pdf-action {
+      border: 1px solid #42d392;
+      background: transparent;
+      color: #42d392;
+      border-radius: 7px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .pdf-action:hover {
+      background: #42d392;
+      color: #07110c;
+    }
+
+    .pdf-close {
+      border: none;
+      background: #ff5555;
+      color: white;
+      border-radius: 7px;
+      padding: 7px 13px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .pdf-frame-wrap {
+      flex: 1;
+      min-height: 0;
+      background: white;
     }
 
     .pdf-box iframe {
@@ -263,30 +319,7 @@
       background: white;
     }
 
-    .pdf-close {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 10;
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 50%;
-      background: #ff5555;
-      color: white;
-      font-size: 26px;
-      line-height: 42px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .pdf-close:hover {
-      opacity: 0.85;
-    }
-
-
     @media (max-width: 650px) {
-
       .search-box {
         grid-template-columns: 1fr;
       }
@@ -304,23 +337,36 @@
       }
 
       .pdf-modal {
-        padding: 8px;
+        padding: 4px;
       }
 
       .pdf-box {
         width: 100%;
-        height: 96%;
+        height: 98%;
+        border-radius: 8px;
       }
 
+      .pdf-header {
+        min-height: 52px;
+      }
+
+      .pdf-title {
+        font-size: 14px;
+      }
+
+      .pdf-action {
+        font-size: 12px;
+        padding: 6px 7px;
+      }
+
+      .pdf-close {
+        padding: 6px 10px;
+      }
     }
-
   </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -330,21 +376,15 @@
 
   <nav>
 
-    <a
-      href="index.html"
-      id="homeLink">
+    <a href="index.html" id="homeLink">
       خانه
     </a>
 
-    <a
-      href="library.html"
-      id="libraryLink">
+    <a href="library.html" id="libraryLink">
       کتابخانه
     </a>
 
-    <a
-      href="auth.html"
-      id="accountLink">
+    <a href="auth.html" id="accountLink">
       ورود / ثبت‌نام
     </a>
 
@@ -360,28 +400,19 @@
 </header>
 
 
-
 <main>
 
-  <h1
-    class="title"
-    id="pageTitle">
+  <h1 class="title" id="pageTitle">
     کتابخانه دیجیتال
   </h1>
 
-  <p
-    class="description"
-    id="pageDescription">
+  <p class="description" id="pageDescription">
     جستجو و دسترسی به مجموعه کتاب‌های HSKRC
   </p>
 
-
-  <div
-    class="login-message"
-    id="loginMessage">
+  <div class="login-message" id="loginMessage">
     برای مطالعه یا دریافت کتاب، ابتدا وارد حساب خود شوید.
   </div>
-
 
   <div class="search-box">
 
@@ -403,10 +434,7 @@
 
   </div>
 
-
-  <div
-    id="booksContainer"
-    class="books">
+  <div id="booksContainer" class="books">
 
     <div class="loading">
       در حال بارگذاری کتاب‌ها...
@@ -417,34 +445,61 @@
 </main>
 
 
+<!-- PDF VIEWER -->
 
-<!-- =========================================
-     PDF MODAL
-     ========================================= -->
-
-<div
-  id="pdfModal"
-  class="pdf-modal">
+<div id="pdfModal" class="pdf-modal">
 
   <div class="pdf-box">
 
-    <button
-      class="pdf-close"
-      onclick="closePdf()"
-      aria-label="Close PDF">
-      ×
-    </button>
+    <div class="pdf-header">
 
-    <iframe
-      id="pdfFrame"
-      src=""
-      title="PDF Viewer">
-    </iframe>
+      <div
+        id="pdfTitle"
+        class="pdf-title">
+        PDF
+      </div>
+
+      <div class="pdf-actions">
+
+        <button
+          id="newTabButton"
+          class="pdf-action"
+          onclick="openPdfNewTab()">
+          ↗ باز کردن در تب جدید
+        </button>
+
+        <button
+          id="fullscreenButton"
+          class="pdf-action"
+          onclick="togglePdfFullscreen()">
+          ⛶ تمام‌صفحه
+        </button>
+
+        <button
+          class="pdf-close"
+          onclick="closePdf()">
+          ×
+        </button>
+
+      </div>
+
+    </div>
+
+    <div
+      id="pdfFrameWrap"
+      class="pdf-frame-wrap">
+
+      <iframe
+        id="pdfFrame"
+        src=""
+        title="PDF Viewer">
+      </iframe>
+
+    </div>
 
   </div>
 
 </div>
-
 
 
 <footer>
@@ -460,9 +515,7 @@
 </footer>
 
 
-
 <script>
-
 
 /* =========================================
    SUPABASE
@@ -528,6 +581,12 @@ function changeLanguage() {
     document.getElementById("languageButton").textContent =
       "🌐 فارسی";
 
+    document.getElementById("newTabButton").textContent =
+      "↗ Open in new tab";
+
+    document.getElementById("fullscreenButton").textContent =
+      "⛶ Fullscreen";
+
     renderCurrentBooks();
 
   } else {
@@ -568,6 +627,12 @@ function changeLanguage() {
     document.getElementById("languageButton").textContent =
       "🌐 English";
 
+    document.getElementById("newTabButton").textContent =
+      "↗ باز کردن در تب جدید";
+
+    document.getElementById("fullscreenButton").textContent =
+      "⛶ تمام‌صفحه";
+
     renderCurrentBooks();
 
   }
@@ -604,6 +669,8 @@ async function checkUser() {
    ========================================= */
 
 let allBooks = [];
+
+let currentPdfUrl = "";
 
 
 async function loadBooks() {
@@ -655,7 +722,6 @@ async function loadBooks() {
 
   allBooks = data || [];
 
-
   updateCategories();
 
 
@@ -701,6 +767,7 @@ function updateCategories() {
 
   const current =
     select.value;
+
 
   const categories =
     [...new Set(
@@ -864,7 +931,7 @@ function renderBooks(books) {
         <button
           class="read-button"
           type="button"
-          onclick="openPdf('${encodeURIComponent(book.pdf_path || "")}')">
+          onclick="openPdf('${encodeURIComponent(book.pdf_path || "")}', '${encodeURIComponent(book.title || "")}')">
 
           ${
             currentLanguage === "fa"
@@ -890,10 +957,13 @@ function renderBooks(books) {
    OPEN PDF
    ========================================= */
 
-function openPdf(encodedPath) {
+function openPdf(encodedPath, encodedTitle) {
 
   const path =
     decodeURIComponent(encodedPath);
+
+  const title =
+    decodeURIComponent(encodedTitle);
 
 
   if (!path) {
@@ -908,32 +978,15 @@ function openPdf(encodedPath) {
   }
 
 
-  let pdfUrl = path;
+  currentPdfUrl = path;
 
 
-  /*
-    اگر pdf_path یک URL کامل باشد،
-    همان URL استفاده می‌شود.
-  */
-
-  if (!/^https?:\/\//i.test(path)) {
-
-    const cleanPath =
-      path
-        .replace(/^\/+/, "")
-        .split("/")
-        .map(part => encodeURIComponent(part))
-        .join("/");
-
-
-    pdfUrl =
-      `${SUPABASE_URL}/storage/v1/object/public/${cleanPath}`;
-
-  }
+  document.getElementById("pdfTitle").textContent =
+    title || "PDF";
 
 
   document.getElementById("pdfFrame").src =
-    pdfUrl;
+    path;
 
 
   document.getElementById("pdfModal")
@@ -942,6 +995,52 @@ function openPdf(encodedPath) {
 
   document.body.style.overflow =
     "hidden";
+
+}
+
+
+/* =========================================
+   OPEN PDF IN NEW TAB
+   ========================================= */
+
+function openPdfNewTab() {
+
+  if (!currentPdfUrl) {
+    return;
+  }
+
+  window.open(
+    currentPdfUrl,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* =========================================
+   FULLSCREEN
+   ========================================= */
+
+function togglePdfFullscreen() {
+
+  const box =
+    document.querySelector(".pdf-box");
+
+
+  if (!document.fullscreenElement) {
+
+    if (box.requestFullscreen) {
+      box.requestFullscreen();
+    }
+
+  } else {
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+
+  }
 
 }
 
@@ -961,11 +1060,14 @@ function closePdf() {
   document.body.style.overflow =
     "";
 
+  currentPdfUrl =
+    "";
+
 }
 
 
 /* =========================================
-   CLOSE PDF WITH ESCAPE
+   ESCAPE KEY
    ========================================= */
 
 document.addEventListener(
@@ -1000,6 +1102,7 @@ function renderCurrentBooks() {
       .trim()
       .toLowerCase();
 
+
   const category =
     document.getElementById("categoryFilter")
       .value;
@@ -1013,6 +1116,7 @@ function renderCurrentBooks() {
 
       const author =
         (book.author || "").toLowerCase();
+
 
       return (
         (!search ||
@@ -1055,9 +1159,7 @@ checkUser();
 
 loadBooks();
 
-
 </script>
-
 
 </body>
 </html>
