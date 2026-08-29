@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>HSKRC | کتابخانه دیجیتال</title>
+  <title>HSKRC | Digital Library</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -377,22 +377,22 @@
   <nav>
 
     <a href="index.html" id="homeLink">
-      خانه
+      Home
     </a>
 
     <a href="library.html" id="libraryLink">
-      کتابخانه
+      Library
     </a>
 
     <a href="auth.html" id="accountLink">
-      ورود / ثبت‌نام
+      Login / Register
     </a>
 
     <button
       class="language"
       id="languageButton"
       onclick="changeLanguage()">
-      🌐 English
+      🌐 Persian
     </button>
 
   </nav>
@@ -403,15 +403,15 @@
 <main>
 
   <h1 class="title" id="pageTitle">
-    کتابخانه دیجیتال
+    Digital Library
   </h1>
 
   <p class="description" id="pageDescription">
-    جستجو و دسترسی به مجموعه کتاب‌های HSKRC
+    Search and access the HSKRC book collection
   </p>
 
   <div class="login-message" id="loginMessage">
-    برای مطالعه یا دریافت کتاب، ابتدا وارد حساب خود شوید.
+    Please login to read or access books.
   </div>
 
   <div class="search-box">
@@ -419,7 +419,7 @@
     <input
       type="search"
       id="searchInput"
-      placeholder="جستجوی عنوان یا نویسنده..."
+      placeholder="Search by title or author..."
       oninput="filterBooks()">
 
     <select
@@ -427,7 +427,7 @@
       onchange="filterBooks()">
 
       <option value="">
-        همه دسته‌بندی‌ها
+        All Categories
       </option>
 
     </select>
@@ -437,7 +437,7 @@
   <div id="booksContainer" class="books">
 
     <div class="loading">
-      در حال بارگذاری کتاب‌ها...
+      Loading books...
     </div>
 
   </div>
@@ -465,14 +465,14 @@
           id="newTabButton"
           class="pdf-action"
           onclick="openPdfNewTab()">
-          ↗ باز کردن در تب جدید
+          ↗ Open in new tab
         </button>
 
         <button
           id="fullscreenButton"
           class="pdf-action"
           onclick="togglePdfFullscreen()">
-          ⛶ تمام‌صفحه
+          ⛶ Fullscreen
         </button>
 
         <button
@@ -538,12 +538,58 @@ const supabaseClient =
    LANGUAGE
    ========================================= */
 
-let currentLanguage = "fa";
+let currentLanguage = "en";
 
 
 function changeLanguage() {
 
-  if (currentLanguage === "fa") {
+  if (currentLanguage === "en") {
+
+    currentLanguage = "fa";
+
+    document.documentElement.lang = "fa";
+    document.documentElement.dir = "rtl";
+
+    document.title =
+      "HSKRC | کتابخانه دیجیتال";
+
+    document.getElementById("homeLink").textContent =
+      "خانه";
+
+    document.getElementById("libraryLink").textContent =
+      "کتابخانه";
+
+    document.getElementById("accountLink").textContent =
+      currentSession
+        ? "حساب من"
+        : "ورود / ثبت‌نام";
+
+    document.getElementById("pageTitle").textContent =
+      "کتابخانه دیجیتال";
+
+    document.getElementById("pageDescription").textContent =
+      "جستجو و دسترسی به مجموعه کتاب‌های HSKRC";
+
+    document.getElementById("loginMessage").textContent =
+      "برای مطالعه یا دسترسی به کتاب‌ها ابتدا وارد حساب خود شوید.";
+
+    document.getElementById("searchInput").placeholder =
+      "جستجوی عنوان یا نویسنده...";
+
+    document.getElementById("categoryFilter")
+      .options[0].textContent =
+      "همه دسته‌بندی‌ها";
+
+    document.getElementById("languageButton").textContent =
+      "🌐 English";
+
+    document.getElementById("newTabButton").textContent =
+      "↗ باز کردن در تب جدید";
+
+    document.getElementById("fullscreenButton").textContent =
+      "⛶ تمام‌صفحه";
+
+  } else {
 
     currentLanguage = "en";
 
@@ -581,62 +627,16 @@ function changeLanguage() {
       "All Categories";
 
     document.getElementById("languageButton").textContent =
-      "🌐 فارسی";
+      "🌐 Persian";
 
     document.getElementById("newTabButton").textContent =
       "↗ Open in new tab";
 
     document.getElementById("fullscreenButton").textContent =
       "⛶ Fullscreen";
-
-  } else {
-
-    currentLanguage = "fa";
-
-    document.documentElement.lang = "fa";
-    document.documentElement.dir = "rtl";
-
-    document.title =
-      "HSKRC | کتابخانه دیجیتال";
-
-    document.getElementById("homeLink").textContent =
-      "خانه";
-
-    document.getElementById("libraryLink").textContent =
-      "کتابخانه";
-
-    document.getElementById("accountLink").textContent =
-      currentSession
-        ? "حساب من"
-        : "ورود / ثبت‌نام";
-
-    document.getElementById("pageTitle").textContent =
-      "کتابخانه دیجیتال";
-
-    document.getElementById("pageDescription").textContent =
-      "جستجو و دسترسی به مجموعه کتاب‌های HSKRC";
-
-    document.getElementById("loginMessage").textContent =
-      "برای مطالعه یا دریافت کتاب، ابتدا وارد حساب خود شوید.";
-
-    document.getElementById("searchInput").placeholder =
-      "جستجوی عنوان یا نویسنده...";
-
-    document.getElementById("categoryFilter")
-      .options[0].textContent =
-      "همه دسته‌بندی‌ها";
-
-    document.getElementById("languageButton").textContent =
-      "🌐 English";
-
-    document.getElementById("newTabButton").textContent =
-      "↗ باز کردن در تب جدید";
-
-    document.getElementById("fullscreenButton").textContent =
-      "⛶ تمام‌صفحه";
   }
 
-  renderCurrentBooks();
+  filterBooks();
 }
 
 
@@ -672,6 +672,9 @@ async function checkUser() {
     loginMessage.style.display =
       "none";
 
+    accountLink.href =
+      "account.html";
+
     accountLink.textContent =
       currentLanguage === "fa"
         ? "حساب من"
@@ -682,12 +685,31 @@ async function checkUser() {
     loginMessage.style.display =
       "block";
 
+    accountLink.href =
+      "auth.html";
+
     accountLink.textContent =
       currentLanguage === "fa"
         ? "ورود / ثبت‌نام"
         : "Login / Register";
   }
 }
+
+
+/* =========================================
+   AUTH STATE
+   ========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event, session) {
+
+    currentSession =
+      session || null;
+
+    checkUser();
+
+  }
+);
 
 
 /* =========================================
@@ -712,7 +734,7 @@ async function loadBooks() {
     `<div class="loading">${
       currentLanguage === "fa"
         ? "در حال بارگذاری..."
-        : "Loading..."
+        : "Loading books..."
     }</div>`;
 
 
@@ -1000,12 +1022,6 @@ async function openPdf(encodedPath, encodedTitle) {
     decodeURIComponent(encodedTitle);
 
 
-  /*
-    مهم:
-    قبل از باز کردن PDF دوباره وضعیت Login
-    بررسی می‌شود.
-  */
-
   const { data, error } =
     await supabaseClient.auth.getSession();
 
@@ -1017,7 +1033,6 @@ async function openPdf(encodedPath, encodedTitle) {
         ? "برای مشاهده کتاب ابتدا باید وارد حساب خود شوید."
         : "Please login to your account before viewing this book."
     );
-
 
     window.location.href =
       "auth.html";
@@ -1167,16 +1182,6 @@ document.addEventListener(
     }
   }
 );
-
-
-/* =========================================
-   KEEP LANGUAGE RENDER
-   ========================================= */
-
-function renderCurrentBooks() {
-
-  filterBooks();
-}
 
 
 /* =========================================
