@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HSKRC | کتابخانه دیجیتال</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Tahoma, sans-serif;
+      background: #0d1117;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #151a22;
+      border-bottom: 1px solid #29313c;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #42d392;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #42d392;
+    }
+
+    .language {
+      background: transparent;
+      border: 1px solid #42d392;
+      color: #42d392;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 55px 6%;
+    }
+
+    .title {
+      text-align: center;
+      color: #42d392;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      text-align: center;
+      color: #aeb6c2;
+      max-width: 700px;
+      margin: 0 auto 35px;
+    }
+
+    .search-box {
+      max-width: 850px;
+      margin: 0 auto 35px;
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 12px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #303846;
+      background: #151a22;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #42d392;
+    }
+
+    .books {
+      max-width: 1150px;
+      margin: auto;
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .book {
+      background: #151a22;
+      border: 1px solid #29313c;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .cover {
+      height: 220px;
+      background: #202731;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .no-cover {
+      font-size: 55px;
+    }
+
+    .book-content {
+      padding: 20px;
+    }
+
+    .book-title {
+      color: #42d392;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .author {
+      color: #ddd;
+      margin-bottom: 8px;
+    }
+
+    .meta {
+      color: #8f98a5;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .book-description {
+      color: #adb5c0;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .read-button {
+      display: inline-block;
+      padding: 10px 16px;
+      background: #42d392;
+      color: #07110c;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .login-message {
+      text-align: center;
+      color: #aeb6c2;
+      margin-bottom: 25px;
+    }
+
+    .loading,
+    .empty,
+    .error {
+      text-align: center;
+      padding: 40px;
+      color: #aeb6c2;
+    }
+
+    .error {
+      color: #ff9999;
+    }
+
+    footer {
+      margin-top: 60px;
+      background: #080a0d;
+      border-top: 1px solid #29313c;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .founder {
+      color: #42d392;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .copyright {
+      color: #777;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .title {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    HSKRC
+  </div>
+
+  <nav>
+
+    <a
+      href="index.html"
+      id="homeLink">
+      خانه
+    </a>
+
+    <a
+      href="library.html"
+      id="libraryLink">
+      کتابخانه
+    </a>
+
+    <a
+      href="auth.html"
+      id="accountLink">
+      ورود / ثبت‌نام
+    </a>
+
+    <button
+      class="language"
+      id="languageButton"
+      onclick="changeLanguage()">
+      🌐 English
+    </button>
+
+  </nav>
+
+</header>
+
+
+<main>
+
+  <h1
+    class="title"
+    id="pageTitle">
+    کتابخانه دیجیتال
+  </h1>
+
+  <p
+    class="description"
+    id="pageDescription">
+    جستجو و دسترسی به مجموعه کتاب‌های HSKRC
+  </p>
+
+
+  <div class="login-message" id="loginMessage">
+    برای مطالعه یا دریافت کتاب، ابتدا وارد حساب خود شوید.
+  </div>
+
+
+  <div class="search-box">
+
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="جستجوی عنوان یا نویسنده..."
+      oninput="loadBooks()">
+
+    <select
+      id="categoryFilter"
+      onchange="loadBooks()">
+
+      <option value="">
+        همه دسته‌بندی‌ها
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div
+    id="booksContainer"
+    class="books">
+
+    <div class="loading">
+      در حال بارگذاری کتاب‌ها...
+    </div>
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  <p class="founder">
+    Founded by Kamal Barlas
+  </p>
+
+  <p class="copyright">
+    © 2026 HSKRC - All rights reserved.
+  </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+   ========================================= */
+
+const SUPABASE_URL =
+  "https://uwuklryzxexpofcxrbnm.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =========================================
+   LANGUAGE
+   ========================================= */
+
+let currentLanguage = "fa";
+
+
+function changeLanguage() {
+
+  if (currentLanguage === "fa") {
+
+    currentLanguage = "en";
+
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+
+    document.title =
+      "HSKRC | Digital Library";
+
+    document.getElementById("homeLink").textContent =
+      "Home";
+
+    document.getElementById("libraryLink").textContent =
+      "Library";
+
+    document.getElementById("accountLink").textContent =
+      "Login / Register";
+
+    document.getElementById("pageTitle").textContent =
+      "Digital Library";
+
+    document.getElementById("pageDescription").textContent =
+      "Search and access the HSKRC book collection";
+
+    document.getElementById("loginMessage").textContent =
+      "Please login to read or access books.";
+
+    document.getElementById("searchInput").placeholder =
+      "Search by title or author...";
+
+    document.getElementById("categoryFilter")
+      .options[0].textContent =
+      "All Categories";
+
+    document.getElementById("languageButton").textContent =
+      "🌐 فارسی";
+
+    renderCurrentBooks();
+
+  } else {
+
+    currentLanguage = "fa";
+
+    document.documentElement.lang = "fa";
+    document.documentElement.dir = "rtl";
+
+    document.title =
+      "HSKRC | کتابخانه دیجیتال";
+
+    document.getElementById("homeLink").textContent =
+      "خانه";
+
+    document.getElementById("libraryLink").textContent =
+      "کتابخانه";
+
+    document.getElementById("accountLink").textContent =
+      "ورود / ثبت‌نام";
+
+    document.getElementById("pageTitle").textContent =
+      "کتابخانه دیجیتال";
+
+    document.getElementById("pageDescription").textContent =
+      "جستجو و دسترسی به مجموعه کتاب‌های HSKRC";
+
+    document.getElementById("loginMessage").textContent =
+      "برای مطالعه یا دریافت کتاب، ابتدا وارد حساب خود شوید.";
+
+    document.getElementById("searchInput").placeholder =
+      "جستجوی عنوان یا نویسنده...";
+
+    document.getElementById("categoryFilter")
+      .options[0].textContent =
+      "همه دسته‌بندی‌ها";
+
+    document.getElementById("languageButton").textContent =
+      "🌐 English";
+
+    renderCurrentBooks();
+  }
+}
+
+
+/* =========================================
+   USER SESSION
+   ========================================= */
+
+async function checkUser() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  if (data.session) {
+
+    document.getElementById("loginMessage").style.display =
+      "none";
+
+    document.getElementById("accountLink").textContent =
+      currentLanguage === "fa"
+        ? "حساب من"
+        : "My Account";
+
+  }
+}
+
+
+/* =========================================
+   BOOK DATA
+   ========================================= */
+
+let allBooks = [];
+
+
+async function loadBooks() {
+
+  const container =
+    document.getElementById("booksContainer");
+
+  const search =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const category =
+    document.getElementById("categoryFilter")
+      .value;
+
+
+  container.innerHTML =
+    `<div class="loading">${
+      currentLanguage === "fa"
+        ? "در حال بارگذاری..."
+        : "Loading..."
+    }</div>`;
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("books")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", {
+        ascending: false
+      });
+
+
+  if (error) {
+
+    container.innerHTML =
+      `<div class="error">${
+        currentLanguage === "fa"
+          ? "خطا در دریافت کتاب‌ها: "
+          : "Error loading books: "
+      }${error.message}</div>`;
+
+    return;
+  }
+
+
+  allBooks = data || [];
+
+
+  updateCategories();
+
+
+  const filtered =
+    allBooks.filter(function(book) {
+
+      const title =
+        (book.title || "").toLowerCase();
+
+      const author =
+        (book.author || "").toLowerCase();
+
+      const matchesSearch =
+        !search ||
+        title.includes(search) ||
+        author.includes(search);
+
+      const matchesCategory =
+        !category ||
+        book.category === category;
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+
+    });
+
+
+  renderBooks(filtered);
+}
+
+
+/* =========================================
+   CATEGORIES
+   ========================================= */
+
+function updateCategories() {
+
+  const select =
+    document.getElementById("categoryFilter");
+
+  const current =
+    select.value;
+
+  const categories =
+    [...new Set(
+      allBooks
+        .map(book => book.category)
+        .filter(Boolean)
+    )];
+
+
+  select.innerHTML =
+    `<option value="">${
+      currentLanguage === "fa"
+        ? "همه دسته‌بندی‌ها"
+        : "All Categories"
+    }</option>`;
+
+
+  categories.forEach(function(category) {
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      category;
+
+    option.textContent =
+      category;
+
+    select.appendChild(option);
+
+  });
+
+
+  select.value =
+    current;
+}
+
+
+/* =========================================
+   RENDER BOOKS
+   ========================================= */
+
+function renderBooks(books) {
+
+  const container =
+    document.getElementById("booksContainer");
+
+
+  if (!books.length) {
+
+    container.innerHTML =
+      `<div class="empty">${
+        currentLanguage === "fa"
+          ? "هیچ کتابی پیدا نشد."
+          : "No books found."
+      }</div>`;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  books.forEach(function(book) {
+
+    const article =
+      document.createElement("article");
+
+    article.className =
+      "book";
+
+
+    let cover = "";
+
+    if (book.cover_url) {
+
+      cover =
+        `<img src="${escapeHtml(book.cover_url)}"
+              alt="${escapeHtml(book.title || "")}">`;
+
+    } else {
+
+      cover =
+        `<div class="no-cover">📚</div>`;
+
+    }
+
+
+    const author =
+      book.author ||
+      (
+        currentLanguage === "fa"
+          ? "نویسنده نامشخص"
+          : "Unknown author"
+      );
+
+
+    const description =
+      book.description ||
+      (
+        currentLanguage === "fa"
+          ? "توضیحی برای این کتاب ثبت نشده است."
+          : "No description available."
+      );
+
+
+    const year =
+      book.publication_year
+        ? book.publication_year
+        : "";
+
+
+    const language =
+      book.language
+        ? book.language
+        : "";
+
+
+    article.innerHTML = `
+
+      <div class="cover">
+        ${cover}
+      </div>
+
+      <div class="book-content">
+
+        <h2 class="book-title">
+          ${escapeHtml(book.title || "")}
+        </h2>
+
+        <div class="author">
+          ${escapeHtml(author)}
+        </div>
+
+        <div class="meta">
+          ${escapeHtml(language)}
+          ${year ? " • " + escapeHtml(String(year)) : ""}
+          ${book.category
+            ? " • " + escapeHtml(book.category)
+            : ""}
+        </div>
+
+        <p class="book-description">
+          ${escapeHtml(description)}
+        </p>
+
+        <a
+          class="read-button"
+          href="${escapeHtml(book.pdf_path || "#")}"
+          target="_blank"
+          rel="noopener">
+
+          ${
+            currentLanguage === "fa"
+              ? "📖 مشاهده PDF"
+              : "📖 View PDF"
+          }
+
+        </a>
+
+      </div>
+    `;
+
+
+    container.appendChild(article);
+
+  });
+}
+
+
+/* =========================================
+   KEEP LANGUAGE RENDER
+   ========================================= */
+
+function renderCurrentBooks() {
+
+  const search =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const category =
+    document.getElementById("categoryFilter")
+      .value;
+
+
+  const filtered =
+    allBooks.filter(function(book) {
+
+      const title =
+        (book.title || "").toLowerCase();
+
+      const author =
+        (book.author || "").toLowerCase();
+
+      return (
+        (!search ||
+          title.includes(search) ||
+          author.includes(search))
+        &&
+        (!category ||
+          book.category === category)
+      );
+
+    });
+
+
+  renderBooks(filtered);
+}
+
+
+/* =========================================
+   SECURITY
+   ========================================= */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================
+   START
+   ========================================= */
+
+checkUser();
+
+loadBooks();
+
+</script>
+
+</body>
+</html>
