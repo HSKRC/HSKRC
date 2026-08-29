@@ -83,6 +83,12 @@
       margin: 0 auto 35px;
     }
 
+    .login-message {
+      text-align: center;
+      color: #aeb6c2;
+      margin-bottom: 25px;
+    }
+
     .search-box {
       max-width: 850px;
       margin: 0 auto 35px;
@@ -175,7 +181,6 @@
       padding: 10px 16px;
       background: #42d392;
       color: #07110c;
-      text-decoration: none;
       border: none;
       border-radius: 8px;
       font-weight: bold;
@@ -185,12 +190,6 @@
 
     .read-button:hover {
       opacity: 0.9;
-    }
-
-    .login-message {
-      text-align: center;
-      color: #aeb6c2;
-      margin-bottom: 25px;
     }
 
     .loading,
@@ -320,6 +319,7 @@
     }
 
     @media (max-width: 650px) {
+
       .search-box {
         grid-template-columns: 1fr;
       }
@@ -420,11 +420,11 @@
       type="search"
       id="searchInput"
       placeholder="جستجوی عنوان یا نویسنده..."
-      oninput="loadBooks()">
+      oninput="filterBooks()">
 
     <select
       id="categoryFilter"
-      onchange="loadBooks()">
+      onchange="filterBooks()">
 
       <option value="">
         همه دسته‌بندی‌ها
@@ -560,7 +560,9 @@ function changeLanguage() {
       "Library";
 
     document.getElementById("accountLink").textContent =
-      "Login / Register";
+      currentSession
+        ? "My Account"
+        : "Login / Register";
 
     document.getElementById("pageTitle").textContent =
       "Digital Library";
@@ -587,8 +589,6 @@ function changeLanguage() {
     document.getElementById("fullscreenButton").textContent =
       "⛶ Fullscreen";
 
-    renderCurrentBooks();
-
   } else {
 
     currentLanguage = "fa";
@@ -606,7 +606,9 @@ function changeLanguage() {
       "کتابخانه";
 
     document.getElementById("accountLink").textContent =
-      "ورود / ثبت‌نام";
+      currentSession
+        ? "حساب من"
+        : "ورود / ثبت‌نام";
 
     document.getElementById("pageTitle").textContent =
       "کتابخانه دیجیتال";
@@ -632,11 +634,9 @@ function changeLanguage() {
 
     document.getElementById("fullscreenButton").textContent =
       "⛶ تمام‌صفحه";
-
-    renderCurrentBooks();
-
   }
 
+  renderCurrentBooks();
 }
 
 
@@ -644,23 +644,49 @@ function changeLanguage() {
    USER SESSION
    ========================================= */
 
+let currentSession = null;
+
+
 async function checkUser() {
 
-  const { data } =
+  const { data, error } =
     await supabaseClient.auth.getSession();
 
-  if (data.session) {
+  if (error) {
+    console.error(error);
+    return;
+  }
 
-    document.getElementById("loginMessage").style.display =
+  currentSession =
+    data.session || null;
+
+  const loginMessage =
+    document.getElementById("loginMessage");
+
+  const accountLink =
+    document.getElementById("accountLink");
+
+
+  if (currentSession) {
+
+    loginMessage.style.display =
       "none";
 
-    document.getElementById("accountLink").textContent =
+    accountLink.textContent =
       currentLanguage === "fa"
         ? "حساب من"
         : "My Account";
 
-  }
+  } else {
 
+    loginMessage.style.display =
+      "block";
+
+    accountLink.textContent =
+      currentLanguage === "fa"
+        ? "ورود / ثبت‌نام"
+        : "Login / Register";
+  }
 }
 
 
@@ -673,21 +699,14 @@ let allBooks = [];
 let currentPdfUrl = "";
 
 
+/* =========================================
+   LOAD BOOKS
+   ========================================= */
+
 async function loadBooks() {
 
   const container =
     document.getElementById("booksContainer");
-
-  const search =
-    document.getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
-
-  const category =
-    document.getElementById("categoryFilter")
-      .value;
-
 
   container.innerHTML =
     `<div class="loading">${
@@ -720,19 +739,42 @@ async function loadBooks() {
   }
 
 
-  allBooks = data || [];
+  allBooks =
+    data || [];
 
   updateCategories();
+
+  filterBooks();
+}
+
+
+/* =========================================
+   FILTER BOOKS
+   ========================================= */
+
+function filterBooks() {
+
+  const search =
+    document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const category =
+    document.getElementById("categoryFilter")
+      .value;
 
 
   const filtered =
     allBooks.filter(function(book) {
 
       const title =
-        (book.title || "").toLowerCase();
+        (book.title || "")
+          .toLowerCase();
 
       const author =
-        (book.author || "").toLowerCase();
+        (book.author || "")
+          .toLowerCase();
 
       const matchesSearch =
         !search ||
@@ -747,12 +789,10 @@ async function loadBooks() {
         matchesSearch &&
         matchesCategory
       );
-
     });
 
 
   renderBooks(filtered);
-
 }
 
 
@@ -797,13 +837,11 @@ function updateCategories() {
       category;
 
     select.appendChild(option);
-
   });
 
 
   select.value =
     current;
-
 }
 
 
@@ -860,7 +898,6 @@ function renderBooks(books) {
         `<div class="no-cover">
           📚
         </div>`;
-
     }
 
 
@@ -942,28 +979,55 @@ function renderBooks(books) {
         </button>
 
       </div>
-
     `;
 
 
     container.appendChild(article);
-
   });
-
 }
 
 
 /* =========================================
-   OPEN PDF
+   OPEN PDF - LOGIN REQUIRED
    ========================================= */
 
-function openPdf(encodedPath, encodedTitle) {
+async function openPdf(encodedPath, encodedTitle) {
 
   const path =
     decodeURIComponent(encodedPath);
 
   const title =
     decodeURIComponent(encodedTitle);
+
+
+  /*
+    مهم:
+    قبل از باز کردن PDF دوباره وضعیت Login
+    بررسی می‌شود.
+  */
+
+  const { data, error } =
+    await supabaseClient.auth.getSession();
+
+
+  if (error || !data.session) {
+
+    alert(
+      currentLanguage === "fa"
+        ? "برای مشاهده کتاب ابتدا باید وارد حساب خود شوید."
+        : "Please login to your account before viewing this book."
+    );
+
+
+    window.location.href =
+      "auth.html";
+
+    return;
+  }
+
+
+  currentSession =
+    data.session;
 
 
   if (!path) {
@@ -978,24 +1042,27 @@ function openPdf(encodedPath, encodedTitle) {
   }
 
 
-  currentPdfUrl = path;
-
-
-  document.getElementById("pdfTitle").textContent =
-    title || "PDF";
-
-
-  document.getElementById("pdfFrame").src =
+  currentPdfUrl =
     path;
 
 
+  document.getElementById("pdfTitle")
+    .textContent =
+      title || "PDF";
+
+
+  document.getElementById("pdfFrame")
+    .src =
+      path;
+
+
   document.getElementById("pdfModal")
-    .classList.add("active");
+    .classList
+    .add("active");
 
 
   document.body.style.overflow =
     "hidden";
-
 }
 
 
@@ -1003,18 +1070,31 @@ function openPdf(encodedPath, encodedTitle) {
    OPEN PDF IN NEW TAB
    ========================================= */
 
-function openPdfNewTab() {
+async function openPdfNewTab() {
 
   if (!currentPdfUrl) {
     return;
   }
+
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+
+  if (!data.session) {
+
+    window.location.href =
+      "auth.html";
+
+    return;
+  }
+
 
   window.open(
     currentPdfUrl,
     "_blank",
     "noopener,noreferrer"
   );
-
 }
 
 
@@ -1039,9 +1119,7 @@ function togglePdfFullscreen() {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     }
-
   }
-
 }
 
 
@@ -1051,18 +1129,21 @@ function togglePdfFullscreen() {
 
 function closePdf() {
 
-  document.getElementById("pdfFrame").src =
-    "";
+  document.getElementById("pdfFrame")
+    .src = "";
+
 
   document.getElementById("pdfModal")
-    .classList.remove("active");
+    .classList
+    .remove("active");
+
 
   document.body.style.overflow =
     "";
 
+
   currentPdfUrl =
     "";
-
 }
 
 
@@ -1083,9 +1164,7 @@ document.addEventListener(
     ) {
 
       closePdf();
-
     }
-
   }
 );
 
@@ -1096,42 +1175,7 @@ document.addEventListener(
 
 function renderCurrentBooks() {
 
-  const search =
-    document.getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
-
-
-  const category =
-    document.getElementById("categoryFilter")
-      .value;
-
-
-  const filtered =
-    allBooks.filter(function(book) {
-
-      const title =
-        (book.title || "").toLowerCase();
-
-      const author =
-        (book.author || "").toLowerCase();
-
-
-      return (
-        (!search ||
-          title.includes(search) ||
-          author.includes(search))
-        &&
-        (!category ||
-          book.category === category)
-      );
-
-    });
-
-
-  renderBooks(filtered);
-
+  filterBooks();
 }
 
 
@@ -1147,7 +1191,6 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-
 }
 
 
@@ -1155,9 +1198,15 @@ function escapeHtml(value) {
    START
    ========================================= */
 
-checkUser();
+async function startLibrary() {
 
-loadBooks();
+  await checkUser();
+
+  await loadBooks();
+}
+
+
+startLibrary();
 
 </script>
 
