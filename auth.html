@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>HSKRC | Login & Register</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -34,6 +32,7 @@
       border: 1px solid #29313c;
       border-radius: 18px;
       padding: 35px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.35);
     }
 
     .logo {
@@ -144,8 +143,12 @@
       cursor: pointer;
     }
 
+    .submit:hover {
+      opacity: .92;
+    }
+
     .submit:disabled {
-      opacity: 0.6;
+      opacity: .6;
       cursor: wait;
     }
 
@@ -183,6 +186,38 @@
       text-decoration: underline;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
+    .step-title {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .step-text {
+      text-align: center;
+      color: #aeb6c2;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .email-display {
+      text-align: center;
+      color: #42d392;
+      margin-bottom: 22px;
+      word-break: break-word;
+    }
+
+    .password-note {
+      color: #899790;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 7px;
+    }
+
     @media (max-width: 500px) {
       .container {
         padding: 25px 20px;
@@ -208,144 +243,282 @@
     🌐 Persian
   </button>
 
-  <div class="tabs">
 
-    <button
-      type="button"
-      class="tab active"
-      id="registerTab"
-      onclick="showRegister()">
-      Register
-    </button>
+  <!-- =========================
+       AUTH TABS
+       ========================= -->
 
-    <button
-      type="button"
-      class="tab"
-      id="loginTab"
-      onclick="showLogin()">
-      Login
-    </button>
+  <div id="authArea">
 
-  </div>
+    <div class="tabs">
 
-  <form id="authForm" novalidate>
+      <button
+        type="button"
+        class="tab active"
+        id="registerTab"
+        onclick="showRegister()">
+        Register
+      </button>
 
-    <div id="registerFields">
-
-      <div class="form-group">
-
-        <label id="firstNameLabel">
-          First Name <span class="required">*</span>
-        </label>
-
-        <input
-          type="text"
-          id="firstName"
-          autocomplete="given-name">
-
-      </div>
-
-      <div class="form-group">
-
-        <label id="lastNameLabel">
-          Last Name <span class="required">*</span>
-        </label>
-
-        <input
-          type="text"
-          id="lastName"
-          autocomplete="family-name">
-
-      </div>
-
-      <div class="form-group">
-
-        <label id="phoneLabel">
-          Phone (Optional)
-        </label>
-
-        <input
-          type="tel"
-          id="phone"
-          autocomplete="tel">
-
-      </div>
+      <button
+        type="button"
+        class="tab"
+        id="loginTab"
+        onclick="showLogin()">
+        Login
+      </button>
 
     </div>
 
-    <div class="form-group">
 
-      <label id="emailLabel">
-        Email <span class="required">*</span>
-      </label>
+    <!-- =========================
+         AUTH FORM
+         ========================= -->
 
-      <input
-        type="email"
-        id="email"
-        autocomplete="email">
+    <form id="authForm" novalidate>
 
-    </div>
+      <!-- REGISTER -->
 
-    <div class="form-group">
+      <div id="registerFields">
 
-      <label id="passwordLabel">
-        Password <span class="required">*</span>
-      </label>
+        <div class="form-group">
+          <label id="firstNameLabel">
+            First Name <span class="required">*</span>
+          </label>
 
-      <input
-        type="password"
-        id="password"
-        autocomplete="new-password"
-        minlength="6">
+          <input
+            type="text"
+            id="firstName"
+            autocomplete="given-name">
+        </div>
 
-    </div>
+
+        <div class="form-group">
+          <label id="lastNameLabel">
+            Last Name <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            id="lastName"
+            autocomplete="family-name">
+        </div>
+
+
+        <div class="form-group">
+          <label id="phoneLabel">
+            Phone (Optional)
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            autocomplete="tel">
+        </div>
+
+      </div>
+
+
+      <!-- EMAIL -->
+
+      <div class="form-group">
+
+        <label id="emailLabel">
+          Email <span class="required">*</span>
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          autocomplete="email">
+
+      </div>
+
+
+      <!-- PASSWORD ONLY LOGIN -->
+
+      <div class="form-group" id="loginPasswordField">
+
+        <label id="loginPasswordLabel">
+          Password <span class="required">*</span>
+        </label>
+
+        <input
+          type="password"
+          id="loginPassword"
+          autocomplete="current-password">
+
+      </div>
+
+
+      <!-- EMAIL CONSENT -->
+
+      <div
+        class="checkbox"
+        id="consentBox">
+
+        <input
+          type="checkbox"
+          id="emailConsent">
+
+        <span id="consentText">
+          I would like to receive HSKRC email updates.
+        </span>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit"
+        id="submitButton">
+        Create Account
+      </button>
+
+    </form>
+
 
     <div
-      class="checkbox"
-      id="consentBox">
-
-      <input
-        type="checkbox"
-        id="emailConsent">
-
-      <span id="consentText">
-        I would like to receive HSKRC email updates.
-      </span>
-
+      class="forgot"
+      id="forgotButton"
+      onclick="forgotPassword()">
+      Forgot Password
     </div>
 
-    <button
-      type="submit"
-      class="submit"
-      id="submitButton">
+  </div>
 
-      Create Account
 
-    </button>
+  <!-- =========================
+       SET PASSWORD AREA
+       ========================= -->
 
-  </form>
+  <div id="setPasswordArea" class="hidden">
 
-  <div
-    class="forgot"
-    id="forgotButton"
-    onclick="forgotPassword()">
+    <div class="step-title" id="setPasswordTitle">
+      Set Your Password
+    </div>
 
-    Forgot Password
+    <div class="step-text" id="setPasswordText">
+      Your email has been confirmed. Please create a secure password for your HSKRC account.
+    </div>
+
+    <div class="email-display" id="confirmedEmail"></div>
+
+
+    <form id="setPasswordForm" novalidate>
+
+      <div class="form-group">
+
+        <label id="newPasswordLabel">
+          Password <span class="required">*</span>
+        </label>
+
+        <input
+          type="password"
+          id="newPassword"
+          autocomplete="new-password">
+
+        <div class="password-note" id="passwordNote">
+          Password must be at least 6 characters.
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label id="confirmPasswordLabel">
+          Confirm Password <span class="required">*</span>
+        </label>
+
+        <input
+          type="password"
+          id="confirmPassword"
+          autocomplete="new-password">
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit"
+        id="setPasswordButton">
+        Set Password
+      </button>
+
+    </form>
 
   </div>
+
+
+  <!-- =========================
+       RESET PASSWORD AREA
+       ========================= -->
+
+  <div id="resetPasswordArea" class="hidden">
+
+    <div class="step-title" id="resetTitle">
+      Create New Password
+    </div>
+
+    <div class="step-text" id="resetText">
+      Enter your new password below.
+    </div>
+
+
+    <form id="resetPasswordForm" novalidate>
+
+      <div class="form-group">
+
+        <label id="resetNewPasswordLabel">
+          New Password <span class="required">*</span>
+        </label>
+
+        <input
+          type="password"
+          id="resetNewPassword"
+          autocomplete="new-password">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label id="resetConfirmPasswordLabel">
+          Confirm Password <span class="required">*</span>
+        </label>
+
+        <input
+          type="password"
+          id="resetConfirmPassword"
+          autocomplete="new-password">
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit"
+        id="resetPasswordButton">
+        Update Password
+      </button>
+
+    </form>
+
+  </div>
+
 
   <div
     class="message"
     id="message">
   </div>
 
+
   <a
     href="index.html"
     class="back"
     id="backButton">
-
     ← Back to Home
-
   </a>
 
 </div>
@@ -410,7 +583,7 @@ function changeLanguage() {
     document.getElementById("emailLabel").innerHTML =
       'ایمیل <span class="required">*</span>';
 
-    document.getElementById("passwordLabel").innerHTML =
+    document.getElementById("loginPasswordLabel").innerHTML =
       'رمز عبور <span class="required">*</span>';
 
     document.getElementById("consentText").textContent =
@@ -424,6 +597,39 @@ function changeLanguage() {
 
     document.getElementById("languageButton").textContent =
       "🌐 English";
+
+    document.getElementById("setPasswordTitle").textContent =
+      "تعیین رمز عبور";
+
+    document.getElementById("setPasswordText").textContent =
+      "ایمیل شما تأیید شده است. لطفاً یک رمز عبور امن برای حساب HSKRC خود ایجاد کنید.";
+
+    document.getElementById("newPasswordLabel").innerHTML =
+      'رمز عبور <span class="required">*</span>';
+
+    document.getElementById("confirmPasswordLabel").innerHTML =
+      'تأیید رمز عبور <span class="required">*</span>';
+
+    document.getElementById("passwordNote").textContent =
+      "رمز عبور باید حداقل ۶ کاراکتر باشد.";
+
+    document.getElementById("setPasswordButton").textContent =
+      "تعیین رمز عبور";
+
+    document.getElementById("resetTitle").textContent =
+      "ایجاد رمز عبور جدید";
+
+    document.getElementById("resetText").textContent =
+      "رمز عبور جدید خود را وارد کنید.";
+
+    document.getElementById("resetNewPasswordLabel").innerHTML =
+      'رمز عبور جدید <span class="required">*</span>';
+
+    document.getElementById("resetConfirmPasswordLabel").innerHTML =
+      'تأیید رمز عبور <span class="required">*</span>';
+
+    document.getElementById("resetPasswordButton").textContent =
+      "تغییر رمز عبور";
 
   } else {
 
@@ -456,7 +662,7 @@ function changeLanguage() {
     document.getElementById("emailLabel").innerHTML =
       'Email <span class="required">*</span>';
 
-    document.getElementById("passwordLabel").innerHTML =
+    document.getElementById("loginPasswordLabel").innerHTML =
       'Password <span class="required">*</span>';
 
     document.getElementById("consentText").textContent =
@@ -470,6 +676,39 @@ function changeLanguage() {
 
     document.getElementById("languageButton").textContent =
       "🌐 Persian";
+
+    document.getElementById("setPasswordTitle").textContent =
+      "Set Your Password";
+
+    document.getElementById("setPasswordText").textContent =
+      "Your email has been confirmed. Please create a secure password for your HSKRC account.";
+
+    document.getElementById("newPasswordLabel").innerHTML =
+      'Password <span class="required">*</span>';
+
+    document.getElementById("confirmPasswordLabel").innerHTML =
+      'Confirm Password <span class="required">*</span>';
+
+    document.getElementById("passwordNote").textContent =
+      "Password must be at least 6 characters.";
+
+    document.getElementById("setPasswordButton").textContent =
+      "Set Password";
+
+    document.getElementById("resetTitle").textContent =
+      "Create New Password";
+
+    document.getElementById("resetText").textContent =
+      "Enter your new password below.";
+
+    document.getElementById("resetNewPasswordLabel").innerHTML =
+      'New Password <span class="required">*</span>';
+
+    document.getElementById("resetConfirmPasswordLabel").innerHTML =
+      'Confirm Password <span class="required">*</span>';
+
+    document.getElementById("resetPasswordButton").textContent =
+      "Update Password";
   }
 
   updateButtonText();
@@ -503,13 +742,16 @@ function updateButtonText() {
 
 
 /* =========================================
-   REGISTER
+   SHOW REGISTER
    ========================================= */
 
 function showRegister() {
 
   document.getElementById("registerFields")
     .style.display = "block";
+
+  document.getElementById("loginPasswordField")
+    .style.display = "none";
 
   document.getElementById("consentBox")
     .style.display = "flex";
@@ -520,21 +762,26 @@ function showRegister() {
   document.getElementById("loginTab")
     .classList.remove("active");
 
+  document.getElementById("forgotButton")
+    .style.display = "none";
+
   updateButtonText();
 
-  document.getElementById("message")
-    .style.display = "none";
+  clearMessage();
 }
 
 
 /* =========================================
-   LOGIN
+   SHOW LOGIN
    ========================================= */
 
 function showLogin() {
 
   document.getElementById("registerFields")
     .style.display = "none";
+
+  document.getElementById("loginPasswordField")
+    .style.display = "block";
 
   document.getElementById("consentBox")
     .style.display = "none";
@@ -545,10 +792,12 @@ function showLogin() {
   document.getElementById("loginTab")
     .classList.add("active");
 
+  document.getElementById("forgotButton")
+    .style.display = "block";
+
   updateButtonText();
 
-  document.getElementById("message")
-    .style.display = "none";
+  clearMessage();
 }
 
 
@@ -567,6 +816,16 @@ function showMessage(text, type) {
     "message " + type;
 
   box.style.display = "block";
+}
+
+
+function clearMessage() {
+
+  const box =
+    document.getElementById("message");
+
+  box.style.display = "none";
+  box.textContent = "";
 }
 
 
@@ -591,11 +850,6 @@ function validateRegisterFields() {
       .value
       .trim();
 
-  const password =
-    document.getElementById("password")
-      .value;
-
-
   if (!firstName || !lastName) {
 
     showMessage(
@@ -607,7 +861,6 @@ function validateRegisterFields() {
 
     return false;
   }
-
 
   if (!email) {
 
@@ -621,39 +874,37 @@ function validateRegisterFields() {
     return false;
   }
 
-
-  if (!password) {
-
-    showMessage(
-      currentLanguage === "fa"
-        ? "لطفاً رمز عبور خود را وارد کنید."
-        : "Please enter your password.",
-      "error"
-    );
-
-    return false;
-  }
-
-
-  if (password.length < 6) {
-
-    showMessage(
-      currentLanguage === "fa"
-        ? "رمز عبور باید حداقل ۶ کاراکتر باشد."
-        : "Password must be at least 6 characters.",
-      "error"
-    );
-
-    return false;
-  }
-
-
   return true;
 }
 
 
 /* =========================================
-   AUTH FORM
+   GENERATE TEMPORARY PASSWORD
+   ========================================= */
+
+function generateTemporaryPassword() {
+
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+
+  let result = "";
+
+  for (let i = 0; i < 24; i++) {
+
+    result +=
+      chars.charAt(
+        Math.floor(
+          Math.random() * chars.length
+        )
+      );
+  }
+
+  return result + "A1!";
+}
+
+
+/* =========================================
+   REGISTER / LOGIN
    ========================================= */
 
 document
@@ -664,30 +915,29 @@ document
 
       event.preventDefault();
 
-
       const email =
         document.getElementById("email")
           .value
           .trim()
           .toLowerCase();
 
-      const password =
-        document.getElementById("password")
-          .value;
-
       const button =
         document.getElementById("submitButton");
 
 
-      /* =====================================
+      /* ===============================
          LOGIN
-         ===================================== */
+         =============================== */
 
       if (
         document.getElementById("loginTab")
           .classList
           .contains("active")
       ) {
+
+        const password =
+          document.getElementById("loginPassword")
+            .value;
 
         if (!email || !password) {
 
@@ -701,7 +951,6 @@ document
           return;
         }
 
-
         button.disabled = true;
 
         showMessage(
@@ -710,7 +959,6 @@ document
             : "Logging in...",
           "success"
         );
-
 
         try {
 
@@ -721,21 +969,37 @@ document
                 password: password
               });
 
-
           if (error) {
 
-            showMessage(
-              currentLanguage === "fa"
-                ? "ایمیل یا رمز عبور صحیح نیست. اگر رمز را فراموش کرده‌اید، از «فراموشی رمز عبور» استفاده کنید."
-                : "Invalid email or password. If you forgot your password, use Forgot Password.",
-              "error"
-            );
+            const errorText =
+              String(error.message || "")
+                .toLowerCase();
+
+            if (
+              errorText.includes("email not confirmed") ||
+              errorText.includes("email_not_confirmed")
+            ) {
+
+              showMessage(
+                currentLanguage === "fa"
+                  ? "ابتدا ایمیل خود را تأیید کنید."
+                  : "Please confirm your email before logging in.",
+                "error"
+              );
+
+            } else {
+
+              showMessage(
+                currentLanguage === "fa"
+                  ? "ایمیل یا رمز عبور صحیح نیست."
+                  : "Invalid email or password.",
+                "error"
+              );
+            }
 
             button.disabled = false;
-
             return;
           }
-
 
           if (data && data.session) {
 
@@ -746,7 +1010,6 @@ document
               "success"
             );
 
-
             setTimeout(function() {
 
               window.location.href =
@@ -754,7 +1017,6 @@ document
 
             }, 800);
           }
-
 
         } catch (error) {
 
@@ -767,17 +1029,17 @@ document
             "error"
           );
 
-          button.disabled = false;
         }
 
+        button.disabled = false;
 
         return;
       }
 
 
-      /* =====================================
+      /* ===============================
          REGISTER
-         ===================================== */
+         =============================== */
 
       if (!validateRegisterFields()) {
         return;
@@ -806,7 +1068,6 @@ document
 
       button.disabled = true;
 
-
       showMessage(
         currentLanguage === "fa"
           ? "در حال ایجاد حساب..."
@@ -817,13 +1078,23 @@ document
 
       try {
 
+        /*
+         * Supabase requires a password during signUp.
+         * We generate a temporary password automatically.
+         * The user never sees this password.
+         */
+
+        const temporaryPassword =
+          generateTemporaryPassword();
+
+
         const { data, error } =
           await supabaseClient.auth
             .signUp({
 
               email: email,
 
-              password: password,
+              password: temporaryPassword,
 
               options: {
 
@@ -843,12 +1114,12 @@ document
                     phone || null,
 
                   email_consent:
-                    emailConsent
+                    emailConsent,
 
+                  needs_password_setup:
+                    true
                 }
-
               }
-
             });
 
 
@@ -857,7 +1128,6 @@ document
           const errorText =
             String(error.message || "")
               .toLowerCase();
-
 
           if (
             errorText.includes("already registered") ||
@@ -868,7 +1138,7 @@ document
 
             showMessage(
               currentLanguage === "fa"
-                ? "این ایمیل قبلاً در HSKRC حساب دارد. لطفاً وارد شوید یا از «فراموشی رمز عبور» استفاده کنید."
+                ? "این ایمیل قبلاً حساب دارد. لطفاً وارد شوید یا از «فراموشی رمز عبور» استفاده کنید."
                 : "This email already has an HSKRC account. Please log in or use Forgot Password.",
               "error"
             );
@@ -881,27 +1151,19 @@ document
                 : "Error creating account: " + error.message,
               "error"
             );
-
           }
 
-
           button.disabled = false;
-
           return;
         }
 
-
-        /*
-          اگر Supabase حساب موجود را تشخیص دهد،
-          ممکن است به جای error یک user برگرداند.
-        */
 
         if (data && data.user) {
 
           showMessage(
             currentLanguage === "fa"
-              ? "حساب ایجاد شد. لطفاً ایمیل خود را برای تأیید حساب بررسی کنید."
-              : "Account created. Please check your email to confirm your account.",
+              ? "حساب ایجاد شد. لطفاً ایمیل خود را باز کنید و حساب را تأیید کنید. بعد از تأیید، می‌توانید رمز اصلی خود را تعیین کنید."
+              : "Account created. Please check your email and confirm your account. After confirmation, you can set your own password.",
             "success"
           );
 
@@ -915,7 +1177,6 @@ document
           );
         }
 
-
       } catch (error) {
 
         console.error(error);
@@ -926,11 +1187,219 @@ document
             : "An error occurred while creating the account.",
           "error"
         );
+      }
 
+      button.disabled = false;
+    }
+  );
+
+
+/* =========================================
+   AUTH STATE
+   ========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  async function(event, session) {
+
+    /*
+     * PASSWORD_RECOVERY is fired after a user
+     * follows the password recovery email.
+     */
+
+    if (event === "PASSWORD_RECOVERY") {
+
+      showResetPasswordArea();
+      return;
+    }
+
+
+    /*
+     * When the email confirmation link is opened,
+     * Supabase creates a session.
+     *
+     * We check the user's metadata to see whether
+     * the account still needs password setup.
+     */
+
+    if (
+      event === "SIGNED_IN" &&
+      session &&
+      session.user
+    ) {
+
+      const user =
+        session.user;
+
+      const needsPasswordSetup =
+        user.user_metadata &&
+        user.user_metadata.needs_password_setup === true;
+
+
+      if (needsPasswordSetup) {
+
+        showSetPasswordArea(
+          user.email || ""
+        );
+      }
+    }
+  }
+);
+
+
+/* =========================================
+   SET PASSWORD AREA
+   ========================================= */
+
+function showSetPasswordArea(email) {
+
+  document.getElementById("authArea")
+    .classList.add("hidden");
+
+  document.getElementById("setPasswordArea")
+    .classList.remove("hidden");
+
+  document.getElementById("resetPasswordArea")
+    .classList.add("hidden");
+
+  document.getElementById("confirmedEmail")
+    .textContent = email || "";
+
+  clearMessage();
+}
+
+
+/* =========================================
+   SET PASSWORD
+   ========================================= */
+
+document
+  .getElementById("setPasswordForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      const password =
+        document.getElementById("newPassword")
+          .value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword")
+          .value;
+
+      const button =
+        document.getElementById("setPasswordButton");
+
+
+      if (!password || !confirmPassword) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "لطفاً هر دو قسمت رمز عبور را وارد کنید."
+            : "Please enter both password fields.",
+          "error"
+        );
+
+        return;
       }
 
 
-      button.disabled = false;
+      if (password.length < 6) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور باید حداقل ۶ کاراکتر باشد."
+            : "Password must be at least 6 characters.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      if (password !== confirmPassword) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور و تأیید رمز عبور یکسان نیستند."
+            : "Password and confirmation do not match.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      button.disabled = true;
+
+      showMessage(
+        currentLanguage === "fa"
+          ? "در حال ذخیره رمز عبور..."
+          : "Saving your password...",
+        "success"
+      );
+
+
+      try {
+
+        const { data, error } =
+          await supabaseClient.auth
+            .updateUser({
+
+              password: password,
+
+              data: {
+                needs_password_setup: false
+              }
+            });
+
+
+        if (error) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "خطا در تعیین رمز عبور: " + error.message
+              : "Error setting password: " + error.message,
+            "error"
+          );
+
+          button.disabled = false;
+          return;
+        }
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور با موفقیت تعیین شد. حساب شما فعال است."
+            : "Password set successfully. Your account is now active.",
+          "success"
+        );
+
+
+        setTimeout(async function() {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.href =
+            "auth.html";
+
+        }, 1200);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "خطایی هنگام تعیین رمز عبور رخ داد."
+            : "An error occurred while setting your password.",
+          "error"
+        );
+
+        button.disabled = false;
+      }
 
     }
   );
@@ -991,7 +1460,7 @@ async function forgotPassword() {
 
     showMessage(
       currentLanguage === "fa"
-        ? "اگر این ایمیل دارای حساب باشد، لینک تغییر رمز برای آن ارسال می‌شود. ایمیل خود را بررسی کنید."
+        ? "اگر این ایمیل دارای حساب باشد، لینک بازیابی رمز ارسال شده است. ایمیل خود را بررسی کنید."
         : "If an account exists for this email, a password reset link has been sent. Please check your email.",
       "success"
     );
@@ -1007,10 +1476,201 @@ async function forgotPassword() {
         : "An error occurred while sending the reset link.",
       "error"
     );
+  }
+}
 
+
+/* =========================================
+   RESET PASSWORD AREA
+   ========================================= */
+
+function showResetPasswordArea() {
+
+  document.getElementById("authArea")
+    .classList.add("hidden");
+
+  document.getElementById("setPasswordArea")
+    .classList.add("hidden");
+
+  document.getElementById("resetPasswordArea")
+    .classList.remove("hidden");
+
+  clearMessage();
+}
+
+
+/* =========================================
+   RESET PASSWORD
+   ========================================= */
+
+document
+  .getElementById("resetPasswordForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      const password =
+        document.getElementById("resetNewPassword")
+          .value;
+
+      const confirmPassword =
+        document.getElementById("resetConfirmPassword")
+          .value;
+
+      const button =
+        document.getElementById("resetPasswordButton");
+
+
+      if (!password || !confirmPassword) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "لطفاً هر دو قسمت رمز عبور را وارد کنید."
+            : "Please enter both password fields.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور باید حداقل ۶ کاراکتر باشد."
+            : "Password must be at least 6 characters.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      if (password !== confirmPassword) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور و تأیید رمز عبور یکسان نیستند."
+            : "Password and confirmation do not match.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      button.disabled = true;
+
+
+      try {
+
+        const { error } =
+          await supabaseClient.auth
+            .updateUser({
+              password: password
+            });
+
+
+        if (error) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "خطا در تغییر رمز عبور: " + error.message
+              : "Error updating password: " + error.message,
+            "error"
+          );
+
+          button.disabled = false;
+          return;
+        }
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور با موفقیت تغییر کرد. اکنون می‌توانید وارد شوید."
+            : "Password updated successfully. You can now log in.",
+          "success"
+        );
+
+
+        setTimeout(async function() {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.href =
+            "auth.html";
+
+        }, 1200);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "خطایی هنگام تغییر رمز عبور رخ داد."
+            : "An error occurred while updating your password.",
+          "error"
+        );
+
+        button.disabled = false;
+      }
+
+    }
+  );
+
+
+/* =========================================
+   INITIAL PAGE
+   ========================================= */
+
+showRegister();
+
+
+/*
+ * If the page was opened after an email link,
+ * Supabase may already have a session.
+ */
+
+(async function checkInitialSession() {
+
+  try {
+
+    const { data } =
+      await supabaseClient.auth.getSession();
+
+    if (
+      data &&
+      data.session &&
+      data.session.user
+    ) {
+
+      const user =
+        data.session.user;
+
+      const needsPasswordSetup =
+        user.user_metadata &&
+        user.user_metadata.needs_password_setup === true;
+
+
+      if (needsPasswordSetup) {
+
+        showSetPasswordArea(
+          user.email || ""
+        );
+      }
+    }
+
+  } catch (error) {
+
+    console.error(error);
   }
 
-}
+})();
 
 </script>
 
