@@ -10,9 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    HSKRC | Article
-  </title>
+  <title>HSKRC | Articles & Research</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -28,7 +26,7 @@
       font-family: Arial, Tahoma, sans-serif;
       background: #0d1117;
       color: #f5f5f5;
-      line-height: 1.9;
+      line-height: 1.7;
     }
 
     header {
@@ -86,72 +84,103 @@
       min-height: 75vh;
     }
 
-    .article-page {
-      max-width: 950px;
-      margin: auto;
-      padding: 70px 25px 90px;
+    .page-header {
+      text-align: center;
+      padding: 70px 20px 40px;
     }
 
-    .back-link {
-      display: inline-block;
+    .page-header h1 {
       color: #42d392;
-      text-decoration: none;
-      margin-bottom: 30px;
-      border: 1px solid #42d392;
-      padding: 8px 16px;
-      border-radius: 8px;
+      font-size: 40px;
+      margin-bottom: 12px;
     }
 
-    .back-link:hover {
-      background: #42d392;
-      color: #07110c;
+    .page-header p {
+      color: #9aa2ad;
+      font-size: 17px;
     }
 
-    .article-container {
+    .articles-container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 25px 90px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .article-card {
       background: #151a22;
       border: 1px solid #252c36;
-      border-radius: 16px;
-      padding: 45px;
+      border-radius: 14px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;
     }
 
-    .article-title {
+    .article-card:hover {
+      border-color: #42d392;
+      transform: translateY(-3px);
+      transition: 0.2s;
+    }
+
+    .article-category {
       color: #42d392;
-      font-size: 38px;
-      line-height: 1.4;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .article-card h2 {
+      font-size: 23px;
+      line-height: 1.45;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .article-author {
+      color: #8f98a5;
+      font-size: 14px;
       margin-bottom: 15px;
     }
 
-    .article-meta {
-      color: #858c96;
+    .article-excerpt {
+      color: #c7ccd3;
       font-size: 15px;
-      margin-bottom: 35px;
-      border-bottom: 1px solid #252c36;
-      padding-bottom: 20px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      flex: 1;
     }
 
-    .article-content {
-      color: #d0d5dc;
-      font-size: 18px;
-      white-space: pre-wrap;
-      line-height: 2.1;
-      overflow-wrap: anywhere;
-    }
-
-    .loading {
+    .view-button {
+      display: inline-block;
       text-align: center;
-      color: #858c96;
-      padding: 70px 20px;
+      background: #42d392;
+      color: #07110c;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .view-button:hover {
+      opacity: 0.85;
+    }
+
+    .loading,
+    .empty,
+    .error {
+      text-align: center;
+      color: #9aa2ad;
+      padding: 60px 20px;
     }
 
     .error {
-      text-align: center;
-      color: #d0d5dc;
-      padding: 70px 20px;
-    }
-
-    .error h2 {
-      color: #42d392;
-      margin-bottom: 15px;
+      color: #ff8f8f;
     }
 
     footer {
@@ -189,20 +218,12 @@
         font-size: 14px;
       }
 
-      .article-page {
-        padding: 45px 15px 60px;
+      .page-header h1 {
+        font-size: 30px;
       }
 
-      .article-container {
-        padding: 25px 18px;
-      }
-
-      .article-title {
-        font-size: 28px;
-      }
-
-      .article-content {
-        font-size: 16px;
+      .articles-container {
+        padding: 15px 15px 60px;
       }
 
     }
@@ -223,31 +244,19 @@
 
   <nav>
 
-    <a
-      href="index.html"
-      data-fa="خانه"
-      data-en="Home">
+    <a href="index.html">
       Home
     </a>
 
-    <a
-      href="library.html"
-      data-fa="کتابخانه"
-      data-en="Library">
+    <a href="library.html">
       Library
     </a>
 
-    <a
-      href="articles.html"
-      data-fa="مقالات"
-      data-en="Articles">
+    <a href="articles.html">
       Articles
     </a>
 
-    <a
-      href="index.html#about"
-      data-fa="درباره ما"
-      data-en="About">
+    <a href="index.html#about">
       About
     </a>
 
@@ -272,30 +281,32 @@
 
 <main>
 
-  <div class="article-page">
+  <section class="page-header">
 
-    <a
-      href="articles.html"
-      class="back-link"
-      data-fa="← بازگشت به مقالات"
-      data-en="← Back to Articles">
+    <h1>
+      Articles & Research
+    </h1>
 
-      ← Back to Articles
+    <p>
+      Research, history, culture and knowledge from HSKRC
+    </p>
 
-    </a>
+  </section>
 
+
+  <section class="articles-container">
 
     <div
-      id="articleArea"
-      class="article-container">
+      id="articlesArea"
+      class="articles-grid">
 
       <div class="loading">
-        Loading article...
+        Loading articles...
       </div>
 
     </div>
 
-  </div>
+  </section>
 
 </main>
 
@@ -307,13 +318,8 @@
     Founded by Kamal Barlas
   </p>
 
-  <p
-    class="copyright"
-    data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است."
-    data-en="© 2026 HSKRC - All rights reserved.">
-
+  <p class="copyright">
     © 2026 HSKRC - All rights reserved.
-
   </p>
 
 </footer>
@@ -358,23 +364,14 @@ function changeLanguage() {
       ? "rtl"
       : "ltr";
 
-  document
-    .querySelectorAll("[data-fa]")
-    .forEach(function(element) {
-
-      element.textContent =
-        currentLanguage === "fa"
-          ? element.getAttribute("data-fa")
-          : element.getAttribute("data-en");
-
-    });
-
   document.getElementById(
     "languageButton"
   ).textContent =
     currentLanguage === "fa"
       ? "🌐 English"
       : "🌐 Persian";
+
+  loadArticles();
 
   updateAccountLink();
 
@@ -420,36 +417,23 @@ async function updateAccountLink() {
 
 
 
-const urlParams =
-  new URLSearchParams(
-    window.location.search
-  );
-
-
-const articleId =
-  urlParams.get("id");
-
-
-
-async function loadArticle() {
+async function loadArticles() {
 
   const area =
     document.getElementById(
-      "articleArea"
+      "articlesArea"
     );
 
 
-  if (!articleId) {
-
-    showError(
-      currentLanguage === "fa"
-        ? "مقاله پیدا نشد."
-        : "Article not found."
-    );
-
-    return;
-
-  }
+  area.innerHTML = `
+    <div class="loading">
+      ${
+        currentLanguage === "fa"
+          ? "در حال بارگذاری مقالات..."
+          : "Loading articles..."
+      }
+    </div>
+  `;
 
 
   const {
@@ -463,119 +447,132 @@ async function loadArticle() {
         title,
         author,
         category,
-        content,
-        published,
+        excerpt,
         published_at
       `)
-      .eq(
-        "id",
-        articleId
-      )
       .eq(
         "published",
         true
       )
-      .maybeSingle();
+      .order(
+        "published_at",
+        {
+          ascending: false,
+          nullsFirst: false
+        }
+      );
 
 
   if (error) {
 
     console.error(
-      "Article error:",
+      "Articles error:",
       error
     );
 
-    showError(
-      currentLanguage === "fa"
-        ? "خطا در بارگذاری مقاله."
-        : "Unable to load article."
-    );
+    area.innerHTML = `
+      <div class="error">
+        ${
+          currentLanguage === "fa"
+            ? "خطا در بارگذاری مقالات."
+            : "Unable to load articles."
+        }
+      </div>
+    `;
 
     return;
 
   }
 
 
-  if (!data) {
+  if (!data || data.length === 0) {
 
-    showError(
-      currentLanguage === "fa"
-        ? "این مقاله وجود ندارد یا منتشر نشده است."
-        : "This article does not exist or is not published."
-    );
+    area.innerHTML = `
+      <div class="empty">
+        ${
+          currentLanguage === "fa"
+            ? "هنوز مقاله‌ای منتشر نشده است."
+            : "No published articles yet."
+        }
+      </div>
+    `;
 
     return;
 
   }
 
 
-  document.title =
-    "HSKRC | " +
-    data.title;
+  area.innerHTML =
+    data.map(function(article) {
+
+      return `
+
+        <article class="article-card">
+
+          <div class="article-category">
+
+            ${escapeHTML(
+              article.category ||
+              (
+                currentLanguage === "fa"
+                  ? "پژوهش"
+                  : "Research"
+              )
+            )}
+
+          </div>
 
 
-  area.innerHTML = `
-
-    <h1 class="article-title">
-      ${escapeHTML(data.title)}
-    </h1>
-
-    <div class="article-meta">
-
-      ${escapeHTML(
-        data.author ||
-        (
-          currentLanguage === "fa"
-            ? "نویسنده نامشخص"
-            : "Author unknown"
-        )
-      )}
-
-      ·
-
-      ${escapeHTML(
-        data.category ||
-        (
-          currentLanguage === "fa"
-            ? "پژوهش"
-            : "Research"
-        )
-      )}
-
-    </div>
-
-    <div class="article-content">
-      ${escapeHTML(data.content || "")}
-    </div>
-
-  `;
-
-}
+          <h2>
+            ${escapeHTML(
+              article.title
+            )}
+          </h2>
 
 
+          <div class="article-author">
 
-function showError(message) {
+            ${
+              currentLanguage === "fa"
+                ? "نویسنده: "
+                : "Author: "
+            }
 
-  const area =
-    document.getElementById(
-      "articleArea"
-    );
+            ${escapeHTML(
+              article.author ||
+              "HSKRC Research Centre"
+            )}
 
-  area.innerHTML = `
+          </div>
 
-    <div class="error">
 
-      <h2>
-        HSKRC
-      </h2>
+          <div class="article-excerpt">
 
-      <p>
-        ${escapeHTML(message)}
-      </p>
+            ${escapeHTML(
+              article.excerpt ||
+              ""
+            )}
 
-    </div>
+          </div>
 
-  `;
+
+          <a
+            class="view-button"
+            href="article.html?id=${encodeURIComponent(article.id)}">
+
+            ${
+              currentLanguage === "fa"
+                ? "مشاهده مقاله"
+                : "View Article"
+            }
+
+          </a>
+
+        </article>
+
+      `;
+
+    }).join("");
 
 }
 
@@ -593,22 +590,27 @@ function escapeHTML(value) {
   }
 
   return String(value)
+
     .replace(
       /&/g,
       "&amp;"
     )
+
     .replace(
       /</g,
       "&lt;"
     )
+
     .replace(
       />/g,
       "&gt;"
     )
+
     .replace(
       /"/g,
       "&quot;"
     )
+
     .replace(
       /'/g,
       "&#039;"
@@ -630,7 +632,7 @@ supabaseClient.auth.onAuthStateChange(
 
 updateAccountLink();
 
-loadArticle();
+loadArticles();
 
 
 </script>
