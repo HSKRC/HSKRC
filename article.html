@@ -115,8 +115,10 @@
     .article-title {
       color: #42d392;
       font-size: 38px;
-      line-height: 1.4;
+      line-height: 1.5;
       margin-bottom: 15px;
+      text-align: left;
+      direction: ltr;
     }
 
     .article-meta {
@@ -125,6 +127,8 @@
       margin-bottom: 35px;
       border-bottom: 1px solid #252c36;
       padding-bottom: 20px;
+      text-align: left;
+      direction: ltr;
     }
 
     .article-content {
@@ -133,6 +137,31 @@
       white-space: pre-wrap;
       line-height: 2.1;
       overflow-wrap: anywhere;
+      text-align: left;
+      direction: ltr;
+    }
+
+    /*
+      Persian / RTL
+    */
+
+    html[dir="rtl"] .article-title {
+      text-align: right;
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .article-meta {
+      text-align: right;
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .article-content {
+      text-align: right;
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .back-link {
+      direction: rtl;
     }
 
     .loading {
@@ -339,6 +368,7 @@ function changeLanguage() {
       ? "rtl"
       : "ltr";
 
+
   document.querySelectorAll(
     "[data-fa]"
   ).forEach(function(element) {
@@ -350,12 +380,14 @@ function changeLanguage() {
 
   });
 
+
   document.getElementById(
     "languageButton"
   ).textContent =
     currentLanguage === "fa"
       ? "🌐 English"
       : "🌐 Persian";
+
 
   updateAccountLink();
 
@@ -370,10 +402,12 @@ async function updateAccountLink() {
       "accountLink"
     );
 
+
   const {
     data
   } =
     await supabaseClient.auth.getSession();
+
 
   if (data.session) {
 
@@ -501,6 +535,7 @@ async function loadArticle() {
       ${escapeHTML(data.title)}
     </h1>
 
+
     <div class="article-meta">
 
       ${
@@ -533,6 +568,7 @@ async function loadArticle() {
 
     </div>
 
+
     <div class="article-content">
       ${escapeHTML(data.content || "")}
     </div>
@@ -549,6 +585,7 @@ function showError(message) {
     document.getElementById(
       "articleArea"
     );
+
 
   area.innerHTML = `
 
@@ -580,6 +617,7 @@ function escapeHTML(value) {
     return "";
 
   }
+
 
   return String(value)
 
