@@ -108,7 +108,11 @@
 
     .articles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        );
       gap: 25px;
     }
 
@@ -116,16 +120,43 @@
       background: #151a22;
       border: 1px solid #252c36;
       border-radius: 14px;
-      padding: 28px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      min-height: 300px;
+      min-height: 480px;
     }
 
     .article-card:hover {
       border-color: #42d392;
       transform: translateY(-3px);
       transition: 0.2s;
+    }
+
+    .article-cover {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+      background: #0b0f14;
+    }
+
+    .article-cover-placeholder {
+      width: 100%;
+      height: 230px;
+      background: #0b0f14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #42d392;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .article-body {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .article-category {
@@ -157,7 +188,7 @@
     }
 
     .view-button {
-      display: inline-block;
+      display: block;
       text-align: center;
       background: #42d392;
       color: #07110c;
@@ -224,6 +255,10 @@
 
       .articles-container {
         padding: 15px 15px 60px;
+      }
+
+      .article-cover {
+        height: 210px;
       }
 
     }
@@ -417,6 +452,54 @@ async function updateAccountLink() {
 
 
 
+async function getCoverUrl(
+  coverPath
+) {
+
+  if (!coverPath) {
+    return null;
+  }
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .storage
+        .from("Books")
+        .createSignedUrl(
+          coverPath,
+          3600
+        );
+
+    if (error) {
+
+      console.error(
+        "Cover error:",
+        error
+      );
+
+      return null;
+    }
+
+    return data?.signedUrl || null;
+
+  } catch (error) {
+
+    console.error(
+      "Cover exception:",
+      error
+    );
+
+    return null;
+  }
+
+}
+
+
+
 async function loadArticles() {
 
   const area =
@@ -448,6 +531,7 @@ async function loadArticles() {
         author,
         category,
         excerpt,
+        cover_path,
         published_at
       `)
       .eq(
@@ -502,77 +586,137 @@ async function loadArticles() {
   }
 
 
+  const cards =
+    await Promise.all(
+
+      data.map(
+        async function(article) {
+
+          const coverUrl =
+            await getCoverUrl(
+              article.cover_path
+            );
+
+
+          let coverHTML;
+
+
+          if (coverUrl) {
+
+            coverHTML = `
+
+              <img
+                class="article-cover"
+                src="${coverUrl}"
+                alt="${escapeHTML(
+                  article.title
+                )}"
+              >
+
+            `;
+
+          } else {
+
+            coverHTML = `
+
+              <div
+                class="article-cover-placeholder">
+
+                HSKRC
+
+              </div>
+
+            `;
+
+          }
+
+
+          return `
+
+            <article class="article-card">
+
+              ${coverHTML}
+
+
+              <div class="article-body">
+
+                <div class="article-category">
+
+                  ${escapeHTML(
+                    article.category ||
+                    (
+                      currentLanguage === "fa"
+                        ? "پژوهش"
+                        : "Research"
+                    )
+                  )}
+
+                </div>
+
+
+                <h2>
+
+                  ${escapeHTML(
+                    article.title
+                  )}
+
+                </h2>
+
+
+                <div class="article-author">
+
+                  ${
+                    currentLanguage === "fa"
+                      ? "نویسنده: "
+                      : "Author: "
+                  }
+
+                  ${escapeHTML(
+                    article.author ||
+                    "HSKRC Research Centre"
+                  )}
+
+                </div>
+
+
+                <div class="article-excerpt">
+
+                  ${escapeHTML(
+                    article.excerpt ||
+                    ""
+                  )}
+
+                </div>
+
+
+                <a
+                  class="view-button"
+                  href="article.html?id=${encodeURIComponent(
+                    article.id
+                  )}">
+
+                  ${
+                    currentLanguage === "fa"
+                      ? "مشاهده مقاله"
+                      : "View Article"
+                  }
+
+                </a>
+
+              </div>
+
+            </article>
+
+          `;
+
+        }
+      )
+
+    );
+
+
   area.innerHTML =
-    data.map(function(article) {
-
-      return `
-
-        <article class="article-card">
-
-          <div class="article-category">
-
-            ${escapeHTML(
-              article.category ||
-              (
-                currentLanguage === "fa"
-                  ? "پژوهش"
-                  : "Research"
-              )
-            )}
-
-          </div>
-
-
-          <h2>
-            ${escapeHTML(
-              article.title
-            )}
-          </h2>
-
-
-          <div class="article-author">
-
-            ${
-              currentLanguage === "fa"
-                ? "نویسنده: "
-                : "Author: "
-            }
-
-            ${escapeHTML(
-              article.author ||
-              "HSKRC Research Centre"
-            )}
-
-          </div>
-
-
-          <div class="article-excerpt">
-
-            ${escapeHTML(
-              article.excerpt ||
-              ""
-            )}
-
-          </div>
-
-
-          <a
-            class="view-button"
-            href="article.html?id=${encodeURIComponent(article.id)}">
-
-            ${
-              currentLanguage === "fa"
-                ? "مشاهده مقاله"
-                : "View Article"
-            }
-
-          </a>
-
-        </article>
-
-      `;
-
-    }).join("");
+    cards.join("");
 
 }
 
@@ -627,7 +771,6 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 );
-
 
 
 updateAccountLink();
