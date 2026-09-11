@@ -1276,7 +1276,77 @@
         scroll-behavior: auto;
       }
     }
-  </style>
+  
+    /* Professional refinements */
+    .library-tools{position:relative}
+    .search-box{
+      padding:14px;
+      background:rgba(21,26,34,.72);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:18px;
+      box-shadow:0 14px 38px rgba(0,0,0,.16);
+    }
+    .search-box input,.search-box select{min-height:50px}
+    .search-box input{
+      padding-left:46px;
+      background:linear-gradient(90deg,rgba(66,211,146,.045),transparent 28%),rgba(21,26,34,.96);
+    }
+    .search-box:before{
+      content:"⌕";
+      position:absolute;
+      left:30px;
+      top:50%;
+      transform:translateY(-50%);
+      z-index:2;
+      color:var(--green);
+      font-size:24px;
+      pointer-events:none;
+    }
+    html[dir="rtl"] .search-box input{padding-left:16px;padding-right:46px}
+    html[dir="rtl"] .search-box:before{left:auto;right:30px}
+    .book{isolation:isolate}
+    .book:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      border-radius:inherit;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+      z-index:2;
+    }
+    .cover{height:350px}
+    .book-title{min-height:55px}
+    .author{font-weight:650}
+    .meta{min-height:21px}
+    .book-description{min-height:96px}
+    .read-button{box-shadow:0 8px 20px rgba(66,211,146,.08)}
+    .read-button:focus-visible,.pdf-action:focus-visible,.pdf-close:focus-visible,
+    .language:focus-visible,nav a:focus-visible,input:focus-visible,select:focus-visible{
+      outline:2px solid var(--green);
+      outline-offset:2px;
+    }
+    .loading{
+      min-height:260px;
+      display:grid;
+      place-items:center;
+    }
+    .empty,.error{
+      min-height:260px;
+      display:grid;
+      place-items:center;
+      border:1px dashed rgba(255,255,255,.10);
+      border-radius:18px;
+      background:rgba(21,26,34,.55);
+    }
+    @media(max-width:700px){
+      .search-box{padding:10px;border-radius:15px}
+      .search-box:before{left:25px}
+      html[dir="rtl"] .search-box:before{right:25px}
+      .cover{height:320px}
+      .book-title,.book-description{min-height:auto}
+    }
+
+</style>
 
 </head>
 
@@ -2267,4 +2337,223 @@
     }
 
   }
-  
+
+
+  function renderBooks(books) {
+    const container = document.getElementById("booksContainer");
+
+    if (!books.length) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-box">
+            <div class="empty-icon">⌕</div>
+            <div class="empty-title">
+              ${currentLanguage === "fa" ? "کتابی پیدا نشد" : "No books found"}
+            </div>
+            <p>
+              ${currentLanguage === "fa"
+                ? "عبارت جستجو یا دسته‌بندی دیگری را امتحان کنید."
+                : "Try a different search term or category."}
+            </p>
+          </div>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = "";
+
+    books.forEach(book => {
+      const article = document.createElement("article");
+      article.className = "book";
+
+      const title = String(book.title || "");
+      const author = book.author ||
+        (currentLanguage === "fa" ? "نویسنده نامشخص" : "Unknown author");
+      const description = book.description ||
+        (currentLanguage === "fa"
+          ? "توضیحی برای این کتاب ثبت نشده است."
+          : "No description available.");
+      const year = book.publication_year || "";
+      const language = book.language || "";
+      const category = book.category || "";
+      const pdfPath = book.pdf_path || "";
+
+      let coverHtml = book.cover_url
+        ? `<img src="${escapeHtml(book.cover_url)}" alt="${escapeHtml(title)}" loading="lazy">`
+        : `<div class="no-cover">📚</div>`;
+
+      article.innerHTML = `
+        <div class="cover">${coverHtml}</div>
+        <div class="book-content">
+          <h2 class="book-title" dir="auto">${escapeHtml(title)}</h2>
+          <div class="author" dir="auto">${escapeHtml(author)}</div>
+          <div class="meta" dir="auto">
+            ${escapeHtml(language)}
+            ${year ? " • " + escapeHtml(String(year)) : ""}
+            ${category ? " • " + escapeHtml(category) : ""}
+          </div>
+          <p class="book-description" dir="auto">${escapeHtml(description)}</p>
+          <button class="read-button" type="button" ${pdfPath ? "" : "disabled"}>
+            ${currentLanguage === "fa" ? "📖 مشاهده PDF" : "📖 View PDF"}
+          </button>
+        </div>`;
+
+      const image = article.querySelector(".cover img");
+      if (image) {
+        image.addEventListener("error", () => {
+          image.parentElement.innerHTML = '<div class="no-cover">📚</div>';
+        });
+      }
+
+      article.querySelector(".read-button").addEventListener("click", () => {
+        if (!pdfPath) {
+          alert(currentLanguage === "fa"
+            ? "فایل PDF برای این کتاب ثبت نشده است."
+            : "No PDF file is available for this book.");
+          return;
+        }
+        openPdf(pdfPath, title);
+      });
+
+      container.appendChild(article);
+
+      if (!book.cover_url && book.cover_path) {
+        supabaseClient.storage.from("Books")
+          .createSignedUrl(book.cover_path, 3600)
+          .then(({data}) => {
+            if (data && data.signedUrl) {
+              const cover = article.querySelector(".cover");
+              cover.innerHTML = `
+                <img src="${escapeHtml(data.signedUrl)}"
+                     alt="${escapeHtml(title)}" loading="lazy">`;
+            }
+          })
+          .catch(error => console.warn("Cover URL error:", error));
+      }
+    });
+  }
+
+  async function openPdf(path, title) {
+    const {data, error} = await supabaseClient.auth.getSession();
+
+    if (error || !data || !data.session) {
+      alert(currentLanguage === "fa"
+        ? "برای مشاهده کتاب ابتدا باید وارد حساب خود شوید."
+        : "Please login to your account before viewing this book.");
+      window.location.href = "auth.html";
+      return;
+    }
+
+    currentSession = data.session;
+
+    if (!path) {
+      alert(currentLanguage === "fa"
+        ? "مسیر فایل PDF در اطلاعات کتاب ثبت نشده است."
+        : "The PDF file path is missing.");
+      return;
+    }
+
+    const loading = document.getElementById("pdfLoading");
+    loading.textContent = currentLanguage === "fa"
+      ? "در حال آماده‌سازی PDF..."
+      : "Preparing PDF...";
+    loading.classList.remove("hidden");
+
+    const {data: signedData, error: signedError} =
+      await supabaseClient.storage.from("Books").createSignedUrl(path, 3600);
+
+    if (signedError || !signedData || !signedData.signedUrl) {
+      console.error("Signed URL error:", signedError);
+      loading.classList.add("hidden");
+      alert(currentLanguage === "fa"
+        ? "امکان دسترسی به فایل PDF وجود ندارد. مسیر فایل را بررسی کنید."
+        : "Unable to access the PDF file. Please check the file path.");
+      return;
+    }
+
+    currentPdfUrl = signedData.signedUrl;
+    currentPdfPath = path;
+
+    document.getElementById("pdfTitle").textContent = title || "PDF";
+
+    const frame = document.getElementById("pdfFrame");
+    frame.onload = () => loading.classList.add("hidden");
+    frame.onerror = () => {
+      loading.classList.add("hidden");
+      alert(currentLanguage === "fa"
+        ? "PDF بارگذاری نشد."
+        : "The PDF could not be loaded.");
+    };
+
+    frame.src = currentPdfUrl;
+
+    const modal = document.getElementById("pdfModal");
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    setTimeout(() => loading.classList.add("hidden"), 5000);
+  }
+
+  async function openPdfNewTab() {
+    if (!currentPdfUrl) return;
+
+    const {data, error} = await supabaseClient.auth.getSession();
+    if (error || !data || !data.session) {
+      window.location.href = "auth.html";
+      return;
+    }
+
+    window.open(currentPdfUrl, "_blank", "noopener,noreferrer");
+  }
+
+  function togglePdfFullscreen() {
+    const box = document.getElementById("pdfBox");
+    if (!document.fullscreenElement) {
+      if (box && box.requestFullscreen) box.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+
+  function closePdf() {
+    const frame = document.getElementById("pdfFrame");
+    const modal = document.getElementById("pdfModal");
+    const loading = document.getElementById("pdfLoading");
+
+    frame.src = "";
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    currentPdfUrl = "";
+    currentPdfPath = "";
+    loading.classList.remove("hidden");
+  }
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" &&
+        document.getElementById("pdfModal").classList.contains("active")) {
+      closePdf();
+    }
+  });
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  async function startLibrary() {
+    applyLanguage(getSavedLanguage());
+    await checkUser();
+    await loadBooks();
+  }
+
+  startLibrary();
+
+</script>
+</body>
+</html>
