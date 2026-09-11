@@ -38,12 +38,16 @@
       align-items: center;
       gap: 20px;
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
       color: #42d392;
       font-size: 28px;
       font-weight: bold;
+      letter-spacing: 1px;
     }
 
     nav {
@@ -57,6 +61,7 @@
       color: #dddddd;
       text-decoration: none;
       transition: color 0.2s ease;
+      font-size: 15px;
     }
 
     nav a:hover {
@@ -71,6 +76,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: 0.2s ease;
+      font-size: 14px;
     }
 
     .language:hover {
@@ -79,42 +85,56 @@
     }
 
     main {
-      padding: 55px 6%;
+      padding: 55px 6% 80px;
+    }
+
+    .hero {
+      max-width: 850px;
+      margin: 0 auto 40px;
+      text-align: center;
     }
 
     .title {
-      text-align: center;
       color: #42d392;
-      font-size: 36px;
-      margin-bottom: 10px;
+      font-size: 38px;
+      line-height: 1.4;
+      margin-bottom: 12px;
     }
 
     .description {
-      text-align: center;
       color: #aeb6c2;
-      max-width: 700px;
-      margin: 0 auto 35px;
-      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.8;
+      font-size: 16px;
     }
 
     .login-message {
+      max-width: 900px;
+      margin: 0 auto 25px;
       text-align: center;
       color: #aeb6c2;
-      margin-bottom: 25px;
+      background: #111720;
+      border: 1px solid #29313c;
+      border-radius: 10px;
+      padding: 12px 18px;
+    }
+
+    .library-tools {
+      max-width: 1150px;
+      margin: 0 auto 30px;
     }
 
     .search-box {
-      max-width: 900px;
-      margin: 0 auto 35px;
       display: grid;
-      grid-template-columns: 1fr 220px;
+      grid-template-columns: 1fr 240px;
       gap: 12px;
     }
 
     input,
     select {
       width: 100%;
-      padding: 14px;
+      padding: 14px 16px;
       border-radius: 10px;
       border: 1px solid #303846;
       background: #151a22;
@@ -123,10 +143,31 @@
       outline: none;
     }
 
+    input::placeholder {
+      color: #777f8b;
+    }
+
     input:focus,
     select:focus {
       border-color: #42d392;
       box-shadow: 0 0 0 2px rgba(66, 211, 146, 0.08);
+    }
+
+    .library-summary {
+      max-width: 1150px;
+      margin: 0 auto 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      color: #858c96;
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .summary-count {
+      color: #42d392;
+      font-weight: bold;
     }
 
     .books {
@@ -135,33 +176,36 @@
       display: grid;
       grid-template-columns:
         repeat(auto-fit, minmax(250px, 1fr));
-      gap: 22px;
+      gap: 24px;
     }
 
     .book {
       background: #151a22;
       border: 1px solid #29313c;
-      border-radius: 15px;
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
     }
 
     .book:hover {
-      transform: translateY(-3px);
+      transform: translateY(-5px);
       border-color: #42d392;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
     }
 
     .cover {
-      height: 250px;
+      height: 310px;
       background: #202731;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
     }
 
     .cover img {
@@ -169,14 +213,20 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .book:hover .cover img {
+      transform: scale(1.025);
     }
 
     .no-cover {
-      font-size: 55px;
+      font-size: 58px;
+      opacity: 0.65;
     }
 
     .book-content {
-      padding: 20px;
+      padding: 21px;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -185,33 +235,45 @@
     .book-title {
       color: #42d392;
       font-size: 20px;
-      line-height: 1.4;
-      margin-bottom: 8px;
+      line-height: 1.5;
+      margin-bottom: 9px;
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .author {
       color: #dddddd;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .meta {
       color: #8f98a5;
       font-size: 13px;
-      margin-bottom: 12px;
-      line-height: 1.6;
+      margin-bottom: 13px;
+      line-height: 1.7;
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .book-description {
       color: #adb5c0;
       font-size: 14px;
-      margin-bottom: 18px;
-      line-height: 1.7;
+      margin-bottom: 20px;
+      line-height: 1.8;
       flex: 1;
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .read-button {
       width: 100%;
-      padding: 11px 16px;
+      padding: 12px 16px;
       background: #42d392;
       color: #07110c;
       border: none;
@@ -223,7 +285,8 @@
     }
 
     .read-button:hover {
-      opacity: 0.9;
+      opacity: 0.88;
+      transform: translateY(-1px);
     }
 
     .read-button:disabled {
@@ -236,8 +299,28 @@
     .error {
       grid-column: 1 / -1;
       text-align: center;
-      padding: 40px;
+      padding: 55px 20px;
       color: #aeb6c2;
+    }
+
+    .empty-box {
+      max-width: 500px;
+      margin: auto;
+      background: #151a22;
+      border: 1px solid #29313c;
+      border-radius: 14px;
+      padding: 35px 20px;
+    }
+
+    .empty-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .empty-title {
+      color: #42d392;
+      font-size: 20px;
+      margin-bottom: 8px;
     }
 
     .error {
@@ -245,11 +328,11 @@
     }
 
     footer {
-      margin-top: 60px;
+      margin-top: 30px;
       background: #080a0d;
       border-top: 1px solid #29313c;
       text-align: center;
-      padding: 30px;
+      padding: 32px 20px;
     }
 
     .founder {
@@ -263,7 +346,10 @@
       font-size: 13px;
     }
 
-    /* PDF MODAL */
+
+    /* =========================================
+       PDF MODAL
+    ========================================= */
 
     .pdf-modal {
       display: none;
@@ -376,11 +462,12 @@
       display: none;
     }
 
-    @media (max-width: 650px) {
 
-      .search-box {
-        grid-template-columns: 1fr;
-      }
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 700px) {
 
       header {
         justify-content: center;
@@ -388,14 +475,35 @@
 
       nav {
         justify-content: center;
+        gap: 12px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      main {
+        padding: 40px 15px 60px;
       }
 
       .title {
         font-size: 29px;
       }
 
+      .description {
+        font-size: 14px;
+      }
+
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
       .cover {
-        height: 230px;
+        height: 280px;
+      }
+
+      .book-content {
+        padding: 18px;
       }
 
       .pdf-modal {
@@ -424,80 +532,92 @@
       .pdf-close {
         padding: 6px 10px;
       }
-
     }
 
   </style>
 
 </head>
 
+
 <body>
 
-  <header>
+<header>
 
-    <div class="logo">
-      HSKRC
-    </div>
+  <div class="logo">
+    HSKRC
+  </div>
 
-    <nav>
+  <nav>
 
-      <a
-        href="index.html"
-        id="homeLink"
-      >
-        Home
-      </a>
+    <a
+      href="index.html"
+      id="homeLink">
+      Home
+    </a>
 
-      <a
-        href="library.html"
-        id="libraryLink"
-      >
-        Library
-      </a>
+    <a
+      href="library.html"
+      id="libraryLink">
+      Library
+    </a>
 
-      <a
-        href="auth.html"
-        id="accountLink"
-      >
-        Login / Register
-      </a>
+    <a
+      href="articles.html"
+      id="articlesLink">
+      Articles
+    </a>
 
-      <button
-        class="language"
-        id="languageButton"
-        onclick="changeLanguage()"
-      >
-        🌐 Persian
-      </button>
+    <a
+      href="index.html#about"
+      id="aboutLink">
+      About
+    </a>
 
-    </nav>
+    <a
+      href="auth.html"
+      id="accountLink">
+      Login / Register
+    </a>
 
-  </header>
+    <button
+      class="language"
+      id="languageButton"
+      onclick="changeLanguage()">
+      🌐 Persian
+    </button>
+
+  </nav>
+
+</header>
 
 
-  <main>
+<main>
+
+  <section class="hero">
 
     <h1
       class="title"
-      id="pageTitle"
-    >
+      id="pageTitle">
       Digital Library
     </h1>
 
     <p
       class="description"
-      id="pageDescription"
-    >
+      id="pageDescription">
       Search and access the HSKRC book collection
     </p>
 
-    <div
-      class="login-message"
-      id="loginMessage"
-    >
-      Please login to read or access books.
-    </div>
+  </section>
 
+
+  <div
+    class="login-message"
+    id="loginMessage">
+    Please login to read or access books.
+  </div>
+
+
+  <div class="library-tools">
 
     <div class="search-box">
 
@@ -511,8 +631,7 @@
 
       <select
         id="categoryFilter"
-        onchange="filterBooks()"
-      >
+        onchange="filterBooks()">
 
         <option value="">
           All Categories
@@ -522,1402 +641,1578 @@
 
     </div>
 
+  </div>
 
-    <div
-      id="booksContainer"
-      class="books"
-    >
 
-      <div class="loading">
-        Loading books...
+  <div
+    class="library-summary"
+    id="librarySummary">
+
+    <span id="summaryText">
+      Showing all books
+    </span>
+
+    <span>
+      <span id="summaryCount" class="summary-count">
+        0
+      </span>
+      <span id="summaryBooks">
+        books
+      </span>
+    </span>
+
+  </div>
+
+
+  <div
+    id="booksContainer"
+    class="books">
+
+    <div class="loading">
+      Loading books...
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- PDF MODAL -->
+
+<div
+  id="pdfModal"
+  class="pdf-modal"
+  aria-hidden="true">
+
+  <div
+    class="pdf-box"
+    id="pdfBox">
+
+    <div class="pdf-header">
+
+      <div
+        id="pdfTitle"
+        class="pdf-title">
+        PDF
+      </div>
+
+      <div class="pdf-actions">
+
+        <button
+          id="newTabButton"
+          class="pdf-action"
+          onclick="openPdfNewTab()">
+          ↗ Open in new tab
+        </button>
+
+        <button
+          id="fullscreenButton"
+          class="pdf-action"
+          onclick="togglePdfFullscreen()">
+          ⛶ Fullscreen
+        </button>
+
+        <button
+          class="pdf-close"
+          onclick="closePdf()"
+          aria-label="Close PDF">
+          ×
+        </button>
+
       </div>
 
     </div>
 
-  </main>
-
-
-  <!-- PDF MODAL -->
-
-  <div
-    id="pdfModal"
-    class="pdf-modal"
-    aria-hidden="true"
-  >
 
     <div
-      class="pdf-box"
-      id="pdfBox"
-    >
-
-      <div class="pdf-header">
-
-        <div
-          id="pdfTitle"
-          class="pdf-title"
-        >
-          PDF
-        </div>
-
-        <div class="pdf-actions">
-
-          <button
-            id="newTabButton"
-            class="pdf-action"
-            onclick="openPdfNewTab()"
-          >
-            ↗ Open in new tab
-          </button>
-
-          <button
-            id="fullscreenButton"
-            class="pdf-action"
-            onclick="togglePdfFullscreen()"
-          >
-            ⛶ Fullscreen
-          </button>
-
-          <button
-            class="pdf-close"
-            onclick="closePdf()"
-            aria-label="Close PDF"
-          >
-            ×
-          </button>
-
-        </div>
-
-      </div>
-
+      id="pdfFrameWrap"
+      class="pdf-frame-wrap">
 
       <div
-        id="pdfFrameWrap"
-        class="pdf-frame-wrap"
-      >
-
-        <div
-          id="pdfLoading"
-          class="pdf-loading"
-        >
-          Preparing PDF...
-        </div>
-
-        <iframe
-          id="pdfFrame"
-          src=""
-          title="PDF Viewer"
-          loading="lazy"
-        ></iframe>
-
+        id="pdfLoading"
+        class="pdf-loading">
+        Preparing PDF...
       </div>
+
+      <iframe
+        id="pdfFrame"
+        src=""
+        title="PDF Viewer"
+        loading="lazy">
+      </iframe>
 
     </div>
 
   </div>
 
+</div>
 
-  <footer>
 
-    <p class="founder">
-      Founded by Kamal Barlas
-    </p>
+<footer>
 
-    <p class="copyright">
-      © 2026 HSKRC - All rights reserved.
-    </p>
+  <p class="founder">
+    Founded by Kamal Barlas
+  </p>
 
-  </footer>
+  <p class="copyright">
+    © 2026 HSKRC - All rights reserved.
+  </p>
 
+</footer>
 
-  <script>
 
-    /* =========================================
-       SUPABASE
-    ========================================= */
+<script>
 
-    const SUPABASE_URL =
-      "https://uwuklryzxexpofcxrbnm.supabase.co";
 
-    const SUPABASE_KEY =
-      "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+/* =========================================
+   SUPABASE
+========================================= */
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+const SUPABASE_URL =
+  "https://uwuklryzxexpofcxrbnm.supabase.co";
 
+const SUPABASE_KEY =
+  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
-    /* =========================================
-       STATE
-    ========================================= */
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-    let currentLanguage = "en";
 
-    let currentSession = null;
+/* =========================================
+   STATE
+========================================= */
 
-    let allBooks = [];
+let currentLanguage = "en";
 
-    let currentPdfUrl = "";
+let currentSession = null;
 
-    let currentPdfPath = "";
+let allBooks = [];
 
+let currentPdfUrl = "";
 
-    /* =========================================
-       LANGUAGE
-    ========================================= */
+let currentPdfPath = "";
 
-    function changeLanguage() {
 
-      currentLanguage =
-        currentLanguage === "en"
-          ? "fa"
-          : "en";
+/* =========================================
+   LANGUAGE
+========================================= */
 
-      document.documentElement.lang =
-        currentLanguage;
+function changeLanguage() {
 
-      document.documentElement.dir =
-        currentLanguage === "fa"
-          ? "rtl"
-          : "ltr";
+  currentLanguage =
+    currentLanguage === "en"
+      ? "fa"
+      : "en";
 
+  const fa =
+    currentLanguage === "fa";
 
-      const fa =
-        currentLanguage === "fa";
 
+  document.documentElement.lang =
+    currentLanguage;
 
-      document.title =
-        fa
-          ? "HSKRC | کتابخانه دیجیتال"
-          : "HSKRC | Digital Library";
+  document.documentElement.dir =
+    fa
+      ? "rtl"
+      : "ltr";
 
 
-      document.getElementById("homeLink")
-        .textContent =
-          fa
-            ? "خانه"
-            : "Home";
+  document.title =
+    fa
+      ? "HSKRC | کتابخانه دیجیتال"
+      : "HSKRC | Digital Library";
 
 
-      document.getElementById("libraryLink")
-        .textContent =
-          fa
-            ? "کتابخانه"
-            : "Library";
+  document.getElementById(
+    "homeLink"
+  ).textContent =
+    fa
+      ? "خانه"
+      : "Home";
 
 
-      document.getElementById("accountLink")
-        .textContent =
-          currentSession
-            ? (
-                fa
-                  ? "حساب من"
-                  : "My Account"
-              )
-            : (
-                fa
-                  ? "ورود / ثبت‌نام"
-                  : "Login / Register"
-              );
+  document.getElementById(
+    "libraryLink"
+  ).textContent =
+    fa
+      ? "کتابخانه"
+      : "Library";
 
 
-      document.getElementById("pageTitle")
-        .textContent =
-          fa
-            ? "کتابخانه دیجیتال"
-            : "Digital Library";
+  document.getElementById(
+    "articlesLink"
+  ).textContent =
+    fa
+      ? "مقالات"
+      : "Articles";
 
 
-      document.getElementById("pageDescription")
-        .textContent =
-          fa
-            ? "جستجو و دسترسی به مجموعه کتاب‌های HSKRC"
-            : "Search and access the HSKRC book collection";
+  document.getElementById(
+    "aboutLink"
+  ).textContent =
+    fa
+      ? "درباره ما"
+      : "About";
 
 
-      document.getElementById("loginMessage")
-        .textContent =
-          fa
-            ? "برای مطالعه یا دسترسی به کتاب‌ها ابتدا وارد حساب خود شوید."
-            : "Please login to read or access books.";
+  document.getElementById(
+    "pageTitle"
+  ).textContent =
+    fa
+      ? "کتابخانه دیجیتال"
+      : "Digital Library";
 
 
-      document.getElementById("searchInput")
-        .placeholder =
-          fa
-            ? "جستجوی عنوان یا نویسنده..."
-            : "Search by title or author...";
+  document.getElementById(
+    "pageDescription"
+  ).textContent =
+    fa
+      ? "جستجو و دسترسی به مجموعه کتاب‌های HSKRC"
+      : "Search and access the HSKRC book collection";
 
 
-      document.getElementById("languageButton")
-        .textContent =
-          fa
-            ? "🌐 English"
-            : "🌐 Persian";
+  document.getElementById(
+    "loginMessage"
+  ).textContent =
+    fa
+      ? "برای مطالعه یا دسترسی به کتاب‌ها ابتدا وارد حساب خود شوید."
+      : "Please login to read or access books.";
 
 
-      document.getElementById("newTabButton")
-        .textContent =
-          fa
-            ? "↗ باز کردن در تب جدید"
-            : "↗ Open in new tab";
+  document.getElementById(
+    "searchInput"
+  ).placeholder =
+    fa
+      ? "جستجوی عنوان یا نویسنده..."
+      : "Search by title or author...";
 
 
-      document.getElementById("fullscreenButton")
-        .textContent =
-          fa
-            ? "⛶ تمام‌صفحه"
-            : "⛶ Fullscreen";
+  document.getElementById(
+    "languageButton"
+  ).textContent =
+    fa
+      ? "🌐 English"
+      : "🌐 Persian";
 
 
-      updateCategories();
+  document.getElementById(
+    "newTabButton"
+  ).textContent =
+    fa
+      ? "↗ باز کردن در تب جدید"
+      : "↗ Open in new tab";
 
-      filterBooks();
 
-    }
+  document.getElementById(
+    "fullscreenButton"
+  ).textContent =
+    fa
+      ? "⛶ تمام‌صفحه"
+      : "⛶ Fullscreen";
 
 
-    /* =========================================
-       CHECK CURRENT USER
-    ========================================= */
+  updateAccountLink();
 
-    async function checkUser() {
+  updateCategories();
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.getSession();
+  filterBooks();
 
+}
 
-      if (error) {
 
-        console.error(
-          "Session error:",
-          error
-        );
+/* =========================================
+   CHECK CURRENT USER
+========================================= */
 
-        currentSession = null;
+async function checkUser() {
 
-        updateAccountLink();
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getSession();
 
-        return;
 
-      }
+  if (error) {
 
+    console.error(
+      "Session error:",
+      error
+    );
 
-      currentSession =
-        data.session || null;
+    currentSession = null;
 
+    updateAccountLink();
 
-      updateAccountLink();
+    return;
+  }
 
-    }
 
+  currentSession =
+    data.session || null;
 
-    function updateAccountLink() {
+  updateAccountLink();
 
-      const msg =
-        document.getElementById(
-          "loginMessage"
-        );
+}
 
-      const link =
-        document.getElementById(
-          "accountLink"
-        );
 
+/* =========================================
+   ACCOUNT LINK
+========================================= */
 
-      if (currentSession) {
+function updateAccountLink() {
 
-        msg.style.display = "none";
+  const msg =
+    document.getElementById(
+      "loginMessage"
+    );
 
-        link.href =
-          "account.html";
-
-        link.textContent =
-          currentLanguage === "fa"
-            ? "حساب من"
-            : "My Account";
-
-      } else {
-
-        msg.style.display = "block";
-
-        link.href =
-          "auth.html";
-
-        link.textContent =
-          currentLanguage === "fa"
-            ? "ورود / ثبت‌نام"
-            : "Login / Register";
-
-      }
-
-    }
-
-
-    /* =========================================
-       AUTH STATE
-    ========================================= */
-
-    supabaseClient.auth.onAuthStateChange(
-      (event, session) => {
-
-        currentSession =
-          session || null;
-
-        updateAccountLink();
-
-      }
+  const link =
+    document.getElementById(
+      "accountLink"
     );
 
 
-    /* =========================================
-       LOAD BOOKS
-    ========================================= */
+  if (currentSession) {
 
-    async function loadBooks() {
+    msg.style.display =
+      "none";
 
-      const container =
-        document.getElementById(
-          "booksContainer"
-        );
+    link.href =
+      "account.html";
 
+    link.textContent =
+      currentLanguage === "fa"
+        ? "حساب من 👤"
+        : "My Account 👤";
 
-      container.innerHTML = `
-        <div class="loading">
-          ${
-            currentLanguage === "fa"
-              ? "در حال بارگذاری کتاب‌ها..."
-              : "Loading books..."
-          }
-        </div>
-      `;
+  } else {
 
+    msg.style.display =
+      "block";
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("books")
-          .select("*")
-          .eq("published", true)
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
+    link.href =
+      "auth.html";
+
+    link.textContent =
+      currentLanguage === "fa"
+        ? "ورود / ثبت‌نام"
+        : "Login / Register";
+
+  }
+
+}
 
 
-      if (error) {
+/* =========================================
+   AUTH STATE
+========================================= */
 
-        console.error(
-          "Books error:",
-          error
-        );
+supabaseClient.auth.onAuthStateChange(
+  (event, session) => {
+
+    currentSession =
+      session || null;
+
+    updateAccountLink();
+
+  }
+);
 
 
-        container.innerHTML = `
-          <div class="error">
-            ${
-              currentLanguage === "fa"
-                ? "خطا در دریافت کتاب‌ها: "
-                : "Error loading books: "
-            }
-            ${escapeHtml(error.message)}
-          </div>
-        `;
+/* =========================================
+   LOAD BOOKS
+========================================= */
 
-        return;
+async function loadBooks() {
 
+  const container =
+    document.getElementById(
+      "booksContainer"
+    );
+
+
+  container.innerHTML = `
+    <div class="loading">
+      ${
+        currentLanguage === "fa"
+          ? "در حال بارگذاری کتاب‌ها..."
+          : "Loading books..."
       }
+    </div>
+  `;
 
 
-      allBooks =
-        data || [];
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("books")
+      .select("*")
+      .eq(
+        "published",
+        true
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
 
 
-      updateCategories();
+  if (error) {
 
-      filterBooks();
-
-    }
-
-
-    /* =========================================
-       CATEGORY FILTER
-    ========================================= */
-
-    function updateCategories() {
-
-      const select =
-        document.getElementById(
-          "categoryFilter"
-        );
+    console.error(
+      "Books error:",
+      error
+    );
 
 
-      const current =
-        select.value;
+    container.innerHTML = `
+      <div class="error">
+        ${
+          currentLanguage === "fa"
+            ? "خطا در دریافت کتاب‌ها: "
+            : "Error loading books: "
+        }
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
 
 
-      const categories =
-        [
-          ...new Set(
-            allBooks
-              .map(book => book.category)
-              .filter(Boolean)
+  allBooks =
+    data || [];
+
+
+  updateCategories();
+
+  filterBooks();
+
+}
+
+
+/* =========================================
+   CATEGORY FILTER
+========================================= */
+
+function updateCategories() {
+
+  const select =
+    document.getElementById(
+      "categoryFilter"
+    );
+
+
+  const current =
+    select.value;
+
+
+  const categories =
+    [
+      ...new Set(
+        allBooks
+          .map(
+            book =>
+              book.category
           )
-        ]
-        .sort(
-          (a, b) =>
-            String(a).localeCompare(
-              String(b)
-            )
-        );
+          .filter(Boolean)
+      )
+    ]
+      .sort(
+        (a, b) =>
+          String(a).localeCompare(
+            String(b)
+          )
+      );
 
 
-      select.innerHTML = "";
+  select.innerHTML =
+    "";
 
 
-      const firstOption =
+  const firstOption =
+    document.createElement(
+      "option"
+    );
+
+
+  firstOption.value =
+    "";
+
+  firstOption.textContent =
+    currentLanguage === "fa"
+      ? "همه دسته‌بندی‌ها"
+      : "All Categories";
+
+
+  select.appendChild(
+    firstOption
+  );
+
+
+  categories.forEach(
+    category => {
+
+      const option =
         document.createElement(
           "option"
         );
 
-      firstOption.value = "";
 
-      firstOption.textContent =
-        currentLanguage === "fa"
-          ? "همه دسته‌بندی‌ها"
-          : "All Categories";
+      option.value =
+        category;
+
+
+      option.textContent =
+        category;
+
 
       select.appendChild(
-        firstOption
-      );
-
-
-      categories.forEach(
-        category => {
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value =
-            category;
-
-          option.textContent =
-            category;
-
-          select.appendChild(
-            option
-          );
-
-        }
-      );
-
-
-      if (
-        categories.includes(current)
-      ) {
-
-        select.value =
-          current;
-
-      } else {
-
-        select.value =
-          "";
-
-      }
-
-    }
-
-
-    /* =========================================
-       SEARCH / FILTER
-    ========================================= */
-
-    function filterBooks() {
-
-      const search =
-        document.getElementById(
-          "searchInput"
-        )
-        .value
-        .trim()
-        .toLowerCase();
-
-
-      const category =
-        document.getElementById(
-          "categoryFilter"
-        ).value;
-
-
-      const filtered =
-        allBooks.filter(
-          book => {
-
-            const title =
-              String(
-                book.title || ""
-              ).toLowerCase();
-
-
-            const author =
-              String(
-                book.author || ""
-              ).toLowerCase();
-
-
-            const categoryMatch =
-              !category ||
-              book.category === category;
-
-
-            const searchMatch =
-              !search ||
-              title.includes(search) ||
-              author.includes(search);
-
-
-            return (
-              searchMatch &&
-              categoryMatch
-            );
-
-          }
-        );
-
-
-      renderBooks(
-        filtered
+        option
       );
 
     }
+  );
 
 
-    /* =========================================
-       RENDER BOOKS
-    ========================================= */
+  if (
+    categories.includes(
+      current
+    )
+  ) {
 
-    function renderBooks(
-      books
-    ) {
+    select.value =
+      current;
 
-      const container =
-        document.getElementById(
-          "booksContainer"
+  } else {
+
+    select.value =
+      "";
+
+  }
+
+}
+
+
+/* =========================================
+   SEARCH / FILTER
+========================================= */
+
+function filterBooks() {
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    )
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const category =
+    document.getElementById(
+      "categoryFilter"
+    ).value;
+
+
+  const filtered =
+    allBooks.filter(
+      book => {
+
+        const title =
+          String(
+            book.title || ""
+          ).toLowerCase();
+
+
+        const author =
+          String(
+            book.author || ""
+          ).toLowerCase();
+
+
+        const description =
+          String(
+            book.description || ""
+          ).toLowerCase();
+
+
+        const categoryMatch =
+          !category ||
+          book.category === category;
+
+
+        const searchMatch =
+          !search ||
+          title.includes(search) ||
+          author.includes(search) ||
+          description.includes(search);
+
+
+        return (
+          searchMatch &&
+          categoryMatch
         );
-
-
-      if (!books.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            ${
-              currentLanguage === "fa"
-                ? "هیچ کتابی پیدا نشد."
-                : "No books found."
-            }
-          </div>
-        `;
-
-        return;
-
-      }
-
-
-      container.innerHTML =
-        "";
-
-
-      books.forEach(
-        book => {
-
-          const article =
-            document.createElement(
-              "article"
-            );
-
-
-          article.className =
-            "book";
-
-
-          const author =
-            book.author ||
-            (
-              currentLanguage === "fa"
-                ? "نویسنده نامشخص"
-                : "Unknown author"
-            );
-
-
-          const description =
-            book.description ||
-            (
-              currentLanguage === "fa"
-                ? "توضیحی برای این کتاب ثبت نشده است."
-                : "No description available."
-            );
-
-
-          const year =
-            book.publication_year ||
-            "";
-
-
-          const language =
-            book.language ||
-            "";
-
-
-          const category =
-            book.category ||
-            "";
-
-
-          const pdfPath =
-            book.pdf_path ||
-            "";
-
-
-          /*
-             Cover is handled below.
-
-             If cover_url exists and is a valid URL,
-             use it.
-
-             If there is only cover_path, we attempt
-             to create a temporary signed URL.
-          */
-
-          const coverBox =
-            document.createElement(
-              "div"
-            );
-
-          coverBox.className =
-            "cover";
-
-
-          coverBox.innerHTML =
-            `
-              <div class="no-cover">
-                📚
-              </div>
-            `;
-
-
-          if (book.cover_url) {
-
-            setCoverImage(
-              coverBox,
-              book.cover_url,
-              book.title
-            );
-
-          } else if (
-            book.cover_path
-          ) {
-
-            createCoverSignedUrl(
-              coverBox,
-              book.cover_path,
-              book.title
-            );
-
-          }
-
-
-          const content =
-            document.createElement(
-              "div"
-            );
-
-
-          content.className =
-            "book-content";
-
-
-          const titleElement =
-            document.createElement(
-              "h2"
-            );
-
-          titleElement.className =
-            "book-title";
-
-          titleElement.textContent =
-            book.title || "";
-
-
-          const authorElement =
-            document.createElement(
-              "div"
-            );
-
-          authorElement.className =
-            "author";
-
-          authorElement.textContent =
-            author;
-
-
-          const metaElement =
-            document.createElement(
-              "div"
-            );
-
-          metaElement.className =
-            "meta";
-
-
-          const metaParts =
-            [];
-
-
-          if (language) {
-            metaParts.push(
-              language
-            );
-          }
-
-
-          if (year) {
-            metaParts.push(
-              String(year)
-            );
-          }
-
-
-          if (category) {
-            metaParts.push(
-              category
-            );
-          }
-
-
-          metaElement.textContent =
-            metaParts.join(
-              " • "
-            );
-
-
-          const descriptionElement =
-            document.createElement(
-              "p"
-            );
-
-          descriptionElement.className =
-            "book-description";
-
-          descriptionElement.textContent =
-            description;
-
-
-          const button =
-            document.createElement(
-              "button"
-            );
-
-
-          button.className =
-            "read-button";
-
-
-          button.type =
-            "button";
-
-
-          button.textContent =
-            currentLanguage === "fa"
-              ? "📖 مشاهده PDF"
-              : "📖 View PDF";
-
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              openPdf(
-                pdfPath,
-                book.title || ""
-              );
-
-            }
-          );
-
-
-          content.appendChild(
-            titleElement
-          );
-
-          content.appendChild(
-            authorElement
-          );
-
-          content.appendChild(
-            metaElement
-          );
-
-          content.appendChild(
-            descriptionElement
-          );
-
-          content.appendChild(
-            button
-          );
-
-
-          article.appendChild(
-            coverBox
-          );
-
-          article.appendChild(
-            content
-          );
-
-
-          container.appendChild(
-            article
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =========================================
-       COVER IMAGE
-    ========================================= */
-
-    function setCoverImage(
-      container,
-      url,
-      title
-    ) {
-
-      const img =
-        document.createElement(
-          "img"
-        );
-
-
-      img.src =
-        url;
-
-
-      img.alt =
-        title || "Book cover";
-
-
-      img.loading =
-        "lazy";
-
-
-      img.onerror =
-        () => {
-
-          container.innerHTML =
-            `
-              <div class="no-cover">
-                📚
-              </div>
-            `;
-
-        };
-
-
-      container.innerHTML =
-        "";
-
-
-      container.appendChild(
-        img
-      );
-
-    }
-
-
-    /* =========================================
-       PRIVATE COVER SIGNED URL
-    ========================================= */
-
-    async function createCoverSignedUrl(
-      container,
-      path,
-      title
-    ) {
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .storage
-            .from("Books")
-            .createSignedUrl(
-              path,
-              3600
-            );
-
-
-        if (
-          error ||
-          !data ||
-          !data.signedUrl
-        ) {
-
-          return;
-
-        }
-
-
-        setCoverImage(
-          container,
-          data.signedUrl,
-          title
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Cover signed URL error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =========================================
-       OPEN PDF
-    ========================================= */
-
-    async function openPdf(
-      path,
-      title
-    ) {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.getSession();
-
-
-      if (
-        error ||
-        !data.session
-      ) {
-
-        alert(
-          currentLanguage === "fa"
-            ? "برای مشاهده کتاب ابتدا باید وارد حساب خود شوید."
-            : "Please login to your account before viewing this book."
-        );
-
-
-        window.location.href =
-          "auth.html";
-
-
-        return;
-
-      }
-
-
-      currentSession =
-        data.session;
-
-
-      updateAccountLink();
-
-
-      if (!path) {
-
-        alert(
-          currentLanguage === "fa"
-            ? "مسیر فایل PDF در اطلاعات کتاب ثبت نشده است."
-            : "The PDF file path is missing."
-        );
-
-        return;
-
-      }
-
-
-      const loading =
-        document.getElementById(
-          "pdfLoading"
-        );
-
-
-      loading.textContent =
-        currentLanguage === "fa"
-          ? "در حال آماده‌سازی PDF..."
-          : "Preparing PDF...";
-
-
-      loading.classList.remove(
-        "hidden"
-      );
-
-
-      const {
-        data: signedData,
-        error: signedError
-      } =
-        await supabaseClient
-          .storage
-          .from("Books")
-          .createSignedUrl(
-            path,
-            3600
-          );
-
-
-      if (
-        signedError ||
-        !signedData ||
-        !signedData.signedUrl
-      ) {
-
-        console.error(
-          "Signed URL error:",
-          signedError
-        );
-
-
-        loading.classList.add(
-          "hidden"
-        );
-
-
-        alert(
-          currentLanguage === "fa"
-            ? "امکان دسترسی به فایل PDF وجود ندارد. مسیر فایل را بررسی کنید."
-            : "Unable to access the PDF file. Please check the file path."
-        );
-
-
-        return;
-
-      }
-
-
-      currentPdfUrl =
-        signedData.signedUrl;
-
-
-      currentPdfPath =
-        path;
-
-
-      document.getElementById(
-        "pdfTitle"
-      ).textContent =
-        title ||
-        "PDF";
-
-
-      const frame =
-        document.getElementById(
-          "pdfFrame"
-        );
-
-
-      frame.onload =
-        () => {
-
-          loading.classList.add(
-            "hidden"
-          );
-
-        };
-
-
-      frame.onerror =
-        () => {
-
-          loading.classList.add(
-            "hidden"
-          );
-
-
-          alert(
-            currentLanguage === "fa"
-              ? "PDF بارگذاری نشد."
-              : "The PDF could not be loaded."
-          );
-
-        };
-
-
-      frame.src =
-        signedData.signedUrl;
-
-
-      const modal =
-        document.getElementById(
-          "pdfModal"
-        );
-
-
-      modal.classList.add(
-        "active"
-      );
-
-
-      modal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-
-      document.body.style.overflow =
-        "hidden";
-
-
-      setTimeout(
-        () => {
-
-          loading.classList.add(
-            "hidden"
-          );
-
-        },
-        5000
-      );
-
-    }
-
-
-    /* =========================================
-       OPEN PDF IN NEW TAB
-    ========================================= */
-
-    async function openPdfNewTab() {
-
-      if (!currentPdfUrl) {
-        return;
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.getSession();
-
-
-      if (
-        error ||
-        !data.session
-      ) {
-
-        window.location.href =
-          "auth.html";
-
-        return;
-
-      }
-
-
-      window.open(
-        currentPdfUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-    }
-
-
-    /* =========================================
-       FULLSCREEN
-    ========================================= */
-
-    function togglePdfFullscreen() {
-
-      const box =
-        document.getElementById(
-          "pdfBox"
-        );
-
-
-      if (
-        !document.fullscreenElement
-      ) {
-
-        if (
-          box.requestFullscreen
-        ) {
-
-          box.requestFullscreen();
-
-        }
-
-      } else {
-
-        if (
-          document.exitFullscreen
-        ) {
-
-          document.exitFullscreen();
-
-        }
-
-      }
-
-    }
-
-
-    /* =========================================
-       CLOSE PDF
-    ========================================= */
-
-    function closePdf() {
-
-      const frame =
-        document.getElementById(
-          "pdfFrame"
-        );
-
-
-      frame.src =
-        "";
-
-
-      const modal =
-        document.getElementById(
-          "pdfModal"
-        );
-
-
-      modal.classList.remove(
-        "active"
-      );
-
-
-      modal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-
-      document.body.style.overflow =
-        "";
-
-
-      currentPdfUrl =
-        "";
-
-      currentPdfPath =
-        "";
-
-
-      document.getElementById(
-        "pdfLoading"
-      ).classList.remove(
-        "hidden"
-      );
-
-    }
-
-
-    /* =========================================
-       ESC KEY
-    ========================================= */
-
-    document.addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key === "Escape" &&
-          document
-            .getElementById(
-              "pdfModal"
-            )
-            .classList
-            .contains("active")
-        ) {
-
-          closePdf();
-
-        }
 
       }
     );
 
 
-    /* =========================================
-       ESCAPE HTML
-    ========================================= */
+  updateSummary(
+    filtered.length,
+    search,
+    category
+  );
 
-    function escapeHtml(
-      value
-    ) {
 
-      return String(
-        value ?? ""
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
+  renderBooks(
+    filtered
+  );
+
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+function updateSummary(
+  count,
+  search,
+  category
+) {
+
+  const summaryText =
+    document.getElementById(
+      "summaryText"
+    );
+
+  const summaryCount =
+    document.getElementById(
+      "summaryCount"
+    );
+
+  const summaryBooks =
+    document.getElementById(
+      "summaryBooks"
+    );
+
+
+  summaryCount.textContent =
+    count;
+
+
+  summaryBooks.textContent =
+    currentLanguage === "fa"
+      ? "کتاب"
+      : count === 1
+        ? "book"
+        : "books";
+
+
+  if (!search && !category) {
+
+    summaryText.textContent =
+      currentLanguage === "fa"
+        ? "نمایش همه کتاب‌ها"
+        : "Showing all books";
+
+  } else {
+
+    summaryText.textContent =
+      currentLanguage === "fa"
+        ? "نتایج جستجو و فیلتر"
+        : "Search and filter results";
+
+  }
+
+}
+
+
+/* =========================================
+   RENDER BOOKS
+========================================= */
+
+function renderBooks(
+  books
+) {
+
+  const container =
+    document.getElementById(
+      "booksContainer"
+    );
+
+
+  if (!books.length) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-box">
+
+          <div class="empty-icon">
+            📚
+          </div>
+
+          <div class="empty-title">
+            ${
+              currentLanguage === "fa"
+                ? "کتابی پیدا نشد"
+                : "No books found"
+            }
+          </div>
+
+          <p>
+            ${
+              currentLanguage === "fa"
+                ? "عبارت جستجو یا دسته‌بندی را تغییر دهید."
+                : "Try changing your search or category filter."
+            }
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    "";
+
+
+  books.forEach(
+    book => {
+
+      const article =
+        document.createElement(
+          "article"
         );
 
+
+      article.className =
+        "book";
+
+
+      const author =
+        book.author ||
+        (
+          currentLanguage === "fa"
+            ? "نویسنده نامشخص"
+            : "Unknown author"
+        );
+
+
+      const description =
+        book.description ||
+        (
+          currentLanguage === "fa"
+            ? "توضیحی برای این کتاب ثبت نشده است."
+            : "No description available."
+        );
+
+
+      const year =
+        book.publication_year ||
+        "";
+
+
+      const language =
+        book.language ||
+        "";
+
+
+      const category =
+        book.category ||
+        "";
+
+
+      const pdfPath =
+        book.pdf_path ||
+        "";
+
+
+      /* COVER */
+
+      const coverBox =
+        document.createElement(
+          "div"
+        );
+
+
+      coverBox.className =
+        "cover";
+
+
+      coverBox.innerHTML = `
+        <div class="no-cover">
+          📚
+        </div>
+      `;
+
+
+      if (book.cover_url) {
+
+        setCoverImage(
+          coverBox,
+          book.cover_url,
+          book.title
+        );
+
+      } else if (
+        book.cover_path
+      ) {
+
+        createCoverSignedUrl(
+          coverBox,
+          book.cover_path,
+          book.title
+        );
+
+      }
+
+
+      /* CONTENT */
+
+      const content =
+        document.createElement(
+          "div"
+        );
+
+
+      content.className =
+        "book-content";
+
+
+      const titleElement =
+        document.createElement(
+          "h2"
+        );
+
+
+      titleElement.className =
+        "book-title";
+
+
+      titleElement.textContent =
+        book.title || "";
+
+
+      titleElement.dir =
+        "auto";
+
+
+      const authorElement =
+        document.createElement(
+          "div"
+        );
+
+
+      authorElement.className =
+        "author";
+
+
+      authorElement.textContent =
+        author;
+
+
+      authorElement.dir =
+        "auto";
+
+
+      const metaElement =
+        document.createElement(
+          "div"
+        );
+
+
+      metaElement.className =
+        "meta";
+
+
+      metaElement.dir =
+        "auto";
+
+
+      const metaParts =
+        [];
+
+
+      if (language) {
+
+        metaParts.push(
+          language
+        );
+
+      }
+
+
+      if (year) {
+
+        metaParts.push(
+          String(year)
+        );
+
+      }
+
+
+      if (category) {
+
+        metaParts.push(
+          category
+        );
+
+      }
+
+
+      metaElement.textContent =
+        metaParts.join(
+          " • "
+        );
+
+
+      const descriptionElement =
+        document.createElement(
+          "p"
+        );
+
+
+      descriptionElement.className =
+        "book-description";
+
+
+      descriptionElement.textContent =
+        description;
+
+
+      descriptionElement.dir =
+        "auto";
+
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "read-button";
+
+
+      button.type =
+        "button";
+
+
+      button.textContent =
+        currentLanguage === "fa"
+          ? "📖 مشاهده PDF"
+          : "📖 View PDF";
+
+
+      if (!pdfPath) {
+
+        button.disabled =
+          true;
+
+        button.textContent =
+          currentLanguage === "fa"
+            ? "PDF موجود نیست"
+            : "PDF unavailable";
+
+      } else {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openPdf(
+              pdfPath,
+              book.title || ""
+            );
+
+          }
+        );
+
+      }
+
+
+      content.appendChild(
+        titleElement
+      );
+
+      content.appendChild(
+        authorElement
+      );
+
+      content.appendChild(
+        metaElement
+      );
+
+      content.appendChild(
+        descriptionElement
+      );
+
+      content.appendChild(
+        button
+      );
+
+
+      article.appendChild(
+        coverBox
+      );
+
+      article.appendChild(
+        content
+      );
+
+
+      container.appendChild(
+        article
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   COVER IMAGE
+========================================= */
+
+function setCoverImage(
+  container,
+  url,
+  title
+) {
+
+  const img =
+    document.createElement(
+      "img"
+    );
+
+
+  img.src =
+    url;
+
+
+  img.alt =
+    title || "Book cover";
+
+
+  img.loading =
+    "lazy";
+
+
+  img.onerror =
+    () => {
+
+      container.innerHTML = `
+        <div class="no-cover">
+          📚
+        </div>
+      `;
+
+    };
+
+
+  container.innerHTML =
+    "";
+
+
+  container.appendChild(
+    img
+  );
+
+}
+
+
+/* =========================================
+   PRIVATE COVER SIGNED URL
+========================================= */
+
+async function createCoverSignedUrl(
+  container,
+  path,
+  title
+) {
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .storage
+        .from("Books")
+        .createSignedUrl(
+          path,
+          3600
+        );
+
+
+    if (
+      error ||
+      !data ||
+      !data.signedUrl
+    ) {
+
+      return;
+
     }
 
 
-    /* =========================================
-       START LIBRARY
-    ========================================= */
+    setCoverImage(
+      container,
+      data.signedUrl,
+      title
+    );
 
-    async function startLibrary() {
 
-      await checkUser();
+  } catch (error) {
 
-      await loadBooks();
+    console.error(
+      "Cover signed URL error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   OPEN PDF
+========================================= */
+
+async function openPdf(
+  path,
+  title
+) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (
+    error ||
+    !data.session
+  ) {
+
+    alert(
+      currentLanguage === "fa"
+        ? "برای مشاهده کتاب ابتدا باید وارد حساب خود شوید."
+        : "Please login to your account before viewing this book."
+    );
+
+
+    window.location.href =
+      "auth.html";
+
+
+    return;
+
+  }
+
+
+  currentSession =
+    data.session;
+
+
+  updateAccountLink();
+
+
+  if (!path) {
+
+    alert(
+      currentLanguage === "fa"
+        ? "مسیر فایل PDF در اطلاعات کتاب ثبت نشده است."
+        : "The PDF file path is missing."
+    );
+
+
+    return;
+
+  }
+
+
+  const loading =
+    document.getElementById(
+      "pdfLoading"
+    );
+
+
+  loading.textContent =
+    currentLanguage === "fa"
+      ? "در حال آماده‌سازی PDF..."
+      : "Preparing PDF...";
+
+
+  loading.classList.remove(
+    "hidden"
+  );
+
+
+  const {
+    data: signedData,
+    error: signedError
+  } =
+    await supabaseClient
+      .storage
+      .from("Books")
+      .createSignedUrl(
+        path,
+        3600
+      );
+
+
+  if (
+    signedError ||
+    !signedData ||
+    !signedData.signedUrl
+  ) {
+
+    console.error(
+      "Signed URL error:",
+      signedError
+    );
+
+
+    loading.classList.add(
+      "hidden"
+    );
+
+
+    alert(
+      currentLanguage === "fa"
+        ? "امکان دسترسی به فایل PDF وجود ندارد. مسیر فایل را بررسی کنید."
+        : "Unable to access the PDF file. Please check the file path."
+    );
+
+
+    return;
+
+  }
+
+
+  currentPdfUrl =
+    signedData.signedUrl;
+
+
+  currentPdfPath =
+    path;
+
+
+  document.getElementById(
+    "pdfTitle"
+  ).textContent =
+    title ||
+    "PDF";
+
+
+  const frame =
+    document.getElementById(
+      "pdfFrame"
+    );
+
+
+  frame.onload =
+    () => {
+
+      loading.classList.add(
+        "hidden"
+      );
+
+    };
+
+
+  frame.onerror =
+    () => {
+
+      loading.classList.add(
+        "hidden"
+      );
+
+
+      alert(
+        currentLanguage === "fa"
+          ? "PDF بارگذاری نشد."
+          : "The PDF could not be loaded."
+      );
+
+    };
+
+
+  frame.src =
+    signedData.signedUrl;
+
+
+  const modal =
+    document.getElementById(
+      "pdfModal"
+    );
+
+
+  modal.classList.add(
+    "active"
+  );
+
+
+  modal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+
+  setTimeout(
+    () => {
+
+      loading.classList.add(
+        "hidden"
+      );
+
+    },
+    5000
+  );
+
+}
+
+
+/* =========================================
+   OPEN PDF IN NEW TAB
+========================================= */
+
+async function openPdfNewTab() {
+
+  if (!currentPdfUrl) {
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (
+    error ||
+    !data.session
+  ) {
+
+    window.location.href =
+      "auth.html";
+
+    return;
+
+  }
+
+
+  window.open(
+    currentPdfUrl,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* =========================================
+   FULLSCREEN
+========================================= */
+
+function togglePdfFullscreen() {
+
+  const box =
+    document.getElementById(
+      "pdfBox"
+    );
+
+
+  if (
+    !document.fullscreenElement
+  ) {
+
+    if (
+      box.requestFullscreen
+    ) {
+
+      box.requestFullscreen();
 
     }
 
+  } else {
 
-    /* =========================================
-       START
-    ========================================= */
+    if (
+      document.exitFullscreen
+    ) {
 
-    startLibrary();
+      document.exitFullscreen();
 
-  </script>
+    }
+
+  }
+
+}
+
+
+/* =========================================
+   CLOSE PDF
+========================================= */
+
+function closePdf() {
+
+  const frame =
+    document.getElementById(
+      "pdfFrame"
+    );
+
+
+  frame.src =
+    "";
+
+
+  const modal =
+    document.getElementById(
+      "pdfModal"
+    );
+
+
+  modal.classList.remove(
+    "active"
+  );
+
+
+  modal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body.style.overflow =
+    "";
+
+
+  currentPdfUrl =
+    "";
+
+  currentPdfPath =
+    "";
+
+
+  document.getElementById(
+    "pdfLoading"
+  ).classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================================
+   ESC KEY
+========================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape" &&
+      document
+        .getElementById(
+          "pdfModal"
+        )
+        .classList
+        .contains("active")
+    ) {
+
+      closePdf();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================
+   START LIBRARY
+========================================= */
+
+async function startLibrary() {
+
+  await checkUser();
+
+  await loadBooks();
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+startLibrary();
+
+</script>
+
 
 </body>
 
