@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta
     name="description"
@@ -18,33 +15,27 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     :root {
       --bg: #0d1117;
       --bg-soft: #10161e;
       --panel: #151a22;
       --panel-soft: #181f29;
       --border: #29313c;
-      --border-soft: rgba(66, 211, 146, 0.18);
-
       --green: #42d392;
       --green-dark: #2db878;
       --green-soft: rgba(66, 211, 146, 0.10);
-
       --text: #f4f7f6;
       --text-soft: #c4ccd5;
       --muted: #8f98a5;
-
       --danger: #ff7777;
       --danger-bg: rgba(255, 80, 80, 0.08);
       --danger-border: rgba(255, 100, 100, 0.28);
-
       --success: #7ee2ad;
       --success-bg: rgba(66, 211, 146, 0.10);
       --success-border: rgba(66, 211, 146, 0.28);
-
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
-
       --radius-lg: 22px;
       --radius-md: 16px;
       --radius-sm: 11px;
@@ -61,47 +52,15 @@
     }
 
     body {
-      font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        Tahoma,
-        sans-serif;
-
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Arial, Tahoma, sans-serif;
       background:
-        radial-gradient(
-          circle at top right,
-          rgba(66, 211, 146, 0.08),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at top left,
-          rgba(66, 211, 146, 0.045),
-          transparent 28%
-        ),
+        radial-gradient(circle at top right, rgba(66, 211, 146, 0.08), transparent 32%),
+        radial-gradient(circle at top left, rgba(66, 211, 146, 0.045), transparent 28%),
         var(--bg);
-
       color: var(--text);
       min-height: 100vh;
       line-height: 1.6;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.012),
-          transparent 30%
-        );
-
-      z-index: -1;
     }
 
     a {
@@ -113,18 +72,12 @@
       font: inherit;
     }
 
-    /* =========================================
-       HEADER
-       ========================================= */
-
     .site-header {
       position: sticky;
       top: 0;
       z-index: 100;
-
-      background: rgba(13, 17, 23, 0.88);
+      background: rgba(13, 17, 23, 0.90);
       border-bottom: 1px solid rgba(66, 211, 146, 0.10);
-
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
@@ -132,22 +85,19 @@
     .header-inner {
       width: 100%;
       max-width: 1180px;
-      margin: 0 auto;
-
       min-height: 72px;
+      margin: 0 auto;
       padding: 0 24px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 18px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-
       text-decoration: none;
       min-width: 0;
     }
@@ -155,27 +105,15 @@
     .brand-mark {
       width: 42px;
       height: 42px;
-
       display: grid;
       place-items: center;
-
+      flex: 0 0 auto;
       border-radius: 12px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(66, 211, 146, 0.18),
-          rgba(66, 211, 146, 0.05)
-        );
-
+      background: linear-gradient(145deg, rgba(66, 211, 146, 0.18), rgba(66, 211, 146, 0.05));
       border: 1px solid rgba(66, 211, 146, 0.28);
-
       color: var(--green);
       font-weight: 800;
       letter-spacing: 0.5px;
-
-      box-shadow:
-        0 8px 25px rgba(66, 211, 146, 0.08);
     }
 
     .brand-text {
@@ -184,11 +122,9 @@
 
     .brand-name {
       display: block;
-
       color: var(--text);
       font-size: 14px;
       font-weight: 700;
-
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -196,95 +132,94 @@
 
     .brand-subtitle {
       display: block;
-
       color: var(--muted);
       font-size: 11px;
       margin-top: 1px;
+    }
 
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .header-nav {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 3px;
     }
 
     .nav-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-
       min-height: 40px;
-      padding: 8px 13px;
-
+      padding: 8px 12px;
       border-radius: 9px;
-
       color: var(--text-soft);
       text-decoration: none;
-
-      font-size: 13px;
-      font-weight: 600;
-
-      transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+      font-size: 12px;
+      font-weight: 650;
+      transition: 0.2s ease;
     }
 
-    .nav-link:hover {
-      background: var(--green-soft);
-      color: var(--green);
-      transform: translateY(-1px);
-    }
-
+    .nav-link:hover,
     .nav-link.active {
       background: var(--green-soft);
       color: var(--green);
     }
 
-    /* =========================================
-       PAGE
-       ========================================= */
+    .language {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      background: transparent;
+      color: var(--green);
+      border: 1px solid rgba(66, 211, 146, 0.35);
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .language:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
+      transform: translateY(-1px);
+    }
 
     .page {
       width: 100%;
       max-width: 1050px;
-
       margin: 0 auto;
       padding: 48px 24px 70px;
     }
 
     .page-heading {
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-
       color: var(--green);
-
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
-
       letter-spacing: 0.12em;
       text-transform: uppercase;
-
-      margin-bottom: 10px;
+      margin-bottom: 9px;
     }
 
     .eyebrow::before {
       content: "";
       width: 7px;
       height: 7px;
-
       border-radius: 50%;
       background: var(--green);
-
       box-shadow: 0 0 0 5px rgba(66, 211, 146, 0.08);
     }
 
@@ -292,181 +227,117 @@
       font-size: clamp(30px, 5vw, 42px);
       line-height: 1.15;
       letter-spacing: -0.02em;
-
       color: var(--text);
       margin-bottom: 8px;
     }
 
     .page-description {
-      max-width: 650px;
-
+      max-width: 680px;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
     }
-
-    /* =========================================
-       ACCOUNT HERO
-       ========================================= */
 
     .account-hero {
       position: relative;
-
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-
-      gap: 22px;
-
-      padding: 25px;
-
-      margin-bottom: 24px;
-
+      gap: 20px;
+      padding: 24px;
+      margin-bottom: 22px;
       background:
-        linear-gradient(
-          135deg,
-          rgba(66, 211, 146, 0.09),
-          rgba(66, 211, 146, 0.025) 55%,
-          rgba(255, 255, 255, 0.015)
-        ),
+        linear-gradient(135deg, rgba(66, 211, 146, 0.09), rgba(66, 211, 146, 0.025) 55%, rgba(255,255,255,0.015)),
         var(--panel);
-
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-
       box-shadow: var(--shadow-soft);
       overflow: hidden;
     }
 
     .account-hero::after {
       content: "";
-
       position: absolute;
       width: 220px;
       height: 220px;
-
       right: -100px;
       top: -120px;
-
       border-radius: 50%;
-
       background: rgba(66, 211, 146, 0.08);
       filter: blur(10px);
-
       pointer-events: none;
     }
 
     .avatar {
       position: relative;
       z-index: 1;
-
-      width: 76px;
-      height: 76px;
-
+      width: 72px;
+      height: 72px;
       display: grid;
       place-items: center;
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          var(--green),
-          var(--green-dark)
-        );
-
+      border-radius: 20px;
+      background: linear-gradient(145deg, var(--green), var(--green-dark));
       color: #07110c;
-
-      font-size: 27px;
+      font-size: 25px;
       font-weight: 800;
-
-      box-shadow:
-        0 12px 30px rgba(66, 211, 146, 0.18);
+      box-shadow: 0 12px 30px rgba(66, 211, 146, 0.18);
     }
 
     .hero-info {
       position: relative;
       z-index: 1;
-
       min-width: 0;
     }
 
     .hero-name {
       color: var(--text);
-
-      font-size: 23px;
+      font-size: 22px;
       font-weight: 750;
-
-      margin-bottom: 3px;
-
+      margin-bottom: 2px;
       word-break: break-word;
     }
 
     .hero-email {
       color: var(--muted);
-
-      font-size: 14px;
-
+      font-size: 13px;
       word-break: break-word;
     }
 
     .account-badge {
       position: relative;
       z-index: 1;
-
       display: inline-flex;
       align-items: center;
       gap: 7px;
-
       padding: 8px 12px;
-
       border-radius: 999px;
-
       background: var(--green-soft);
-      border: 1px solid var(--border-soft);
-
+      border: 1px solid rgba(66, 211, 146, 0.18);
       color: var(--green);
-
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-
       white-space: nowrap;
     }
 
     .account-badge::before {
       content: "";
-
       width: 7px;
       height: 7px;
-
       border-radius: 50%;
       background: var(--green);
     }
 
-    /* =========================================
-       GRID
-       ========================================= */
-
     .content-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 22px;
+      gap: 20px;
       align-items: start;
     }
 
     .section {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.012),
-          transparent 30%
-        ),
-        var(--panel);
-
+      background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent 30%), var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-
-      padding: 24px;
-
+      padding: 23px;
       box-shadow: var(--shadow-soft);
     }
 
@@ -478,68 +349,51 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 16px;
-
+      gap: 14px;
       margin-bottom: 20px;
-      padding-bottom: 16px;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.055);
     }
 
     .section-heading-wrap {
       min-width: 0;
     }
 
-    .section-icon {
-      flex: 0 0 auto;
-
-      width: 42px;
-      height: 42px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 12px;
-
-      background: var(--green-soft);
-      border: 1px solid var(--border-soft);
-
-      font-size: 18px;
-    }
-
     .section-title {
       color: var(--text);
-
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 750;
-
       line-height: 1.3;
     }
 
     .section-description {
       color: var(--muted);
-
-      font-size: 12px;
+      font-size: 11px;
       margin-top: 3px;
     }
 
-    /* =========================================
-       PROFILE INFORMATION
-       ========================================= */
+    .section-icon {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--green-soft);
+      border: 1px solid rgba(66,211,146,0.18);
+      font-size: 17px;
+    }
 
     .profile-list {
       display: grid;
-      gap: 0;
     }
 
     .profile-row {
       display: grid;
-      grid-template-columns: 145px 1fr;
-      gap: 18px;
-
-      padding: 15px 0;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+      grid-template-columns: 135px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.055);
     }
 
     .profile-row:first-child {
@@ -553,20 +407,16 @@
 
     .profile-label {
       color: var(--muted);
-
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 650;
-
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
 
     .profile-value {
       color: var(--text);
-
       font-size: 14px;
       font-weight: 550;
-
       word-break: break-word;
     }
 
@@ -574,50 +424,29 @@
       color: #66707c;
     }
 
-    /* =========================================
-       FORM
-       ========================================= */
-
     .form-group {
-      margin-bottom: 17px;
+      margin-bottom: 16px;
     }
 
     .form-label {
       display: block;
-
       color: var(--text-soft);
-
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 650;
-
       margin-bottom: 7px;
-    }
-
-    .input-wrap {
-      position: relative;
     }
 
     input {
       width: 100%;
-
       min-height: 46px;
-
-      padding: 11px 13px;
-
+      padding: 10px 13px;
       background: var(--bg-soft);
       color: var(--text);
-
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-
       outline: none;
-
       font-size: 14px;
-
-      transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+      transition: 0.2s ease;
     }
 
     input::placeholder {
@@ -630,56 +459,39 @@
 
     input:focus {
       background: #111821;
-
       border-color: var(--green);
-
-      box-shadow:
-        0 0 0 3px rgba(66, 211, 146, 0.10);
+      box-shadow: 0 0 0 3px rgba(66,211,146,0.10);
     }
 
-    .password-hint {
+    .password-note {
       color: var(--muted);
-
-      font-size: 11px;
-      line-height: 1.5;
-
-      margin-top: 7px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 16px;
     }
 
-    /* =========================================
-       BUTTONS
-       ========================================= */
+    .password-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
 
     .button {
       min-height: 46px;
-
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-
       width: 100%;
-
-      padding: 11px 16px;
-
+      padding: 10px 16px;
       border-radius: var(--radius-sm);
-
       text-align: center;
       text-decoration: none;
-
       font-size: 13px;
       font-weight: 750;
-
       cursor: pointer;
-
       border: 1px solid transparent;
-
-      transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease,
-        opacity 0.2s ease,
-        box-shadow 0.2s ease;
+      transition: 0.2s ease;
     }
 
     .button:hover {
@@ -696,29 +508,24 @@
       transform: none;
     }
 
-    .primary {
+    .primary,
+    .library {
       background: var(--green);
       color: #07110c;
-
       border-color: var(--green);
-
-      box-shadow:
-        0 8px 22px rgba(66, 211, 146, 0.10);
+      box-shadow: 0 8px 22px rgba(66,211,146,0.10);
     }
 
-    .primary:hover {
+    .primary:hover,
+    .library:hover {
       background: var(--green-dark);
       border-color: var(--green-dark);
-
-      box-shadow:
-        0 10px 26px rgba(66, 211, 146, 0.16);
     }
 
     .secondary {
       background: transparent;
       color: var(--green);
-
-      border-color: rgba(66, 211, 146, 0.35);
+      border-color: rgba(66,211,146,0.35);
     }
 
     .secondary:hover {
@@ -728,18 +535,9 @@
 
     .navigation {
       grid-column: 1 / -1;
-
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-
-      margin-top: 1px;
-    }
-
-    .library {
-      background: var(--green);
-      color: #07110c;
-      border-color: var(--green);
     }
 
     .home {
@@ -750,7 +548,7 @@
 
     .home:hover {
       color: var(--green);
-      border-color: rgba(66, 211, 146, 0.35);
+      border-color: rgba(66,211,146,0.35);
       background: var(--green-soft);
     }
 
@@ -761,103 +559,67 @@
     }
 
     .logout:hover {
-      background: rgba(255, 80, 80, 0.14);
-      border-color: rgba(255, 100, 100, 0.45);
+      background: rgba(255,80,80,0.14);
+      border-color: rgba(255,100,100,0.45);
     }
-
-    /* =========================================
-       MESSAGE
-       ========================================= */
 
     .message {
       display: none;
-
       width: 100%;
-
       padding: 13px 15px;
-
-      margin-bottom: 22px;
-
+      margin-bottom: 20px;
       border-radius: var(--radius-sm);
-
       font-size: 13px;
       line-height: 1.6;
-
       text-align: left;
     }
 
     .message.success {
       display: block;
-
       background: var(--success-bg);
       color: var(--success);
-
       border: 1px solid var(--success-border);
     }
 
     .message.error {
       display: block;
-
       background: var(--danger-bg);
       color: var(--danger);
-
       border: 1px solid var(--danger-border);
     }
 
-    /* =========================================
-       LOADING
-       ========================================= */
-
     .loading {
       width: 100%;
-
       padding: 70px 25px;
-
       text-align: center;
-
       color: var(--muted);
       font-size: 14px;
     }
 
     .loading::before {
       content: "";
-
       display: block;
-
       width: 30px;
       height: 30px;
-
       margin: 0 auto 14px;
-
       border-radius: 50%;
-
-      border: 3px solid rgba(66, 211, 146, 0.15);
+      border: 3px solid rgba(66,211,146,0.15);
       border-top-color: var(--green);
-
       animation: spin 0.8s linear infinite;
     }
 
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
     }
 
     .hidden {
       display: none !important;
     }
 
-    /* =========================================
-       FOOTER
-       ========================================= */
-
     .site-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-
-      background: rgba(8, 10, 13, 0.65);
-
+      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(8,10,13,0.65);
       padding: 24px;
-
       text-align: center;
     }
 
@@ -873,15 +635,8 @@
       margin-top: 4px;
     }
 
-    /* =========================================
-       RTL
-       ========================================= */
-
     html[dir="rtl"] body {
-      font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
+      font-family: Tahoma, Arial, sans-serif;
     }
 
     html[dir="rtl"] .message {
@@ -892,35 +647,18 @@
       direction: rtl;
     }
 
-    html[dir="rtl"] .profile-label {
-      text-align: right;
-    }
-
+    html[dir="rtl"] .profile-label,
     html[dir="rtl"] .profile-value {
       text-align: right;
     }
 
-    /* =========================================
-       RESPONSIVE
-       ========================================= */
-
-    @media (max-width: 850px) {
+    @media (max-width: 900px) {
       .header-inner {
-        min-height: 68px;
         padding: 0 18px;
       }
 
       .header-nav {
-        gap: 2px;
-      }
-
-      .nav-link {
-        padding: 8px 9px;
-        font-size: 12px;
-      }
-
-      .page {
-        padding: 38px 18px 55px;
+        display: none;
       }
 
       .content-grid {
@@ -933,58 +671,66 @@
 
       .navigation {
         grid-column: auto;
-        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 650px) {
+      .header-inner {
+        min-height: 64px;
+        padding: 0 13px;
+      }
+
       .brand-subtitle {
         display: none;
       }
 
       .brand-name {
-        max-width: 150px;
-      }
-
-      .header-nav {
-        display: none;
-      }
-
-      .account-hero {
-        grid-template-columns: auto 1fr;
-        padding: 20px;
-      }
-
-      .account-badge {
-        grid-column: 1 / -1;
-        justify-self: start;
-      }
-
-      .avatar {
-        width: 62px;
-        height: 62px;
-        border-radius: 18px;
-        font-size: 22px;
-      }
-
-      .hero-name {
-        font-size: 19px;
-      }
-
-      .hero-email {
+        max-width: 165px;
         font-size: 12px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      .language {
+        min-height: 38px;
+        padding: 7px 10px;
+        font-size: 11px;
       }
 
       .page {
         padding: 30px 13px 45px;
       }
 
-      .page-heading {
-        margin-bottom: 22px;
-      }
-
       .page-title {
         font-size: 30px;
+      }
+
+      .account-hero {
+        grid-template-columns: auto 1fr;
+        padding: 19px;
+      }
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 17px;
+        font-size: 21px;
+      }
+
+      .hero-name {
+        font-size: 18px;
+      }
+
+      .hero-email {
+        font-size: 12px;
+      }
+
+      .account-badge {
+        grid-column: 1 / -1;
+        justify-self: start;
       }
 
       .section {
@@ -993,208 +739,134 @@
 
       .profile-row {
         grid-template-columns: 1fr;
-        gap: 4px;
+        gap: 3px;
       }
 
-      .profile-label {
-        font-size: 11px;
+      .password-fields {
+        grid-template-columns: 1fr;
+        gap: 0;
       }
 
-      .profile-value {
-        font-size: 14px;
+      .navigation {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
     }
+
   </style>
 </head>
 
 <body>
-
-  <!-- =========================================
-       HEADER
-       ========================================= -->
 
   <header class="site-header">
     <div class="header-inner">
 
       <a href="index.html" class="brand">
         <div class="brand-mark">H</div>
-
         <div class="brand-text">
           <span class="brand-name">
             Hassan Sabbah Knowledge &amp; Research Centre
           </span>
-
           <span class="brand-subtitle">
             Digital Library &amp; Research Centre
           </span>
         </div>
       </a>
 
-      <nav class="header-nav">
-        <a
-          href="index.html"
-          class="nav-link"
-          id="homeNav"
-        >
-          Home
-        </a>
+      <div class="header-actions">
 
-        <a
-          href="library.html"
-          class="nav-link"
-          id="libraryNav"
-        >
-          Library
-        </a>
+        <nav class="header-nav">
+          <a href="index.html" class="nav-link" id="homeNav">Home</a>
+          <a href="library.html" class="nav-link" id="libraryNav">Library</a>
+          <a href="articles.html" class="nav-link" id="articlesNav">Articles</a>
+          <a href="account.html" class="nav-link active" id="accountNav">Account</a>
+        </nav>
 
-        <a
-          href="articles.html"
-          class="nav-link"
-          id="articlesNav"
+        <button
+          class="language"
+          id="languageButton"
+          onclick="changeLanguage()"
         >
-          Articles
-        </a>
+          🌐 Persian
+        </button>
 
-        <a
-          href="account.html"
-          class="nav-link active"
-          id="accountNav"
-        >
-          Account
-        </a>
-      </nav>
-
+      </div>
     </div>
   </header>
 
 
-  <!-- =========================================
-       MAIN
-       ========================================= -->
-
   <main class="page">
 
     <div class="page-heading">
+      <div class="eyebrow" id="eyebrow">Member Area</div>
 
-      <div class="eyebrow" id="eyebrow">
-        Member Area
-      </div>
-
-      <h1
-        class="page-title"
-        id="pageTitle"
-      >
+      <h1 class="page-title" id="pageTitle">
         My Account
       </h1>
 
-      <p
-        class="page-description"
-        id="pageDescription"
-      >
+      <p class="page-description" id="pageDescription">
         Manage your profile, security settings and access to the HSKRC library.
       </p>
-
     </div>
 
 
-    <div
-      id="message"
-      class="message"
-    ></div>
+    <div id="message" class="message"></div>
 
 
-    <div
-      id="loading"
-      class="loading"
-    >
+    <div id="loading" class="loading">
       Loading account information...
     </div>
 
 
-    <div
-      id="accountContent"
-      class="hidden"
-    >
-
-      <!-- ACCOUNT HERO -->
+    <div id="accountContent" class="hidden">
 
       <section class="account-hero">
 
-        <div
-          class="avatar"
-          id="avatar"
-        >
+        <div class="avatar" id="avatar">
           H
         </div>
 
         <div class="hero-info">
 
-          <div
-            class="hero-name"
-            id="heroName"
-          >
+          <div class="hero-name" id="heroName">
             -
           </div>
 
-          <div
-            class="hero-email"
-            id="heroEmail"
-          >
+          <div class="hero-email" id="heroEmail">
             -
           </div>
 
         </div>
 
-        <div
-          class="account-badge"
-          id="accountBadge"
-        >
+        <div class="account-badge" id="accountBadge">
           Active Account
         </div>
 
       </section>
 
 
-      <!-- MAIN GRID -->
-
       <div class="content-grid">
-
-        <!-- PROFILE INFORMATION -->
 
         <section class="section">
 
           <div class="section-header">
 
             <div class="section-heading-wrap">
-
-              <div
-                class="section-title"
-                id="profileTitle"
-              >
+              <div class="section-title" id="profileTitle">
                 Account Information
               </div>
 
-              <div
-                class="section-description"
-                id="profileDescription"
-              >
+              <div class="section-description" id="profileDescription">
                 Your current account details
               </div>
-
             </div>
 
             <div class="section-icon">
@@ -1207,78 +879,46 @@
           <div class="profile-list">
 
             <div class="profile-row">
-
-              <div
-                class="profile-label"
-                id="firstNameLabel"
-              >
+              <div class="profile-label" id="firstNameLabel">
                 First Name
               </div>
 
-              <div
-                class="profile-value"
-                id="firstName"
-              >
+              <div class="profile-value" id="firstName">
                 -
               </div>
-
             </div>
 
 
             <div class="profile-row">
-
-              <div
-                class="profile-label"
-                id="lastNameLabel"
-              >
+              <div class="profile-label" id="lastNameLabel">
                 Last Name
               </div>
 
-              <div
-                class="profile-value"
-                id="lastName"
-              >
+              <div class="profile-value" id="lastName">
                 -
               </div>
-
             </div>
 
 
             <div class="profile-row">
-
-              <div
-                class="profile-label"
-                id="emailLabel"
-              >
+              <div class="profile-label" id="emailLabel">
                 Email
               </div>
 
-              <div
-                class="profile-value"
-                id="email"
-              >
+              <div class="profile-value" id="email">
                 -
               </div>
-
             </div>
 
 
             <div class="profile-row">
-
-              <div
-                class="profile-label"
-                id="phoneLabel"
-              >
+              <div class="profile-label" id="phoneLabel">
                 Phone
               </div>
 
-              <div
-                class="profile-value"
-                id="phone"
-              >
+              <div class="profile-value" id="phone">
                 -
               </div>
-
             </div>
 
           </div>
@@ -1286,25 +926,17 @@
         </section>
 
 
-        <!-- EDIT PROFILE -->
-
         <section class="section">
 
           <div class="section-header">
 
             <div class="section-heading-wrap">
 
-              <div
-                class="section-title"
-                id="editTitle"
-              >
+              <div class="section-title" id="editTitle">
                 Edit Profile
               </div>
 
-              <div
-                class="section-description"
-                id="editDescription"
-              >
+              <div class="section-description" id="editDescription">
                 Update your personal information
               </div>
 
@@ -1327,16 +959,12 @@
               First Name
             </label>
 
-            <div class="input-wrap">
-
-              <input
-                type="text"
-                id="editFirstName"
-                autocomplete="given-name"
-                placeholder="Enter your first name"
-              >
-
-            </div>
+            <input
+              type="text"
+              id="editFirstName"
+              autocomplete="given-name"
+              placeholder="Enter your first name"
+            >
 
           </div>
 
@@ -1351,16 +979,12 @@
               Last Name
             </label>
 
-            <div class="input-wrap">
-
-              <input
-                type="text"
-                id="editLastName"
-                autocomplete="family-name"
-                placeholder="Enter your last name"
-              >
-
-            </div>
+            <input
+              type="text"
+              id="editLastName"
+              autocomplete="family-name"
+              placeholder="Enter your last name"
+            >
 
           </div>
 
@@ -1375,16 +999,12 @@
               Phone
             </label>
 
-            <div class="input-wrap">
-
-              <input
-                type="tel"
-                id="editPhone"
-                autocomplete="tel"
-                placeholder="Enter your phone number"
-              >
-
-            </div>
+            <input
+              type="tel"
+              id="editPhone"
+              autocomplete="tel"
+              placeholder="Enter your phone number"
+            >
 
           </div>
 
@@ -1400,25 +1020,17 @@
         </section>
 
 
-        <!-- CHANGE PASSWORD -->
-
         <section class="section full-width">
 
           <div class="section-header">
 
             <div class="section-heading-wrap">
 
-              <div
-                class="section-title"
-                id="passwordTitle"
-              >
+              <div class="section-title" id="passwordTitle">
                 Change Password
               </div>
 
-              <div
-                class="section-description"
-                id="passwordDescription"
-              >
+              <div class="section-description" id="passwordDescription">
                 Keep your account secure with a strong password
               </div>
 
@@ -1431,23 +1043,13 @@
           </div>
 
 
-          <p
-            class="password-hint"
-            id="passwordNote"
-          >
+          <p class="password-note" id="passwordNote">
             Enter a new password and confirm it below.
             Your password should be at least 6 characters long.
           </p>
 
 
-          <div
-            style="
-              display:grid;
-              grid-template-columns:1fr 1fr;
-              gap:16px;
-            "
-            id="passwordFields"
-          >
+          <div class="password-fields">
 
             <div class="form-group">
 
@@ -1502,8 +1104,6 @@
         </section>
 
 
-        <!-- NAVIGATION -->
-
         <div class="navigation">
 
           <a
@@ -1541,28 +1141,22 @@
   </main>
 
 
-  <!-- =========================================
-       FOOTER
-       ========================================= -->
-
   <footer class="site-footer">
 
-    <div
-      class="footer-title"
-      id="footerTitle"
-    >
+    <div class="footer-title" id="footerTitle">
       Founded by Kamal Barlas
     </div>
 
-    <div
-      class="footer-copy"
-      id="footerCopy"
-    >
+    <div class="footer-copy" id="footerCopy">
       © 2026 HSKRC - All rights reserved.
     </div>
 
   </footer>
-    <script>
+
+
+  <script>
+
+
 
     /* =========================================
        SUPABASE
@@ -1571,8 +1165,10 @@
     const SUPABASE_URL =
       "https://uwuklryzxexpofcxrbnm.supabase.co";
 
+
     const SUPABASE_KEY =
       "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
 
     const supabaseClient =
       window.supabase.createClient(
@@ -1585,8 +1181,7 @@
        LANGUAGE
        ========================================= */
 
-    let currentLanguage =
-      localStorage.getItem("hskrc_language") || "en";
+    let currentLanguage = localStorage.getItem("hskrc_language") || "en";
 
 
     function changeLanguage() {
@@ -1596,19 +1191,18 @@
           ? "fa"
           : "en";
 
-      localStorage.setItem(
-        "hskrc_language",
-        currentLanguage
-      );
 
       document.documentElement.lang =
         currentLanguage;
+
 
       document.documentElement.dir =
         currentLanguage === "fa"
           ? "rtl"
           : "ltr";
 
+
+      localStorage.setItem("hskrc_language", currentLanguage);
       updateLanguage();
 
     }
@@ -1616,270 +1210,187 @@
 
     function updateLanguage() {
 
-      const elements = {
+      if (currentLanguage === "fa") {
 
-        pageTitle:
-          currentLanguage === "fa"
-            ? "حساب من"
-            : "My Account",
-
-        eyebrow:
-          currentLanguage === "fa"
-            ? "ناحیه کاربری"
-            : "Member Area",
-
-        pageDescription:
-          currentLanguage === "fa"
-            ? "پروفایل، تنظیمات امنیتی و دسترسی خود به کتابخانه HSKRC را مدیریت کنید."
-            : "Manage your profile, security settings and access to the HSKRC library.",
-
-        profileTitle:
-          currentLanguage === "fa"
-            ? "اطلاعات حساب"
-            : "Account Information",
-
-        profileDescription:
-          currentLanguage === "fa"
-            ? "اطلاعات فعلی حساب شما"
-            : "Your current account details",
-
-        firstNameLabel:
-          currentLanguage === "fa"
-            ? "نام"
-            : "First Name",
-
-        lastNameLabel:
-          currentLanguage === "fa"
-            ? "نام خانوادگی"
-            : "Last Name",
-
-        emailLabel:
-          currentLanguage === "fa"
-            ? "ایمیل"
-            : "Email",
-
-        phoneLabel:
-          currentLanguage === "fa"
-            ? "شماره تلفن"
-            : "Phone",
-
-        editTitle:
-          currentLanguage === "fa"
-            ? "ویرایش پروفایل"
-            : "Edit Profile",
-
-        editDescription:
-          currentLanguage === "fa"
-            ? "اطلاعات شخصی خود را به‌روزرسانی کنید"
-            : "Update your personal information",
-
-        editFirstNameLabel:
-          currentLanguage === "fa"
-            ? "نام"
-            : "First Name",
-
-        editLastNameLabel:
-          currentLanguage === "fa"
-            ? "نام خانوادگی"
-            : "Last Name",
-
-        editPhoneLabel:
-          currentLanguage === "fa"
-            ? "شماره تلفن"
-            : "Phone",
-
-        saveProfileButton:
-          currentLanguage === "fa"
-            ? "💾 ذخیره تغییرات"
-            : "💾 Save Changes",
-
-        passwordTitle:
-          currentLanguage === "fa"
-            ? "تغییر رمز عبور"
-            : "Change Password",
-
-        passwordDescription:
-          currentLanguage === "fa"
-            ? "با انتخاب یک رمز عبور قوی، حساب خود را ایمن نگه دارید"
-            : "Keep your account secure with a strong password",
-
-        passwordNote:
-          currentLanguage === "fa"
-            ? "رمز عبور جدید را وارد کرده و آن را تأیید کنید. رمز عبور باید حداقل ۶ کاراکتر باشد."
-            : "Enter a new password and confirm it below. Your password should be at least 6 characters long.",
-
-        newPasswordLabel:
-          currentLanguage === "fa"
-            ? "رمز عبور جدید"
-            : "New Password",
-
-        confirmPasswordLabel:
-          currentLanguage === "fa"
-            ? "تأیید رمز عبور جدید"
-            : "Confirm New Password",
-
-        changePasswordButton:
-          currentLanguage === "fa"
-            ? "🔑 تغییر رمز عبور"
-            : "🔑 Change Password",
-
-        libraryButton:
-          currentLanguage === "fa"
-            ? "📚 رفتن به کتابخانه"
-            : "📚 Go to Library",
-
-        homeButton:
-          currentLanguage === "fa"
-            ? "← بازگشت به صفحه اصلی"
-            : "← Back to Home",
-
-        logoutButton:
-          currentLanguage === "fa"
-            ? "🚪 خروج از حساب"
-            : "🚪 Logout",
-
-        accountBadge:
-          currentLanguage === "fa"
-            ? "حساب فعال"
-            : "Active Account",
-
-        footerTitle:
-          currentLanguage === "fa"
-            ? "بنیان‌گذاری شده توسط کمال بارلاس"
-            : "Founded by Kamal Barlas",
-
-        footerCopy:
-          "© 2026 HSKRC - All rights reserved.",
-
-        homeNav:
-          currentLanguage === "fa"
-            ? "خانه"
-            : "Home",
-
-        libraryNav:
-          currentLanguage === "fa"
-            ? "کتابخانه"
-            : "Library",
-
-        articlesNav:
-          currentLanguage === "fa"
-            ? "مقالات"
-            : "Articles",
-
-        accountNav:
-          currentLanguage === "fa"
-            ? "حساب من"
-            : "Account"
-
-      };
+        document.title =
+          "HSKRC | حساب من";
 
 
-      Object.keys(elements).forEach(
-        function(id) {
-
-          const element =
-            document.getElementById(id);
-
-          if (element) {
-            element.textContent =
-              elements[id];
-          }
-
-        }
-      );
+        document.getElementById("pageTitle").textContent =
+          "حساب من";
 
 
-      document.title =
-        currentLanguage === "fa"
-          ? "HSKRC | حساب من"
-          : "HSKRC | My Account";
+        document.getElementById("profileTitle").textContent =
+          "اطلاعات حساب";
 
 
-      document.getElementById(
-        "languageButton"
-      ).textContent =
-        currentLanguage === "fa"
-          ? "🌐 English"
-          : "🌐 Persian";
+        document.getElementById("firstNameLabel").textContent =
+          "نام";
 
 
-      const firstNameInput =
-        document.getElementById(
-          "editFirstName"
-        );
-
-      const lastNameInput =
-        document.getElementById(
-          "editLastName"
-        );
-
-      const phoneInput =
-        document.getElementById(
-          "editPhone"
-        );
-
-      const newPasswordInput =
-        document.getElementById(
-          "newPassword"
-        );
-
-      const confirmPasswordInput =
-        document.getElementById(
-          "confirmPassword"
-        );
+        document.getElementById("lastNameLabel").textContent =
+          "نام خانوادگی";
 
 
-      if (firstNameInput) {
-        firstNameInput.placeholder =
-          currentLanguage === "fa"
-            ? "نام خود را وارد کنید"
-            : "Enter your first name";
+        document.getElementById("emailLabel").textContent =
+          "ایمیل";
+
+
+        document.getElementById("phoneLabel").textContent =
+          "شماره تلفن";
+
+
+        document.getElementById("editTitle").textContent =
+          "ویرایش اطلاعات";
+
+
+        document.getElementById("editFirstNameLabel").textContent =
+          "نام";
+
+
+        document.getElementById("editLastNameLabel").textContent =
+          "نام خانوادگی";
+
+
+        document.getElementById("editPhoneLabel").textContent =
+          "شماره تلفن";
+
+
+        document.getElementById("saveProfileButton").textContent =
+          "ذخیره تغییرات";
+
+
+        document.getElementById("passwordTitle").textContent =
+          "تغییر رمز عبور";
+
+
+        document.getElementById("passwordNote").textContent =
+          "رمز عبور جدید را وارد کرده و آن را تأیید کنید.";
+
+
+        document.getElementById("newPasswordLabel").textContent =
+          "رمز عبور جدید";
+
+
+        document.getElementById("confirmPasswordLabel").textContent =
+          "تأیید رمز عبور جدید";
+
+
+        document.getElementById("changePasswordButton").textContent =
+          "تغییر رمز عبور";
+
+
+        document.getElementById("libraryButton").textContent =
+          "📚 رفتن به کتابخانه";
+
+
+        document.getElementById("homeButton").textContent =
+          "← بازگشت به صفحه اصلی";
+
+
+        document.getElementById("logoutButton").textContent =
+          "خروج از حساب";
+
+
+        document.getElementById("languageButton").textContent =
+          "🌐 English";
+
+
+        document.getElementById("loading").textContent =
+          "در حال بارگذاری اطلاعات حساب...";
+
       }
 
 
-      if (lastNameInput) {
-        lastNameInput.placeholder =
-          currentLanguage === "fa"
-            ? "نام خانوادگی خود را وارد کنید"
-            : "Enter your last name";
-      }
+      else {
+
+        document.title =
+          "HSKRC | My Account";
 
 
-      if (phoneInput) {
-        phoneInput.placeholder =
-          currentLanguage === "fa"
-            ? "شماره تلفن خود را وارد کنید"
-            : "Enter your phone number";
-      }
+        document.getElementById("pageTitle").textContent =
+          "My Account";
 
 
-      if (newPasswordInput) {
-        newPasswordInput.placeholder =
-          currentLanguage === "fa"
-            ? "رمز عبور جدید را وارد کنید"
-            : "Enter new password";
-      }
+        document.getElementById("profileTitle").textContent =
+          "Account Information";
 
 
-      if (confirmPasswordInput) {
-        confirmPasswordInput.placeholder =
-          currentLanguage === "fa"
-            ? "رمز عبور جدید را تأیید کنید"
-            : "Confirm new password";
-      }
+        document.getElementById("firstNameLabel").textContent =
+          "First Name";
 
 
-      const loading =
-        document.getElementById("loading");
+        document.getElementById("lastNameLabel").textContent =
+          "Last Name";
 
-      if (
-        loading &&
-        loading.style.display !== "none"
-      ) {
-        loading.textContent =
-          currentLanguage === "fa"
-            ? "در حال بارگذاری اطلاعات حساب..."
-            : "Loading account information...";
+
+        document.getElementById("emailLabel").textContent =
+          "Email";
+
+
+        document.getElementById("phoneLabel").textContent =
+          "Phone";
+
+
+        document.getElementById("editTitle").textContent =
+          "Edit Profile";
+
+
+        document.getElementById("editFirstNameLabel").textContent =
+          "First Name";
+
+
+        document.getElementById("editLastNameLabel").textContent =
+          "Last Name";
+
+
+        document.getElementById("editPhoneLabel").textContent =
+          "Phone";
+
+
+        document.getElementById("saveProfileButton").textContent =
+          "Save Changes";
+
+
+        document.getElementById("passwordTitle").textContent =
+          "Change Password";
+
+
+        document.getElementById("passwordNote").textContent =
+          "Enter a new password and confirm it below.";
+
+
+        document.getElementById("newPasswordLabel").textContent =
+          "New Password";
+
+
+        document.getElementById("confirmPasswordLabel").textContent =
+          "Confirm New Password";
+
+
+        document.getElementById("changePasswordButton").textContent =
+          "Change Password";
+
+
+        document.getElementById("libraryButton").textContent =
+          "📚 Go to Library";
+
+
+        document.getElementById("homeButton").textContent =
+          "← Back to Home";
+
+
+        document.getElementById("logoutButton").textContent =
+          "Logout";
+
+
+        document.getElementById("languageButton").textContent =
+          "🌐 Persian";
+
+
+        document.getElementById("loading").textContent =
+          "Loading account information...";
+
       }
 
     }
@@ -1895,15 +1406,16 @@
     ) {
 
       const message =
-        document.getElementById(
-          "message"
-        );
+        document.getElementById("message");
+
 
       message.textContent =
         text;
 
+
       message.className =
         "message " + type;
+
 
     }
 
@@ -1911,59 +1423,15 @@
     function clearMessage() {
 
       const message =
-        document.getElementById(
-          "message"
-        );
+        document.getElementById("message");
+
 
       message.textContent =
         "";
 
+
       message.className =
         "message";
-
-    }
-
-
-    /* =========================================
-       AVATAR
-       ========================================= */
-
-    function updateAvatar(
-      firstName,
-      lastName
-    ) {
-
-      const avatar =
-        document.getElementById(
-          "avatar"
-        );
-
-      let initials = "H";
-
-
-      if (firstName) {
-        initials =
-          firstName
-            .trim()
-            .charAt(0)
-            .toUpperCase();
-      }
-
-
-      if (
-        lastName &&
-        firstName
-      ) {
-        initials +=
-          lastName
-            .trim()
-            .charAt(0)
-            .toUpperCase();
-      }
-
-
-      avatar.textContent =
-        initials.slice(0, 2);
 
     }
 
@@ -1975,14 +1443,11 @@
     async function loadUser() {
 
       const loading =
-        document.getElementById(
-          "loading"
-        );
+        document.getElementById("loading");
+
 
       const accountContent =
-        document.getElementById(
-          "accountContent"
-        );
+        document.getElementById("accountContent");
 
 
       try {
@@ -2028,118 +1493,35 @@
           metadata.phone || "";
 
 
-        /* =================================
-           PROFILE DISPLAY
-           ================================= */
+        /* Display */
 
-        const firstNameElement =
-          document.getElementById(
-            "firstName"
-          );
-
-        const lastNameElement =
-          document.getElementById(
-            "lastName"
-          );
-
-        const emailElement =
-          document.getElementById(
-            "email"
-          );
-
-        const phoneElement =
-          document.getElementById(
-            "phone"
-          );
-
-
-        firstNameElement.textContent =
+        document.getElementById("firstName").textContent =
           firstName || "-";
 
-        lastNameElement.textContent =
+
+        document.getElementById("lastName").textContent =
           lastName || "-";
 
-        emailElement.textContent =
+
+        document.getElementById("email").textContent =
           user.email || "-";
 
-        phoneElement.textContent =
+
+        document.getElementById("phone").textContent =
           phone || "-";
 
 
-        /* Empty value styling */
+        /* Edit fields */
 
-        firstNameElement.classList.toggle(
-          "empty",
-          !firstName
-        );
-
-        lastNameElement.classList.toggle(
-          "empty",
-          !lastName
-        );
-
-        phoneElement.classList.toggle(
-          "empty",
-          !phone
-        );
-
-
-        /* =================================
-           HERO
-           ================================= */
-
-        const fullName =
-          [
-            firstName,
-            lastName
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .trim();
-
-
-        document.getElementById(
-          "heroName"
-        ).textContent =
-          fullName ||
-          (
-            currentLanguage === "fa"
-              ? "کاربر HSKRC"
-              : "HSKRC Member"
-          );
-
-
-        document.getElementById(
-          "heroEmail"
-        ).textContent =
-          user.email || "-";
-
-
-        updateAvatar(
-          firstName,
-          lastName
-        );
-
-
-        /* =================================
-           EDIT FIELDS
-           ================================= */
-
-        document.getElementById(
-          "editFirstName"
-        ).value =
+        document.getElementById("editFirstName").value =
           firstName;
 
 
-        document.getElementById(
-          "editLastName"
-        ).value =
+        document.getElementById("editLastName").value =
           lastName;
 
 
-        document.getElementById(
-          "editPhone"
-        ).value =
+        document.getElementById("editPhone").value =
           phone;
 
 
@@ -2222,6 +1604,8 @@
 
         /*
           Update Supabase Auth metadata.
+          This keeps account information
+          synchronized with the user's session.
         */
 
         const {
@@ -2231,21 +1615,29 @@
           await supabaseClient.auth.updateUser({
 
             data: {
+
               first_name: firstName,
+
               last_name: lastName,
+
               phone: phone
+
             }
 
           });
 
 
         if (authError) {
+
           throw authError;
+
         }
 
 
         /*
-          Also update profiles table.
+          Also update the profiles table.
+          If RLS does not allow it yet,
+          Auth metadata will still be updated.
         */
 
         if (
@@ -2260,14 +1652,11 @@
               .from("profiles")
               .update({
 
-                first_name:
-                  firstName,
+                first_name: firstName,
 
-                last_name:
-                  lastName,
+                last_name: lastName,
 
-                phone:
-                  phone
+                phone: phone
 
               })
               .eq(
@@ -2288,8 +1677,6 @@
         }
 
 
-        /* Update screen */
-
         document.getElementById(
           "firstName"
         ).textContent =
@@ -2306,59 +1693,6 @@
           "phone"
         ).textContent =
           phone || "-";
-
-
-        document.getElementById(
-          "firstName"
-        ).classList.toggle(
-          "empty",
-          !firstName
-        );
-
-
-        document.getElementById(
-          "lastName"
-        ).classList.toggle(
-          "empty",
-          !lastName
-        );
-
-
-        document.getElementById(
-          "phone"
-        ).classList.toggle(
-          "empty",
-          !phone
-        );
-
-
-        /* Update hero */
-
-        const fullName =
-          [
-            firstName,
-            lastName
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .trim();
-
-
-        document.getElementById(
-          "heroName"
-        ).textContent =
-          fullName ||
-          (
-            currentLanguage === "fa"
-              ? "کاربر HSKRC"
-              : "HSKRC Member"
-          );
-
-
-        updateAvatar(
-          firstName,
-          lastName
-        );
 
 
         showMessage(
@@ -2394,8 +1728,8 @@
 
         button.textContent =
           currentLanguage === "fa"
-            ? "💾 ذخیره تغییرات"
-            : "💾 Save Changes";
+            ? "ذخیره تغییرات"
+            : "Save Changes";
 
       }
 
@@ -2499,15 +1833,19 @@
               newPassword,
 
             data: {
+
               needs_password_setup:
                 false
+
             }
 
           });
 
 
         if (error) {
+
           throw error;
+
         }
 
 
@@ -2533,6 +1871,7 @@
 
         /*
           Sign out after password change.
+          User will return to login page.
         */
 
         setTimeout(
@@ -2569,8 +1908,8 @@
 
         button.textContent =
           currentLanguage === "fa"
-            ? "🔑 تغییر رمز عبور"
-            : "🔑 Change Password";
+            ? "تغییر رمز عبور"
+            : "Change Password";
 
       }
 
@@ -2602,29 +1941,13 @@
           : "Logging out...";
 
 
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient.auth.signOut();
+      const {
+        error
+      } =
+        await supabaseClient.auth.signOut();
 
 
-        if (error) {
-          throw error;
-        }
-
-
-        window.location.href =
-          "auth.html";
-
-      }
-
-
-      catch (error) {
-
-        console.error(error);
-
+      if (error) {
 
         button.disabled =
           false;
@@ -2632,8 +1955,8 @@
 
         button.textContent =
           currentLanguage === "fa"
-            ? "🚪 خروج از حساب"
-            : "🚪 Logout";
+            ? "خروج از حساب"
+            : "Logout";
 
 
         showMessage(
@@ -2643,7 +1966,14 @@
           "error"
         );
 
+
+        return;
+
       }
+
+
+      window.location.href =
+        "auth.html";
 
     }
 
@@ -2653,10 +1983,7 @@
        ========================================= */
 
     supabaseClient.auth.onAuthStateChange(
-      function(
-        event,
-        session
-      ) {
+      function(event, session) {
 
         if (!session) {
 
@@ -2673,19 +2000,12 @@
        START
        ========================================= */
 
-    document.documentElement.lang =
-      currentLanguage;
-
-    document.documentElement.dir =
-      currentLanguage === "fa"
-        ? "rtl"
-        : "ltr";
-
-
     updateLanguage();
 
     loadUser();
 
+
+  
   </script>
 
 </body>
