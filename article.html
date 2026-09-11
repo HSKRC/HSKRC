@@ -1,831 +1,2717 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="HSKRC Research Article"
+  >
 
   <title>HSKRC | Article</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
+    /* =========================================
+       ROOT
+    ========================================= */
+
+    :root {
+      --bg: #0d1117;
+      --bg-soft: #10161e;
+
+      --surface: #151a22;
+      --surface-2: #1a202a;
+      --surface-3: #202733;
+
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.14);
+
+      --text: #f1f5f9;
+      --text-soft: #c4ccd7;
+      --muted: #8d98a7;
+
+      --green: #42d392;
+      --green-soft: rgba(66,211,146,0.12);
+      --green-border: rgba(66,211,146,0.28);
+
+      --danger: #ff6b6b;
+
+      --max-width: 1050px;
+
+      --radius: 18px;
+
+      --shadow:
+        0 20px 50px rgba(0,0,0,0.28);
+    }
+
+
+    /* =========================================
+       RESET
+    ========================================= */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      font-family: Arial, Tahoma, sans-serif;
-      background: #0d1117;
-      color: #f5f5f5;
-      line-height: 1.9;
+
+    html {
+      scroll-behavior: smooth;
     }
+
+
+    body {
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 20% 0%,
+          rgba(66,211,146,0.07),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 8%,
+          rgba(66,211,146,0.035),
+          transparent 25%
+        ),
+        var(--bg);
+
+      color: var(--text);
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      line-height: 1.7;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
 
     header {
-      background: #151a22;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #252c36;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+
+      background:
+        rgba(13,17,23,0.88);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+      border-bottom:
+        1px solid var(--border);
     }
 
-    .logo {
-      font-size: 27px;
-      font-weight: bold;
-      color: #42d392;
-      letter-spacing: 1px;
-    }
 
-    nav {
+    .header-inner {
+      width:
+        min(
+          calc(100% - 40px),
+          1180px
+        );
+
+      min-height: 76px;
+
+      margin: 0 auto;
+
       display: flex;
+
       align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+
+      gap: 24px;
     }
 
-    nav a {
-      color: #f5f5f5;
-      text-decoration: none;
+
+    /* =========================================
+       BRAND
+    ========================================= */
+
+    .brand {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      white-space: nowrap;
+
+      font-weight: 800;
+    }
+
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(66,211,146,0.18),
+          rgba(66,211,146,0.05)
+        );
+
+      border:
+        1px solid var(--green-border);
+
+      color:
+        var(--green);
+
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+
+    .brand-text {
       font-size: 16px;
     }
 
+
+    /* =========================================
+       NAV
+    ========================================= */
+
+    nav {
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+    }
+
+
+    nav a {
+      padding:
+        9px 12px;
+
+      border-radius:
+        9px;
+
+      color:
+        var(--text-soft);
+
+      font-size: 14px;
+      font-weight: 600;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+
     nav a:hover {
-      color: #42d392;
+      color:
+        var(--text);
+
+      background:
+        rgba(255,255,255,0.05);
     }
 
-    .language-btn {
-      background: transparent;
-      color: #42d392;
-      border: 1px solid #42d392;
-      padding: 8px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
+
+    nav a.active {
+      color:
+        var(--green);
+
+      background:
+        var(--green-soft);
     }
 
-    .language-btn:hover {
-      background: #42d392;
-      color: #07110c;
+
+    /* =========================================
+       LANGUAGE
+    ========================================= */
+
+    .language-button {
+      min-width: 44px;
+
+      padding:
+        8px 11px;
+
+      border:
+        1px solid var(--border-strong);
+
+      border-radius:
+        9px;
+
+      background:
+        rgba(255,255,255,0.025);
+
+      color:
+        var(--text-soft);
+
+      font-size: 13px;
+      font-weight: 700;
+
+      transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
     }
+
+
+    .language-button:hover {
+      color:
+        var(--green);
+
+      border-color:
+        var(--green-border);
+
+      background:
+        var(--green-soft);
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
 
     main {
-      min-height: 75vh;
+      width:
+        min(
+          calc(100% - 40px),
+          var(--max-width)
+        );
+
+      margin:
+        0 auto;
+
+      padding:
+        55px 0 90px;
     }
 
-    .article-page {
-      max-width: 1050px;
-      margin: auto;
-      padding: 60px 20px 90px;
-    }
+
+    /* =========================================
+       TOP ACTIONS
+    ========================================= */
 
     .top-actions {
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
+      justify-content: space-between;
+
       gap: 15px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
+
+      margin-bottom: 24px;
     }
 
-    .back-link,
-    .print-btn {
-      display: inline-block;
-      color: #42d392;
-      text-decoration: none;
-      border: 1px solid #42d392;
-      padding: 9px 17px;
-      border-radius: 8px;
-      background: transparent;
-      cursor: pointer;
-      font-size: 15px;
+
+    .back-link {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      color:
+        var(--text-soft);
+
+      font-size: 13px;
+      font-weight: 700;
+
+      transition:
+        color 0.2s ease,
+        transform 0.2s ease;
     }
 
-    .back-link:hover,
-    .print-btn:hover {
-      background: #42d392;
-      color: #07110c;
+
+    .back-link:hover {
+      color:
+        var(--green);
+
+      transform:
+        translateX(-2px);
     }
+
+
+    .article-actions {
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+    }
+
+
+    .action-button {
+      min-height: 38px;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding:
+        0 13px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        9px;
+
+      background:
+        var(--surface);
+
+      color:
+        var(--text-soft);
+
+      font-size: 12px;
+      font-weight: 700;
+
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+
+    .action-button:hover {
+      color:
+        var(--green);
+
+      border-color:
+        var(--green-border);
+
+      background:
+        var(--green-soft);
+    }
+
+
+    /* =========================================
+       ARTICLE
+    ========================================= */
 
     .article-container {
-      background: #151a22;
-      border: 1px solid #252c36;
-      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        22px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(21,26,34,0.98),
+          rgba(16,21,28,0.98)
+        );
+
+      box-shadow:
+        var(--shadow);
     }
 
-    .article-cover-wrapper {
-      width: 100%;
-      background: #0a0e13;
-      border-bottom: 1px solid #252c36;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 35px 20px;
-    }
+
+    /* =========================================
+       COVER
+    ========================================= */
 
     .article-cover {
-      display: block;
+      position: relative;
+
       width: 100%;
-      max-width: 620px;
-      max-height: 650px;
-      object-fit: contain;
-      border-radius: 12px;
-      border: 1px solid #252c36;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+
+      aspect-ratio:
+        16 / 7;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1a202a,
+          #10151c
+        );
     }
 
-    .article-body {
-      padding: 50px;
+
+    .article-cover img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
     }
+
+
+    .cover-placeholder {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
+      font-weight: 700;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      text-align: center;
+    }
+
+
+    /* =========================================
+       ARTICLE HEADER
+    ========================================= */
+
+    .article-header {
+      padding:
+        45px 55px 35px;
+
+      border-bottom:
+        1px solid var(--border);
+    }
+
+
+    .article-category {
+      display: inline-flex;
+
+      align-items: center;
+
+      margin-bottom: 17px;
+
+      padding:
+        6px 10px;
+
+      border:
+        1px solid var(--green-border);
+
+      border-radius:
+        8px;
+
+      background:
+        var(--green-soft);
+
+      color:
+        var(--green);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      letter-spacing:
+        0.04em;
+    }
+
 
     .article-title {
-      color: #42d392;
-      font-size: 40px;
-      line-height: 1.5;
+      max-width: 900px;
+
       margin-bottom: 18px;
-      direction: auto;
-      unicode-bidi: plaintext;
-      text-align: start;
+
+      color:
+        var(--text);
+
+      font-size:
+        clamp(32px, 5vw, 50px);
+
+      line-height:
+        1.14;
+
+      letter-spacing:
+        -0.04em;
+
+      overflow-wrap:
+        anywhere;
     }
+
 
     .article-meta {
-      color: #858c96;
-      font-size: 15px;
-      margin-bottom: 35px;
-      border-bottom: 1px solid #252c36;
-      padding-bottom: 22px;
-      direction: auto;
-      unicode-bidi: plaintext;
-      text-align: start;
+      display: flex;
+
+      flex-wrap: wrap;
+
+      align-items: center;
+
+      gap: 9px;
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
     }
 
-    .meta-item {
-      display: inline-block;
-      margin-bottom: 5px;
+
+    .meta-dot {
+      width: 4px;
+      height: 4px;
+
+      border-radius: 50%;
+
+      background:
+        var(--muted);
     }
+
+
+    /* =========================================
+       CONTENT
+    ========================================= */
 
     .article-content {
-      color: #d0d5dc;
-      font-size: 18px;
-      white-space: pre-wrap;
-      line-height: 2.15;
-      overflow-wrap: anywhere;
-      direction: auto;
-      unicode-bidi: plaintext;
-      text-align: start;
+      padding:
+        45px 55px 60px;
+
+      color:
+        var(--text-soft);
+
+      font-size: 17px;
+
+      line-height:
+        2;
     }
 
-    .loading {
+
+    .article-content p {
+      margin-bottom: 24px;
+    }
+
+
+    .article-content h2 {
+      margin:
+        42px 0 17px;
+
+      color:
+        var(--text);
+
+      font-size:
+        clamp(23px, 3vw, 30px);
+
+      line-height:
+        1.3;
+
+      letter-spacing:
+        -0.025em;
+    }
+
+
+    .article-content h3 {
+      margin:
+        32px 0 13px;
+
+      color:
+        var(--text);
+
+      font-size:
+        21px;
+
+      line-height:
+        1.4;
+    }
+
+
+    .article-content ul,
+    .article-content ol {
+      margin:
+        0 0 25px;
+
+      padding-left:
+        26px;
+    }
+
+
+    .article-content li {
+      margin-bottom:
+        8px;
+    }
+
+
+    .article-content blockquote {
+      margin:
+        30px 0;
+
+      padding:
+        18px 22px;
+
+      border-left:
+        3px solid var(--green);
+
+      border-radius:
+        0 10px 10px 0;
+
+      background:
+        var(--green-soft);
+
+      color:
+        var(--text);
+
+      font-style:
+        italic;
+    }
+
+
+    .article-content a {
+      color:
+        var(--green);
+
+      text-decoration:
+        underline;
+
+      text-decoration-thickness:
+        1px;
+
+      text-underline-offset:
+        3px;
+    }
+
+
+    .article-content strong {
+      color:
+        var(--text);
+
+      font-weight:
+        750;
+    }
+
+
+    .article-content em {
+      color:
+        var(--text-soft);
+    }
+
+
+    /* =========================================
+       AUTOMATIC TEXT DIRECTION
+    ========================================= */
+
+    .article-title,
+    .article-meta,
+    .article-content {
+      direction:
+        auto;
+
+      unicode-bidi:
+        plaintext;
+
+      text-align:
+        start;
+    }
+
+
+    /* =========================================
+       LOADING / ERROR
+    ========================================= */
+
+    .state-box {
+      min-height:
+        400px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      padding:
+        45px;
+
       text-align: center;
-      color: #858c96;
-      padding: 80px 20px;
     }
 
-    .error {
-      text-align: center;
-      color: #d0d5dc;
-      padding: 80px 20px;
+
+    .state-icon {
+      width: 56px;
+      height: 56px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom:
+        17px;
+
+      border-radius:
+        15px;
+
+      background:
+        var(--green-soft);
+
+      border:
+        1px solid var(--green-border);
+
+      color:
+        var(--green);
+
+      font-size: 22px;
+      font-weight: 800;
     }
 
-    .error h2 {
-      color: #42d392;
-      margin-bottom: 15px;
+
+    .state-box h2 {
+      margin-bottom:
+        8px;
+
+      color:
+        var(--text);
+
+      font-size:
+        21px;
     }
+
+
+    .state-box p {
+      max-width:
+        560px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+    }
+
+
+    .state-back {
+      display: inline-flex;
+
+      align-items: center;
+
+      margin-top:
+        20px;
+
+      min-height:
+        42px;
+
+      padding:
+        0 16px;
+
+      border-radius:
+        10px;
+
+      background:
+        var(--green);
+
+      color:
+        #08110d;
+
+      font-size:
+        13px;
+
+      font-weight:
+        800;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
 
     footer {
-      background: #080a0d;
-      border-top: 1px solid #252c36;
-      padding: 35px 20px;
-      text-align: center;
-      color: #858c96;
+      border-top:
+        1px solid var(--border);
+
+      background:
+        #080a0d;
     }
 
-    .founder {
-      color: #42d392;
-      font-weight: bold;
-      font-size: 17px;
-      margin-bottom: 8px;
+
+    .footer-inner {
+      width:
+        min(
+          calc(100% - 40px),
+          1180px
+        );
+
+      min-height:
+        100px;
+
+      margin:
+        0 auto;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
     }
 
-    .copyright {
-      font-size: 14px;
+
+    .footer-founder {
+      color:
+        var(--text-soft);
+
+      font-size:
+        13px;
     }
 
-    @media (max-width: 700px) {
 
-      header {
-        flex-direction: column;
-        gap: 15px;
+    .footer-founder strong {
+      color:
+        var(--green);
+    }
+
+
+    .footer-copy {
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+    }
+
+
+    /* =========================================
+       RTL
+    ========================================= */
+
+    html[dir="rtl"] body {
+      font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+    }
+
+
+    html[dir="rtl"] .back-link:hover {
+      transform:
+        translateX(2px);
+    }
+
+
+    html[dir="rtl"] .article-content {
+      text-align:
+        start;
+    }
+
+
+    html[dir="rtl"]
+    .article-content ul,
+    html[dir="rtl"]
+    .article-content ol {
+      padding-left:
+        0;
+
+      padding-right:
+        26px;
+    }
+
+
+    html[dir="rtl"]
+    .article-content blockquote {
+      border-left:
+        none;
+
+      border-right:
+        3px solid var(--green);
+
+      border-radius:
+        10px 0 0 10px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 760px) {
+
+      .header-inner {
+        width:
+          min(
+            calc(100% - 28px),
+            1180px
+          );
+
+        min-height:
+          auto;
+
+        padding:
+          13px 0;
+
+        flex-wrap:
+          wrap;
       }
+
 
       nav {
-        justify-content: center;
-        gap: 12px;
+        order:
+          3;
+
+        width:
+          100%;
+
+        overflow-x:
+          auto;
+
+        justify-content:
+          flex-start;
       }
+
 
       nav a {
-        font-size: 14px;
+        flex-shrink:
+          0;
       }
 
-      .article-page {
-        padding: 40px 12px 60px;
+
+      main {
+        width:
+          min(
+            calc(100% - 28px),
+            var(--max-width)
+          );
+
+        padding:
+          35px 0 60px;
       }
 
-      .article-body {
-        padding: 28px 20px;
-      }
-
-      .article-title {
-        font-size: 28px;
-        line-height: 1.6;
-      }
-
-      .article-content {
-        font-size: 16px;
-        line-height: 2;
-      }
-
-      .article-cover-wrapper {
-        padding: 20px 12px;
-      }
-
-      .article-cover {
-        max-height: 500px;
-      }
 
       .top-actions {
-        justify-content: center;
-      }
-    }
+        align-items:
+          flex-start;
 
-    @media print {
-
-      body {
-        background: white;
-        color: black;
+        flex-direction:
+          column;
       }
 
-      header,
-      footer,
-      .top-actions {
-        display: none;
+
+      .article-actions {
+        width:
+          100%;
+
+        flex-wrap:
+          wrap;
       }
 
-      .article-page {
-        max-width: 100%;
-        padding: 0;
-      }
-
-      .article-container {
-        border: none;
-        box-shadow: none;
-        background: white;
-      }
-
-      .article-body {
-        padding: 20px;
-      }
-
-      .article-title {
-        color: black;
-      }
-
-      .article-meta,
-      .article-content {
-        color: black;
-      }
-
-      .article-cover-wrapper {
-        background: white;
-        border: none;
-      }
 
       .article-cover {
-        max-height: 500px;
-        box-shadow: none;
+        aspect-ratio:
+          16 / 9;
       }
+
+
+      .article-header {
+        padding:
+          34px 27px 28px;
+      }
+
+
+      .article-content {
+        padding:
+          32px 27px 45px;
+
+        font-size:
+          16px;
+
+        line-height:
+          1.9;
+      }
+
+
+      .footer-inner {
+        width:
+          min(
+            calc(100% - 28px),
+            1180px
+          );
+
+        min-height:
+          auto;
+
+        padding:
+          25px 0;
+
+        flex-direction:
+          column;
+
+        align-items:
+          flex-start;
+      }
+
     }
+
+
+    @media (max-width: 520px) {
+
+      .brand-text {
+        font-size:
+          14px;
+      }
+
+
+      .brand-mark {
+        width:
+          35px;
+
+        height:
+          35px;
+      }
+
+
+      .action-button {
+        flex:
+          1;
+      }
+
+
+      .article-title {
+        font-size:
+          31px;
+      }
+
+
+      .article-header {
+        padding:
+          29px 20px 25px;
+      }
+
+
+      .article-content {
+        padding:
+          28px 20px 40px;
+      }
+
+
+      .article-content h2 {
+        margin-top:
+          35px;
+      }
+
+    }
+
   </style>
-
 </head>
+
 
 <body>
 
-<header>
 
-  <div class="logo">
-    HSKRC
-  </div>
+  <!-- =========================================
+       HEADER
+  ========================================= -->
 
-  <nav>
+  <header>
 
-    <a href="index.html">
-      Home
-    </a>
-
-    <a href="library.html">
-      Library
-    </a>
-
-    <a href="articles.html">
-      Articles
-    </a>
-
-    <a href="index.html#about">
-      About
-    </a>
-
-    <a
-      href="auth.html"
-      id="accountLink">
-      Login / Register
-    </a>
-
-    <button
-      class="language-btn"
-      onclick="changeLanguage()"
-      id="languageButton">
-      🌐 Persian
-    </button>
-
-  </nav>
-
-</header>
+    <div class="header-inner">
 
 
-<main>
+      <a
+        class="brand"
+        href="index.html"
+      >
 
-  <div class="article-page">
+        <span class="brand-mark">
+          HSKRC
+        </span>
+
+        <span
+          class="brand-text"
+        >
+          HSKRC
+        </span>
+
+      </a>
+
+
+      <nav>
+
+        <a
+          href="index.html"
+          data-en="Home"
+          data-fa="خانه"
+        >
+          Home
+        </a>
+
+
+        <a
+          href="library.html"
+          data-en="Library"
+          data-fa="کتابخانه"
+        >
+          Library
+        </a>
+
+
+        <a
+          href="articles.html"
+          class="active"
+          data-en="Articles"
+          data-fa="مقالات"
+        >
+          Articles
+        </a>
+
+
+        <a
+          href="index.html#about"
+          data-en="About"
+          data-fa="درباره ما"
+        >
+          About
+        </a>
+
+
+        <a
+          href="account.html"
+          id="accountLink"
+          data-en="Account"
+          data-fa="حساب کاربری"
+        >
+          Account
+        </a>
+
+      </nav>
+
+
+      <button
+        class="language-button"
+        id="languageButton"
+        type="button"
+      >
+        فارسی
+      </button>
+
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================
+       MAIN
+  ========================================= -->
+
+  <main>
+
+    <!-- =======================================
+         TOP ACTIONS
+    ======================================= -->
 
     <div class="top-actions">
 
       <a
         href="articles.html"
         class="back-link"
-        data-fa="← بازگشت به مقالات"
-        data-en="← Back to Articles">
-
+        data-en="← Back to Articles"
+        data-fa="→ بازگشت به مقالات"
+      >
         ← Back to Articles
-
       </a>
 
-      <button
-        class="print-btn"
-        onclick="window.print()"
-        data-fa="🖨️ چاپ / ذخیره PDF"
-        data-en="🖨️ Print / Save PDF">
 
-        🖨️ Print / Save PDF
+      <div class="article-actions">
 
-      </button>
+        <button
+          class="action-button"
+          id="printButton"
+          type="button"
+          data-en="Print"
+          data-fa="چاپ"
+        >
+          Print
+        </button>
 
-    </div>
 
+        <button
+          class="action-button"
+          id="pdfButton"
+          type="button"
+          data-en="Save as PDF"
+          data-fa="ذخیره PDF"
+        >
+          Save as PDF
+        </button>
 
-    <div
-      id="articleArea"
-      class="article-container">
-
-      <div class="loading">
-        Loading article...
       </div>
 
     </div>
 
-  </div>
-
-</main>
 
 
-<footer>
+    <!-- =======================================
+         ARTICLE CONTAINER
+    ======================================= -->
 
-  <p class="founder">
-    Founded by Kamal Barlas
-  </p>
+    <article
+      class="article-container"
+      id="articleContainer"
+    >
 
-  <p class="copyright">
-    © 2026 HSKRC - All rights reserved.
-  </p>
+      <!-- LOADING -->
 
-</footer>
+      <div
+        class="state-box"
+        id="loadingState"
+      >
 
-
-<script>
-
-const SUPABASE_URL =
-  "https://uwuklryzxexpofcxrbnm.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+        <div class="state-icon">
+          …
+        </div>
 
 
-let currentLanguage = "en";
+        <h2
+          data-en="Loading article"
+          data-fa="در حال بارگذاری مقاله"
+        >
+          Loading article
+        </h2>
 
 
-function changeLanguage() {
+        <p
+          data-en="Please wait while the article is being loaded."
+          data-fa="لطفاً منتظر بمانید تا مقاله بارگذاری شود."
+        >
+          Please wait while the article is being loaded.
+        </p>
 
-  currentLanguage =
-    currentLanguage === "en"
-      ? "fa"
-      : "en";
-
-  document.documentElement.lang =
-    currentLanguage;
-
-  document.documentElement.dir =
-    currentLanguage === "fa"
-      ? "rtl"
-      : "ltr";
-
-  document
-    .querySelectorAll("[data-fa]")
-    .forEach(function(element) {
-
-      element.textContent =
-        currentLanguage === "fa"
-          ? element.getAttribute("data-fa")
-          : element.getAttribute("data-en");
-
-    });
-
-  document.getElementById(
-    "languageButton"
-  ).textContent =
-    currentLanguage === "fa"
-      ? "🌐 English"
-      : "🌐 Persian";
-
-  updateAccountLink();
-
-}
+      </div>
 
 
-async function updateAccountLink() {
-
-  const accountLink =
-    document.getElementById(
-      "accountLink"
-    );
-
-  const {
-    data
-  } =
-    await supabaseClient.auth.getSession();
-
-  if (data.session) {
-
-    accountLink.href =
-      "account.html";
-
-    accountLink.textContent =
-      currentLanguage === "fa"
-        ? "حساب من 👤"
-        : "My Account 👤";
-
-  } else {
-
-    accountLink.href =
-      "auth.html";
-
-    accountLink.textContent =
-      currentLanguage === "fa"
-        ? "ورود / ثبت‌نام"
-        : "Login / Register";
-
-  }
-
-}
+    </article>
 
 
-const urlParams =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const articleId =
-  urlParams.get("id");
+  </main>
 
 
-async function getCoverUrl(coverPath) {
 
-  if (!coverPath) {
-    return null;
-  }
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
 
-  try {
+  <footer>
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .storage
-        .from("Books")
-        .createSignedUrl(
-          coverPath,
-          3600
-        );
+    <div class="footer-inner">
 
-    if (error) {
+      <div
+        class="footer-founder"
+        data-en="Founded by <strong>Kamal Barlas</strong>"
+        data-fa="بنیان‌گذاری شده توسط <strong>کمال بارلاس</strong>"
+      >
+        Founded by <strong>Kamal Barlas</strong>
+      </div>
 
-      console.error(
-        "Cover error:",
-        error
+
+      <div
+        class="footer-copy"
+        data-en="© 2026 HSKRC - All rights reserved."
+        data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است."
+      >
+        © 2026 HSKRC - All rights reserved.
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+
+  <script>
+
+    /* =========================================
+       SUPABASE
+    ========================================= */
+
+    const SUPABASE_URL =
+      "https://uwuklryzxexpofcxrbnm.supabase.co";
+
+
+    const SUPABASE_KEY =
+      "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
       );
 
-      return null;
+
+    /* =========================================
+       STATE
+    ========================================= */
+
+    let currentLanguage =
+      "en";
+
+
+    let currentArticle =
+      null;
+
+
+    const LANGUAGE_KEY =
+      "hskrc_language";
+
+
+    /* =========================================
+       DOM
+    ========================================= */
+
+    const languageButton =
+      document.getElementById(
+        "languageButton"
+      );
+
+
+    const articleContainer =
+      document.getElementById(
+        "articleContainer"
+      );
+
+
+    const printButton =
+      document.getElementById(
+        "printButton"
+      );
+
+
+    const pdfButton =
+      document.getElementById(
+        "pdfButton"
+      );
+
+
+    const accountLink =
+      document.getElementById(
+        "accountLink"
+      );
+
+
+
+    /* =========================================
+       LANGUAGE
+    ========================================= */
+
+    function getSavedLanguage() {
+
+      const saved =
+        localStorage.getItem(
+          LANGUAGE_KEY
+        );
+
+
+      if (
+        saved === "fa" ||
+        saved === "en"
+      ) {
+
+        return saved;
+
+      }
+
+
+      return "en";
+
     }
 
-    return data?.signedUrl || null;
 
-  } catch (error) {
+    function applyLanguage(
+      language
+    ) {
 
-    console.error(
-      "Cover exception:",
-      error
-    );
-
-    return null;
-
-  }
-
-}
+      currentLanguage =
+        language === "fa"
+          ? "fa"
+          : "en";
 
 
-async function loadArticle() {
-
-  const area =
-    document.getElementById(
-      "articleArea"
-    );
+      document.documentElement.lang =
+        currentLanguage;
 
 
-  if (!articleId) {
-
-    showError(
-      currentLanguage === "fa"
-        ? "مقاله پیدا نشد."
-        : "Article not found."
-    );
-
-    return;
-  }
+      document.documentElement.dir =
+        currentLanguage === "fa"
+          ? "rtl"
+          : "ltr";
 
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("articles")
-      .select(`
-        id,
-        title,
-        author,
-        category,
-        content,
-        cover_path,
-        published,
-        published_at
-      `)
-      .eq(
-        "id",
-        articleId
-      )
-      .eq(
-        "published",
-        true
-      )
-      .maybeSingle();
+      document
+        .querySelectorAll(
+          "[data-en][data-fa]"
+        )
+        .forEach(
+          element => {
 
-
-  if (error) {
-
-    console.error(
-      "Article error:",
-      error
-    );
-
-    showError(
-      currentLanguage === "fa"
-        ? "خطا در بارگذاری مقاله."
-        : "Unable to load article."
-    );
-
-    return;
-  }
-
-
-  if (!data) {
-
-    showError(
-      currentLanguage === "fa"
-        ? "این مقاله وجود ندارد یا منتشر نشده است."
-        : "This article does not exist or is not published."
-    );
-
-    return;
-  }
-
-
-  document.title =
-    "HSKRC | " +
-    data.title;
-
-
-  const coverUrl =
-    await getCoverUrl(
-      data.cover_path
-    );
-
-
-  const coverHTML =
-    coverUrl
-      ? `
-        <div class="article-cover-wrapper">
-          <img
-            class="article-cover"
-            src="${escapeHTML(coverUrl)}"
-            alt="${escapeHTML(data.title)}"
-            loading="eager">
-        </div>
-      `
-      : "";
-
-
-  area.innerHTML = `
-
-    ${coverHTML}
-
-    <div class="article-body">
-
-      <h1
-        class="article-title"
-        dir="auto">
-
-        ${escapeHTML(
-          data.title
-        )}
-
-      </h1>
-
-
-      <div
-        class="article-meta"
-        dir="auto">
-
-        <span class="meta-item">
-          ${
-            currentLanguage === "fa"
-              ? "نویسنده: "
-              : "Author: "
-          }
-
-          ${escapeHTML(
-            data.author ||
-            "HSKRC Research Centre"
-          )}
-        </span>
-
-        &nbsp;&nbsp; | &nbsp;&nbsp;
-
-        <span class="meta-item">
-
-          ${
-            currentLanguage === "fa"
-              ? "دسته‌بندی: "
-              : "Category: "
-          }
-
-          ${escapeHTML(
-            data.category ||
-            (
+            const value =
               currentLanguage === "fa"
-                ? "پژوهش"
-                : "Research"
+                ? element.dataset.fa
+                : element.dataset.en;
+
+
+            if (
+              value !== undefined
+            ) {
+
+              element.innerHTML =
+                value;
+
+            }
+
+          }
+        );
+
+
+      languageButton.textContent =
+        currentLanguage === "fa"
+          ? "English"
+          : "فارسی";
+
+
+      localStorage.setItem(
+        LANGUAGE_KEY,
+        currentLanguage
+      );
+
+    }
+
+
+    languageButton.addEventListener(
+      "click",
+      () => {
+
+        applyLanguage(
+          currentLanguage === "en"
+            ? "fa"
+            : "en"
+        );
+
+        updateAccountLink();
+
+      }
+    );
+
+
+
+    /* =========================================
+       ACCOUNT
+    ========================================= */
+
+    async function updateAccountLink() {
+
+      const {
+        data
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
+
+
+      const session =
+        data?.session;
+
+
+      accountLink.textContent =
+        session
+          ? (
+              currentLanguage === "fa"
+                ? "حساب کاربری"
+                : "My Account"
             )
-          )}
+          : (
+              currentLanguage === "fa"
+                ? "ورود"
+                : "Login"
+            );
 
-        </span>
-
-      </div>
-
-
-      <div
-        class="article-content"
-        dir="auto">
-
-        ${escapeHTML(
-          data.content || ""
-        )}
-
-      </div>
-
-    </div>
-
-  `;
-
-}
+    }
 
 
-function showError(message) {
 
-  const area =
-    document.getElementById(
-      "articleArea"
+    /* =========================================
+       ARTICLE ID
+    ========================================= */
+
+    function getArticleId() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      return params.get(
+        "id"
+      );
+
+    }
+
+
+
+    /* =========================================
+       LOAD ARTICLE
+    ========================================= */
+
+    async function loadArticle() {
+
+      const articleId =
+        getArticleId();
+
+
+      if (
+        !articleId
+      ) {
+
+        showError(
+          currentLanguage === "fa"
+            ? "شناسه مقاله پیدا نشد."
+            : "Article ID was not found."
+        );
+
+        return;
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("articles")
+          .select(
+            "*"
+          )
+          .eq(
+            "id",
+            articleId
+          )
+          .eq(
+            "published",
+            true
+          )
+          .maybeSingle();
+
+
+      if (
+        error
+      ) {
+
+        console.error(
+          "Article loading error:",
+          error
+        );
+
+
+        showError(
+          currentLanguage === "fa"
+            ? "خطا در بارگذاری مقاله."
+            : "There was an error loading the article."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !data
+      ) {
+
+        showNotFound();
+
+        return;
+
+      }
+
+
+      currentArticle =
+        data;
+
+
+      await renderArticle(
+        data
+      );
+
+    }
+
+
+
+    /* =========================================
+       COVER URL
+    ========================================= */
+
+    async function getCoverUrl(
+      article
+    ) {
+
+      if (
+        article.cover_url
+      ) {
+
+        return article.cover_url;
+
+      }
+
+
+      if (
+        !article.cover_path
+      ) {
+
+        return null;
+
+      }
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .storage
+            .from("Books")
+            .createSignedUrl(
+              article.cover_path,
+              3600
+            );
+
+
+        if (
+          error
+        ) {
+
+          console.error(
+            "Cover URL error:",
+            error
+          );
+
+          return null;
+
+        }
+
+
+        return data?.signedUrl || null;
+
+      } catch (
+        error
+      ) {
+
+        console.error(
+          "Cover URL exception:",
+          error
+        );
+
+        return null;
+
+      }
+
+    }
+
+
+
+    /* =========================================
+       RENDER ARTICLE
+    ========================================= */
+
+    async function renderArticle(
+      article
+    ) {
+
+      const coverUrl =
+        await getCoverUrl(
+          article
+        );
+
+
+      articleContainer.innerHTML =
+        "";
+
+
+      /* COVER */
+
+      const cover =
+        document.createElement(
+          "div"
+        );
+
+
+      cover.className =
+        "article-cover";
+
+
+      if (
+        coverUrl
+      ) {
+
+        const image =
+          document.createElement(
+            "img"
+          );
+
+
+        image.src =
+          coverUrl;
+
+
+        image.alt =
+          article.title ||
+          "Article cover";
+
+
+        image.onerror =
+          () => {
+
+            image.remove();
+
+
+            cover.appendChild(
+              createCoverPlaceholder()
+            );
+
+          };
+
+
+        cover.appendChild(
+          image
+        );
+
+      } else {
+
+        cover.appendChild(
+          createCoverPlaceholder()
+        );
+
+      }
+
+
+      /* HEADER */
+
+      const header =
+        document.createElement(
+          "header"
+        );
+
+
+      header.className =
+        "article-header";
+
+
+      /*
+        IMPORTANT:
+        This header is inside the article
+        container, so its styles are reset
+        below to avoid conflict with the
+        main site header.
+      */
+
+      header.style.position =
+        "static";
+
+
+      header.style.zIndex =
+        "auto";
+
+
+      header.style.background =
+        "transparent";
+
+
+      header.style.backdropFilter =
+        "none";
+
+
+      header.style.borderBottom =
+        "1px solid var(--border)";
+
+
+      /* CATEGORY */
+
+      if (
+        article.category &&
+        article.category.trim()
+      ) {
+
+        const category =
+          document.createElement(
+            "div"
+          );
+
+
+        category.className =
+          "article-category";
+
+
+        category.textContent =
+          article.category;
+
+
+        header.appendChild(
+          category
+        );
+
+      }
+
+
+      /* TITLE */
+
+      const title =
+        document.createElement(
+          "h1"
+        );
+
+
+      title.className =
+        "article-title";
+
+
+      title.textContent =
+        article.title ||
+        (
+          currentLanguage === "fa"
+            ? "بدون عنوان"
+            : "Untitled article"
+        );
+
+
+      title.setAttribute(
+        "dir",
+        "auto"
+      );
+
+
+      header.appendChild(
+        title
+      );
+
+
+      /* META */
+
+      const meta =
+        document.createElement(
+          "div"
+        );
+
+
+      meta.className =
+        "article-meta";
+
+
+      meta.setAttribute(
+        "dir",
+        "auto"
+      );
+
+
+      const author =
+        (
+          article.author || ""
+        )
+        .trim();
+
+
+      const date =
+        formatDate(
+          article.published_at ||
+          article.created_at
+        );
+
+
+      if (
+        author
+      ) {
+
+        const authorElement =
+          document.createElement(
+            "span"
+          );
+
+
+        authorElement.textContent =
+          author;
+
+
+        meta.appendChild(
+          authorElement
+        );
+
+      }
+
+
+      if (
+        author &&
+        date
+      ) {
+
+        const dot =
+          document.createElement(
+            "span"
+          );
+
+
+        dot.className =
+          "meta-dot";
+
+
+        meta.appendChild(
+          dot
+        );
+
+      }
+
+
+      if (
+        date
+      ) {
+
+        const dateElement =
+          document.createElement(
+            "span"
+          );
+
+
+        dateElement.textContent =
+          date;
+
+
+        meta.appendChild(
+          dateElement
+        );
+
+      }
+
+
+      if (
+        meta.children.length
+      ) {
+
+        header.appendChild(
+          meta
+        );
+
+      }
+
+
+      /* CONTENT */
+
+      const content =
+        document.createElement(
+          "div"
+        );
+
+
+      content.className =
+        "article-content";
+
+
+      content.setAttribute(
+        "dir",
+        "auto"
+      );
+
+
+      content.setAttribute(
+        "lang",
+        "auto"
+      );
+
+
+      /*
+        The article content is stored as text
+        in Supabase. We preserve line breaks
+        and automatically create paragraphs.
+      */
+
+      const formattedContent =
+        formatArticleContent(
+          article.content || ""
+        );
+
+
+      content.innerHTML =
+        formattedContent;
+
+
+      /* APPEND */
+
+      articleContainer.appendChild(
+        cover
+      );
+
+
+      articleContainer.appendChild(
+        header
+      );
+
+
+      articleContainer.appendChild(
+        content
+      );
+
+
+      /* PAGE TITLE */
+
+      document.title =
+        (
+          article.title
+            ? article.title + " | HSKRC"
+            : "HSKRC | Article"
+        );
+
+    }
+
+
+
+    /* =========================================
+       FORMAT ARTICLE CONTENT
+    ========================================= */
+
+    function formatArticleContent(
+      text
+    ) {
+
+      const normalized =
+        text
+          .replace(
+            /\r\n/g,
+            "\n"
+          )
+          .replace(
+            /\r/g,
+            "\n"
+          )
+          .trim();
+
+
+      if (
+        !normalized
+      ) {
+
+        return `
+          <p>
+            ${
+              currentLanguage === "fa"
+                ? "متن مقاله موجود نیست."
+                : "No article content is available."
+            }
+          </p>
+        `;
+
+      }
+
+
+      /*
+        Escape HTML first so stored article
+        text cannot inject arbitrary HTML.
+      */
+
+      const escaped =
+        escapeHtml(
+          normalized
+        );
+
+
+      /*
+        Convert headings written as:
+        ## Heading
+        ### Heading
+      */
+
+      let html =
+        escaped
+          .replace(
+            /^### (.+)$/gm,
+            "<h3>$1</h3>"
+          )
+          .replace(
+            /^## (.+)$/gm,
+            "<h2>$1</h2>"
+          );
+
+
+      /*
+        Convert simple bullet lists.
+      */
+
+      html =
+        html.replace(
+          /(?:^|\n)([-•]) (.+)(?=\n|$)/g,
+          "<li>$2</li>"
+        );
+
+
+      html =
+        html.replace(
+          /(<li>[\s\S]*?<\/li>)(?:\n|$)+/g,
+          "<ul>$1</ul>"
+        );
+
+
+      /*
+        Convert paragraphs.
+
+        We split on blank lines.
+      */
+
+      const blocks =
+        html.split(
+          /\n{2,}/
+        );
+
+
+      return blocks
+        .map(
+          block => {
+
+            const trimmed =
+              block.trim();
+
+
+            if (
+              !trimmed
+            ) {
+
+              return "";
+
+            }
+
+
+            if (
+              trimmed.startsWith("<h2>")
+            ) {
+
+              return trimmed;
+
+            }
+
+
+            if (
+              trimmed.startsWith("<h3>")
+            ) {
+
+              return trimmed;
+
+            }
+
+
+            if (
+              trimmed.startsWith("<ul>")
+            ) {
+
+              return trimmed;
+
+            }
+
+
+            return `
+              <p>
+                ${trimmed.replace(/\n/g, "<br>")}
+              </p>
+            `;
+
+          }
+        )
+        .join("");
+
+    }
+
+
+
+    /* =========================================
+       ESCAPE HTML
+    ========================================= */
+
+    function escapeHtml(
+      value
+    ) {
+
+      return value
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+
+    /* =========================================
+       DATE
+    ========================================= */
+
+    function formatDate(
+      value
+    ) {
+
+      if (
+        !value
+      ) {
+
+        return "";
+
+      }
+
+
+      const date =
+        new Date(
+          value
+        );
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+
+        return "";
+
+      }
+
+
+      try {
+
+        return new Intl.DateTimeFormat(
+          currentLanguage === "fa"
+            ? "fa-IR"
+            : "en-US",
+          {
+            year:
+              "numeric",
+
+            month:
+              "long",
+
+            day:
+              "numeric"
+          }
+        )
+        .format(
+          date
+        );
+
+      } catch (
+        error
+      ) {
+
+        return date.toLocaleDateString();
+
+      }
+
+    }
+
+
+
+    /* =========================================
+       COVER PLACEHOLDER
+    ========================================= */
+
+    function createCoverPlaceholder() {
+
+      const placeholder =
+        document.createElement(
+          "div"
+        );
+
+
+      placeholder.className =
+        "cover-placeholder";
+
+
+      placeholder.textContent =
+        currentLanguage === "fa"
+          ? "مقاله پژوهشی HSKRC"
+          : "HSKRC Research Article";
+
+
+      return placeholder;
+
+    }
+
+
+
+    /* =========================================
+       NOT FOUND
+    ========================================= */
+
+    function showNotFound() {
+
+      articleContainer.innerHTML = `
+
+        <div class="state-box">
+
+          <div class="state-icon">
+            ?
+          </div>
+
+          <h2>
+            ${
+              currentLanguage === "fa"
+                ? "مقاله پیدا نشد"
+                : "Article not found"
+            }
+          </h2>
+
+          <p>
+            ${
+              currentLanguage === "fa"
+                ? "این مقاله وجود ندارد یا دیگر منتشر نشده است."
+                : "This article does not exist or is no longer published."
+            }
+          </p>
+
+          <a
+            href="articles.html"
+            class="state-back"
+          >
+            ${
+              currentLanguage === "fa"
+                ? "بازگشت به مقالات"
+                : "Back to Articles"
+            }
+          </a>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    /* =========================================
+       ERROR
+    ========================================= */
+
+    function showError(
+      message
+    ) {
+
+      articleContainer.innerHTML = `
+
+        <div class="state-box">
+
+          <div class="state-icon">
+            !
+          </div>
+
+          <h2>
+            ${
+              currentLanguage === "fa"
+                ? "خطا"
+                : "Something went wrong"
+            }
+          </h2>
+
+          <p>
+            ${escapeHtml(message)}
+          </p>
+
+          <a
+            href="articles.html"
+            class="state-back"
+          >
+            ${
+              currentLanguage === "fa"
+                ? "بازگشت به مقالات"
+                : "Back to Articles"
+            }
+          </a>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    /* =========================================
+       PRINT
+    ========================================= */
+
+    printButton.addEventListener(
+      "click",
+      () => {
+
+        window.print();
+
+      }
     );
 
-  area.innerHTML = `
-
-    <div class="error">
-
-      <h2>
-        HSKRC
-      </h2>
-
-      <p>
-        ${escapeHTML(
-          message
-        )}
-      </p>
-
-    </div>
-
-  `;
-
-}
 
 
-function escapeHTML(value) {
+    /* =========================================
+       SAVE AS PDF
+    ========================================= */
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
+    pdfButton.addEventListener(
+      "click",
+      () => {
 
-    return "";
+        /*
+          Browsers normally provide the PDF
+          option through the native print dialog.
+        */
 
-  }
+        window.print();
 
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
+      }
     );
 
-}
 
 
-supabaseClient.auth.onAuthStateChange(
-  function() {
+    /* =========================================
+       AUTH STATE
+    ========================================= */
 
-    updateAccountLink();
+    supabaseClient
+      .auth
+      .onAuthStateChange(
+        () => {
 
-  }
-);
+          updateAccountLink();
+
+        }
+      );
 
 
-updateAccountLink();
 
-loadArticle();
+    /* =========================================
+       START
+    ========================================= */
 
-</script>
+    async function startArticlePage() {
 
+      applyLanguage(
+        getSavedLanguage()
+      );
+
+
+      await updateAccountLink();
+
+
+      await loadArticle();
+
+    }
+
+
+    startArticlePage();
+
+  </script>
+
+
+  <!-- =========================================
+       PRINT STYLES
+  ========================================= -->
+
+  <style>
+
+    @media print {
+
+      @page {
+        size: A4;
+        margin: 18mm;
+      }
+
+
+      body {
+        background:
+          #ffffff !important;
+
+        color:
+          #111111 !important;
+      }
+
+
+      header,
+      footer,
+      .top-actions {
+        display:
+          none !important;
+      }
+
+
+      main {
+        width:
+          100% !important;
+
+        max-width:
+          none !important;
+
+        margin:
+          0 !important;
+
+        padding:
+          0 !important;
+      }
+
+
+      .article-container {
+        overflow:
+          visible !important;
+
+        border:
+          none !important;
+
+        box-shadow:
+          none !important;
+
+        background:
+          #ffffff !important;
+      }
+
+
+      .article-cover {
+        max-height:
+          260px;
+
+        page-break-inside:
+          avoid;
+      }
+
+
+      .article-cover img {
+        max-height:
+          260px;
+
+        object-fit:
+          cover;
+      }
+
+
+      .article-header {
+        padding:
+          30px 0 25px !important;
+
+        border-bottom:
+          1px solid #dddddd !important;
+
+        background:
+          #ffffff !important;
+      }
+
+
+      .article-category {
+        color:
+          #176b47 !important;
+
+        background:
+          #eefaf4 !important;
+
+        border-color:
+          #b9e8d1 !important;
+      }
+
+
+      .article-title {
+        color:
+          #111111 !important;
+
+        font-size:
+          30px !important;
+      }
+
+
+      .article-meta {
+        color:
+          #666666 !important;
+      }
+
+
+      .article-content {
+        padding:
+          30px 0 !important;
+
+        color:
+          #222222 !important;
+
+        font-size:
+          12.5pt !important;
+
+        line-height:
+          1.8 !important;
+      }
+
+
+      .article-content h2,
+      .article-content h3 {
+        color:
+          #111111 !important;
+      }
+
+
+      .article-content strong {
+        color:
+          #111111 !important;
+      }
+
+
+      .article-content a {
+        color:
+          #176b47 !important;
+      }
+
+    }
+
+  </style>
 
 </body>
-
 </html>
