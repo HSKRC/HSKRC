@@ -137,7 +137,6 @@
       font-weight: bold;
       font-size: 17px;
       display: inline-block;
-      cursor: pointer;
     }
 
     .btn-primary {
@@ -181,12 +180,6 @@
       border-radius: 15px;
       padding: 28px 20px;
       text-align: center;
-      transition: 0.25s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #42d392;
     }
 
     .card-icon {
@@ -201,146 +194,6 @@
 
     .card p {
       color: #b6bdc7;
-    }
-
-    /* =========================================
-       ARTICLES
-       ========================================= */
-
-    .articles-status {
-      max-width: 1050px;
-      margin: -20px auto 25px;
-      text-align: center;
-      color: #858c96;
-      font-size: 15px;
-    }
-
-    .article-card {
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-    }
-
-    .article-cover {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 18px;
-      border: 1px solid #252c36;
-      background: #0d1117;
-    }
-
-    .article-icon {
-      width: 100%;
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 55px;
-      background: #10161d;
-      border: 1px solid #252c36;
-      border-radius: 10px;
-      margin-bottom: 18px;
-    }
-
-    .article-meta {
-      color: #858c96;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .article-excerpt {
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-
-    .read-more-btn {
-      display: inline-block;
-      background: transparent;
-      color: #42d392;
-      border: 1px solid #42d392;
-      border-radius: 8px;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 14px;
-      text-decoration: none;
-      text-align: center;
-    }
-
-    .read-more-btn:hover {
-      background: #42d392;
-      color: #07110c;
-    }
-
-    .no-articles {
-      grid-column: 1 / -1;
-      text-align: center;
-      color: #858c96;
-      padding: 30px;
-    }
-
-    /* =========================================
-       ARTICLE MODAL
-       ========================================= */
-
-    .article-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.82);
-      z-index: 1000;
-      padding: 30px 15px;
-      overflow-y: auto;
-    }
-
-    .article-modal.active {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-    }
-
-    .article-modal-content {
-      width: 100%;
-      max-width: 900px;
-      background: #151a22;
-      border: 1px solid #252c36;
-      border-radius: 15px;
-      padding: 35px;
-      position: relative;
-      margin-top: 30px;
-    }
-
-    .article-modal-close {
-      position: absolute;
-      top: 12px;
-      right: 18px;
-      background: transparent;
-      border: none;
-      color: #42d392;
-      font-size: 30px;
-      cursor: pointer;
-    }
-
-    .article-modal-title {
-      color: #42d392;
-      font-size: 30px;
-      margin-bottom: 10px;
-      padding-right: 35px;
-    }
-
-    .article-modal-meta {
-      color: #858c96;
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
-
-    .article-modal-body {
-      color: #d0d5dc;
-      font-size: 17px;
-      white-space: pre-wrap;
-      line-height: 2;
     }
 
     .about {
@@ -406,18 +259,6 @@
         padding: 55px 5%;
       }
 
-      .article-modal-content {
-        padding: 25px 18px;
-      }
-
-      .article-modal-title {
-        font-size: 24px;
-      }
-
-      .article-modal-body {
-        font-size: 16px;
-      }
-
     }
 
   </style>
@@ -434,6 +275,7 @@
     HSKRC
   </div>
 
+
   <nav>
 
     <a
@@ -441,46 +283,63 @@
       id="homeLink"
       data-fa="خانه"
       data-en="Home">
+
       Home
+
     </a>
+
 
     <a
       href="library.html"
       id="libraryLink"
       data-fa="کتابخانه"
       data-en="Library">
+
       Library
+
     </a>
 
+
     <a
-      href="#articles"
+      href="articles.html"
       id="articlesLink"
       data-fa="مقالات"
       data-en="Articles">
+
       Articles
+
     </a>
+
 
     <a
       href="#about"
       id="aboutLink"
       data-fa="درباره ما"
       data-en="About">
+
       About
+
     </a>
+
 
     <a
       href="auth.html"
       id="accountLink"
       data-fa="ورود / ثبت‌نام"
       data-en="Login / Register">
+
       Login / Register
+
     </a>
+
 
     <button
       class="language-btn"
       onclick="changeLanguage()"
       id="languageButton">
+
       🌐 Persian
+
     </button>
 
   </nav>
@@ -488,35 +347,47 @@
 </header>
 
 
+
 <main>
 
 
+
 <!-- =========================================
-     HERO
+     HOME
      ========================================= -->
 
-<section class="hero" id="home">
+<section
+  class="hero"
+  id="home">
 
   <div class="hero-content">
+
 
     <h1>
 
       <span
         data-fa="مرکز دانش و تحقیقات"
         data-en="Hassan Sabbah Knowledge & Research Centre">
+
         Hassan Sabbah Knowledge & Research Centre
+
       </span>
 
+
       <br>
+
 
       <span
         class="green"
         data-fa="حسن صباح"
         data-en="HSKRC">
+
         HSKRC
+
       </span>
 
     </h1>
+
 
 
     <div
@@ -527,6 +398,7 @@
       Digital Library & Research Centre
 
     </div>
+
 
 
     <p
@@ -540,7 +412,9 @@
     </p>
 
 
+
     <div class="buttons">
+
 
       <a
         href="library.html"
@@ -553,6 +427,7 @@
       </a>
 
 
+
       <a
         href="#about"
         class="btn btn-secondary"
@@ -563,7 +438,9 @@
 
       </a>
 
+
     </div>
+
 
   </div>
 
@@ -577,6 +454,7 @@
 
 <section id="library">
 
+
   <h2
     class="section-title"
     data-fa="کتابخانه دیجیتال"
@@ -587,13 +465,16 @@
   </h2>
 
 
+
   <div class="cards">
+
 
     <div class="card">
 
       <div class="card-icon">
         📚
       </div>
+
 
       <h3
         data-fa="کتاب‌ها"
@@ -602,6 +483,7 @@
         Books
 
       </h3>
+
 
       <p
         data-fa="مجموعه کتاب‌های دیجیتال و منابع مطالعاتی."
@@ -614,11 +496,13 @@
     </div>
 
 
+
     <div class="card">
 
       <div class="card-icon">
         🔎
       </div>
+
 
       <h3
         data-fa="جستجو و فیلتر"
@@ -627,6 +511,7 @@
         Search & Filter
 
       </h3>
+
 
       <p
         data-fa="جستجو و پیدا کردن آسان منابع موردنظر."
@@ -639,11 +524,13 @@
     </div>
 
 
+
     <div class="card">
 
       <div class="card-icon">
         📖
       </div>
+
 
       <h3
         data-fa="درخواست کتاب"
@@ -652,6 +539,7 @@
         Request a Book
 
       </h3>
+
 
       <p
         data-fa="اعضا می‌توانند کتاب موردنظر خود را درخواست کنند."
@@ -663,6 +551,7 @@
 
     </div>
 
+
   </div>
 
 </section>
@@ -670,10 +559,11 @@
 
 
 <!-- =========================================
-     ARTICLES & RESEARCH
+     ARTICLES
      ========================================= -->
 
 <section id="articles">
+
 
   <h2
     class="section-title"
@@ -685,20 +575,57 @@
   </h2>
 
 
-  <div
-    class="articles-status"
-    id="articlesStatus">
 
-    Loading articles...
-
-  </div>
+  <div class="cards">
 
 
-  <div
-    class="cards"
-    id="articlesContainer">
+    <div class="card">
 
-    <!-- Articles will be loaded from Supabase -->
+
+      <div class="card-icon">
+        📚
+      </div>
+
+
+
+      <h3
+        data-fa="مرکز مقالات و پژوهش‌ها"
+        data-en="Articles & Research Centre">
+
+        Articles & Research Centre
+
+      </h3>
+
+
+
+      <p
+        data-fa="مطالعات علمی، تاریخی و فرهنگی منتشرشده توسط HSKRC."
+        data-en="Scientific, historical and cultural research published by HSKRC.">
+
+        Scientific, historical and cultural research
+        published by HSKRC.
+
+      </p>
+
+
+
+      <br>
+
+
+
+      <a
+        href="articles.html"
+        class="btn btn-primary"
+        data-fa="مشاهده مقالات"
+        data-en="View Articles">
+
+        View Articles
+
+      </a>
+
+
+    </div>
+
 
   </div>
 
@@ -714,6 +641,7 @@
   class="about"
   id="about">
 
+
   <h2
     class="section-title"
     data-fa="درباره HSKRC"
@@ -722,6 +650,7 @@
     About HSKRC
 
   </h2>
+
 
 
   <p
@@ -737,51 +666,12 @@
 
   </p>
 
+
 </section>
 
 
+
 </main>
-
-
-
-<!-- =========================================
-     ARTICLE MODAL
-     ========================================= -->
-
-<div
-  class="article-modal"
-  id="articleModal">
-
-  <div class="article-modal-content">
-
-    <button
-      class="article-modal-close"
-      onclick="closeArticle()"
-      aria-label="Close">
-      ×
-    </button>
-
-
-    <h2
-      class="article-modal-title"
-      id="modalArticleTitle">
-    </h2>
-
-
-    <div
-      class="article-modal-meta"
-      id="modalArticleMeta">
-    </div>
-
-
-    <div
-      class="article-modal-body"
-      id="modalArticleBody">
-    </div>
-
-  </div>
-
-</div>
 
 
 
@@ -791,9 +681,14 @@
 
 <footer>
 
+
   <p class="founder">
+
     Founded by Kamal Barlas
+
   </p>
+
+
 
   <p
     class="copyright"
@@ -803,6 +698,7 @@
     © 2026 HSKRC - All rights reserved.
 
   </p>
+
 
 </footer>
 
@@ -838,8 +734,8 @@ const supabaseClient =
 let currentLanguage = "en";
 
 
-
 function changeLanguage() {
+
 
   currentLanguage =
     currentLanguage === "en"
@@ -858,21 +754,27 @@ function changeLanguage() {
 
 
   const elements =
-    document.querySelectorAll("[data-fa]");
+    document.querySelectorAll(
+      "[data-fa]"
+    );
 
 
-  elements.forEach(function(element) {
+  elements.forEach(
+    function(element) {
 
-    element.textContent =
-      currentLanguage === "fa"
-        ? element.getAttribute("data-fa")
-        : element.getAttribute("data-en");
+      element.textContent =
+        currentLanguage === "fa"
+          ? element.getAttribute("data-fa")
+          : element.getAttribute("data-en");
 
-  });
+    }
+  );
 
 
   const button =
-    document.getElementById("languageButton");
+    document.getElementById(
+      "languageButton"
+    );
 
 
   button.textContent =
@@ -882,8 +784,6 @@ function changeLanguage() {
 
 
   updateAccountLink();
-
-  updateArticlesLanguage();
 
 }
 
@@ -895,8 +795,11 @@ function changeLanguage() {
 
 async function updateAccountLink() {
 
+
   const accountLink =
-    document.getElementById("accountLink");
+    document.getElementById(
+      "accountLink"
+    );
 
 
   const {
@@ -907,18 +810,23 @@ async function updateAccountLink() {
 
   if (data.session) {
 
+
     accountLink.href =
       "account.html";
+
 
     accountLink.textContent =
       currentLanguage === "fa"
         ? "حساب من 👤"
         : "My Account 👤";
 
+
   } else {
+
 
     accountLink.href =
       "auth.html";
+
 
     accountLink.textContent =
       currentLanguage === "fa"
@@ -932,509 +840,11 @@ async function updateAccountLink() {
 
 
 /* =========================================
-   ARTICLES DATA
-   ========================================= */
-
-let articlesData = [];
-
-
-
-/* =========================================
-   LOAD ARTICLES
-   ========================================= */
-
-async function loadArticles() {
-
-  const container =
-    document.getElementById(
-      "articlesContainer"
-    );
-
-
-  const status =
-    document.getElementById(
-      "articlesStatus"
-    );
-
-
-  status.textContent =
-    currentLanguage === "fa"
-      ? "در حال بارگذاری مقالات..."
-      : "Loading articles...";
-
-
-  container.innerHTML = "";
-
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("articles")
-        .select(`
-          id,
-          title,
-          author,
-          category,
-          excerpt,
-          content,
-          cover_path,
-          published,
-          published_at
-        `)
-        .eq("published", true)
-        .order(
-          "published_at",
-          {
-            ascending: false,
-            nullsFirst: false
-          }
-        );
-
-
-    if (error) {
-
-      console.error(
-        "Articles loading error:",
-        error
-      );
-
-      status.textContent =
-        currentLanguage === "fa"
-          ? "خطا در بارگذاری مقالات."
-          : "Unable to load articles.";
-
-      container.innerHTML = `
-        <div class="no-articles">
-          ${
-            currentLanguage === "fa"
-              ? "لطفاً دوباره تلاش کنید."
-              : "Please try again later."
-          }
-        </div>
-      `;
-
-      return;
-    }
-
-
-    articlesData = data || [];
-
-
-    renderArticles();
-
-
-  } catch (error) {
-
-    console.error(
-      "Unexpected articles error:",
-      error
-    );
-
-
-    status.textContent =
-      currentLanguage === "fa"
-        ? "خطا در اتصال به پایگاه داده."
-        : "Database connection error.";
-
-
-    container.innerHTML = `
-      <div class="no-articles">
-        ${
-          currentLanguage === "fa"
-            ? "مقالات در حال حاضر قابل دریافت نیستند."
-            : "Articles are currently unavailable."
-        }
-      </div>
-    `;
-
-  }
-
-}
-
-
-
-/* =========================================
-   RENDER ARTICLES
-   ========================================= */
-
-function renderArticles() {
-
-  const container =
-    document.getElementById(
-      "articlesContainer"
-    );
-
-
-  const status =
-    document.getElementById(
-      "articlesStatus"
-    );
-
-
-  container.innerHTML = "";
-
-
-  if (
-    !articlesData ||
-    articlesData.length === 0
-  ) {
-
-    status.textContent = "";
-
-
-    container.innerHTML = `
-      <div class="no-articles">
-
-        <div class="card-icon">
-          📚
-        </div>
-
-        <p>
-          ${
-            currentLanguage === "fa"
-              ? "هنوز مقاله‌ای منتشر نشده است."
-              : "No published articles yet."
-          }
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  status.textContent =
-    currentLanguage === "fa"
-      ? `${articlesData.length} مقاله منتشرشده`
-      : `${articlesData.length} published article${articlesData.length === 1 ? "" : "s"}`;
-
-
-  articlesData.forEach(
-    function(article) {
-
-      const card =
-        document.createElement("div");
-
-
-      card.className =
-        "card article-card";
-
-
-      /* COVER */
-
-      let coverHTML = `
-        <div class="article-icon">
-          📜
-        </div>
-      `;
-
-
-      /*
-        If cover_path exists and is a full
-        external image URL, show it.
-      */
-
-      if (
-        article.cover_path &&
-        (
-          article.cover_path.startsWith("http://") ||
-          article.cover_path.startsWith("https://")
-        )
-      ) {
-
-        coverHTML = `
-          <img
-            class="article-cover"
-            src="${escapeHTML(article.cover_path)}"
-            alt="${escapeHTML(article.title || "Article")}"
-          >
-        `;
-
-      }
-
-
-      /* META */
-
-      const author =
-        article.author ||
-        (
-          currentLanguage === "fa"
-            ? "نویسنده نامشخص"
-            : "Author unknown"
-        );
-
-
-      const category =
-        article.category ||
-        (
-          currentLanguage === "fa"
-            ? "پژوهش"
-            : "Research"
-        );
-
-
-      const metaText =
-        `${escapeHTML(author)} · ${escapeHTML(category)}`;
-
-
-      /* EXCERPT */
-
-      const excerpt =
-        article.excerpt ||
-        (
-          currentLanguage === "fa"
-            ? "برای مطالعه این مقاله روی «ادامه مطلب» کلیک کنید."
-            : "Click Read More to read this article."
-        );
-
-
-      card.innerHTML = `
-
-        ${coverHTML}
-
-        <h3>
-          ${escapeHTML(article.title || "Untitled Article")}
-        </h3>
-
-        <div class="article-meta">
-          ${metaText}
-        </div>
-
-        <p class="article-excerpt">
-          ${escapeHTML(excerpt)}
-        </p>
-
-        <button
-          class="read-more-btn"
-          onclick="openArticle('${article.id}')">
-
-          ${
-            currentLanguage === "fa"
-              ? "ادامه مطلب"
-              : "Read More"
-          }
-
-        </button>
-
-      `;
-
-
-      container.appendChild(card);
-
-    }
-  );
-
-}
-
-
-
-/* =========================================
-   UPDATE ARTICLE LANGUAGE
-   ========================================= */
-
-function updateArticlesLanguage() {
-
-  if (
-    articlesData &&
-    articlesData.length > 0
-  ) {
-
-    renderArticles();
-
-  }
-
-}
-
-
-
-/* =========================================
-   OPEN ARTICLE
-   ========================================= */
-
-function openArticle(articleId) {
-
-  const article =
-    articlesData.find(
-      function(item) {
-        return item.id === articleId;
-      }
-    );
-
-
-  if (!article) {
-    return;
-  }
-
-
-  const modal =
-    document.getElementById(
-      "articleModal"
-    );
-
-
-  const title =
-    document.getElementById(
-      "modalArticleTitle"
-    );
-
-
-  const meta =
-    document.getElementById(
-      "modalArticleMeta"
-    );
-
-
-  const body =
-    document.getElementById(
-      "modalArticleBody"
-    );
-
-
-  title.textContent =
-    article.title || "";
-
-
-  meta.textContent =
-    `${article.author || ""} · ${article.category || ""}`;
-
-
-  body.textContent =
-    article.content || "";
-
-
-  modal.classList.add(
-    "active"
-  );
-
-
-  document.body.style.overflow =
-    "hidden";
-
-}
-
-
-
-/* =========================================
-   CLOSE ARTICLE
-   ========================================= */
-
-function closeArticle() {
-
-  const modal =
-    document.getElementById(
-      "articleModal"
-    );
-
-
-  modal.classList.remove(
-    "active"
-  );
-
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-
-/* =========================================
-   CLOSE MODAL WHEN CLICKING OUTSIDE
-   ========================================= */
-
-document
-  .getElementById("articleModal")
-  .addEventListener(
-    "click",
-    function(event) {
-
-      if (
-        event.target === this
-      ) {
-
-        closeArticle();
-
-      }
-
-    }
-  );
-
-
-
-/* =========================================
-   ESC KEY
-   ========================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (
-      event.key === "Escape"
-    ) {
-
-      closeArticle();
-
-    }
-
-  }
-);
-
-
-
-/* =========================================
-   HTML ESCAPE
-   ========================================= */
-
-function escapeHTML(value) {
-
-  if (
-    value === null ||
-    value === undefined
-  ) {
-
-    return "";
-
-  }
-
-
-  return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-
-/* =========================================
    AUTH STATE
    ========================================= */
 
 supabaseClient.auth.onAuthStateChange(
-  function(event, session) {
+  function() {
 
     updateAccountLink();
 
@@ -1448,8 +858,6 @@ supabaseClient.auth.onAuthStateChange(
    ========================================= */
 
 updateAccountLink();
-
-loadArticles();
 
 
 </script>
