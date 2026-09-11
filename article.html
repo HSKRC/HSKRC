@@ -117,8 +117,11 @@
       font-size: 38px;
       line-height: 1.5;
       margin-bottom: 15px;
-      text-align: left;
-      direction: ltr;
+
+      /* Automatic text direction */
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .article-meta {
@@ -127,8 +130,11 @@
       margin-bottom: 35px;
       border-bottom: 1px solid #252c36;
       padding-bottom: 20px;
-      text-align: left;
-      direction: ltr;
+
+      /* Automatic text direction */
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .article-content {
@@ -137,31 +143,11 @@
       white-space: pre-wrap;
       line-height: 2.1;
       overflow-wrap: anywhere;
-      text-align: left;
-      direction: ltr;
-    }
 
-    /*
-      Persian / RTL
-    */
-
-    html[dir="rtl"] .article-title {
-      text-align: right;
-      direction: rtl;
-    }
-
-    html[dir="rtl"] .article-meta {
-      text-align: right;
-      direction: rtl;
-    }
-
-    html[dir="rtl"] .article-content {
-      text-align: right;
-      direction: rtl;
-    }
-
-    html[dir="rtl"] .back-link {
-      direction: rtl;
+      /* Automatic Persian / English direction */
+      direction: auto;
+      unicode-bidi: plaintext;
+      text-align: start;
     }
 
     .loading {
@@ -360,8 +346,10 @@ function changeLanguage() {
       ? "fa"
       : "en";
 
+
   document.documentElement.lang =
     currentLanguage;
+
 
   document.documentElement.dir =
     currentLanguage === "fa"
@@ -369,16 +357,16 @@ function changeLanguage() {
       : "ltr";
 
 
-  document.querySelectorAll(
-    "[data-fa]"
-  ).forEach(function(element) {
+  document
+    .querySelectorAll("[data-fa]")
+    .forEach(function(element) {
 
-    element.textContent =
-      currentLanguage === "fa"
-        ? element.getAttribute("data-fa")
-        : element.getAttribute("data-en");
+      element.textContent =
+        currentLanguage === "fa"
+          ? element.getAttribute("data-fa")
+          : element.getAttribute("data-en");
 
-  });
+    });
 
 
   document.getElementById(
@@ -531,12 +519,20 @@ async function loadArticle() {
 
   area.innerHTML = `
 
-    <h1 class="article-title">
-      ${escapeHTML(data.title)}
+    <h1
+      class="article-title"
+      dir="auto">
+
+      ${escapeHTML(
+        data.title
+      )}
+
     </h1>
 
 
-    <div class="article-meta">
+    <div
+      class="article-meta"
+      dir="auto">
 
       ${
         currentLanguage === "fa"
@@ -569,8 +565,14 @@ async function loadArticle() {
     </div>
 
 
-    <div class="article-content">
-      ${escapeHTML(data.content || "")}
+    <div
+      class="article-content"
+      dir="auto">
+
+      ${escapeHTML(
+        data.content || ""
+      )}
+
     </div>
 
   `;
@@ -596,7 +598,9 @@ function showError(message) {
       </h2>
 
       <p>
-        ${escapeHTML(message)}
+        ${escapeHTML(
+          message
+        )}
       </p>
 
     </div>
