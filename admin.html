@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@
       background: #0d1117;
       color: #fff;
       min-height: 100vh;
+      line-height: 1.7;
     }
 
     header {
@@ -52,6 +54,12 @@
       cursor: pointer;
       font-size: 14px;
       text-decoration: none;
+      display: inline-block;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
     }
 
     .green {
@@ -73,7 +81,7 @@
 
     main {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1250px;
       margin: auto;
       padding: 30px 20px;
     }
@@ -109,7 +117,7 @@
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 15px;
       margin-bottom: 25px;
     }
@@ -171,15 +179,19 @@
       font-size: 14px;
     }
 
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #42d392;
+    }
+
     textarea {
       min-height: 120px;
       resize: vertical;
     }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #42d392;
+    .article-content {
+      min-height: 260px;
     }
 
     .check-row {
@@ -200,14 +212,14 @@
       flex-wrap: wrap;
     }
 
-    .books-table-wrap {
+    .table-wrap {
       overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 800px;
+      min-width: 850px;
     }
 
     th,
@@ -284,6 +296,26 @@
       display: none !important;
     }
 
+    .section-note {
+      color: #899790;
+      font-size: 13px;
+      margin-top: -12px;
+      margin-bottom: 18px;
+    }
+
+    .article-preview {
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 700px) {
       .stats {
         grid-template-columns: 1fr;
@@ -303,1676 +335,2525 @@
     }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="logo">HSKRC Admin</div>
+<header>
+  <div class="logo" id="logoText">HSKRC Admin</div>
 
-    <div class="header-actions">
-      <a href="index.html" class="button-link dark">🏠 Home</a>
-      <a href="library.html" class="button-link dark">📚 Library</a>
-      <button id="languageBtn" class="dark" onclick="toggleLanguage()">🌐 Persian</button>
-      <button class="danger" onclick="logout()">Logout</button>
+  <div class="header-actions">
+    <a href="index.html" class="button-link dark">🏠 Home</a>
+    <a href="library.html" class="button-link dark">📚 Library</a>
+    <button id="languageBtn" class="dark" onclick="toggleLanguage()">🌐 Persian</button>
+    <button class="danger" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<main>
+
+  <div id="loading" class="loading">
+    Checking administrator access...
+  </div>
+
+  <div id="accessDenied" class="access-denied hidden">
+    <h2>Access Denied</h2>
+    <p>You do not have administrator access.</p>
+    <br>
+    <a href="index.html" class="button-link dark">Return to Home</a>
+  </div>
+
+  <div id="dashboard" class="dashboard">
+
+    <div class="title-row">
+      <h1 id="pageTitle">Admin Dashboard</h1>
+
+      <button class="green" onclick="showAddBookForm()">
+        ➕ Add New Book
+      </button>
     </div>
-  </header>
 
-  <main>
+    <div id="message" class="message"></div>
 
-    <div id="loading" class="loading">
-      Checking administrator access...
+    <!-- =========================
+         STATISTICS
+         ========================= -->
+
+    <div class="stats">
+
+      <div class="stat">
+        <div>Total Books</div>
+        <div id="totalBooks" class="stat-number">0</div>
+      </div>
+
+      <div class="stat">
+        <div>Published Books</div>
+        <div id="publishedBooks" class="stat-number">0</div>
+      </div>
+
+      <div class="stat">
+        <div>Articles</div>
+        <div id="totalArticles" class="stat-number">0</div>
+      </div>
+
+      <div class="stat">
+        <div>Users</div>
+        <div id="totalUsers" class="stat-number">0</div>
+      </div>
+
     </div>
 
-    <div id="accessDenied" class="access-denied hidden">
-      <h2>Access Denied</h2>
-      <p>You do not have administrator access.</p>
-      <br>
-      <a href="index.html" class="button-link dark">Return to Home</a>
-    </div>
 
-    <div id="dashboard" class="dashboard">
+    <!-- =========================
+         BOOK FORM
+         ========================= -->
 
-      <div class="title-row">
-        <div>
-          <h1 id="pageTitle">Admin Dashboard</h1>
+    <div id="bookFormPanel" class="panel">
+
+      <h2 id="formTitle">Add New Book</h2>
+
+      <form id="bookForm">
+
+        <input type="hidden" id="bookId">
+
+        <div class="form-grid">
+
+          <div>
+            <label for="title">Book Title *</label>
+            <input type="text" id="title" required placeholder="Enter book title">
+          </div>
+
+          <div>
+            <label for="author">Author *</label>
+            <input type="text" id="author" required placeholder="Enter author name">
+          </div>
+
+          <div>
+            <label for="category">Category</label>
+            <input type="text" id="category" placeholder="e.g. History, Philosophy">
+          </div>
+
+          <div>
+            <label for="publicationYear">Publication Year</label>
+            <input type="number" id="publicationYear" placeholder="e.g. 2024">
+          </div>
+
+          <div>
+            <label for="language">Language</label>
+            <select id="language">
+              <option value="English">English</option>
+              <option value="Persian">Persian</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" placeholder="ISBN">
+          </div>
+
+          <div class="full">
+            <label for="translator">Translator</label>
+            <input type="text" id="translator" placeholder="Translator name (optional)">
+          </div>
+
+          <div class="full">
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Write a short description of the book..."></textarea>
+          </div>
+
+          <div>
+            <label for="coverFile">Book Cover</label>
+            <input type="file" id="coverFile" accept="image/*">
+            <div id="coverFileName" class="file-name"></div>
+          </div>
+
+          <div>
+            <label for="pdfFile">PDF File *</label>
+            <input type="file" id="pdfFile" accept="application/pdf,.pdf">
+            <div id="pdfFileName" class="file-name"></div>
+          </div>
+
+          <div class="full">
+            <div class="check-row">
+              <input type="checkbox" id="published" checked>
+              <label for="published" style="margin:0;">Published</label>
+            </div>
+          </div>
+
         </div>
 
-        <button class="green" onclick="showAddBookForm()">
-          ➕ Add New Book
+        <div class="form-actions">
+
+          <button type="submit" class="green" id="saveBookBtn">
+            Save Book
+          </button>
+
+          <button type="button" class="dark" onclick="resetBookForm()">
+            Cancel
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <!-- =========================
+         BOOKS
+         ========================= -->
+
+    <div class="panel">
+
+      <div class="title-row">
+        <h2>Books</h2>
+
+        <button class="dark" onclick="loadBooks()">
+          🔄 Refresh
         </button>
       </div>
 
-      <div id="message" class="message"></div>
+      <div class="table-wrap">
 
-      <!-- Statistics -->
-      <div class="stats">
+        <table>
 
-        <div class="stat">
-          <div>Total Books</div>
-          <div id="totalBooks" class="stat-number">0</div>
-        </div>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Category</th>
+              <th>Language</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-        <div class="stat">
-          <div>Published Books</div>
-          <div id="publishedBooks" class="stat-number">0</div>
-        </div>
+          <tbody id="booksTableBody">
+            <tr>
+              <td colspan="6">Loading books...</td>
+            </tr>
+          </tbody>
 
-        <div class="stat">
-          <div>Users</div>
-          <div id="totalUsers" class="stat-number">0</div>
-        </div>
-
-      </div>
-
-
-      <!-- Add / Edit Book -->
-      <div id="bookFormPanel" class="panel">
-
-        <h2 id="formTitle">Add New Book</h2>
-
-        <form id="bookForm">
-
-          <input type="hidden" id="bookId">
-
-          <div class="form-grid">
-
-            <div>
-              <label for="title">Book Title *</label>
-              <input
-                type="text"
-                id="title"
-                required
-                placeholder="Enter book title"
-              >
-            </div>
-
-            <div>
-              <label for="author">Author *</label>
-              <input
-                type="text"
-                id="author"
-                required
-                placeholder="Enter author name"
-              >
-            </div>
-
-            <div>
-              <label for="category">Category</label>
-              <input
-                type="text"
-                id="category"
-                placeholder="e.g. History, Philosophy"
-              >
-            </div>
-
-            <div>
-              <label for="publicationYear">Publication Year</label>
-              <input
-                type="number"
-                id="publicationYear"
-                placeholder="e.g. 2024"
-              >
-            </div>
-
-            <div>
-              <label for="language">Language</label>
-              <select id="language">
-                <option value="English">English</option>
-                <option value="Persian">Persian</option>
-                <option value="Arabic">Arabic</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="isbn">ISBN</label>
-              <input
-                type="text"
-                id="isbn"
-                placeholder="ISBN"
-              >
-            </div>
-
-            <div class="full">
-              <label for="translator">Translator</label>
-              <input
-                type="text"
-                id="translator"
-                placeholder="Translator name (optional)"
-              >
-            </div>
-
-            <div class="full">
-              <label for="description">Description</label>
-              <textarea
-                id="description"
-                placeholder="Write a short description of the book..."
-              ></textarea>
-            </div>
-
-            <div>
-              <label for="coverFile">Book Cover</label>
-              <input
-                type="file"
-                id="coverFile"
-                accept="image/*"
-              >
-              <div id="coverFileName" class="file-name"></div>
-            </div>
-
-            <div>
-              <label for="pdfFile">PDF File *</label>
-              <input
-                type="file"
-                id="pdfFile"
-                accept="application/pdf,.pdf"
-              >
-              <div id="pdfFileName" class="file-name"></div>
-            </div>
-
-            <div class="full">
-
-              <div class="check-row">
-                <input
-                  type="checkbox"
-                  id="published"
-                  checked
-                >
-
-                <label
-                  for="published"
-                  style="margin:0;"
-                >
-                  Published
-                </label>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="form-actions">
-
-            <button
-              type="submit"
-              class="green"
-              id="saveBookBtn"
-            >
-              Save Book
-            </button>
-
-            <button
-              type="button"
-              class="dark"
-              onclick="resetBookForm()"
-            >
-              Cancel
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-
-
-      <!-- Books -->
-      <div class="panel">
-
-        <div class="title-row">
-          <h2>Books</h2>
-
-          <button
-            class="dark"
-            onclick="loadBooks()"
-          >
-            🔄 Refresh
-          </button>
-        </div>
-
-        <div class="books-table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th>Language</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody id="booksTableBody">
-              <tr>
-                <td colspan="6">
-                  Loading books...
-                </td>
-              </tr>
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-
-      <!-- Users -->
-      <div class="panel">
-
-        <div class="title-row">
-
-          <h2 id="usersTitle">Users</h2>
-
-          <button
-            class="dark"
-            onclick="loadUsers()"
-          >
-            🔄 Refresh
-          </button>
-
-        </div>
-
-        <div class="books-table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email Consent</th>
-                <th>Role</th>
-                <th>Joined</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody id="usersTableBody">
-
-              <tr>
-                <td colspan="6">
-                  Loading users...
-                </td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
+        </table>
 
       </div>
 
     </div>
 
-  </main>
-    <script>
-    const SUPABASE_URL = "https://uwuklryzxexpofcxrbnm.supabase.co";
 
-    const SUPABASE_ANON_KEY =
-      "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+    <!-- =========================
+         ARTICLE FORM
+         ========================= -->
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
+    <div id="articleFormPanel" class="panel">
 
-    let currentLanguage = "en";
-    let books = [];
-    let users = [];
-    let currentUserId = null;
+      <div class="title-row">
+
+        <div>
+          <h2 id="articleFormTitle">Add New Article</h2>
+          <div class="section-note">
+            Create and publish articles or research materials.
+          </div>
+        </div>
+
+      </div>
+
+      <form id="articleForm">
+
+        <input type="hidden" id="articleId">
+
+        <div class="form-grid">
+
+          <div>
+            <label for="articleTitle">Article Title *</label>
+            <input
+              type="text"
+              id="articleTitle"
+              required
+              placeholder="Enter article title">
+          </div>
+
+          <div>
+            <label for="articleAuthor">Author *</label>
+            <input
+              type="text"
+              id="articleAuthor"
+              required
+              placeholder="Enter author name">
+          </div>
+
+          <div>
+            <label for="articleCategory">Category</label>
+            <input
+              type="text"
+              id="articleCategory"
+              placeholder="e.g. History, Research">
+          </div>
+
+          <div>
+            <label for="articleCoverPath">Cover Path</label>
+            <input
+              type="text"
+              id="articleCoverPath"
+              placeholder="Optional storage path">
+          </div>
+
+          <div class="full">
+            <label for="articleExcerpt">Excerpt</label>
+            <textarea
+              id="articleExcerpt"
+              placeholder="Short summary of the article..."></textarea>
+          </div>
+
+          <div class="full">
+            <label for="articleContent">Article Content *</label>
+            <textarea
+              id="articleContent"
+              class="article-content"
+              required
+              placeholder="Write the full article or research text here..."></textarea>
+          </div>
+
+          <div class="full">
+
+            <div class="check-row">
+
+              <input
+                type="checkbox"
+                id="articlePublished"
+                checked>
+
+              <label
+                for="articlePublished"
+                style="margin:0;">
+                Published
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+
+          <button
+            type="submit"
+            class="green"
+            id="saveArticleBtn">
+            Save Article
+          </button>
+
+          <button
+            type="button"
+            class="dark"
+            onclick="resetArticleForm()">
+            Cancel
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
 
 
-    // =========================
-    // LANGUAGE
-    // =========================
+    <!-- =========================
+         ARTICLES
+         ========================= -->
 
-    function toggleLanguage() {
+    <div class="panel">
 
-      currentLanguage =
+      <div class="title-row">
+
+        <h2 id="articlesPanelTitle">
+          Articles & Research
+        </h2>
+
+        <div class="actions">
+
+          <button
+            class="green"
+            onclick="showAddArticleForm()">
+            ➕ Add New Article
+          </button>
+
+          <button
+            class="dark"
+            onclick="loadArticles()">
+            🔄 Refresh
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Published</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="articlesTableBody">
+
+            <tr>
+              <td colspan="6">
+                Loading articles...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         USERS
+         ========================= -->
+
+    <div class="panel">
+
+      <div class="title-row">
+
+        <h2 id="usersTitle">Users</h2>
+
+        <button
+          class="dark"
+          onclick="loadUsers()">
+          🔄 Refresh
+        </button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email Consent</th>
+              <th>Role</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="usersTableBody">
+
+            <tr>
+              <td colspan="6">
+                Loading users...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<script>
+
+  /* =========================================
+     SUPABASE
+     ========================================= */
+
+  const SUPABASE_URL =
+    "https://uwuklryzxexpofcxrbnm.supabase.co";
+
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+
+  let currentLanguage = "en";
+
+  let books = [];
+  let articles = [];
+  let users = [];
+
+  let currentUserId = null;
+
+
+  /* =========================================
+     LANGUAGE
+     ========================================= */
+
+  function toggleLanguage() {
+
+    currentLanguage =
+      currentLanguage === "en"
+        ? "fa"
+        : "en";
+
+    document.documentElement.lang =
+      currentLanguage === "fa"
+        ? "fa"
+        : "en";
+
+    document.documentElement.dir =
+      currentLanguage === "fa"
+        ? "rtl"
+        : "ltr";
+
+    document.getElementById("languageBtn")
+      .textContent =
         currentLanguage === "en"
-          ? "fa"
-          : "en";
+          ? "🌐 Persian"
+          : "🌐 English";
 
-      document.documentElement.lang =
-        currentLanguage === "fa"
-          ? "fa"
-          : "en";
+    updateLanguage();
 
-      document.documentElement.dir =
-        currentLanguage === "fa"
-          ? "rtl"
-          : "ltr";
+    renderBooks();
+    renderArticles();
+    renderUsers();
 
-      const languageBtn =
-        document.getElementById("languageBtn");
+  }
 
-      if (languageBtn) {
-        languageBtn.textContent =
-          currentLanguage === "en"
-            ? "🌐 Persian"
-            : "🌐 English";
+
+  function updateLanguage() {
+
+    const fa =
+      currentLanguage === "fa";
+
+    document.getElementById("logoText")
+      .textContent =
+        fa
+          ? "پنل مدیریت HSKRC"
+          : "HSKRC Admin";
+
+    document.getElementById("pageTitle")
+      .textContent =
+        fa
+          ? "داشبورد مدیریت"
+          : "Admin Dashboard";
+
+    document.getElementById("usersTitle")
+      .textContent =
+        fa
+          ? "کاربران"
+          : "Users";
+
+    document.getElementById("articlesPanelTitle")
+      .textContent =
+        fa
+          ? "مقالات و پژوهش‌ها"
+          : "Articles & Research";
+
+  }
+
+
+  /* =========================================
+     MESSAGE
+     ========================================= */
+
+  function showMessage(
+    text,
+    type = "success"
+  ) {
+
+    const message =
+      document.getElementById("message");
+
+    message.textContent = text;
+
+    message.className =
+      "message " + type;
+
+    message.style.display = "block";
+
+    setTimeout(() => {
+      message.style.display = "none";
+    }, 5000);
+
+  }
+
+
+  /* =========================================
+     ADMIN CHECK
+     ========================================= */
+
+  async function checkAdmin() {
+
+    const loading =
+      document.getElementById("loading");
+
+    const accessDenied =
+      document.getElementById("accessDenied");
+
+    const dashboard =
+      document.getElementById("dashboard");
+
+    try {
+
+      const {
+        data: {
+          session
+        },
+        error: sessionError
+      } =
+        await supabaseClient.auth.getSession();
+
+      if (sessionError) {
+        throw sessionError;
       }
 
-      updateLanguage();
-    }
-
-
-    function updateLanguage() {
-
-      if (currentLanguage === "fa") {
-
-        document.querySelector(".logo").textContent =
-          "پنل مدیریت HSKRC";
-
-        document.getElementById("pageTitle").textContent =
-          "داشبورد مدیریت";
-
-        document.getElementById("usersTitle").textContent =
-          "کاربران";
-
-      } else {
-
-        document.querySelector(".logo").textContent =
-          "HSKRC Admin";
-
-        document.getElementById("pageTitle").textContent =
-          "Admin Dashboard";
-
-        document.getElementById("usersTitle").textContent =
-          "Users";
-      }
-    }
-
-
-    // =========================
-    // MESSAGES
-    // =========================
-
-    function showMessage(text, type = "success") {
-
-      const message =
-        document.getElementById("message");
-
-      message.textContent = text;
-
-      message.className =
-        "message " + type;
-
-      message.style.display = "block";
-
-      setTimeout(() => {
-        message.style.display = "none";
-      }, 5000);
-    }
-
-
-    // =========================
-    // ADMIN CHECK
-    // =========================
-
-    async function checkAdmin() {
-
-      const loading =
-        document.getElementById("loading");
-
-      const accessDenied =
-        document.getElementById("accessDenied");
-
-      const dashboard =
-        document.getElementById("dashboard");
-
-      try {
-
-        const {
-          data: {
-            session
-          },
-          error: sessionError
-        } =
-          await supabaseClient.auth.getSession();
-
-        if (sessionError) {
-          throw sessionError;
-        }
-
-        if (!session) {
-
-          loading.style.display = "none";
-
-          accessDenied.classList.remove("hidden");
-
-          accessDenied.querySelector("h2").textContent =
-            "Please log in first.";
-
-          accessDenied.querySelector("p").textContent =
-            "You must be logged in to access the admin panel.";
-
-          return;
-        }
-
-        currentUserId =
-          session.user.id;
-
-
-        const {
-          data: profile,
-          error: profileError
-        } =
-          await supabaseClient
-            .from("profiles")
-            .select("role")
-            .eq("id", session.user.id)
-            .single();
-
-
-        if (profileError) {
-          throw profileError;
-        }
-
-
-        if (!profile || profile.role !== "admin") {
-
-          loading.style.display = "none";
-
-          accessDenied.classList.remove("hidden");
-
-          accessDenied.querySelector("h2").textContent =
-            "Access Denied";
-
-          accessDenied.querySelector("p").textContent =
-            "This account does not have administrator access.";
-
-          return;
-        }
-
-
-        loading.style.display = "none";
-
-        dashboard.style.display = "block";
-
-
-        await loadBooks();
-
-        await loadUsers();
-
-      } catch (error) {
-
-        console.error("Admin check error:", error);
+      if (!session) {
 
         loading.style.display = "none";
 
         accessDenied.classList.remove("hidden");
 
-        accessDenied.querySelector("h2").textContent =
+        accessDenied.querySelector("h2")
+          .textContent =
+            "Please log in first.";
+
+        accessDenied.querySelector("p")
+          .textContent =
+            "You must be logged in to access the admin panel.";
+
+        return;
+      }
+
+      currentUserId =
+        session.user.id;
+
+
+      const {
+        data: profile,
+        error: profileError
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select("role")
+          .eq("id", session.user.id)
+          .single();
+
+      if (profileError) {
+        throw profileError;
+      }
+
+
+      if (
+        !profile ||
+        profile.role !== "admin"
+      ) {
+
+        loading.style.display = "none";
+
+        accessDenied.classList.remove("hidden");
+
+        accessDenied.querySelector("h2")
+          .textContent =
+            "Access Denied";
+
+        accessDenied.querySelector("p")
+          .textContent =
+            "This account does not have administrator access.";
+
+        return;
+      }
+
+
+      loading.style.display = "none";
+
+      dashboard.style.display = "block";
+
+
+      await loadBooks();
+
+      await loadArticles();
+
+      await loadUsers();
+
+    } catch (error) {
+
+      console.error(
+        "Admin check error:",
+        error
+      );
+
+      loading.style.display = "none";
+
+      accessDenied.classList.remove("hidden");
+
+      accessDenied.querySelector("h2")
+        .textContent =
           "Error";
 
-        accessDenied.querySelector("p").textContent =
+      accessDenied.querySelector("p")
+        .textContent =
           error.message ||
           "Unable to verify administrator access.";
-      }
+
     }
 
+  }
 
-    // =========================
-    // LOAD BOOKS
-    // =========================
 
-    async function loadBooks() {
+  /* =========================================
+     BOOKS
+     ========================================= */
 
-      const tbody =
-        document.getElementById("booksTableBody");
+  async function loadBooks() {
+
+    const tbody =
+      document.getElementById(
+        "booksTableBody"
+      );
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6">
+          Loading books...
+        </td>
+      </tr>
+    `;
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("books")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+    if (error) {
+
+      console.error(error);
 
       tbody.innerHTML = `
         <tr>
           <td colspan="6">
-            Loading books...
+            Error loading books:
+            ${escapeHtml(error.message)}
           </td>
         </tr>
       `;
 
+      return;
+    }
+
+    books = data || [];
+
+    renderBooks();
+
+    updateStats();
+
+  }
+
+
+  function renderBooks() {
+
+    const tbody =
+      document.getElementById(
+        "booksTableBody"
+      );
+
+    if (!books.length) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            ${
+              currentLanguage === "fa"
+                ? "کتابی پیدا نشد."
+                : "No books found."
+            }
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+
+    tbody.innerHTML =
+      books.map(book => {
+
+        const status =
+          book.published
+            ? `<span class="status published">${
+                currentLanguage === "fa"
+                  ? "منتشر شده"
+                  : "Published"
+              }</span>`
+            : `<span class="status unpublished">${
+                currentLanguage === "fa"
+                  ? "منتشر نشده"
+                  : "Unpublished"
+              }</span>`;
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(book.title || "")}
+            </td>
+
+            <td>
+              ${escapeHtml(book.author || "")}
+            </td>
+
+            <td>
+              ${escapeHtml(book.category || "-")}
+            </td>
+
+            <td>
+              ${escapeHtml(book.language || "-")}
+            </td>
+
+            <td>
+              ${status}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="dark small-btn"
+                  onclick="editBook('${book.id}')">
+                  ${
+                    currentLanguage === "fa"
+                      ? "ویرایش"
+                      : "Edit"
+                  }
+                </button>
+
+                <button
+                  class="danger small-btn"
+                  onclick="deleteBook('${book.id}')">
+                  ${
+                    currentLanguage === "fa"
+                      ? "حذف"
+                      : "Delete"
+                  }
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+
+  }
+
+
+  function showAddBookForm() {
+
+    resetBookForm();
+
+    document.getElementById(
+      "bookFormPanel"
+    ).scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function resetBookForm() {
+
+    document.getElementById(
+      "bookForm"
+    ).reset();
+
+    document.getElementById(
+      "bookId"
+    ).value = "";
+
+    document.getElementById(
+      "published"
+    ).checked = true;
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "افزودن کتاب جدید"
+        : "Add New Book";
+
+    document.getElementById(
+      "saveBookBtn"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "ذخیره کتاب"
+        : "Save Book";
+
+    document.getElementById(
+      "coverFileName"
+    ).textContent = "";
+
+    document.getElementById(
+      "pdfFileName"
+    ).textContent = "";
+
+  }
+
+
+  async function editBook(id) {
+
+    const book =
+      books.find(
+        item => item.id === id
+      );
+
+    if (!book) {
+
+      showMessage(
+        "Book not found.",
+        "error"
+      );
+
+      return;
+    }
+
+    document.getElementById(
+      "bookId"
+    ).value =
+      book.id || "";
+
+    document.getElementById(
+      "title"
+    ).value =
+      book.title || "";
+
+    document.getElementById(
+      "author"
+    ).value =
+      book.author || "";
+
+    document.getElementById(
+      "category"
+    ).value =
+      book.category || "";
+
+    document.getElementById(
+      "publicationYear"
+    ).value =
+      book.publication_year || "";
+
+    document.getElementById(
+      "language"
+    ).value =
+      book.language || "English";
+
+    document.getElementById(
+      "isbn"
+    ).value =
+      book.isbn || "";
+
+    document.getElementById(
+      "translator"
+    ).value =
+      book.translator || "";
+
+    document.getElementById(
+      "description"
+    ).value =
+      book.description || "";
+
+    document.getElementById(
+      "published"
+    ).checked =
+      !!book.published;
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "ویرایش کتاب"
+        : "Edit Book";
+
+    document.getElementById(
+      "saveBookBtn"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "به‌روزرسانی کتاب"
+        : "Update Book";
+
+    document.getElementById(
+      "coverFileName"
+    ).textContent =
+      book.cover_path
+        ? `Current cover: ${book.cover_path}`
+        : "";
+
+    document.getElementById(
+      "pdfFileName"
+    ).textContent =
+      book.pdf_path
+        ? `Current PDF: ${book.pdf_path}`
+        : "";
+
+    document.getElementById(
+      "bookFormPanel"
+    ).scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+
+  document.getElementById(
+    "bookForm"
+  ).addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      const saveButton =
+        document.getElementById(
+          "saveBookBtn"
+        );
+
+      saveButton.disabled = true;
+
+      saveButton.textContent =
+        currentLanguage === "fa"
+          ? "در حال ذخیره..."
+          : "Saving...";
+
+      try {
+
+        const bookId =
+          document.getElementById(
+            "bookId"
+          ).value.trim();
+
+        const title =
+          document.getElementById(
+            "title"
+          ).value.trim();
+
+        const author =
+          document.getElementById(
+            "author"
+          ).value.trim();
+
+        const category =
+          document.getElementById(
+            "category"
+          ).value.trim();
+
+        const publicationYearValue =
+          document.getElementById(
+            "publicationYear"
+          ).value.trim();
+
+        const publicationYear =
+          publicationYearValue
+            ? parseInt(
+                publicationYearValue,
+                10
+              )
+            : null;
+
+        const language =
+          document.getElementById(
+            "language"
+          ).value;
+
+        const isbn =
+          document.getElementById(
+            "isbn"
+          ).value.trim();
+
+        const translator =
+          document.getElementById(
+            "translator"
+          ).value.trim();
+
+        const description =
+          document.getElementById(
+            "description"
+          ).value.trim();
+
+        const published =
+          document.getElementById(
+            "published"
+          ).checked;
+
+        const coverFile =
+          document.getElementById(
+            "coverFile"
+          ).files[0];
+
+        const pdfFile =
+          document.getElementById(
+            "pdfFile"
+          ).files[0];
+
+
+        if (!title || !author) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "عنوان و نویسنده الزامی است."
+              : "Title and author are required.",
+            "error"
+          );
+
+          return;
+        }
+
+
+        let coverPath = null;
+
+        if (coverFile) {
+
+          const extension =
+            coverFile.name
+              .split(".")
+              .pop()
+              .toLowerCase();
+
+          const safeName =
+            title
+              .toLowerCase()
+              .replace(
+                /[^a-z0-9]+/g,
+                "-"
+              )
+              .replace(
+                /^-+|-+$/g,
+                ""
+              );
+
+          const fileName =
+            `${Date.now()}-${safeName}.${extension}`;
+
+          coverPath =
+            `covers/${fileName}`;
+
+          const {
+            error: uploadError
+          } =
+            await supabaseClient
+              .storage
+              .from("Books")
+              .upload(
+                coverPath,
+                coverFile,
+                {
+                  upsert: false
+                }
+              );
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+        }
+
+
+        let pdfPath = null;
+
+        if (pdfFile) {
+
+          const extension =
+            pdfFile.name
+              .split(".")
+              .pop()
+              .toLowerCase();
+
+          if (extension !== "pdf") {
+
+            throw new Error(
+              "Please select a PDF file."
+            );
+
+          }
+
+          const safeName =
+            title
+              .toLowerCase()
+              .replace(
+                /[^a-z0-9]+/g,
+                "-"
+              )
+              .replace(
+                /^-+|-+$/g,
+                ""
+              );
+
+          const fileName =
+            `${Date.now()}-${safeName}.pdf`;
+
+          pdfPath =
+            `pdfs/${fileName}`;
+
+          const {
+            error: uploadError
+          } =
+            await supabaseClient
+              .storage
+              .from("Books")
+              .upload(
+                pdfPath,
+                pdfFile,
+                {
+                  upsert: false,
+                  contentType:
+                    "application/pdf"
+                }
+              );
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+        }
+
+
+        const bookData = {
+
+          title: title,
+
+          author: author,
+
+          category:
+            category || null,
+
+          publication_year:
+            publicationYear,
+
+          language:
+            language || null,
+
+          isbn:
+            isbn || null,
+
+          translator:
+            translator || null,
+
+          description:
+            description || null,
+
+          published:
+            published
+
+        };
+
+
+        if (coverPath) {
+          bookData.cover_path =
+            coverPath;
+        }
+
+        if (pdfPath) {
+          bookData.pdf_path =
+            pdfPath;
+        }
+
+
+        if (bookId) {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("books")
+              .update(bookData)
+              .eq(
+                "id",
+                bookId
+              );
+
+          if (error) {
+            throw error;
+          }
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "کتاب با موفقیت به‌روزرسانی شد."
+              : "Book updated successfully."
+          );
+
+        } else {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("books")
+              .insert(bookData);
+
+          if (error) {
+            throw error;
+          }
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "کتاب با موفقیت اضافه شد."
+              : "Book added successfully."
+          );
+
+        }
+
+
+        resetBookForm();
+
+        await loadBooks();
+
+      } catch (error) {
+
+        console.error(
+          "Save book error:",
+          error
+        );
+
+        showMessage(
+          error.message ||
+          (
+            currentLanguage === "fa"
+              ? "خطایی هنگام ذخیره کتاب رخ داد."
+              : "An error occurred while saving the book."
+          ),
+          "error"
+        );
+
+      } finally {
+
+        saveButton.disabled = false;
+
+        saveButton.textContent =
+          currentLanguage === "fa"
+            ? "ذخیره کتاب"
+            : "Save Book";
+
+      }
+
+    }
+  );
+
+
+  async function deleteBook(id) {
+
+    const book =
+      books.find(
+        item => item.id === id
+      );
+
+    if (!book) {
+      return;
+    }
+
+    const confirmed =
+      confirm(
+        currentLanguage === "fa"
+          ? `آیا مطمئن هستید که می‌خواهید کتاب «${book.title}» را حذف کنید؟`
+          : `Are you sure you want to delete "${book.title}"?`
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+
+      if (book.pdf_path) {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .storage
+            .from("Books")
+            .remove([
+              book.pdf_path
+            ]);
+
+        if (error) {
+          console.warn(error);
+        }
+
+      }
+
+      if (book.cover_path) {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .storage
+            .from("Books")
+            .remove([
+              book.cover_path
+            ]);
+
+        if (error) {
+          console.warn(error);
+        }
+
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("books")
+          .delete()
+          .eq("id", id);
+
+      if (error) {
+        throw error;
+      }
+
+      showMessage(
+        currentLanguage === "fa"
+          ? "کتاب با موفقیت حذف شد."
+          : "Book deleted successfully."
+      );
+
+      await loadBooks();
+
+    } catch (error) {
+
+      console.error(
+        "Delete book error:",
+        error
+      );
+
+      showMessage(
+        error.message ||
+        "Unable to delete book.",
+        "error"
+      );
+
+    }
+
+  }
+
+
+  /* =========================================
+     ARTICLES
+     ========================================= */
+
+  async function loadArticles() {
+
+    const tbody =
+      document.getElementById(
+        "articlesTableBody"
+      );
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6">
+          Loading articles...
+        </td>
+      </tr>
+    `;
+
+    try {
 
       const {
         data,
         error
       } =
         await supabaseClient
-          .from("books")
+          .from("articles")
           .select("*")
-          .order("created_at", {
-            ascending: false
-          });
-
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
 
       if (error) {
-
-        console.error(error);
-
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6">
-              Error loading books:
-              ${escapeHtml(error.message)}
-            </td>
-          </tr>
-        `;
-
-        return;
+        throw error;
       }
 
+      articles = data || [];
 
-      books = data || [];
-
-      renderBooks();
+      renderArticles();
 
       updateStats();
-    }
 
+    } catch (error) {
 
-    // =========================
-    // RENDER BOOKS
-    // =========================
-
-    function renderBooks() {
-
-      const tbody =
-        document.getElementById("booksTableBody");
-
-
-      if (!books.length) {
-
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6">
-              No books found.
-            </td>
-          </tr>
-        `;
-
-        return;
-      }
-
-
-      tbody.innerHTML =
-        books.map(book => {
-
-          const status =
-            book.published
-              ? `<span class="status published">Published</span>`
-              : `<span class="status unpublished">Unpublished</span>`;
-
-
-          return `
-            <tr>
-
-              <td>
-                ${escapeHtml(book.title || "")}
-              </td>
-
-              <td>
-                ${escapeHtml(book.author || "")}
-              </td>
-
-              <td>
-                ${escapeHtml(book.category || "-")}
-              </td>
-
-              <td>
-                ${escapeHtml(book.language || "-")}
-              </td>
-
-              <td>
-                ${status}
-              </td>
-
-              <td>
-
-                <div class="actions">
-
-                  <button
-                    class="dark small-btn"
-                    onclick="editBook('${book.id}')"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    class="danger small-btn"
-                    onclick="deleteBook('${book.id}')"
-                  >
-                    Delete
-                  </button>
-
-                </div>
-
-              </td>
-
-            </tr>
-          `;
-
-        }).join("");
-    }
-
-
-    // =========================
-    // STATS
-    // =========================
-
-    function updateStats() {
-
-      const total =
-        books.length;
-
-      const published =
-        books.filter(book => book.published).length;
-
-
-      document.getElementById("totalBooks")
-        .textContent = total;
-
-      document.getElementById("publishedBooks")
-        .textContent = published;
-
-      document.getElementById("totalUsers")
-        .textContent = users.length;
-    }
-
-
-    // =========================
-    // ESCAPE HTML
-    // =========================
-
-    function escapeHtml(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-
-    // =========================
-    // SHOW ADD BOOK FORM
-    // =========================
-
-    function showAddBookForm() {
-
-      resetBookForm();
-
-      document.getElementById("bookFormPanel")
-        .scrollIntoView({
-          behavior: "smooth"
-        });
-    }
-
-
-    // =========================
-    // RESET BOOK FORM
-    // =========================
-
-    function resetBookForm() {
-
-      document.getElementById("bookForm").reset();
-
-      document.getElementById("bookId").value = "";
-
-      document.getElementById("published").checked = true;
-
-      document.getElementById("formTitle").textContent =
-        currentLanguage === "fa"
-          ? "افزودن کتاب جدید"
-          : "Add New Book";
-
-      document.getElementById("saveBookBtn").textContent =
-        currentLanguage === "fa"
-          ? "ذخیره کتاب"
-          : "Save Book";
-
-      document.getElementById("coverFileName").textContent = "";
-
-      document.getElementById("pdfFileName").textContent = "";
-    }    // =========================
-    // EDIT BOOK
-    // =========================
-
-    async function editBook(id) {
-
-      const book =
-        books.find(item => item.id === id);
-
-      if (!book) {
-        showMessage(
-          "Book not found.",
-          "error"
-        );
-        return;
-      }
-
-
-      document.getElementById("bookId").value =
-        book.id || "";
-
-      document.getElementById("title").value =
-        book.title || "";
-
-      document.getElementById("author").value =
-        book.author || "";
-
-      document.getElementById("category").value =
-        book.category || "";
-
-      document.getElementById("publicationYear").value =
-        book.publication_year || "";
-
-      document.getElementById("language").value =
-        book.language || "English";
-
-      document.getElementById("isbn").value =
-        book.isbn || "";
-
-      document.getElementById("translator").value =
-        book.translator || "";
-
-      document.getElementById("description").value =
-        book.description || "";
-
-      document.getElementById("published").checked =
-        !!book.published;
-
-
-      document.getElementById("formTitle").textContent =
-        currentLanguage === "fa"
-          ? "ویرایش کتاب"
-          : "Edit Book";
-
-
-      document.getElementById("saveBookBtn").textContent =
-        currentLanguage === "fa"
-          ? "به‌روزرسانی کتاب"
-          : "Update Book";
-
-
-      document.getElementById("coverFileName").textContent =
-        book.cover_path
-          ? `Current cover: ${book.cover_path}`
-          : "";
-
-      document.getElementById("pdfFileName").textContent =
-        book.pdf_path
-          ? `Current PDF: ${book.pdf_path}`
-          : "";
-
-
-      document.getElementById("bookFormPanel")
-        .scrollIntoView({
-          behavior: "smooth"
-        });
-    }
-
-
-    // =========================
-    // SAVE BOOK
-    // =========================
-
-    document.getElementById("bookForm")
-      .addEventListener("submit", async function(event) {
-
-        event.preventDefault();
-
-        const saveButton =
-          document.getElementById("saveBookBtn");
-
-        saveButton.disabled = true;
-
-        saveButton.textContent =
-          currentLanguage === "fa"
-            ? "در حال ذخیره..."
-            : "Saving...";
-
-
-        try {
-
-          const bookId =
-            document.getElementById("bookId").value.trim();
-
-          const title =
-            document.getElementById("title").value.trim();
-
-          const author =
-            document.getElementById("author").value.trim();
-
-          const category =
-            document.getElementById("category").value.trim();
-
-          const publicationYearValue =
-            document.getElementById("publicationYear").value.trim();
-
-          const publicationYear =
-            publicationYearValue
-              ? parseInt(publicationYearValue, 10)
-              : null;
-
-          const language =
-            document.getElementById("language").value;
-
-          const isbn =
-            document.getElementById("isbn").value.trim();
-
-          const translator =
-            document.getElementById("translator").value.trim();
-
-          const description =
-            document.getElementById("description").value.trim();
-
-          const published =
-            document.getElementById("published").checked;
-
-
-          const coverFile =
-            document.getElementById("coverFile").files[0];
-
-          const pdfFile =
-            document.getElementById("pdfFile").files[0];
-
-
-          if (!title || !author) {
-
-            showMessage(
-              currentLanguage === "fa"
-                ? "عنوان و نویسنده الزامی است."
-                : "Title and author are required.",
-              "error"
-            );
-
-            return;
-          }
-
-
-          // =========================
-          // UPLOAD COVER
-          // =========================
-
-          let coverPath = null;
-
-
-          if (coverFile) {
-
-            const extension =
-              coverFile.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-
-            const safeName =
-              title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/^-+|-+$/g, "");
-
-
-            const fileName =
-              `${Date.now()}-${safeName}.${extension}`;
-
-
-            coverPath =
-              `covers/${fileName}`;
-
-
-            const {
-              error: uploadError
-            } =
-              await supabaseClient
-                .storage
-                .from("Books")
-                .upload(
-                  coverPath,
-                  coverFile,
-                  {
-                    upsert: false
-                  }
-                );
-
-
-            if (uploadError) {
-              throw uploadError;
-            }
-          }
-
-
-          // =========================
-          // UPLOAD PDF
-          // =========================
-
-          let pdfPath = null;
-
-
-          if (pdfFile) {
-
-            const extension =
-              pdfFile.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-
-            if (extension !== "pdf") {
-
-              throw new Error(
-                "Please select a PDF file."
-              );
-            }
-
-
-            const safeName =
-              title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/^-+|-+$/g, "");
-
-
-            const fileName =
-              `${Date.now()}-${safeName}.pdf`;
-
-
-            pdfPath =
-              `pdfs/${fileName}`;
-
-
-            const {
-              error: uploadError
-            } =
-              await supabaseClient
-                .storage
-                .from("Books")
-                .upload(
-                  pdfPath,
-                  pdfFile,
-                  {
-                    upsert: false,
-                    contentType: "application/pdf"
-                  }
-                );
-
-
-            if (uploadError) {
-              throw uploadError;
-            }
-          }
-
-
-          // =========================
-          // BOOK DATA
-          // =========================
-
-          const bookData = {
-
-            title: title,
-
-            author: author,
-
-            category:
-              category || null,
-
-            publication_year:
-              publicationYear,
-
-            language:
-              language || null,
-
-            isbn:
-              isbn || null,
-
-            translator:
-              translator || null,
-
-            description:
-              description || null,
-
-            published:
-              published
-
-          };
-
-
-          if (coverPath) {
-            bookData.cover_path =
-              coverPath;
-          }
-
-
-          if (pdfPath) {
-            bookData.pdf_path =
-              pdfPath;
-          }
-
-
-          // =========================
-          // INSERT / UPDATE
-          // =========================
-
-          if (bookId) {
-
-            const {
-              error
-            } =
-              await supabaseClient
-                .from("books")
-                .update(bookData)
-                .eq("id", bookId);
-
-
-            if (error) {
-              throw error;
-            }
-
-
-            showMessage(
-              currentLanguage === "fa"
-                ? "کتاب با موفقیت به‌روزرسانی شد."
-                : "Book updated successfully.",
-              "success"
-            );
-
-          } else {
-
-            const {
-              error
-            } =
-              await supabaseClient
-                .from("books")
-                .insert(bookData);
-
-
-            if (error) {
-              throw error;
-            }
-
-
-            showMessage(
-              currentLanguage === "fa"
-                ? "کتاب با موفقیت اضافه شد."
-                : "Book added successfully.",
-              "success"
-            );
-          }
-
-
-          resetBookForm();
-
-          await loadBooks();
-
-        } catch (error) {
-
-          console.error(
-            "Save book error:",
-            error
-          );
-
-
-          showMessage(
-            error.message ||
-            (
-              currentLanguage === "fa"
-                ? "خطایی هنگام ذخیره کتاب رخ داد."
-                : "An error occurred while saving the book."
-            ),
-            "error"
-          );
-
-        } finally {
-
-          saveButton.disabled = false;
-
-          saveButton.textContent =
-            currentLanguage === "fa"
-              ? "ذخیره کتاب"
-              : "Save Book";
-        }
-
-      });
-          // =========================
-    // DELETE BOOK
-    // =========================
-
-    async function deleteBook(id) {
-
-      const book =
-        books.find(item => item.id === id);
-
-      if (!book) {
-        return;
-      }
-
-
-      const confirmed =
-        confirm(
-          currentLanguage === "fa"
-            ? `آیا مطمئن هستید که می‌خواهید کتاب «${book.title}» را حذف کنید؟`
-            : `Are you sure you want to delete "${book.title}"?`
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      try {
-
-        // Delete PDF from storage
-        if (book.pdf_path) {
-
-          const {
-            error: pdfError
-          } =
-            await supabaseClient
-              .storage
-              .from("Books")
-              .remove([
-                book.pdf_path
-              ]);
-
-
-          if (pdfError) {
-            console.warn(
-              "PDF delete warning:",
-              pdfError
-            );
-          }
-        }
-
-
-        // Delete cover from storage
-        if (book.cover_path) {
-
-          const {
-            error: coverError
-          } =
-            await supabaseClient
-              .storage
-              .from("Books")
-              .remove([
-                book.cover_path
-              ]);
-
-
-          if (coverError) {
-            console.warn(
-              "Cover delete warning:",
-              coverError
-            );
-          }
-        }
-
-
-        // Delete database record
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("books")
-            .delete()
-            .eq("id", id);
-
-
-        if (error) {
-          throw error;
-        }
-
-
-        showMessage(
-          currentLanguage === "fa"
-            ? "کتاب با موفقیت حذف شد."
-            : "Book deleted successfully.",
-          "success"
-        );
-
-
-        await loadBooks();
-
-      } catch (error) {
-
-        console.error(
-          "Delete book error:",
-          error
-        );
-
-
-        showMessage(
-          error.message ||
-          (
-            currentLanguage === "fa"
-              ? "خطایی هنگام حذف کتاب رخ داد."
-              : "An error occurred while deleting the book."
-          ),
-          "error"
-        );
-      }
-    }
-
-
-    // =========================
-    // LOAD USERS
-    // =========================
-
-    async function loadUsers() {
-
-      const tbody =
-        document.getElementById("usersTableBody");
-
+      console.error(
+        "Load articles error:",
+        error
+      );
 
       tbody.innerHTML = `
         <tr>
           <td colspan="6">
-            Loading users...
+            Error loading articles:
+            ${escapeHtml(error.message)}
           </td>
         </tr>
       `;
 
+    }
 
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from("profiles")
-            .select(
-              "id, first_name, last_name, phone, email_consent, role, created_at"
-            )
-            .order("created_at", {
-              ascending: false
-            });
+  }
 
 
-        if (error) {
-          throw error;
-        }
+  function renderArticles() {
 
+    const tbody =
+      document.getElementById(
+        "articlesTableBody"
+      );
 
-        users = data || [];
+    if (!articles.length) {
 
-        renderUsers();
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            ${
+              currentLanguage === "fa"
+                ? "مقاله‌ای پیدا نشد."
+                : "No articles found."
+            }
+          </td>
+        </tr>
+      `;
 
-        updateStats();
-
-      } catch (error) {
-
-        console.error(
-          "Load users error:",
-          error
-        );
-
-
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6">
-              Error loading users:
-              ${escapeHtml(error.message)}
-            </td>
-          </tr>
-        `;
-      }
+      return;
     }
 
 
-    // =========================
-    // RENDER USERS
-    // =========================
+    tbody.innerHTML =
+      articles.map(article => {
 
-    function renderUsers() {
-
-      const tbody =
-        document.getElementById("usersTableBody");
-
-
-      if (!users.length) {
-
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6">
-              ${
+        const status =
+          article.published
+            ? `<span class="status published">${
                 currentLanguage === "fa"
-                  ? "کاربری پیدا نشد."
-                  : "No users found."
-              }
+                  ? "منتشر شده"
+                  : "Published"
+              }</span>`
+            : `<span class="status unpublished">${
+                currentLanguage === "fa"
+                  ? "منتشر نشده"
+                  : "Unpublished"
+              }</span>`;
+
+        const publishedDate =
+          article.published_at
+            ? new Date(
+                article.published_at
+              ).toLocaleDateString(
+                currentLanguage === "fa"
+                  ? "fa-IR"
+                  : "en-AU"
+              )
+            : "-";
+
+        return `
+          <tr>
+
+            <td>
+              <div class="article-preview">
+                ${escapeHtml(article.title || "")}
+              </div>
             </td>
+
+            <td>
+              ${escapeHtml(article.author || "-")}
+            </td>
+
+            <td>
+              ${escapeHtml(article.category || "-")}
+            </td>
+
+            <td>
+              ${status}
+            </td>
+
+            <td>
+              ${escapeHtml(publishedDate)}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="dark small-btn"
+                  onclick="editArticle('${article.id}')">
+                  ${
+                    currentLanguage === "fa"
+                      ? "ویرایش"
+                      : "Edit"
+                  }
+                </button>
+
+                <button
+                  class="danger small-btn"
+                  onclick="deleteArticle('${article.id}')">
+                  ${
+                    currentLanguage === "fa"
+                      ? "حذف"
+                      : "Delete"
+                  }
+                </button>
+
+              </div>
+
+            </td>
+
           </tr>
         `;
 
-        return;
-      }
+      }).join("");
+
+  }
 
 
-      tbody.innerHTML =
-        users.map(user => {
+  function showAddArticleForm() {
 
-          const fullName =
-            [
-              user.first_name,
-              user.last_name
-            ]
-              .filter(Boolean)
-              .join(" ") ||
-            "-";
+    resetArticleForm();
 
+    document.getElementById(
+      "articleFormPanel"
+    ).scrollIntoView({
+      behavior: "smooth"
+    });
 
-          const phone =
-            user.phone || "-";
+  }
 
 
-          const emailConsent =
-            user.email_consent
-              ? (
-                  currentLanguage === "fa"
-                    ? "بله"
-                    : "Yes"
-                )
-              : (
-                  currentLanguage === "fa"
-                    ? "خیر"
-                    : "No"
-                );
+  function resetArticleForm() {
+
+    document.getElementById(
+      "articleForm"
+    ).reset();
+
+    document.getElementById(
+      "articleId"
+    ).value = "";
+
+    document.getElementById(
+      "articlePublished"
+    ).checked = true;
+
+    document.getElementById(
+      "articleFormTitle"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "افزودن مقاله جدید"
+        : "Add New Article";
+
+    document.getElementById(
+      "saveArticleBtn"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "ذخیره مقاله"
+        : "Save Article";
+
+  }
 
 
-          const role =
-            user.role || "member";
+  function editArticle(id) {
 
+    const article =
+      articles.find(
+        item => item.id === id
+      );
 
-          const joined =
-            user.created_at
-              ? new Date(
-                  user.created_at
-                ).toLocaleDateString(
-                  currentLanguage === "fa"
-                    ? "fa-IR"
-                    : "en-AU"
-                )
-              : "-";
+    if (!article) {
 
+      showMessage(
+        currentLanguage === "fa"
+          ? "مقاله پیدا نشد."
+          : "Article not found.",
+        "error"
+      );
 
-          const isCurrentUser =
-            user.id === currentUserId;
-
-
-          return `
-            <tr>
-
-              <td>
-                ${escapeHtml(fullName)}
-              </td>
-
-              <td>
-                ${escapeHtml(phone)}
-              </td>
-
-              <td>
-                ${emailConsent}
-              </td>
-
-              <td>
-
-                <select
-                  id="role-${user.id}"
-                  ${isCurrentUser ? "disabled" : ""}
-                  style="min-width:120px;"
-                >
-
-                  <option
-                    value="member"
-                    ${role === "member" ? "selected" : ""}
-                  >
-                    Member
-                  </option>
-
-                  <option
-                    value="admin"
-                    ${role === "admin" ? "selected" : ""}
-                  >
-                    Admin
-                  </option>
-
-                </select>
-
-              </td>
-
-              <td>
-                ${joined}
-              </td>
-
-              <td>
-
-                <div class="actions">
-
-                  <button
-                    class="green small-btn"
-                    onclick="updateUserRole('${user.id}')"
-                    ${isCurrentUser ? "disabled" : ""}
-                  >
-                    Save
-                  </button>
-
-                </div>
-
-              </td>
-
-            </tr>
-          `;
-
-        }).join("");
+      return;
     }
 
 
-    // =========================
-    // UPDATE USER ROLE
-    // =========================
+    document.getElementById(
+      "articleId"
+    ).value =
+      article.id || "";
 
-    async function updateUserRole(userId) {
+    document.getElementById(
+      "articleTitle"
+    ).value =
+      article.title || "";
 
-      if (userId === currentUserId) {
+    document.getElementById(
+      "articleAuthor"
+    ).value =
+      article.author || "";
 
-        showMessage(
-          currentLanguage === "fa"
-            ? "نمی‌توانید نقش حساب خودتان را تغییر دهید."
-            : "You cannot change your own administrator role.",
-          "error"
-        );
+    document.getElementById(
+      "articleCategory"
+    ).value =
+      article.category || "";
 
-        return;
-      }
+    document.getElementById(
+      "articleExcerpt"
+    ).value =
+      article.excerpt || "";
+
+    document.getElementById(
+      "articleContent"
+    ).value =
+      article.content || "";
+
+    document.getElementById(
+      "articleCoverPath"
+    ).value =
+      article.cover_path || "";
+
+    document.getElementById(
+      "articlePublished"
+    ).checked =
+      !!article.published;
 
 
-      const select =
+    document.getElementById(
+      "articleFormTitle"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "ویرایش مقاله"
+        : "Edit Article";
+
+    document.getElementById(
+      "saveArticleBtn"
+    ).textContent =
+      currentLanguage === "fa"
+        ? "به‌روزرسانی مقاله"
+        : "Update Article";
+
+
+    document.getElementById(
+      "articleFormPanel"
+    ).scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
+
+  document.getElementById(
+    "articleForm"
+  ).addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      const saveButton =
         document.getElementById(
-          `role-${userId}`
+          "saveArticleBtn"
         );
 
+      saveButton.disabled = true;
 
-      if (!select) {
-        return;
-      }
-
-
-      const newRole =
-        select.value;
-
-
-      if (
-        newRole !== "member" &&
-        newRole !== "admin"
-      ) {
-        return;
-      }
+      saveButton.textContent =
+        currentLanguage === "fa"
+          ? "در حال ذخیره..."
+          : "Saving...";
 
 
       try {
 
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("profiles")
-            .update({
-              role: newRole
-            })
-            .eq("id", userId);
+        const articleId =
+          document.getElementById(
+            "articleId"
+          ).value.trim();
+
+        const title =
+          document.getElementById(
+            "articleTitle"
+          ).value.trim();
+
+        const author =
+          document.getElementById(
+            "articleAuthor"
+          ).value.trim();
+
+        const category =
+          document.getElementById(
+            "articleCategory"
+          ).value.trim();
+
+        const excerpt =
+          document.getElementById(
+            "articleExcerpt"
+          ).value.trim();
+
+        const content =
+          document.getElementById(
+            "articleContent"
+          ).value.trim();
+
+        const coverPath =
+          document.getElementById(
+            "articleCoverPath"
+          ).value.trim();
+
+        const published =
+          document.getElementById(
+            "articlePublished"
+          ).checked;
 
 
-        if (error) {
-          throw error;
+        if (!title || !author || !content) {
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "عنوان، نویسنده و متن مقاله الزامی است."
+              : "Title, author and content are required.",
+            "error"
+          );
+
+          return;
         }
 
 
-        showMessage(
-          currentLanguage === "fa"
-            ? "نقش کاربر با موفقیت تغییر کرد."
-            : "User role updated successfully.",
-          "success"
-        );
+        const articleData = {
+
+          title: title,
+
+          author: author,
+
+          category:
+            category || null,
+
+          excerpt:
+            excerpt || null,
+
+          content:
+            content,
+
+          cover_path:
+            coverPath || null,
+
+          published:
+            published,
+
+          published_at:
+            published
+              ? new Date().toISOString()
+              : null,
+
+          updated_at:
+            new Date().toISOString()
+
+        };
 
 
-        await loadUsers();
+        if (articleId) {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("articles")
+              .update(articleData)
+              .eq(
+                "id",
+                articleId
+              );
+
+          if (error) {
+            throw error;
+          }
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "مقاله با موفقیت به‌روزرسانی شد."
+              : "Article updated successfully."
+          );
+
+        } else {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("articles")
+              .insert(articleData);
+
+          if (error) {
+            throw error;
+          }
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "مقاله با موفقیت اضافه شد."
+              : "Article added successfully."
+          );
+
+        }
+
+
+        resetArticleForm();
+
+        await loadArticles();
 
       } catch (error) {
 
         console.error(
-          "Update user role error:",
+          "Save article error:",
           error
         );
-
 
         showMessage(
           error.message ||
           (
             currentLanguage === "fa"
-              ? "خطایی هنگام تغییر نقش کاربر رخ داد."
-              : "An error occurred while updating the user role."
+              ? "خطایی هنگام ذخیره مقاله رخ داد."
+              : "An error occurred while saving the article."
           ),
           "error"
         );
+
+      } finally {
+
+        saveButton.disabled = false;
+
+        saveButton.textContent =
+          currentLanguage === "fa"
+            ? "ذخیره مقاله"
+            : "Save Article";
+
       }
+
     }
-          // =========================
-    // FILE NAME DISPLAY
-    // =========================
-
-    document.getElementById("coverFile")
-      .addEventListener("change", function() {
-
-        const file = this.files[0];
-
-        document.getElementById("coverFileName")
-          .textContent =
-            file
-              ? `Selected: ${file.name}`
-              : "";
-      });
+  );
 
 
-    document.getElementById("pdfFile")
-      .addEventListener("change", function() {
+  async function deleteArticle(id) {
 
-        const file = this.files[0];
+    const article =
+      articles.find(
+        item => item.id === id
+      );
 
-        document.getElementById("pdfFileName")
-          .textContent =
-            file
-              ? `Selected: ${file.name}`
-              : "";
-      });
-
-
-    // =========================
-    // LOGOUT
-    // =========================
-
-    async function logout() {
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient.auth.signOut();
-
-
-        if (error) {
-          throw error;
-        }
-
-
-        window.location.href =
-          "auth.html";
-
-      } catch (error) {
-
-        console.error(
-          "Logout error:",
-          error
-        );
-
-
-        showMessage(
-          error.message ||
-          "Unable to log out.",
-          "error"
-        );
-      }
+    if (!article) {
+      return;
     }
 
 
-    // =========================
-    // AUTH STATE LISTENER
-    // =========================
+    const confirmed =
+      confirm(
+        currentLanguage === "fa"
+          ? `آیا مطمئن هستید که می‌خواهید مقاله «${article.title}» را حذف کنید؟`
+          : `Are you sure you want to delete "${article.title}"?`
+      );
 
-    supabaseClient.auth.onAuthStateChange(
-      (event, session) => {
+    if (!confirmed) {
+      return;
+    }
 
-        if (
-          event === "SIGNED_OUT" ||
-          !session
-        ) {
 
-          const dashboard =
-            document.getElementById("dashboard");
+    try {
 
-          if (dashboard) {
-            dashboard.style.display = "none";
-          }
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("articles")
+          .delete()
+          .eq(
+            "id",
+            id
+          );
 
-          const loading =
-            document.getElementById("loading");
-
-          if (loading) {
-            loading.style.display = "none";
-          }
-
-          const accessDenied =
-            document.getElementById("accessDenied");
-
-          if (accessDenied) {
-            accessDenied.classList.remove("hidden");
-          }
-        }
+      if (error) {
+        throw error;
       }
-    );
 
 
-    // =========================
-    // START ADMIN PANEL
-    // =========================
+      showMessage(
+        currentLanguage === "fa"
+          ? "مقاله با موفقیت حذف شد."
+          : "Article deleted successfully."
+      );
 
-    checkAdmin();
+      await loadArticles();
 
-  </script>
+    } catch (error) {
+
+      console.error(
+        "Delete article error:",
+        error
+      );
+
+      showMessage(
+        error.message ||
+        (
+          currentLanguage === "fa"
+            ? "خطایی هنگام حذف مقاله رخ داد."
+            : "An error occurred while deleting the article."
+        ),
+        "error"
+      );
+
+    }
+
+  }
+
+
+  /* =========================================
+     USERS
+     ========================================= */
+
+  async function loadUsers() {
+
+    const tbody =
+      document.getElementById(
+        "usersTableBody"
+      );
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6">
+          Loading users...
+        </td>
+      </tr>
+    `;
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id, first_name, last_name, phone, email_consent, role, created_at"
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      if (error) {
+        throw error;
+      }
+
+      users = data || [];
+
+      renderUsers();
+
+      updateStats();
+
+    } catch (error) {
+
+      console.error(
+        "Load users error:",
+        error
+      );
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            Error loading users:
+            ${escapeHtml(error.message)}
+          </td>
+        </tr>
+      `;
+
+    }
+
+  }
+
+
+  function renderUsers() {
+
+    const tbody =
+      document.getElementById(
+        "usersTableBody"
+      );
+
+
+    if (!users.length) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            ${
+              currentLanguage === "fa"
+                ? "کاربری پیدا نشد."
+                : "No users found."
+            }
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+
+    tbody.innerHTML =
+      users.map(user => {
+
+        const fullName =
+          [
+            user.first_name,
+            user.last_name
+          ]
+            .filter(Boolean)
+            .join(" ") ||
+          "-";
+
+
+        const phone =
+          user.phone || "-";
+
+
+        const emailConsent =
+          user.email_consent
+            ? (
+                currentLanguage === "fa"
+                  ? "بله"
+                  : "Yes"
+              )
+            : (
+                currentLanguage === "fa"
+                  ? "خیر"
+                  : "No"
+              );
+
+
+        const role =
+          user.role || "member";
+
+
+        const joined =
+          user.created_at
+            ? new Date(
+                user.created_at
+              ).toLocaleDateString(
+                currentLanguage === "fa"
+                  ? "fa-IR"
+                  : "en-AU"
+              )
+            : "-";
+
+
+        const isCurrentUser =
+          user.id === currentUserId;
+
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(fullName)}
+            </td>
+
+            <td>
+              ${escapeHtml(phone)}
+            </td>
+
+            <td>
+              ${emailConsent}
+            </td>
+
+            <td>
+
+              <select
+                id="role-${user.id}"
+                ${isCurrentUser ? "disabled" : ""}
+                style="min-width:120px;">
+
+                <option
+                  value="member"
+                  ${role === "member" ? "selected" : ""}>
+                  Member
+                </option>
+
+                <option
+                  value="admin"
+                  ${role === "admin" ? "selected" : ""}>
+                  Admin
+                </option>
+
+              </select>
+
+            </td>
+
+            <td>
+              ${escapeHtml(joined)}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="green small-btn"
+                  onclick="updateUserRole('${user.id}')"
+                  ${isCurrentUser ? "disabled" : ""}>
+                  ${
+                    currentLanguage === "fa"
+                      ? "ذخیره"
+                      : "Save"
+                  }
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+
+  }
+
+
+  async function updateUserRole(userId) {
+
+    if (userId === currentUserId) {
+
+      showMessage(
+        currentLanguage === "fa"
+          ? "نمی‌توانید نقش حساب خودتان را تغییر دهید."
+          : "You cannot change your own administrator role.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const select =
+      document.getElementById(
+        `role-${userId}`
+      );
+
+
+    if (!select) {
+      return;
+    }
+
+
+    const newRole =
+      select.value;
+
+
+    if (
+      newRole !== "member" &&
+      newRole !== "admin"
+    ) {
+      return;
+    }
+
+
+    try {
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .update({
+            role: newRole
+          })
+          .eq(
+            "id",
+            userId
+          );
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      showMessage(
+        currentLanguage === "fa"
+          ? "نقش کاربر با موفقیت تغییر کرد."
+          : "User role updated successfully."
+      );
+
+      await loadUsers();
+
+    } catch (error) {
+
+      console.error(
+        "Update user role error:",
+        error
+      );
+
+      showMessage(
+        error.message ||
+        (
+          currentLanguage === "fa"
+            ? "خطایی هنگام تغییر نقش کاربر رخ داد."
+            : "An error occurred while updating the user role."
+        ),
+        "error"
+      );
+
+    }
+
+  }
+
+
+  /* =========================================
+     STATS
+     ========================================= */
+
+  function updateStats() {
+
+    const total =
+      books.length;
+
+    const published =
+      books.filter(
+        book => book.published
+      ).length;
+
+    document.getElementById(
+      "totalBooks"
+    ).textContent =
+      total;
+
+    document.getElementById(
+      "publishedBooks"
+    ).textContent =
+      published;
+
+    document.getElementById(
+      "totalArticles"
+    ).textContent =
+      articles.length;
+
+    document.getElementById(
+      "totalUsers"
+    ).textContent =
+      users.length;
+
+  }
+
+
+  /* =========================================
+     ESCAPE HTML
+     ========================================= */
+
+  function escapeHtml(value) {
+
+    return String(
+      value ?? ""
+    )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  /* =========================================
+     FILE NAME DISPLAY
+     ========================================= */
+
+  document.getElementById(
+    "coverFile"
+  ).addEventListener(
+    "change",
+    function() {
+
+      const file =
+        this.files[0];
+
+      document.getElementById(
+        "coverFileName"
+      ).textContent =
+        file
+          ? `Selected: ${file.name}`
+          : "";
+
+    }
+  );
+
+
+  document.getElementById(
+    "pdfFile"
+  ).addEventListener(
+    "change",
+    function() {
+
+      const file =
+        this.files[0];
+
+      document.getElementById(
+        "pdfFileName"
+      ).textContent =
+        file
+          ? `Selected: ${file.name}`
+          : "";
+
+    }
+  );
+
+
+  /* =========================================
+     LOGOUT
+     ========================================= */
+
+  async function logout() {
+
+    try {
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .auth
+          .signOut();
+
+      if (error) {
+        throw error;
+      }
+
+      window.location.href =
+        "auth.html";
+
+    } catch (error) {
+
+      console.error(
+        "Logout error:",
+        error
+      );
+
+      showMessage(
+        error.message ||
+        "Unable to log out.",
+        "error"
+      );
+
+    }
+
+  }
+
+
+  /* =========================================
+     AUTH STATE
+     ========================================= */
+
+  supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+      if (
+        event === "SIGNED_OUT" ||
+        !session
+      ) {
+
+        const dashboard =
+          document.getElementById(
+            "dashboard"
+          );
+
+        if (dashboard) {
+          dashboard.style.display =
+            "none";
+        }
+
+        const loading =
+          document.getElementById(
+            "loading"
+          );
+
+        if (loading) {
+          loading.style.display =
+            "none";
+        }
+
+        const accessDenied =
+          document.getElementById(
+            "accessDenied"
+          );
+
+        if (accessDenied) {
+          accessDenied.classList.remove(
+            "hidden"
+          );
+        }
+
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     START
+     ========================================= */
+
+  checkAdmin();
+
+</script>
 
 </body>
 </html>
