@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    HSKRC | Hassan Sabbah Knowledge & Research Centre
-  </title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>HSKRC | Hassan Sabbah Knowledge & Research Centre</title>
+  <meta name="description" content="Hassan Sabbah Knowledge & Research Centre — Digital Library & Research Centre.">
+  <meta name="theme-color" content="#0d1117">
 
   <style>
+    :root {
+      --bg: #0d1117;
+      --bg-soft: #10161f;
+      --panel: #151a22;
+      --panel-2: #181f29;
+      --panel-hover: #1c2530;
+      --border: rgba(255,255,255,.09);
+      --border-green: rgba(66,211,146,.30);
+      --text: #f5f7fa;
+      --muted: #9ba5b1;
+      --green: #42d392;
+      --green-dark: #2bb879;
+      --white: #ffffff;
+      --shadow: 0 20px 60px rgba(0,0,0,.30);
+      --radius: 18px;
+      --max-width: 1180px;
+    }
 
     * {
       box-sizing: border-box;
@@ -24,845 +33,1538 @@
       padding: 0;
     }
 
-    body {
-      font-family: Arial, Tahoma, sans-serif;
-      background: #0d1117;
-      color: #f5f5f5;
-      line-height: 1.8;
+    html {
+      scroll-behavior: smooth;
     }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(66,211,146,.07), transparent 28%),
+        radial-gradient(circle at 85% 25%, rgba(66,211,146,.045), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.5), transparent 80%);
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
-      background: #151a22;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #252c36;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      background: rgba(13,17,23,.86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
 
-    .logo {
-      font-size: 27px;
-      font-weight: bold;
-      color: #42d392;
-      letter-spacing: 1px;
-    }
-
-    nav {
+    .nav {
+      min-height: 76px;
       display: flex;
       align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 28px;
     }
 
-    nav a {
-      color: #f5f5f5;
-      text-decoration: none;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(145deg, rgba(66,211,146,.24), rgba(66,211,146,.06));
+      border: 1px solid rgba(66,211,146,.30);
+      color: var(--green);
       font-size: 16px;
+      font-weight: 800;
+      letter-spacing: .4px;
+      box-shadow: 0 8px 30px rgba(66,211,146,.08);
     }
 
-    nav a:hover {
-      color: #42d392;
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 750;
+      letter-spacing: .2px;
+    }
+
+    .brand-subtitle {
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .nav-links a,
+    .language-btn {
+      position: relative;
+      border: 0;
+      background: transparent;
+      color: #c7cdd5;
+      padding: 9px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition:
+        color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+    }
+
+    .nav-links a:hover,
+    .language-btn:hover {
+      color: var(--white);
+      background: rgba(255,255,255,.055);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 13px;
+      right: 13px;
+      bottom: 4px;
+      height: 2px;
+      border-radius: 99px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .2s ease;
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .language-btn {
-      background: transparent;
-      color: #42d392;
-      border: 1px solid #42d392;
-      padding: 8px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      min-width: 78px;
     }
 
-    .language-btn:hover {
-      background: #42d392;
-      color: #07110c;
-    }
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
-      min-height: 78vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 70px 20px;
+      position: relative;
+      padding: 105px 0 92px;
+      overflow: hidden;
+    }
 
-      background:
-        radial-gradient(
-          circle at center,
-          #1a2933 0%,
-          #0d1117 65%
-        );
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      border-radius: 50%;
+      background: rgba(66,211,146,.065);
+      filter: blur(90px);
+      top: -260px;
+      right: -190px;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(66,211,146,.035);
+      filter: blur(80px);
+      bottom: -260px;
+      left: -180px;
+      pointer-events: none;
     }
 
     .hero-content {
-      max-width: 900px;
+      position: relative;
+      z-index: 2;
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(66,211,146,.22);
+      background: rgba(66,211,146,.055);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      margin-bottom: 23px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px rgba(66,211,146,.7);
     }
 
     .hero h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: clamp(39px, 6vw, 72px);
+      line-height: 1.06;
+      letter-spacing: -2.5px;
+      font-weight: 820;
+      margin-bottom: 22px;
     }
 
     .hero h1 .green {
-      color: #42d392;
+      color: var(--green);
     }
 
-    .hero-subtitle {
-      font-size: 23px;
-      color: #d0d5dc;
-      margin-bottom: 15px;
+    .hero-tagline {
+      font-size: clamp(19px, 2.5vw, 27px);
+      color: #dce2e8;
+      font-weight: 550;
+      margin-bottom: 19px;
     }
 
     .hero-description {
-      color: #aeb6c2;
-      font-size: 18px;
-      margin-bottom: 35px;
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
     }
 
-    .buttons {
+    .hero-buttons {
+      margin-top: 34px;
       display: flex;
       justify-content: center;
-      gap: 15px;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .btn {
-      padding: 13px 26px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 17px;
-      display: inline-block;
+      min-height: 48px;
+      padding: 0 21px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        background .22s ease,
+        border-color .22s ease;
     }
 
     .btn-primary {
-      background: #42d392;
       color: #07110c;
+      background: var(--green);
+      box-shadow: 0 12px 30px rgba(66,211,146,.17);
+    }
+
+    .btn-primary:hover {
+      background: #55dda0;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(66,211,146,.25);
     }
 
     .btn-secondary {
-      color: #42d392;
-      border: 1px solid #42d392;
+      color: #e9edf1;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--border);
     }
 
     .btn-secondary:hover {
-      background: #42d392;
-      color: #07110c;
+      background: rgba(255,255,255,.075);
+      border-color: rgba(66,211,146,.28);
+      transform: translateY(-2px);
     }
+
+    /* =========================
+       SECTIONS
+    ========================= */
 
     section {
-      padding: 70px 7%;
+      scroll-margin-top: 95px;
     }
 
-    .section-title {
-      text-align: center;
-      color: #42d392;
-      font-size: 32px;
-      margin-bottom: 40px;
+    .section {
+      padding: 78px 0;
     }
 
-    .cards {
-      max-width: 1050px;
-      margin: auto;
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
-      gap: 22px;
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 34px;
     }
 
-    .card {
-      background: #151a22;
-      border: 1px solid #252c36;
-      border-radius: 15px;
-      padding: 28px 20px;
-      text-align: center;
+    .section-kicker {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
     }
 
-    .card-icon {
-      font-size: 38px;
+    .section-heading h2 {
+      font-size: clamp(29px, 4vw, 42px);
+      line-height: 1.2;
+      letter-spacing: -.8px;
       margin-bottom: 12px;
     }
 
-    .card h3 {
-      color: #42d392;
+    .section-heading p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    /* =========================
+       FEATURE CARDS
+    ========================= */
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      position: relative;
+      min-height: 245px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.025), rgba(255,255,255,.008)),
+        var(--panel);
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+      overflow: hidden;
+      transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(66,211,146,.07);
+      filter: blur(45px);
+      top: -80px;
+      right: -60px;
+      transition: opacity .25s ease;
+      opacity: .55;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-green);
+      background: var(--panel-hover);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 49px;
+      height: 49px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      border: 1px solid rgba(66,211,146,.2);
+      background: rgba(66,211,146,.07);
+      color: var(--green);
+      font-size: 21px;
+      margin-bottom: 22px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      line-height: 1.3;
       margin-bottom: 10px;
     }
 
-    .card p {
-      color: #b6bdc7;
+    .feature-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
     }
 
-    .about {
-      background: #12161c;
-      text-align: center;
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 18px;
+      transition: gap .2s ease;
     }
 
-    .about-text {
-      max-width: 850px;
-      margin: auto;
-      color: #c5cad2;
-      font-size: 18px;
+    .feature-link:hover {
+      gap: 11px;
     }
 
-    footer {
-      background: #080a0d;
-      border-top: 1px solid #252c36;
-      padding: 35px 20px;
-      text-align: center;
-      color: #858c96;
+    /* =========================
+       ARTICLES
+    ========================= */
+
+    .article-intro {
+      position: relative;
+      padding: 35px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(66,211,146,.055), transparent 45%),
+        var(--panel);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      overflow: hidden;
     }
 
-    .founder {
-      color: #42d392;
-      font-weight: bold;
-      font-size: 17px;
-      margin-bottom: 8px;
+    .article-intro::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(66,211,146,.055);
+      filter: blur(55px);
+      right: -120px;
+      bottom: -150px;
     }
 
-    .copyright {
+    .article-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 730px;
+    }
+
+    .article-copy h3 {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    .article-copy p {
+      color: var(--muted);
+      line-height: 1.85;
       font-size: 14px;
     }
 
-    @media (max-width: 700px) {
+    .article-action {
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
 
-      header {
+    /* =========================
+       ABOUT
+    ========================= */
+
+    .about-box {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 24px;
+    }
+
+    .about-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 30px;
+    }
+
+    .about-panel.primary {
+      background:
+        linear-gradient(145deg, rgba(66,211,146,.075), transparent 65%),
+        var(--panel);
+      border-color: rgba(66,211,146,.17);
+    }
+
+    .about-panel h3 {
+      font-size: 22px;
+      margin-bottom: 13px;
+    }
+
+    .about-panel p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .about-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin-top: 19px;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #d0d6dc;
+      font-size: 14px;
+    }
+
+    .about-list li span {
+      color: var(--green);
+      font-weight: 900;
+      margin-top: 1px;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+      padding: 25px 0 90px;
+    }
+
+    .cta-box {
+      text-align: center;
+      padding: 55px 30px;
+      border: 1px solid rgba(66,211,146,.16);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(66,211,146,.09), transparent 52%),
+        var(--panel);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(27px, 4vw, 39px);
+      margin-bottom: 12px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 670px;
+      margin: 0 auto 25px;
+      line-height: 1.85;
+      font-size: 14px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.07);
+      background: #080a0d;
+      padding: 27px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      color: #dfe4e9;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .footer-copy {
+      color: #69737f;
+      font-size: 12px;
+    }
+
+    /* =========================
+       PERSIAN
+    ========================= */
+
+    html[dir="rtl"] body {
+      font-family:
+        Tahoma,
+        Arial,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    html[dir="rtl"] .brand-subtitle {
+      letter-spacing: 0;
+    }
+
+    html[dir="rtl"] .section-heading,
+    html[dir="rtl"] .feature-card,
+    html[dir="rtl"] .article-copy,
+    html[dir="rtl"] .about-panel,
+    html[dir="rtl"] .cta-box {
+      text-align: right;
+    }
+
+    html[dir="rtl"] .nav-links {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .about-list li {
+      flex-direction: row;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+      .nav {
+        min-height: 68px;
+      }
+
+      .brand-subtitle {
+        display: none;
+      }
+
+      .nav-links {
+        gap: 1px;
+      }
+
+      .nav-links a,
+      .language-btn {
+        padding: 8px 9px;
+        font-size: 13px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        min-height: auto;
+      }
+
+      .about-box {
+        grid-template-columns: 1fr;
+      }
+
+      .article-intro {
+        align-items: flex-start;
         flex-direction: column;
-        gap: 15px;
       }
 
-      nav {
-        justify-content: center;
-        gap: 12px;
+      .article-action {
+        width: 100%;
       }
 
-      nav a {
-        font-size: 14px;
+      .article-action .btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(100% - 28px, var(--max-width));
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 9px;
+      }
+
+      .brand {
+        flex: 1;
+      }
+
+      .nav-actions {
+        margin-left: auto;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-links a {
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding: 75px 0 65px;
       }
 
       .hero h1 {
-        font-size: 34px;
-      }
-
-      .hero-subtitle {
-        font-size: 19px;
+        letter-spacing: -1.3px;
       }
 
       .hero-description {
-        font-size: 16px;
+        font-size: 14px;
       }
 
-      section {
-        padding: 55px 5%;
+      .section {
+        padding: 60px 0;
       }
 
+      .section-heading {
+        margin-bottom: 25px;
+      }
+
+      .feature-card,
+      .about-panel {
+        padding: 24px;
+      }
+
+      .article-intro {
+        padding: 25px;
+      }
+
+      .cta {
+        padding-bottom: 65px;
+      }
+
+      .cta-box {
+        padding: 42px 22px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
     }
 
+    @media (max-width: 430px) {
+      .brand-title {
+        font-size: 13px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      .language-btn {
+        min-width: 66px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+    }
+
+    /* =========================
+       REDUCED MOTION
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
   </style>
-
 </head>
-
 
 <body>
 
-
-<header>
-
-  <div class="logo">
-    HSKRC
-  </div>
-
-
-  <nav>
-
-    <a
-      href="#home"
-      id="homeLink"
-      data-fa="خانه"
-      data-en="Home">
-
-      Home
-
-    </a>
-
-
-    <a
-      href="library.html"
-      id="libraryLink"
-      data-fa="کتابخانه"
-      data-en="Library">
-
-      Library
-
-    </a>
-
-
-    <a
-      href="articles.html"
-      id="articlesLink"
-      data-fa="مقالات"
-      data-en="Articles">
-
-      Articles
-
-    </a>
-
-
-    <a
-      href="#about"
-      id="aboutLink"
-      data-fa="درباره ما"
-      data-en="About">
-
-      About
-
-    </a>
-
-
-    <a
-      href="auth.html"
-      id="accountLink"
-      data-fa="ورود / ثبت‌نام"
-      data-en="Login / Register">
-
-      Login / Register
-
-    </a>
-
-
-    <button
-      class="language-btn"
-      onclick="changeLanguage()"
-      id="languageButton">
-
-      🌐 Persian
-
-    </button>
-
-  </nav>
-
-</header>
-
-
-
-<main>
-
-
-
-<!-- =========================================
-     HOME
-     ========================================= -->
-
-<section
-  class="hero"
-  id="home">
-
-  <div class="hero-content">
-
-
-    <h1>
-
-      <span
-        data-fa="مرکز دانش و تحقیقات"
-        data-en="Hassan Sabbah Knowledge & Research Centre">
-
-        Hassan Sabbah Knowledge & Research Centre
-
-      </span>
-
-
-      <br>
-
-
-      <span
-        class="green"
-        data-fa="حسن صباح"
-        data-en="HSKRC">
-
-        HSKRC
-
-      </span>
-
-    </h1>
-
-
-
-    <div
-      class="hero-subtitle"
-      data-fa="کتابخانه دیجیتال و مرکز پژوهش"
-      data-en="Digital Library & Research Centre">
-
-      Digital Library & Research Centre
-
-    </div>
-
-
-
-    <p
-      class="hero-description"
-      data-fa="مرجعی دیجیتال برای دسترسی، مطالعه و نگهداری منابع علمی، تاریخی و فرهنگی."
-      data-en="A digital centre for accessing, studying and preserving scientific, historical and cultural resources.">
-
-      A digital centre for accessing, studying and preserving
-      scientific, historical and cultural resources.
-
-    </p>
-
-
-
-    <div class="buttons">
-
-
-      <a
-        href="library.html"
-        class="btn btn-primary"
-        data-fa="ورود به کتابخانه"
-        data-en="Enter Library">
-
-        Enter Library
-
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+    <div class="container nav">
+
+      <a href="#home" class="brand">
+        <div class="brand-mark">H</div>
+
+        <div class="brand-text">
+          <div class="brand-title">HSKRC</div>
+          <div class="brand-subtitle">Knowledge & Research Centre</div>
+        </div>
       </a>
 
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#home" data-en="Home" data-fa="خانه">Home</a>
+        <a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a>
+        <a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a>
+        <a href="#about" data-en="About" data-fa="درباره ما">About</a>
+      </nav>
 
+      <div class="nav-actions">
+        <a
+          id="accountLink"
+          class="language-btn"
+          href="auth.html"
+          data-en="Account"
+          data-fa="حساب کاربری"
+        >
+          Account
+        </a>
 
-      <a
-        href="#about"
-        class="btn btn-secondary"
-        data-fa="درباره HSKRC"
-        data-en="About HSKRC">
-
-        About HSKRC
-
-      </a>
-
-
-    </div>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================
-     DIGITAL LIBRARY
-     ========================================= -->
-
-<section id="library">
-
-
-  <h2
-    class="section-title"
-    data-fa="کتابخانه دیجیتال"
-    data-en="Digital Library">
-
-    Digital Library
-
-  </h2>
-
-
-
-  <div class="cards">
-
-
-    <div class="card">
-
-      <div class="card-icon">
-        📚
+        <button
+          id="languageToggle"
+          class="language-btn"
+          type="button"
+          aria-label="Change language"
+        >
+          فارسی
+        </button>
       </div>
 
-
-      <h3
-        data-fa="کتاب‌ها"
-        data-en="Books">
-
-        Books
-
-      </h3>
-
-
-      <p
-        data-fa="مجموعه کتاب‌های دیجیتال و منابع مطالعاتی."
-        data-en="A collection of digital books and reading resources.">
-
-        A collection of digital books and reading resources.
-
-      </p>
-
     </div>
+  </header>
 
 
+  <!-- =========================
+       HOME / HERO
+  ========================= -->
 
-    <div class="card">
+  <main id="home">
 
-      <div class="card-icon">
-        🔎
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span
+              data-en="Digital Knowledge Platform"
+              data-fa="پلتفرم دیجیتال دانش"
+            >
+              Digital Knowledge Platform
+            </span>
+          </div>
+
+          <h1>
+            Hassan Sabbah
+            <span class="green">Knowledge & Research Centre</span>
+          </h1>
+
+          <div
+            class="hero-tagline"
+            data-en="Digital Library & Research Centre"
+            data-fa="کتابخانه دیجیتال و مرکز پژوهش"
+          >
+            Digital Library & Research Centre
+          </div>
+
+          <p
+            class="hero-description"
+            data-en="A digital space dedicated to preserving, organizing, discovering, and sharing books, articles, and research related to Hassan Sabbah, Alamut, Ismaili history, and the wider intellectual and cultural heritage of the region."
+            data-fa="فضای دیجیتال برای حفظ، سازمان‌دهی، جست‌وجو و دسترسی به کتاب‌ها، مقالات و پژوهش‌های مرتبط با حسن صباح، الموت، تاریخ اسماعیلیه و میراث فکری و فرهنگی این حوزه."
+          >
+            A digital space dedicated to preserving, organizing, discovering,
+            and sharing books, articles, and research related to Hassan Sabbah,
+            Alamut, Ismaili history, and the wider intellectual and cultural
+            heritage of the region.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a
+              href="library.html"
+              class="btn btn-primary"
+              data-en="Enter Digital Library"
+              data-fa="ورود به کتابخانه دیجیتال"
+            >
+              Enter Digital Library
+            </a>
+
+            <a
+              href="#about"
+              class="btn btn-secondary"
+              data-en="Explore HSKRC"
+              data-fa="آشنایی با HSKRC"
+            >
+              Explore HSKRC
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================
+         DIGITAL LIBRARY
+    ========================= -->
+
+    <section class="section" id="library">
+      <div class="container">
+
+        <div class="section-heading">
+          <div
+            class="section-kicker"
+            data-en="Digital Library"
+            data-fa="کتابخانه دیجیتال"
+          >
+            Digital Library
+          </div>
+
+          <h2
+            data-en="Explore the HSKRC Knowledge Collection"
+            data-fa="مجموعه دانش HSKRC را کاوش کنید"
+          >
+            Explore the HSKRC Knowledge Collection
+          </h2>
+
+          <p
+            data-en="Discover books and research materials through a simple, organized, and searchable digital library."
+            data-fa="کتاب‌ها و منابع پژوهشی را در یک کتابخانه دیجیتال ساده، منظم و قابل جست‌وجو پیدا کنید."
+          >
+            Discover books and research materials through a simple,
+            organized, and searchable digital library.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+
+          <article class="feature-card">
+            <div class="feature-icon">📚</div>
+
+            <h3
+              data-en="Books Collection"
+              data-fa="مجموعه کتاب‌ها"
+            >
+              Books Collection
+            </h3>
+
+            <p
+              data-en="Browse the growing collection of books covering history, culture, Ismaili studies, Alamut, Hassan Sabbah, and related subjects."
+              data-fa="مجموعه رو به گسترش کتاب‌ها در زمینه تاریخ، فرهنگ، مطالعات اسماعیلی، الموت، حسن صباح و موضوعات مرتبط را مشاهده کنید."
+            >
+              Browse the growing collection of books covering history,
+              culture, Ismaili studies, Alamut, Hassan Sabbah, and related
+              subjects.
+            </p>
+
+            <a
+              href="library.html"
+              class="feature-link"
+              data-en="Browse Library →"
+              data-fa="مشاهده کتابخانه ←"
+            >
+              Browse Library →
+            </a>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-icon">⌕</div>
+
+            <h3
+              data-en="Search & Filter"
+              data-fa="جست‌وجو و فیلتر"
+            >
+              Search & Filter
+            </h3>
+
+            <p
+              data-en="Find resources quickly by searching titles and authors or filtering the collection by subject and category."
+              data-fa="منابع موردنظر خود را با جست‌وجوی عنوان و نویسنده یا فیلتر کردن مجموعه بر اساس موضوع و دسته‌بندی سریع پیدا کنید."
+            >
+              Find resources quickly by searching titles and authors or
+              filtering the collection by subject and category.
+            </p>
+
+            <a
+              href="library.html"
+              class="feature-link"
+              data-en="Start Searching →"
+              data-fa="شروع جست‌وجو ←"
+            >
+              Start Searching →
+            </a>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-icon">✦</div>
+
+            <h3
+              data-en="Request a Book"
+              data-fa="درخواست کتاب"
+            >
+              Request a Book
+            </h3>
+
+            <p
+              data-en="Help expand the collection by suggesting books and research materials that should become part of the digital library."
+              data-fa="با پیشنهاد کتاب‌ها و منابع پژوهشی جدید به گسترش مجموعه کتابخانه دیجیتال کمک کنید."
+            >
+              Help expand the collection by suggesting books and research
+              materials that should become part of the digital library.
+            </p>
+
+            <a
+              href="library.html"
+              class="feature-link"
+              data-en="Explore Collection →"
+              data-fa="مشاهده مجموعه ←"
+            >
+              Explore Collection →
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================
+         ARTICLES
+    ========================= -->
+
+    <section class="section" id="articles">
+      <div class="container">
+
+        <div class="section-heading">
+          <div
+            class="section-kicker"
+            data-en="Articles & Research"
+            data-fa="مقالات و پژوهش"
+          >
+            Articles & Research
+          </div>
+
+          <h2
+            data-en="Research, History & Intellectual Heritage"
+            data-fa="پژوهش، تاریخ و میراث فکری"
+          >
+            Research, History & Intellectual Heritage
+          </h2>
+
+          <p
+            data-en="Read published research and scholarly articles exploring Hassan Sabbah, Alamut, Ismaili history, culture, and related subjects."
+            data-fa="مقالات پژوهشی و علمی منتشرشده درباره حسن صباح، الموت، تاریخ اسماعیلیه، فرهنگ و موضوعات مرتبط را مطالعه کنید."
+          >
+            Read published research and scholarly articles exploring Hassan
+            Sabbah, Alamut, Ismaili history, culture, and related subjects.
+          </p>
+        </div>
+
+        <div class="article-intro">
+
+          <div class="article-copy">
+
+            <h3
+              data-en="HSKRC Research Archive"
+              data-fa="آرشیو پژوهشی HSKRC"
+            >
+              HSKRC Research Archive
+            </h3>
+
+            <p
+              data-en="The Articles & Research section provides access to published studies and written research. Articles are presented separately from the Home page so visitors can explore the research collection in its dedicated space."
+              data-fa="بخش مقالات و پژوهش، دسترسی به مطالعات و پژوهش‌های منتشرشده را فراهم می‌کند. مقالات از صفحه اصلی جدا نگه داشته شده‌اند تا بازدیدکنندگان بتوانند مجموعه پژوهشی را در فضای اختصاصی خود مطالعه کنند."
+            >
+              The Articles & Research section provides access to published
+              studies and written research. Articles are presented separately
+              from the Home page so visitors can explore the research collection
+              in its dedicated space.
+            </p>
+
+          </div>
+
+          <div class="article-action">
+            <a
+              href="articles.html"
+              class="btn btn-primary"
+              data-en="View Articles"
+              data-fa="مشاهده مقالات"
+            >
+              View Articles
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================= -->
+
+    <section class="section" id="about">
+      <div class="container">
+
+        <div class="section-heading">
+          <div
+            class="section-kicker"
+            data-en="About HSKRC"
+            data-fa="درباره HSKRC"
+          >
+            About HSKRC
+          </div>
+
+          <h2
+            data-en="Preserving Knowledge for the Future"
+            data-fa="حفظ دانش برای آینده"
+          >
+            Preserving Knowledge for the Future
+          </h2>
+        </div>
+
+        <div class="about-box">
+
+          <div class="about-panel primary">
+
+            <h3
+              data-en="Our Purpose"
+              data-fa="هدف ما"
+            >
+              Our Purpose
+            </h3>
+
+            <p
+              data-en="HSKRC is designed as a digital knowledge and research environment focused on collecting, organizing, preserving, and making historical and scholarly resources easier to discover."
+              data-fa="HSKRC به‌عنوان یک محیط دیجیتال دانش و پژوهش طراحی شده است تا منابع تاریخی و علمی را گردآوری، سازمان‌دهی، حفظ و دسترسی به آنها را آسان‌تر کند."
+            >
+              HSKRC is designed as a digital knowledge and research environment
+              focused on collecting, organizing, preserving, and making
+              historical and scholarly resources easier to discover.
+            </p>
+
+          </div>
+
+
+          <div class="about-panel">
+
+            <h3
+              data-en="What You Can Find"
+              data-fa="چه چیزهایی پیدا می‌کنید"
+            >
+              What You Can Find
+            </h3>
+
+            <p
+              data-en="The platform brings together different types of resources in one organized environment."
+              data-fa="این پلتفرم انواع مختلف منابع را در یک محیط منظم و یکپارچه گرد هم می‌آورد."
+            >
+              The platform brings together different types of resources in one
+              organized environment.
+            </p>
+
+            <ul class="about-list">
+
+              <li>
+                <span>✓</span>
+                <span
+                  data-en="Digital books and research materials"
+                  data-fa="کتاب‌های دیجیتال و منابع پژوهشی"
+                >
+                  Digital books and research materials
+                </span>
+              </li>
+
+              <li>
+                <span>✓</span>
+                <span
+                  data-en="Published historical and scholarly articles"
+                  data-fa="مقالات تاریخی و علمی منتشرشده"
+                >
+                  Published historical and scholarly articles
+                </span>
+              </li>
+
+              <li>
+                <span>✓</span>
+                <span
+                  data-en="Search and category-based discovery"
+                  data-fa="جست‌وجو و دسترسی بر اساس دسته‌بندی"
+                >
+                  Search and category-based discovery
+                </span>
+              </li>
+
+              <li>
+                <span>✓</span>
+                <span
+                  data-en="A growing digital research archive"
+                  data-fa="آرشیو پژوهشی دیجیتال در حال توسعه"
+                >
+                  A growing digital research archive
+                </span>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
+    <section class="cta">
+      <div class="container">
+
+        <div class="cta-box">
+
+          <h2
+            data-en="Explore the Digital Library"
+            data-fa="کتابخانه دیجیتال را کاوش کنید"
+          >
+            Explore the Digital Library
+          </h2>
+
+          <p
+            data-en="Begin exploring the HSKRC collection and discover books, research, and articles in a dedicated digital environment."
+            data-fa="کاوش در مجموعه HSKRC را آغاز کنید و کتاب‌ها، پژوهش‌ها و مقالات را در یک محیط دیجیتال اختصاصی کشف کنید."
+          >
+            Begin exploring the HSKRC collection and discover books, research,
+            and articles in a dedicated digital environment.
+          </p>
+
+          <a
+            href="library.html"
+            class="btn btn-primary"
+            data-en="Open Library"
+            data-fa="باز کردن کتابخانه"
+          >
+            Open Library
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+    <div class="container footer-inner">
+
+      <div
+        class="footer-brand"
+        data-en="Founded by Kamal Barlas"
+        data-fa="بنیان‌گذاری شده توسط کمال بارلاس"
+      >
+        Founded by Kamal Barlas
       </div>
 
-
-      <h3
-        data-fa="جستجو و فیلتر"
-        data-en="Search & Filter">
-
-        Search & Filter
-
-      </h3>
-
-
-      <p
-        data-fa="جستجو و پیدا کردن آسان منابع موردنظر."
-        data-en="Easily search and find the resources you need.">
-
-        Easily search and find the resources you need.
-
-      </p>
-
-    </div>
-
-
-
-    <div class="card">
-
-      <div class="card-icon">
-        📖
+      <div>
+        <div class="footer-copy">
+          © 2026 HSKRC - All rights reserved.
+        </div>
       </div>
 
-
-      <h3
-        data-fa="درخواست کتاب"
-        data-en="Request a Book">
-
-        Request a Book
-
-      </h3>
-
-
-      <p
-        data-fa="اعضا می‌توانند کتاب موردنظر خود را درخواست کنند."
-        data-en="Members can request books they would like to see in the library.">
-
-        Members can request books they would like to see in the library.
-
-      </p>
-
     </div>
+  </footer>
 
 
-  </div>
+  <!-- =========================
+       SUPABASE
+  ========================= -->
 
-</section>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <script>
+    const SUPABASE_URL =
+      "https://uwuklryzxexpofcxrbnm.supabase.co";
 
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
-<!-- =========================================
-     ARTICLES
-     ========================================= -->
+    const { createClient } =
+      supabase;
 
-<section id="articles">
+    const db =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
 
 
-  <h2
-    class="section-title"
-    data-fa="مقالات و پژوهش‌ها"
-    data-en="Articles & Research">
+    /* =====================================================
+       LANGUAGE SYSTEM
+       ===================================================== */
 
-    Articles & Research
+    const LANGUAGE_KEY = "hskrc_language";
 
-  </h2>
+    const html =
+      document.documentElement;
 
+    const languageToggle =
+      document.getElementById("languageToggle");
 
+    function getSavedLanguage() {
 
-  <div class="cards">
+      const saved =
+        localStorage.getItem(LANGUAGE_KEY);
 
+      if (saved === "fa" || saved === "en") {
+        return saved;
+      }
 
-    <div class="card">
-
-
-      <div class="card-icon">
-        📚
-      </div>
-
-
-
-      <h3
-        data-fa="مرکز مقالات و پژوهش‌ها"
-        data-en="Articles & Research Centre">
-
-        Articles & Research Centre
-
-      </h3>
-
-
-
-      <p
-        data-fa="مطالعات علمی، تاریخی و فرهنگی منتشرشده توسط HSKRC."
-        data-en="Scientific, historical and cultural research published by HSKRC.">
-
-        Scientific, historical and cultural research
-        published by HSKRC.
-
-      </p>
-
-
-
-      <br>
-
-
-
-      <a
-        href="articles.html"
-        class="btn btn-primary"
-        data-fa="مشاهده مقالات"
-        data-en="View Articles">
-
-        View Articles
-
-      </a>
-
-
-    </div>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================
-     ABOUT
-     ========================================= -->
-
-<section
-  class="about"
-  id="about">
-
-
-  <h2
-    class="section-title"
-    data-fa="درباره HSKRC"
-    data-en="About HSKRC">
-
-    About HSKRC
-
-  </h2>
-
-
-
-  <p
-    class="about-text"
-    data-fa="Hassan Sabbah Knowledge & Research Centre یک مرکز دیجیتال برای نگهداری، مطالعه و دسترسی به منابع علمی، تاریخی و فرهنگی است. این مرکز در حال حاضر به‌صورت الکترونیکی فعالیت می‌کند و هدف آن توسعه یک فضای فیزیکی در آینده است."
-    data-en="Hassan Sabbah Knowledge & Research Centre is a digital centre dedicated to preserving, studying and providing access to scientific, historical and cultural resources. The centre currently operates digitally, with the goal of developing a physical location in the future.">
-
-    Hassan Sabbah Knowledge & Research Centre is a digital
-    centre dedicated to preserving, studying and providing
-    access to scientific, historical and cultural resources.
-    The centre currently operates digitally, with the goal
-    of developing a physical location in the future.
-
-  </p>
-
-
-</section>
-
-
-
-</main>
-
-
-
-<!-- =========================================
-     FOOTER
-     ========================================= -->
-
-<footer>
-
-
-  <p class="founder">
-
-    Founded by Kamal Barlas
-
-  </p>
-
-
-
-  <p
-    class="copyright"
-    data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است."
-    data-en="© 2026 HSKRC - All rights reserved.">
-
-    © 2026 HSKRC - All rights reserved.
-
-  </p>
-
-
-</footer>
-
-
-
-<script>
-
-
-/* =========================================
-   SUPABASE
-   ========================================= */
-
-const SUPABASE_URL =
-  "https://uwuklryzxexpofcxrbnm.supabase.co";
-
-
-const SUPABASE_KEY =
-  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
-
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-
-/* =========================================
-   LANGUAGE
-   ========================================= */
-
-let currentLanguage = "en";
-
-
-function changeLanguage() {
-
-
-  currentLanguage =
-    currentLanguage === "en"
-      ? "fa"
-      : "en";
-
-
-  document.documentElement.lang =
-    currentLanguage;
-
-
-  document.documentElement.dir =
-    currentLanguage === "fa"
-      ? "rtl"
-      : "ltr";
-
-
-  const elements =
-    document.querySelectorAll(
-      "[data-fa]"
-    );
-
-
-  elements.forEach(
-    function(element) {
-
-      element.textContent =
-        currentLanguage === "fa"
-          ? element.getAttribute("data-fa")
-          : element.getAttribute("data-en");
-
+      return "en";
     }
-  );
 
 
-  const button =
-    document.getElementById(
-      "languageButton"
+    function applyLanguage(language) {
+
+      const lang =
+        language === "fa"
+          ? "fa"
+          : "en";
+
+      localStorage.setItem(
+        LANGUAGE_KEY,
+        lang
+      );
+
+      html.lang = lang;
+      html.dir =
+        lang === "fa"
+          ? "rtl"
+          : "ltr";
+
+      document
+        .querySelectorAll("[data-en][data-fa]")
+        .forEach(element => {
+
+          element.textContent =
+            lang === "fa"
+              ? element.getAttribute("data-fa")
+              : element.getAttribute("data-en");
+
+        });
+
+
+      languageToggle.textContent =
+        lang === "fa"
+          ? "English"
+          : "فارسی";
+
+      languageToggle.setAttribute(
+        "aria-label",
+        lang === "fa"
+          ? "Switch to English"
+          : "تغییر زبان به فارسی"
+      );
+
+      document.title =
+        lang === "fa"
+          ? "HSKRC | مرکز دانش و پژوهش حسن صباح"
+          : "HSKRC | Hassan Sabbah Knowledge & Research Centre";
+    }
+
+
+    languageToggle.addEventListener(
+      "click",
+      function () {
+
+        const current =
+          getSavedLanguage();
+
+        const next =
+          current === "fa"
+            ? "en"
+            : "fa";
+
+        applyLanguage(next);
+
+      }
     );
 
 
-  button.textContent =
-    currentLanguage === "fa"
-      ? "🌐 English"
-      : "🌐 Persian";
+    /* =====================================================
+       APPLY SAVED LANGUAGE IMMEDIATELY
+       ===================================================== */
 
-
-  updateAccountLink();
-
-}
-
-
-
-/* =========================================
-   ACCOUNT LINK
-   ========================================= */
-
-async function updateAccountLink() {
-
-
-  const accountLink =
-    document.getElementById(
-      "accountLink"
+    applyLanguage(
+      getSavedLanguage()
     );
 
 
-  const {
-    data
-  } =
-    await supabaseClient.auth.getSession();
+    /* =====================================================
+       ACCOUNT / AUTH STATE
+       ===================================================== */
+
+    const accountLink =
+      document.getElementById("accountLink");
 
 
-  if (data.session) {
+    async function updateAccountLink() {
+
+      try {
+
+        const {
+          data: {
+            session
+          }
+        } = await db.auth.getSession();
 
 
-    accountLink.href =
-      "account.html";
+        if (session) {
 
+          accountLink.href =
+            "account.html";
 
-    accountLink.textContent =
-      currentLanguage === "fa"
-        ? "حساب من 👤"
-        : "My Account 👤";
+          accountLink.textContent =
+            getSavedLanguage() === "fa"
+              ? "حساب من"
+              : "My Account";
 
+        } else {
 
-  } else {
+          accountLink.href =
+            "auth.html";
 
+          accountLink.textContent =
+            getSavedLanguage() === "fa"
+              ? "حساب کاربری"
+              : "Account";
 
-    accountLink.href =
-      "auth.html";
+        }
 
+      } catch (error) {
 
-    accountLink.textContent =
-      currentLanguage === "fa"
-        ? "ورود / ثبت‌نام"
-        : "Login / Register";
+        console.error(
+          "Account state error:",
+          error
+        );
 
-  }
+      }
+    }
 
-}
-
-
-
-/* =========================================
-   AUTH STATE
-   ========================================= */
-
-supabaseClient.auth.onAuthStateChange(
-  function() {
 
     updateAccountLink();
 
-  }
-);
+
+    /* =====================================================
+       KEEP ACCOUNT TEXT IN CURRENT LANGUAGE
+       ===================================================== */
+
+    languageToggle.addEventListener(
+      "click",
+      function () {
+
+        setTimeout(
+          updateAccountLink,
+          0
+        );
+
+      }
+    );
 
 
+    /* =====================================================
+       SUPABASE AUTH STATE
+       ===================================================== */
 
-/* =========================================
-   START
-   ========================================= */
+    db.auth.onAuthStateChange(
+      function () {
 
-updateAccountLink();
+        updateAccountLink();
 
+      }
+    );
 
-</script>
-
+  </script>
 
 </body>
-
 </html>
