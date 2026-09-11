@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>HSKRC | Article</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Tahoma, sans-serif;
+      background: #0d1117;
+      color: #f5f5f5;
+      line-height: 1.9;
+    }
+
+    header {
+      background: #151a22;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #252c36;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: bold;
+      color: #42d392;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #f5f5f5;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      color: #42d392;
+    }
+
+    .language-btn {
+      background: transparent;
+      color: #42d392;
+      border: 1px solid #42d392;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .language-btn:hover {
+      background: #42d392;
+      color: #07110c;
+    }
+
+    main {
+      min-height: 75vh;
+    }
+
+    .article-page {
+      max-width: 950px;
+      margin: auto;
+      padding: 70px 25px 90px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #42d392;
+      text-decoration: none;
+      margin-bottom: 30px;
+      border: 1px solid #42d392;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .back-link:hover {
+      background: #42d392;
+      color: #07110c;
+    }
+
+    .article-container {
+      background: #151a22;
+      border: 1px solid #252c36;
+      border-radius: 16px;
+      padding: 45px;
+    }
+
+    .article-title {
+      color: #42d392;
+      font-size: 38px;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .article-meta {
+      color: #858c96;
+      font-size: 15px;
+      margin-bottom: 35px;
+      border-bottom: 1px solid #252c36;
+      padding-bottom: 20px;
+    }
+
+    .article-content {
+      color: #d0d5dc;
+      font-size: 18px;
+      white-space: pre-wrap;
+      line-height: 2.1;
+      overflow-wrap: anywhere;
+    }
+
+    .loading {
+      text-align: center;
+      color: #858c96;
+      padding: 70px 20px;
+    }
+
+    .error {
+      text-align: center;
+      color: #d0d5dc;
+      padding: 70px 20px;
+    }
+
+    .error h2 {
+      color: #42d392;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      background: #080a0d;
+      border-top: 1px solid #252c36;
+      padding: 35px 20px;
+      text-align: center;
+      color: #858c96;
+    }
+
+    .founder {
+      color: #42d392;
+      font-weight: bold;
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .copyright {
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 12px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      .article-page {
+        padding: 45px 15px 60px;
+      }
+
+      .article-container {
+        padding: 25px 18px;
+      }
+
+      .article-title {
+        font-size: 28px;
+      }
+
+      .article-content {
+        font-size: 16px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="logo">
+    HSKRC
+  </div>
+
+  <nav>
+
+    <a href="index.html">
+      Home
+    </a>
+
+    <a href="library.html">
+      Library
+    </a>
+
+    <a href="articles.html">
+      Articles
+    </a>
+
+    <a href="index.html#about">
+      About
+    </a>
+
+    <a
+      href="auth.html"
+      id="accountLink">
+      Login / Register
+    </a>
+
+    <button
+      class="language-btn"
+      onclick="changeLanguage()"
+      id="languageButton">
+      🌐 Persian
+    </button>
+
+  </nav>
+
+</header>
+
+
+
+<main>
+
+  <div class="article-page">
+
+    <a
+      href="articles.html"
+      class="back-link"
+      data-fa="← بازگشت به مقالات"
+      data-en="← Back to Articles">
+
+      ← Back to Articles
+
+    </a>
+
+
+    <div
+      id="articleArea"
+      class="article-container">
+
+      <div class="loading">
+        Loading article...
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<footer>
+
+  <p class="founder">
+    Founded by Kamal Barlas
+  </p>
+
+  <p class="copyright">
+    © 2026 HSKRC - All rights reserved.
+  </p>
+
+</footer>
+
+
+
+<script>
+
+
+const SUPABASE_URL =
+  "https://uwuklryzxexpofcxrbnm.supabase.co";
+
+
+const SUPABASE_KEY =
+  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+
+let currentLanguage = "en";
+
+
+
+function changeLanguage() {
+
+  currentLanguage =
+    currentLanguage === "en"
+      ? "fa"
+      : "en";
+
+  document.documentElement.lang =
+    currentLanguage;
+
+  document.documentElement.dir =
+    currentLanguage === "fa"
+      ? "rtl"
+      : "ltr";
+
+  document.querySelectorAll(
+    "[data-fa]"
+  ).forEach(function(element) {
+
+    element.textContent =
+      currentLanguage === "fa"
+        ? element.getAttribute("data-fa")
+        : element.getAttribute("data-en");
+
+  });
+
+  document.getElementById(
+    "languageButton"
+  ).textContent =
+    currentLanguage === "fa"
+      ? "🌐 English"
+      : "🌐 Persian";
+
+  updateAccountLink();
+
+}
+
+
+
+async function updateAccountLink() {
+
+  const accountLink =
+    document.getElementById(
+      "accountLink"
+    );
+
+  const {
+    data
+  } =
+    await supabaseClient.auth.getSession();
+
+  if (data.session) {
+
+    accountLink.href =
+      "account.html";
+
+    accountLink.textContent =
+      currentLanguage === "fa"
+        ? "حساب من 👤"
+        : "My Account 👤";
+
+  } else {
+
+    accountLink.href =
+      "auth.html";
+
+    accountLink.textContent =
+      currentLanguage === "fa"
+        ? "ورود / ثبت‌نام"
+        : "Login / Register";
+
+  }
+
+}
+
+
+
+const urlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+const articleId =
+  urlParams.get("id");
+
+
+
+async function loadArticle() {
+
+  const area =
+    document.getElementById(
+      "articleArea"
+    );
+
+
+  if (!articleId) {
+
+    showError(
+      currentLanguage === "fa"
+        ? "مقاله پیدا نشد."
+        : "Article not found."
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("articles")
+      .select(`
+        id,
+        title,
+        author,
+        category,
+        content,
+        published,
+        published_at
+      `)
+      .eq(
+        "id",
+        articleId
+      )
+      .eq(
+        "published",
+        true
+      )
+      .maybeSingle();
+
+
+  if (error) {
+
+    console.error(
+      "Article error:",
+      error
+    );
+
+    showError(
+      currentLanguage === "fa"
+        ? "خطا در بارگذاری مقاله."
+        : "Unable to load article."
+    );
+
+    return;
+
+  }
+
+
+  if (!data) {
+
+    showError(
+      currentLanguage === "fa"
+        ? "این مقاله وجود ندارد یا منتشر نشده است."
+        : "This article does not exist or is not published."
+    );
+
+    return;
+
+  }
+
+
+  document.title =
+    "HSKRC | " +
+    data.title;
+
+
+  area.innerHTML = `
+
+    <h1 class="article-title">
+      ${escapeHTML(data.title)}
+    </h1>
+
+    <div class="article-meta">
+
+      ${
+        currentLanguage === "fa"
+          ? "نویسنده: "
+          : "Author: "
+      }
+
+      ${escapeHTML(
+        data.author ||
+        "HSKRC Research Centre"
+      )}
+
+      &nbsp;&nbsp; | &nbsp;&nbsp;
+
+      ${
+        currentLanguage === "fa"
+          ? "دسته‌بندی: "
+          : "Category: "
+      }
+
+      ${escapeHTML(
+        data.category ||
+        (
+          currentLanguage === "fa"
+            ? "پژوهش"
+            : "Research"
+        )
+      )}
+
+    </div>
+
+    <div class="article-content">
+      ${escapeHTML(data.content || "")}
+    </div>
+
+  `;
+
+}
+
+
+
+function showError(message) {
+
+  const area =
+    document.getElementById(
+      "articleArea"
+    );
+
+  area.innerHTML = `
+
+    <div class="error">
+
+      <h2>
+        HSKRC
+      </h2>
+
+      <p>
+        ${escapeHTML(message)}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function escapeHTML(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    return "";
+
+  }
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+
+supabaseClient.auth.onAuthStateChange(
+  function() {
+
+    updateAccountLink();
+
+  }
+);
+
+
+updateAccountLink();
+
+loadArticle();
+
+
+</script>
+
+
+</body>
+
+</html>
