@@ -2,7 +2,6 @@
 <html lang="en" dir="ltr">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,9 +11,34 @@
 
   <title>HSKRC | Digital Library</title>
 
+  <meta
+    name="description"
+    content="HSKRC Digital Library — Books, research materials and historical resources."
+  >
+
+  <meta name="theme-color" content="#0d1117">
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    :root {
+      --bg: #0d1117;
+      --bg-soft: #10161f;
+      --panel: #151a22;
+      --panel-2: #181f29;
+      --panel-hover: #1c2530;
+      --border: rgba(255,255,255,.09);
+      --border-green: rgba(66,211,146,.30);
+      --green: #42d392;
+      --green-light: #55dda0;
+      --text: #f5f7fa;
+      --muted: #9ba5b1;
+      --muted-2: #737e8b;
+      --danger: #ff7777;
+      --shadow: 0 20px 55px rgba(0,0,0,.30);
+      --radius: 18px;
+      --max: 1180px;
+    }
 
     * {
       box-sizing: border-box;
@@ -22,330 +46,830 @@
       padding: 0;
     }
 
-    body {
-      font-family: Arial, Tahoma, sans-serif;
-      background: #0d1117;
-      color: #ffffff;
-      min-height: 100vh;
+    html {
+      scroll-behavior: smooth;
     }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 15% 5%,
+          rgba(66,211,146,.065),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 90% 30%,
+          rgba(66,211,146,.04),
+          transparent 25%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,.016) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.016) 1px,
+          transparent 1px
+        );
+
+      background-size: 48px 48px;
+
+      mask-image:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.45),
+          transparent 80%
+        );
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(
+        var(--max),
+        calc(100% - 40px)
+      );
+
+      margin: 0 auto;
+    }
+
+    /* =========================================
+       HEADER
+    ========================================= */
 
     header {
-      background: #151a22;
-      border-bottom: 1px solid #29313c;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+
+      background:
+        rgba(13,17,23,.88);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      border-bottom:
+        1px solid rgba(255,255,255,.07);
     }
 
-    .logo {
-      color: #42d392;
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 1px;
+    .header-inner {
+      min-height: 76px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 22px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      min-width: max-content;
+    }
+
+    .logo-mark {
+      width: 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 13px;
+
+      color: var(--green);
+
+      font-weight: 850;
+      font-size: 16px;
+
+      border:
+        1px solid rgba(66,211,146,.28);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(66,211,146,.20),
+          rgba(66,211,146,.045)
+        );
+
+      box-shadow:
+        0 8px 28px rgba(66,211,146,.07);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+
+      line-height: 1.15;
+    }
+
+    .logo-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .logo-subtitle {
+      margin-top: 4px;
+
+      color: var(--muted-2);
+
+      font-size: 9px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
     }
 
     nav {
       display: flex;
-      gap: 18px;
       align-items: center;
-      flex-wrap: wrap;
+      justify-content: center;
+
+      gap: 4px;
+
+      flex: 1;
     }
 
-    nav a {
-      color: #dddddd;
-      text-decoration: none;
-      transition: color 0.2s ease;
-      font-size: 15px;
+    nav a,
+    .language {
+      border: 0;
+      background: transparent;
+
+      color: #c7cdd5;
+
+      padding: 9px 12px;
+
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      font-size: 13px;
+
+      transition:
+        color .2s ease,
+        background .2s ease,
+        transform .2s ease;
     }
 
-    nav a:hover {
-      color: #42d392;
+    nav a:hover,
+    .language:hover {
+      color: #fff;
+
+      background:
+        rgba(255,255,255,.055);
+
+      transform: translateY(-1px);
     }
 
     .language {
-      background: transparent;
-      border: 1px solid #42d392;
-      color: #42d392;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      font-size: 14px;
+      border:
+        1px solid var(--border);
+
+      min-width: 82px;
     }
 
     .language:hover {
-      background: #42d392;
-      color: #07110c;
+      color: var(--green);
+
+      border-color:
+        rgba(66,211,146,.30);
     }
 
+    /* =========================================
+       MAIN
+    ========================================= */
+
     main {
-      padding: 55px 6% 80px;
+      padding: 70px 0 90px;
     }
 
     .hero {
       max-width: 850px;
-      margin: 0 auto 40px;
+
+      margin: 0 auto 42px;
+
       text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 7px 13px;
+
+      margin-bottom: 18px;
+
+      border:
+        1px solid rgba(66,211,146,.22);
+
+      border-radius: 999px;
+
+      background:
+        rgba(66,211,146,.05);
+
+      color: var(--green);
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow:
+        0 0 14px rgba(66,211,146,.65);
     }
 
     .title {
-      color: #42d392;
-      font-size: 38px;
-      line-height: 1.4;
-      margin-bottom: 12px;
+      color: var(--text);
+
+      font-size:
+        clamp(34px, 5vw, 51px);
+
+      line-height: 1.15;
+
+      letter-spacing: -1.4px;
+
+      margin-bottom: 14px;
+    }
+
+    .title .green {
+      color: var(--green);
     }
 
     .description {
-      color: #aeb6c2;
+      color: var(--muted);
+
       max-width: 720px;
-      margin: 0 auto;
-      line-height: 1.8;
-      font-size: 16px;
+
+      margin: auto;
+
+      line-height: 1.9;
+
+      font-size: 15px;
     }
 
+    /* =========================================
+       LOGIN MESSAGE
+    ========================================= */
+
     .login-message {
-      max-width: 900px;
-      margin: 0 auto 25px;
+      max-width: 1150px;
+
+      margin: 0 auto 24px;
+
+      padding: 13px 18px;
+
       text-align: center;
-      color: #aeb6c2;
-      background: #111720;
-      border: 1px solid #29313c;
-      border-radius: 10px;
-      padding: 12px 18px;
+
+      color: var(--muted);
+
+      background:
+        rgba(66,211,146,.035);
+
+      border:
+        1px solid rgba(66,211,146,.12);
+
+      border-radius: 12px;
+
+      font-size: 13px;
     }
+
+    /* =========================================
+       TOOLS
+    ========================================= */
 
     .library-tools {
       max-width: 1150px;
-      margin: 0 auto 30px;
+
+      margin: 0 auto 20px;
     }
 
     .search-box {
       display: grid;
-      grid-template-columns: 1fr 240px;
+
+      grid-template-columns:
+        minmax(0, 1fr) 245px;
+
       gap: 12px;
     }
 
     input,
     select {
       width: 100%;
+
       padding: 14px 16px;
-      border-radius: 10px;
-      border: 1px solid #303846;
-      background: #151a22;
-      color: #ffffff;
-      font-size: 15px;
+
+      border:
+        1px solid #303846;
+
+      border-radius: 12px;
+
+      background:
+        rgba(21,26,34,.95);
+
+      color: #fff;
+
       outline: none;
+
+      font-size: 14px;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
     }
 
     input::placeholder {
-      color: #777f8b;
+      color: #737d89;
+    }
+
+    input:hover,
+    select:hover {
+      background: #181f29;
     }
 
     input:focus,
     select:focus {
-      border-color: #42d392;
-      box-shadow: 0 0 0 2px rgba(66, 211, 146, 0.08);
+      border-color: var(--green);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(66,211,146,.08);
     }
+
+    select {
+      cursor: pointer;
+    }
+
+    /* =========================================
+       SUMMARY
+    ========================================= */
 
     .library-summary {
       max-width: 1150px;
-      margin: 0 auto 22px;
+
+      margin: 0 auto 24px;
+
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
+      justify-content: space-between;
+
       gap: 15px;
-      color: #858c96;
-      font-size: 14px;
+
       flex-wrap: wrap;
+
+      color: var(--muted-2);
+
+      font-size: 13px;
     }
 
     .summary-count {
-      color: #42d392;
-      font-weight: bold;
+      color: var(--green);
+
+      font-size: 15px;
+
+      font-weight: 800;
     }
+
+    /* =========================================
+       BOOK GRID
+    ========================================= */
 
     .books {
       max-width: 1150px;
+
       margin: auto;
+
       display: grid;
+
       grid-template-columns:
-        repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
+        repeat(
+          auto-fill,
+          minmax(255px, 1fr)
+        );
+
+      gap: 20px;
     }
 
     .book {
-      background: #151a22;
-      border: 1px solid #29313c;
-      border-radius: 16px;
+      position: relative;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.025),
+          rgba(255,255,255,.008)
+        ),
+        var(--panel);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: var(--radius);
+
       overflow: hidden;
+
       display: flex;
       flex-direction: column;
+
+      min-width: 0;
+
+      box-shadow:
+        0 8px 28px rgba(0,0,0,.12);
+
       transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
     }
 
     .book:hover {
-      transform: translateY(-5px);
-      border-color: #42d392;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      transform: translateY(-6px);
+
+      border-color:
+        rgba(66,211,146,.30);
+
+      background:
+        var(--panel-hover);
+
+      box-shadow:
+        var(--shadow);
     }
 
+    /* =========================================
+       COVER
+    ========================================= */
+
     .cover {
-      height: 310px;
-      background: #202731;
+      height: 330px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #202731,
+          #171d25
+        );
+
       display: flex;
+
       align-items: center;
       justify-content: center;
+
       overflow: hidden;
+
       position: relative;
+    }
+
+    .cover::after {
+      content: "";
+
+      position: absolute;
+      inset: auto 0 0 0;
+
+      height: 90px;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0,0,0,.38),
+          transparent
+        );
+
+      pointer-events: none;
     }
 
     .cover img {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       display: block;
-      transition: transform 0.3s ease;
+
+      transition:
+        transform .45s ease;
     }
 
     .book:hover .cover img {
-      transform: scale(1.025);
+      transform: scale(1.035);
     }
 
     .no-cover {
-      font-size: 58px;
-      opacity: 0.65;
+      width: 76px;
+      height: 76px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 22px;
+
+      background:
+        rgba(66,211,146,.055);
+
+      border:
+        1px solid rgba(66,211,146,.12);
+
+      color: var(--green);
+
+      font-size: 34px;
+
+      opacity: .8;
     }
 
+    /* =========================================
+       BOOK CONTENT
+    ========================================= */
+
     .book-content {
-      padding: 21px;
+      padding: 22px;
+
       display: flex;
       flex-direction: column;
+
       flex: 1;
     }
 
     .book-title {
-      color: #42d392;
-      font-size: 20px;
-      line-height: 1.5;
+      color: var(--green);
+
+      font-size: 19px;
+
+      line-height: 1.45;
+
       margin-bottom: 9px;
+
       direction: auto;
+
       unicode-bidi: plaintext;
+
       text-align: start;
     }
 
     .author {
-      color: #dddddd;
+      color: #d8dde3;
+
+      font-size: 14px;
+
       margin-bottom: 9px;
+
       direction: auto;
+
       unicode-bidi: plaintext;
+
       text-align: start;
     }
 
     .meta {
-      color: #8f98a5;
-      font-size: 13px;
-      margin-bottom: 13px;
+      color: #87919e;
+
+      font-size: 12px;
+
+      margin-bottom: 14px;
+
       line-height: 1.7;
+
       direction: auto;
+
       unicode-bidi: plaintext;
+
       text-align: start;
     }
 
     .book-description {
-      color: #adb5c0;
-      font-size: 14px;
+      color: #aab3bd;
+
+      font-size: 13px;
+
       margin-bottom: 20px;
-      line-height: 1.8;
+
+      line-height: 1.85;
+
       flex: 1;
+
       direction: auto;
+
       unicode-bidi: plaintext;
+
       text-align: start;
+
+      display: -webkit-box;
+
+      -webkit-line-clamp: 5;
+
+      -webkit-box-orient: vertical;
+
+      overflow: hidden;
     }
+
+    /* =========================================
+       PDF BUTTON
+    ========================================= */
 
     .read-button {
       width: 100%;
-      padding: 12px 16px;
-      background: #42d392;
+
+      min-height: 45px;
+
+      padding: 11px 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--green),
+          #38c988
+        );
+
       color: #07110c;
+
       border: none;
-      border-radius: 8px;
-      font-weight: bold;
+
+      border-radius: 11px;
+
+      font-weight: 800;
+
       cursor: pointer;
-      font-size: 15px;
-      transition: 0.2s ease;
+
+      font-size: 14px;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
     }
 
     .read-button:hover {
-      opacity: 0.88;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 10px 25px
+        rgba(66,211,146,.18);
+
+      filter: brightness(1.05);
+    }
+
+    .read-button:active {
+      transform: translateY(0);
     }
 
     .read-button:disabled {
-      opacity: 0.5;
+      opacity: .45;
+
       cursor: not-allowed;
+
+      transform: none;
+
+      box-shadow: none;
     }
+
+    /* =========================================
+       STATES
+    ========================================= */
 
     .loading,
     .empty,
     .error {
       grid-column: 1 / -1;
+
       text-align: center;
-      padding: 55px 20px;
-      color: #aeb6c2;
+
+      padding: 70px 20px;
+
+      color: var(--muted);
     }
 
     .empty-box {
-      max-width: 500px;
+      max-width: 520px;
+
       margin: auto;
-      background: #151a22;
-      border: 1px solid #29313c;
-      border-radius: 14px;
-      padding: 35px 20px;
+
+      padding: 40px 25px;
+
+      background: var(--panel);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.15);
     }
 
     .empty-icon {
-      font-size: 42px;
-      margin-bottom: 12px;
+      width: 70px;
+      height: 70px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 16px;
+
+      border-radius: 20px;
+
+      background:
+        rgba(66,211,146,.06);
+
+      color: var(--green);
+
+      font-size: 32px;
     }
 
     .empty-title {
-      color: #42d392;
+      color: var(--green);
+
       font-size: 20px;
-      margin-bottom: 8px;
+
+      font-weight: 800;
+
+      margin-bottom: 7px;
+    }
+
+    .empty-box p {
+      color: var(--muted);
+
+      font-size: 13px;
     }
 
     .error {
       color: #ff9999;
     }
 
+    /* =========================================
+       FOOTER
+    ========================================= */
+
     footer {
-      margin-top: 30px;
+      border-top:
+        1px solid rgba(255,255,255,.07);
+
       background: #080a0d;
-      border-top: 1px solid #29313c;
+
+      padding: 30px 20px;
+
       text-align: center;
-      padding: 32px 20px;
     }
 
     .founder {
-      color: #42d392;
-      font-weight: bold;
-      margin-bottom: 8px;
+      color: var(--green);
+
+      font-size: 13px;
+
+      font-weight: 750;
+
+      margin-bottom: 7px;
     }
 
     .copyright {
-      color: #777777;
-      font-size: 13px;
-    }
+      color: #68727e;
 
+      font-size: 12px;
+    }
 
     /* =========================================
        PDF MODAL
@@ -353,15 +877,22 @@
 
     .pdf-modal {
       display: none;
+
       position: fixed;
+
       z-index: 9999;
+
       inset: 0;
-      background: rgba(0, 0, 0, 0.94);
+
+      background:
+        rgba(0,0,0,.94);
+
       padding: 12px;
     }
 
     .pdf-modal.active {
       display: flex;
+
       align-items: center;
       justify-content: center;
     }
@@ -369,92 +900,168 @@
     .pdf-box {
       width: 98%;
       height: 97%;
+
       background: #151a22;
-      border: 1px solid #29313c;
-      border-radius: 14px;
+
+      border:
+        1px solid #29313c;
+
+      border-radius: 15px;
+
       overflow: hidden;
+
       position: relative;
+
       display: flex;
+
       flex-direction: column;
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.50);
     }
 
     .pdf-header {
-      min-height: 58px;
+      min-height: 60px;
+
       background: #151a22;
-      border-bottom: 1px solid #29313c;
+
+      border-bottom:
+        1px solid #29313c;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       gap: 10px;
+
       padding: 8px 12px;
     }
 
     .pdf-title {
-      color: #42d392;
-      font-weight: bold;
-      font-size: 17px;
+      color: var(--green);
+
+      font-weight: 800;
+
+      font-size: 16px;
+
       overflow: hidden;
+
       text-overflow: ellipsis;
+
       white-space: nowrap;
+
       min-width: 0;
+
+      direction: auto;
+
+      unicode-bidi: plaintext;
+
+      text-align: start;
     }
 
     .pdf-actions {
       display: flex;
-      gap: 8px;
+
       align-items: center;
+
+      gap: 7px;
+
       flex-shrink: 0;
     }
 
     .pdf-action {
-      border: 1px solid #42d392;
-      background: transparent;
-      color: #42d392;
-      border-radius: 7px;
+      border:
+        1px solid rgba(66,211,146,.45);
+
+      background:
+        rgba(66,211,146,.035);
+
+      color: var(--green);
+
+      border-radius: 8px;
+
       padding: 7px 10px;
+
       cursor: pointer;
-      font-size: 14px;
+
+      font-size: 13px;
+
+      transition:
+        background .2s ease,
+        color .2s ease;
     }
 
     .pdf-action:hover {
-      background: #42d392;
+      background: var(--green);
+
       color: #07110c;
     }
 
     .pdf-close {
       border: none;
-      background: #ff5555;
-      color: #ffffff;
-      border-radius: 7px;
+
+      background: #e64e4e;
+
+      color: #fff;
+
+      border-radius: 8px;
+
       padding: 7px 13px;
+
       cursor: pointer;
+
       font-size: 18px;
+
       line-height: 1;
+
+      transition:
+        background .2s ease,
+        transform .2s ease;
+    }
+
+    .pdf-close:hover {
+      background: #ff5d5d;
+
+      transform: scale(1.03);
     }
 
     .pdf-frame-wrap {
       flex: 1;
+
       min-height: 0;
-      background: #ffffff;
+
+      background: #fff;
+
       position: relative;
     }
 
     .pdf-box iframe {
       width: 100%;
       height: 100%;
+
       border: none;
-      background: #ffffff;
+
+      background: #fff;
     }
 
     .pdf-loading {
       position: absolute;
+
       inset: 0;
-      background: #ffffff;
-      color: #333333;
+
+      background: #fff;
+
+      color: #333;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+
+      font-size: 15px;
+
       z-index: 2;
     }
 
@@ -462,32 +1069,119 @@
       display: none;
     }
 
+    /* =========================================
+       RTL
+    ========================================= */
+
+    html[dir="rtl"] body {
+      font-family:
+        Tahoma,
+        Arial,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    html[dir="rtl"] nav {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] .hero {
+      text-align: center;
+    }
+
+    html[dir="rtl"] .library-summary {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] input,
+    html[dir="rtl"] select {
+      text-align: right;
+    }
 
     /* =========================================
        RESPONSIVE
     ========================================= */
 
+    @media (max-width: 900px) {
+
+      .header-inner {
+        min-height: 70px;
+      }
+
+      .logo-subtitle {
+        display: none;
+      }
+
+      nav a,
+      .language {
+        padding: 8px 9px;
+
+        font-size: 12px;
+      }
+
+      .books {
+        grid-template-columns:
+          repeat(
+            auto-fill,
+            minmax(235px, 1fr)
+          );
+      }
+    }
+
     @media (max-width: 700px) {
 
+      .container {
+        width:
+          calc(100% - 28px);
+      }
+
       header {
-        justify-content: center;
+        position: relative;
+      }
+
+      .header-inner {
+        flex-wrap: wrap;
+
+        padding: 10px 0;
+      }
+
+      .logo-area {
+        flex: 1;
       }
 
       nav {
-        justify-content: center;
-        gap: 12px;
+        order: 3;
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        scrollbar-width: none;
+      }
+
+      nav::-webkit-scrollbar {
+        display: none;
       }
 
       nav a {
-        font-size: 14px;
+        white-space: nowrap;
       }
 
       main {
-        padding: 40px 15px 60px;
+        padding:
+          50px 0 65px;
+      }
+
+      .hero {
+        margin-bottom: 32px;
       }
 
       .title {
-        font-size: 29px;
+        font-size: 31px;
+
+        letter-spacing: -.7px;
       }
 
       .description {
@@ -499,11 +1193,11 @@
       }
 
       .cover {
-        height: 280px;
+        height: 300px;
       }
 
       .book-content {
-        padding: 18px;
+        padding: 20px;
       }
 
       .pdf-modal {
@@ -513,27 +1207,74 @@
       .pdf-box {
         width: 100%;
         height: 98%;
-        border-radius: 8px;
+
+        border-radius: 9px;
       }
 
       .pdf-header {
-        min-height: 52px;
+        min-height: 54px;
+
+        padding: 7px;
       }
 
       .pdf-title {
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .pdf-action {
-        font-size: 12px;
-        padding: 6px 7px;
+        font-size: 11px;
+
+        padding:
+          6px 7px;
       }
 
       .pdf-close {
-        padding: 6px 10px;
+        padding:
+          6px 10px;
       }
     }
 
+    @media (max-width: 430px) {
+
+      .logo-name {
+        font-size: 13px;
+      }
+
+      .logo-mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      .language {
+        min-width: 70px;
+      }
+
+      .books {
+        grid-template-columns: 1fr;
+      }
+
+      .cover {
+        height: 320px;
+      }
+
+      .pdf-actions {
+        gap: 4px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
   </style>
 
 </head>
@@ -543,50 +1284,81 @@
 
 <header>
 
-  <div class="logo">
-    HSKRC
-  </div>
-
-  <nav>
+  <div class="container header-inner">
 
     <a
       href="index.html"
-      id="homeLink">
-      Home
+      class="logo-area"
+    >
+
+      <div class="logo-mark">
+        H
+      </div>
+
+      <div class="logo-text">
+
+        <div class="logo-name">
+          HSKRC
+        </div>
+
+        <div class="logo-subtitle">
+          Knowledge & Research Centre
+        </div>
+
+      </div>
+
     </a>
 
-    <a
-      href="library.html"
-      id="libraryLink">
-      Library
-    </a>
 
-    <a
-      href="articles.html"
-      id="articlesLink">
-      Articles
-    </a>
+    <nav>
 
-    <a
-      href="index.html#about"
-      id="aboutLink">
-      About
-    </a>
+      <a
+        href="index.html"
+        id="homeLink"
+      >
+        Home
+      </a>
 
-    <a
-      href="auth.html"
-      id="accountLink">
-      Login / Register
-    </a>
+      <a
+        href="library.html"
+        id="libraryLink"
+      >
+        Library
+      </a>
 
-    <button
-      class="language"
-      id="languageButton"
-      onclick="changeLanguage()">
-      🌐 Persian
-    </button>
+      <a
+        href="articles.html"
+        id="articlesLink"
+      >
+        Articles
+      </a>
 
-  </nav>
+      <a
+        href="index.html#about"
+        id="aboutLink"
+      >
+        About
+      </a>
+
+      <a
+        href="auth.html"
+        id="accountLink"
+      >
+        Login / Register
+      </a>
+
+      <button
+        class="language"
+        id="languageButton"
+        type="button"
+        onclick="changeLanguage()"
+      >
+        فارسی
+      </button>
+
+    </nav>
+
+  </div>
 
 </header>
 
@@ -595,16 +1367,30 @@
 
   <section class="hero">
 
+    <div class="eyebrow">
+
+      <span class="eyebrow-dot"></span>
+
+      <span id="eyebrowText">
+        HSKRC Digital Collection
+      </span>
+
+    </div>
+
+
     <h1
       class="title"
-      id="pageTitle">
+      id="pageTitle"
+    >
       Digital Library
     </h1>
 
+
     <p
       class="description"
-      id="pageDescription">
-      Search and access the HSKRC book collection
+      id="pageDescription"
+    >
+      Explore books and research materials from the HSKRC digital collection.
     </p>
 
   </section>
@@ -612,7 +1398,8 @@
 
   <div
     class="login-message"
-    id="loginMessage">
+    id="loginMessage"
+  >
     Please login to read or access books.
   </div>
 
@@ -624,14 +1411,16 @@
       <input
         type="search"
         id="searchInput"
-        placeholder="Search by title or author..."
+        placeholder="Search by title, author or description..."
         autocomplete="off"
         oninput="filterBooks()"
       >
 
+
       <select
         id="categoryFilter"
-        onchange="filterBooks()">
+        onchange="filterBooks()"
+      >
 
         <option value="">
           All Categories
@@ -646,19 +1435,26 @@
 
   <div
     class="library-summary"
-    id="librarySummary">
+    id="librarySummary"
+  >
 
     <span id="summaryText">
       Showing all books
     </span>
 
     <span>
-      <span id="summaryCount" class="summary-count">
+
+      <span
+        id="summaryCount"
+        class="summary-count"
+      >
         0
       </span>
+
       <span id="summaryBooks">
         books
       </span>
+
     </span>
 
   </div>
@@ -666,7 +1462,8 @@
 
   <div
     id="booksContainer"
-    class="books">
+    class="books"
+  >
 
     <div class="loading">
       Loading books...
@@ -677,45 +1474,59 @@
 </main>
 
 
-<!-- PDF MODAL -->
+<!-- =========================================
+     PDF MODAL
+========================================= -->
 
 <div
   id="pdfModal"
   class="pdf-modal"
-  aria-hidden="true">
+  aria-hidden="true"
+>
 
   <div
     class="pdf-box"
-    id="pdfBox">
+    id="pdfBox"
+  >
 
     <div class="pdf-header">
 
       <div
         id="pdfTitle"
-        class="pdf-title">
+        class="pdf-title"
+      >
         PDF
       </div>
+
 
       <div class="pdf-actions">
 
         <button
           id="newTabButton"
           class="pdf-action"
-          onclick="openPdfNewTab()">
+          type="button"
+          onclick="openPdfNewTab()"
+        >
           ↗ Open in new tab
         </button>
+
 
         <button
           id="fullscreenButton"
           class="pdf-action"
-          onclick="togglePdfFullscreen()">
+          type="button"
+          onclick="togglePdfFullscreen()"
+        >
           ⛶ Fullscreen
         </button>
 
+
         <button
           class="pdf-close"
+          type="button"
           onclick="closePdf()"
-          aria-label="Close PDF">
+          aria-label="Close PDF"
+        >
           ×
         </button>
 
@@ -726,20 +1537,23 @@
 
     <div
       id="pdfFrameWrap"
-      class="pdf-frame-wrap">
+      class="pdf-frame-wrap"
+    >
 
       <div
         id="pdfLoading"
-        class="pdf-loading">
+        class="pdf-loading"
+      >
         Preparing PDF...
       </div>
+
 
       <iframe
         id="pdfFrame"
         src=""
         title="PDF Viewer"
-        loading="lazy">
-      </iframe>
+        loading="lazy"
+      ></iframe>
 
     </div>
 
@@ -750,7 +1564,10 @@
 
 <footer>
 
-  <p class="founder">
+  <p
+    class="founder"
+    id="founderText"
+  >
     Founded by Kamal Barlas
   </p>
 
@@ -763,7 +1580,6 @@
 
 <script>
 
-
 /* =========================================
    SUPABASE
 ========================================= */
@@ -771,8 +1587,10 @@
 const SUPABASE_URL =
   "https://uwuklryzxexpofcxrbnm.supabase.co";
 
+
 const SUPABASE_KEY =
   "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
 
 const supabaseClient =
   window.supabase.createClient(
@@ -797,15 +1615,59 @@ let currentPdfPath = "";
 
 
 /* =========================================
-   LANGUAGE
+   LANGUAGE STORAGE
 ========================================= */
 
-function changeLanguage() {
+const LANGUAGE_KEY =
+  "hskrc_language";
+
+
+/* =========================================
+   GET SAVED LANGUAGE
+========================================= */
+
+function getSavedLanguage() {
+
+  const saved =
+    localStorage.getItem(
+      LANGUAGE_KEY
+    );
+
+
+  if (
+    saved === "fa" ||
+    saved === "en"
+  ) {
+
+    return saved;
+
+  }
+
+
+  return "en";
+
+}
+
+
+/* =========================================
+   APPLY LANGUAGE
+========================================= */
+
+function applyLanguage(
+  language
+) {
 
   currentLanguage =
-    currentLanguage === "en"
+    language === "fa"
       ? "fa"
       : "en";
+
+
+  localStorage.setItem(
+    LANGUAGE_KEY,
+    currentLanguage
+  );
+
 
   const fa =
     currentLanguage === "fa";
@@ -813,6 +1675,7 @@ function changeLanguage() {
 
   document.documentElement.lang =
     currentLanguage;
+
 
   document.documentElement.dir =
     fa
@@ -859,6 +1722,14 @@ function changeLanguage() {
 
 
   document.getElementById(
+    "eyebrowText"
+  ).textContent =
+    fa
+      ? "مجموعه دیجیتال HSKRC"
+      : "HSKRC Digital Collection";
+
+
+  document.getElementById(
     "pageTitle"
   ).textContent =
     fa
@@ -870,8 +1741,8 @@ function changeLanguage() {
     "pageDescription"
   ).textContent =
     fa
-      ? "جستجو و دسترسی به مجموعه کتاب‌های HSKRC"
-      : "Search and access the HSKRC book collection";
+      ? "کتاب‌ها و منابع پژوهشی مجموعه دیجیتال HSKRC را کاوش کنید."
+      : "Explore books and research materials from the HSKRC digital collection.";
 
 
   document.getElementById(
@@ -886,16 +1757,16 @@ function changeLanguage() {
     "searchInput"
   ).placeholder =
     fa
-      ? "جستجوی عنوان یا نویسنده..."
-      : "Search by title or author...";
+      ? "جستجوی عنوان، نویسنده یا توضیحات..."
+      : "Search by title, author or description...";
 
 
   document.getElementById(
     "languageButton"
   ).textContent =
     fa
-      ? "🌐 English"
-      : "🌐 Persian";
+      ? "English"
+      : "فارسی";
 
 
   document.getElementById(
@@ -914,6 +1785,14 @@ function changeLanguage() {
       : "⛶ Fullscreen";
 
 
+  document.getElementById(
+    "founderText"
+  ).textContent =
+    fa
+      ? "بنیان‌گذاری شده توسط کمال بارلاس"
+      : "Founded by Kamal Barlas";
+
+
   updateAccountLink();
 
   updateCategories();
@@ -924,22 +1803,63 @@ function changeLanguage() {
 
 
 /* =========================================
-   CHECK CURRENT USER
+   CHANGE LANGUAGE
+========================================= */
+
+function changeLanguage() {
+
+  const next =
+    currentLanguage === "en"
+      ? "fa"
+      : "en";
+
+
+  applyLanguage(next);
+
+}
+
+
+/* =========================================
+   CHECK USER
 ========================================= */
 
 async function checkUser() {
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient.auth.getSession();
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getSession();
 
 
-  if (error) {
+    if (error) {
+
+      console.error(
+        "Session error:",
+        error
+      );
+
+      currentSession = null;
+
+      updateAccountLink();
+
+      return;
+
+    }
+
+
+    currentSession =
+      data.session || null;
+
+
+    updateAccountLink();
+
+  } catch (error) {
 
     console.error(
-      "Session error:",
+      "User check error:",
       error
     );
 
@@ -947,14 +1867,7 @@ async function checkUser() {
 
     updateAccountLink();
 
-    return;
   }
-
-
-  currentSession =
-    data.session || null;
-
-  updateAccountLink();
 
 }
 
@@ -965,10 +1878,11 @@ async function checkUser() {
 
 function updateAccountLink() {
 
-  const msg =
+  const message =
     document.getElementById(
       "loginMessage"
     );
+
 
   const link =
     document.getElementById(
@@ -978,11 +1892,13 @@ function updateAccountLink() {
 
   if (currentSession) {
 
-    msg.style.display =
+    message.style.display =
       "none";
+
 
     link.href =
       "account.html";
+
 
     link.textContent =
       currentLanguage === "fa"
@@ -991,11 +1907,13 @@ function updateAccountLink() {
 
   } else {
 
-    msg.style.display =
+    message.style.display =
       "block";
+
 
     link.href =
       "auth.html";
+
 
     link.textContent =
       currentLanguage === "fa"
@@ -1012,10 +1930,14 @@ function updateAccountLink() {
 ========================================= */
 
 supabaseClient.auth.onAuthStateChange(
-  (event, session) => {
+  function (
+    event,
+    session
+  ) {
 
     currentSession =
       session || null;
+
 
     updateAccountLink();
 
@@ -1084,7 +2006,9 @@ async function loadBooks() {
       </div>
     `;
 
+
     return;
+
   }
 
 
@@ -1128,9 +2052,10 @@ function updateCategories() {
     ]
       .sort(
         (a, b) =>
-          String(a).localeCompare(
-            String(b)
-          )
+          String(a)
+            .localeCompare(
+              String(b)
+            )
       );
 
 
@@ -1146,6 +2071,7 @@ function updateCategories() {
 
   firstOption.value =
     "";
+
 
   firstOption.textContent =
     currentLanguage === "fa"
@@ -1295,10 +2221,12 @@ function updateSummary(
       "summaryText"
     );
 
+
   const summaryCount =
     document.getElementById(
       "summaryCount"
     );
+
 
   const summaryBooks =
     document.getElementById(
@@ -1318,7 +2246,10 @@ function updateSummary(
         : "books";
 
 
-  if (!search && !category) {
+  if (
+    !search &&
+    !category
+  ) {
 
     summaryText.textContent =
       currentLanguage === "fa"
@@ -1384,6 +2315,7 @@ function renderBooks(
       </div>
 
     `;
+
 
     return;
 
@@ -1497,6 +2429,8 @@ function renderBooks(
         "book-content";
 
 
+      /* TITLE */
+
       const titleElement =
         document.createElement(
           "h2"
@@ -1515,6 +2449,8 @@ function renderBooks(
         "auto";
 
 
+      /* AUTHOR */
+
       const authorElement =
         document.createElement(
           "div"
@@ -1532,6 +2468,8 @@ function renderBooks(
       authorElement.dir =
         "auto";
 
+
+      /* META */
 
       const metaElement =
         document.createElement(
@@ -1584,6 +2522,8 @@ function renderBooks(
         );
 
 
+      /* DESCRIPTION */
+
       const descriptionElement =
         document.createElement(
           "p"
@@ -1601,6 +2541,8 @@ function renderBooks(
       descriptionElement.dir =
         "auto";
 
+
+      /* BUTTON */
 
       const button =
         document.createElement(
@@ -1627,6 +2569,7 @@ function renderBooks(
         button.disabled =
           true;
 
+
         button.textContent =
           currentLanguage === "fa"
             ? "PDF موجود نیست"
@@ -1636,7 +2579,7 @@ function renderBooks(
 
         button.addEventListener(
           "click",
-          () => {
+          function () {
 
             openPdf(
               pdfPath,
@@ -1653,17 +2596,25 @@ function renderBooks(
         titleElement
       );
 
+
       content.appendChild(
         authorElement
       );
 
-      content.appendChild(
-        metaElement
-      );
+
+      if (metaParts.length) {
+
+        content.appendChild(
+          metaElement
+        );
+
+      }
+
 
       content.appendChild(
         descriptionElement
       );
+
 
       content.appendChild(
         button
@@ -1673,6 +2624,7 @@ function renderBooks(
       article.appendChild(
         coverBox
       );
+
 
       article.appendChild(
         content
@@ -1718,7 +2670,7 @@ function setCoverImage(
 
 
   img.onerror =
-    () => {
+    function () {
 
       container.innerHTML = `
         <div class="no-cover">
@@ -1782,7 +2734,6 @@ async function createCoverSignedUrl(
       title
     );
 
-
   } catch (error) {
 
     console.error(
@@ -1808,7 +2759,9 @@ async function openPdf(
     data,
     error
   } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient
+      .auth
+      .getSession();
 
 
   if (
@@ -1934,7 +2887,7 @@ async function openPdf(
 
 
   frame.onload =
-    () => {
+    function () {
 
       loading.classList.add(
         "hidden"
@@ -1944,7 +2897,7 @@ async function openPdf(
 
 
   frame.onerror =
-    () => {
+    function () {
 
       loading.classList.add(
         "hidden"
@@ -1986,7 +2939,7 @@ async function openPdf(
 
 
   setTimeout(
-    () => {
+    function () {
 
       loading.classList.add(
         "hidden"
@@ -2000,7 +2953,7 @@ async function openPdf(
 
 
 /* =========================================
-   OPEN PDF IN NEW TAB
+   OPEN PDF NEW TAB
 ========================================= */
 
 async function openPdfNewTab() {
@@ -2014,7 +2967,9 @@ async function openPdfNewTab() {
     data,
     error
   } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient
+      .auth
+      .getSession();
 
 
   if (
@@ -2024,6 +2979,7 @@ async function openPdfNewTab() {
 
     window.location.href =
       "auth.html";
+
 
     return;
 
@@ -2118,6 +3074,7 @@ function closePdf() {
   currentPdfUrl =
     "";
 
+
   currentPdfPath =
     "";
 
@@ -2137,7 +3094,7 @@ function closePdf() {
 
 document.addEventListener(
   "keydown",
-  event => {
+  function (event) {
 
     if (
       event.key === "Escape" &&
@@ -2198,6 +3155,17 @@ function escapeHtml(
 
 async function startLibrary() {
 
+  /*
+    VERY IMPORTANT:
+    Read the saved language BEFORE
+    rendering the library.
+  */
+
+  applyLanguage(
+    getSavedLanguage()
+  );
+
+
   await checkUser();
 
   await loadBooks();
@@ -2213,7 +3181,5 @@ startLibrary();
 
 </script>
 
-
 </body>
-
 </html>
