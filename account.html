@@ -2,14 +2,20 @@
 <html lang="en" dir="ltr">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>HSKRC | My Account</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -26,8 +32,8 @@
 
     .container {
       width: 100%;
-      max-width: 600px;
-      margin: 40px auto;
+      max-width: 650px;
+      margin: 35px auto;
       background: #151a22;
       border: 1px solid #29313c;
       border-radius: 18px;
@@ -46,15 +52,67 @@
       text-align: center;
       color: #42d392;
       font-size: 28px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
-    .profile {
+    .language {
+      display: block;
+      margin: 0 auto 25px;
+      padding: 8px 15px;
+      background: transparent;
+      border: 1px solid #42d392;
+      color: #42d392;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .language:hover {
+      background: #42d392;
+      color: #07110c;
+    }
+
+    .message {
+      display: none;
+      text-align: center;
+      padding: 13px;
+      border-radius: 9px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .success {
+      display: block;
+      background: #123d2b;
+      color: #7ee2ad;
+      border: 1px solid #246b4b;
+    }
+
+    .error {
+      display: block;
+      background: #3d1717;
+      color: #ff9999;
+      border: 1px solid #6b2525;
+    }
+
+    .loading {
+      text-align: center;
+      color: #aeb6c2;
+      padding: 30px;
+    }
+
+    .section {
       background: #0d1117;
       border: 1px solid #29313c;
       border-radius: 12px;
       padding: 22px;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      color: #42d392;
+      font-size: 19px;
+      margin-bottom: 18px;
     }
 
     .row {
@@ -78,6 +136,32 @@
       word-break: break-word;
     }
 
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      color: #aeb6c2;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 13px;
+      background: #151a22;
+      color: white;
+      border: 1px solid #29313c;
+      border-radius: 8px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #42d392;
+    }
+
     .button {
       display: block;
       width: 100%;
@@ -89,11 +173,39 @@
       margin-top: 12px;
       cursor: pointer;
       font-size: 15px;
+      transition: 0.2s;
+    }
+
+    .button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      background: #42d392;
+      color: #07110c;
+      border: 1px solid #42d392;
+    }
+
+    .primary:hover {
+      opacity: 0.9;
+    }
+
+    .secondary {
+      background: transparent;
+      color: #42d392;
+      border: 1px solid #42d392;
+    }
+
+    .secondary:hover {
+      background: #42d392;
+      color: #07110c;
     }
 
     .library {
       background: #42d392;
       color: #07110c;
+      border: 1px solid #42d392;
     }
 
     .home {
@@ -107,44 +219,29 @@
       border: 1px solid #6b2525;
     }
 
-    .message {
-      display: none;
-      text-align: center;
-      padding: 13px;
-      border-radius: 9px;
-      margin-bottom: 20px;
+    .logout:hover {
+      background: #521c1c;
+    }
+
+    .divider {
+      height: 1px;
+      background: #29313c;
+      margin: 25px 0;
+    }
+
+    .password-note {
+      color: #8f98a5;
+      font-size: 13px;
       line-height: 1.6;
+      margin-bottom: 15px;
     }
 
-    .error {
-      display: block;
-      background: #3d1717;
-      color: #ff9999;
-    }
-
-    .loading {
-      text-align: center;
-      color: #aeb6c2;
-      padding: 30px;
-    }
-
-    .language {
-      display: block;
-      margin: 0 auto 25px;
-      padding: 8px 15px;
-      background: transparent;
-      border: 1px solid #42d392;
-      color: #42d392;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .language:hover {
-      background: #42d392;
-      color: #07110c;
+    .hidden {
+      display: none !important;
     }
 
     @media (max-width: 600px) {
+
       body {
         padding: 12px;
       }
@@ -157,9 +254,17 @@
       .title {
         font-size: 24px;
       }
+
+      .logo {
+        font-size: 28px;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
@@ -169,126 +274,327 @@
       HSKRC
     </div>
 
+
     <button
       class="language"
       id="languageButton"
-      onclick="changeLanguage()">
+      onclick="changeLanguage()"
+    >
       🌐 Persian
     </button>
 
+
     <h1
       class="title"
-      id="pageTitle">
+      id="pageTitle"
+    >
       My Account
     </h1>
 
+
     <div
       id="message"
-      class="message">
-    </div>
+      class="message"
+    ></div>
+
 
     <div
       id="loading"
-      class="loading">
+      class="loading"
+    >
       Loading account information...
     </div>
 
+
     <div
-      id="profile"
-      class="profile"
-      style="display:none;">
+      id="accountContent"
+      class="hidden"
+    >
 
-      <div class="row">
+
+      <!-- =========================
+           PROFILE INFORMATION
+           ========================= -->
+
+      <div class="section">
 
         <div
-          class="label"
-          id="firstNameLabel">
-          First Name
+          class="section-title"
+          id="profileTitle"
+        >
+          Account Information
         </div>
 
-        <div
-          class="value"
-          id="firstName">
-          -
+
+        <div class="row">
+
+          <div
+            class="label"
+            id="firstNameLabel"
+          >
+            First Name
+          </div>
+
+          <div
+            class="value"
+            id="firstName"
+          >
+            -
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div
+            class="label"
+            id="lastNameLabel"
+          >
+            Last Name
+          </div>
+
+          <div
+            class="value"
+            id="lastName"
+          >
+            -
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div
+            class="label"
+            id="emailLabel"
+          >
+            Email
+          </div>
+
+          <div
+            class="value"
+            id="email"
+          >
+            -
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div
+            class="label"
+            id="phoneLabel"
+          >
+            Phone
+          </div>
+
+          <div
+            class="value"
+            id="phone"
+          >
+            -
+          </div>
+
         </div>
 
       </div>
 
-      <div class="row">
+
+      <!-- =========================
+           EDIT PROFILE
+           ========================= -->
+
+      <div class="section">
 
         <div
-          class="label"
-          id="lastNameLabel">
-          Last Name
+          class="section-title"
+          id="editTitle"
+        >
+          Edit Profile
         </div>
 
-        <div
-          class="value"
-          id="lastName">
-          -
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            id="editFirstNameLabel"
+            for="editFirstName"
+          >
+            First Name
+          </label>
+
+          <input
+            type="text"
+            id="editFirstName"
+            autocomplete="given-name"
+          >
+
         </div>
+
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            id="editLastNameLabel"
+            for="editLastName"
+          >
+            Last Name
+          </label>
+
+          <input
+            type="text"
+            id="editLastName"
+            autocomplete="family-name"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            id="editPhoneLabel"
+            for="editPhone"
+          >
+            Phone
+          </label>
+
+          <input
+            type="tel"
+            id="editPhone"
+            autocomplete="tel"
+          >
+
+        </div>
+
+
+        <button
+          class="button primary"
+          id="saveProfileButton"
+          onclick="saveProfile()"
+        >
+          Save Changes
+        </button>
 
       </div>
 
-      <div class="row">
+
+      <!-- =========================
+           CHANGE PASSWORD
+           ========================= -->
+
+      <div class="section">
 
         <div
-          class="label"
-          id="emailLabel">
-          Email
+          class="section-title"
+          id="passwordTitle"
+        >
+          Change Password
         </div>
 
+
         <div
-          class="value"
-          id="email">
-          -
+          class="password-note"
+          id="passwordNote"
+        >
+          Enter a new password and confirm it below.
         </div>
+
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            id="newPasswordLabel"
+            for="newPassword"
+          >
+            New Password
+          </label>
+
+          <input
+            type="password"
+            id="newPassword"
+            autocomplete="new-password"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            id="confirmPasswordLabel"
+            for="confirmPassword"
+          >
+            Confirm New Password
+          </label>
+
+          <input
+            type="password"
+            id="confirmPassword"
+            autocomplete="new-password"
+          >
+
+        </div>
+
+
+        <button
+          class="button primary"
+          id="changePasswordButton"
+          onclick="changePassword()"
+        >
+          Change Password
+        </button>
 
       </div>
 
-      <div class="row">
 
-        <div
-          class="label"
-          id="phoneLabel">
-          Phone
-        </div>
+      <!-- =========================
+           NAVIGATION
+           ========================= -->
 
-        <div
-          class="value"
-          id="phone">
-          -
-        </div>
+      <a
+        href="library.html"
+        class="button library"
+        id="libraryButton"
+      >
+        📚 Go to Library
+      </a>
 
-      </div>
+
+      <a
+        href="index.html"
+        class="button home"
+        id="homeButton"
+      >
+        ← Back to Home
+      </a>
+
+
+      <button
+        class="button logout"
+        id="logoutButton"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+
 
     </div>
-
-    <a
-      href="library.html"
-      class="button library"
-      id="libraryButton">
-      📚 Go to Library
-    </a>
-
-    <a
-      href="index.html"
-      class="button home"
-      id="homeButton">
-      ← Back to Home
-    </a>
-
-    <button
-      class="button logout"
-      id="logoutButton"
-      onclick="logout()">
-      Logout
-    </button>
 
   </div>
 
 
   <script>
+
 
     /* =========================================
        SUPABASE
@@ -297,8 +603,10 @@
     const SUPABASE_URL =
       "https://uwuklryzxexpofcxrbnm.supabase.co";
 
+
     const SUPABASE_KEY =
       "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
 
     const supabaseClient =
       window.supabase.createClient(
@@ -325,82 +633,242 @@
       document.documentElement.lang =
         currentLanguage;
 
+
       document.documentElement.dir =
         currentLanguage === "fa"
           ? "rtl"
           : "ltr";
 
 
+      updateLanguage();
+
+    }
+
+
+    function updateLanguage() {
+
       if (currentLanguage === "fa") {
 
         document.title =
           "HSKRC | حساب من";
 
+
         document.getElementById("pageTitle").textContent =
           "حساب من";
+
+
+        document.getElementById("profileTitle").textContent =
+          "اطلاعات حساب";
+
 
         document.getElementById("firstNameLabel").textContent =
           "نام";
 
+
         document.getElementById("lastNameLabel").textContent =
           "نام خانوادگی";
+
 
         document.getElementById("emailLabel").textContent =
           "ایمیل";
 
+
         document.getElementById("phoneLabel").textContent =
           "شماره تلفن";
+
+
+        document.getElementById("editTitle").textContent =
+          "ویرایش اطلاعات";
+
+
+        document.getElementById("editFirstNameLabel").textContent =
+          "نام";
+
+
+        document.getElementById("editLastNameLabel").textContent =
+          "نام خانوادگی";
+
+
+        document.getElementById("editPhoneLabel").textContent =
+          "شماره تلفن";
+
+
+        document.getElementById("saveProfileButton").textContent =
+          "ذخیره تغییرات";
+
+
+        document.getElementById("passwordTitle").textContent =
+          "تغییر رمز عبور";
+
+
+        document.getElementById("passwordNote").textContent =
+          "رمز عبور جدید را وارد کرده و آن را تأیید کنید.";
+
+
+        document.getElementById("newPasswordLabel").textContent =
+          "رمز عبور جدید";
+
+
+        document.getElementById("confirmPasswordLabel").textContent =
+          "تأیید رمز عبور جدید";
+
+
+        document.getElementById("changePasswordButton").textContent =
+          "تغییر رمز عبور";
+
 
         document.getElementById("libraryButton").textContent =
           "📚 رفتن به کتابخانه";
 
+
         document.getElementById("homeButton").textContent =
           "← بازگشت به صفحه اصلی";
+
 
         document.getElementById("logoutButton").textContent =
           "خروج از حساب";
 
+
         document.getElementById("languageButton").textContent =
           "🌐 English";
+
 
         document.getElementById("loading").textContent =
           "در حال بارگذاری اطلاعات حساب...";
 
-      } else {
+      }
+
+
+      else {
 
         document.title =
           "HSKRC | My Account";
 
+
         document.getElementById("pageTitle").textContent =
           "My Account";
+
+
+        document.getElementById("profileTitle").textContent =
+          "Account Information";
+
 
         document.getElementById("firstNameLabel").textContent =
           "First Name";
 
+
         document.getElementById("lastNameLabel").textContent =
           "Last Name";
+
 
         document.getElementById("emailLabel").textContent =
           "Email";
 
+
         document.getElementById("phoneLabel").textContent =
           "Phone";
+
+
+        document.getElementById("editTitle").textContent =
+          "Edit Profile";
+
+
+        document.getElementById("editFirstNameLabel").textContent =
+          "First Name";
+
+
+        document.getElementById("editLastNameLabel").textContent =
+          "Last Name";
+
+
+        document.getElementById("editPhoneLabel").textContent =
+          "Phone";
+
+
+        document.getElementById("saveProfileButton").textContent =
+          "Save Changes";
+
+
+        document.getElementById("passwordTitle").textContent =
+          "Change Password";
+
+
+        document.getElementById("passwordNote").textContent =
+          "Enter a new password and confirm it below.";
+
+
+        document.getElementById("newPasswordLabel").textContent =
+          "New Password";
+
+
+        document.getElementById("confirmPasswordLabel").textContent =
+          "Confirm New Password";
+
+
+        document.getElementById("changePasswordButton").textContent =
+          "Change Password";
+
 
         document.getElementById("libraryButton").textContent =
           "📚 Go to Library";
 
+
         document.getElementById("homeButton").textContent =
           "← Back to Home";
+
 
         document.getElementById("logoutButton").textContent =
           "Logout";
 
+
         document.getElementById("languageButton").textContent =
           "🌐 Persian";
 
+
         document.getElementById("loading").textContent =
           "Loading account information...";
+
       }
+
+    }
+
+
+    /* =========================================
+       MESSAGE
+       ========================================= */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      const message =
+        document.getElementById("message");
+
+
+      message.textContent =
+        text;
+
+
+      message.className =
+        "message " + type;
+
+
+    }
+
+
+    function clearMessage() {
+
+      const message =
+        document.getElementById("message");
+
+
+      message.textContent =
+        "";
+
+
+      message.className =
+        "message";
 
     }
 
@@ -414,11 +882,9 @@
       const loading =
         document.getElementById("loading");
 
-      const profile =
-        document.getElementById("profile");
 
-      const message =
-        document.getElementById("message");
+      const accountContent =
+        document.getElementById("accountContent");
 
 
       try {
@@ -430,12 +896,17 @@
           await supabaseClient.auth.getUser();
 
 
-        if (error || !data.user) {
+        if (
+          error ||
+          !data ||
+          !data.user
+        ) {
 
           window.location.href =
             "auth.html";
 
           return;
+
         }
 
 
@@ -447,12 +918,26 @@
           user.user_metadata || {};
 
 
+        const firstName =
+          metadata.first_name || "";
+
+
+        const lastName =
+          metadata.last_name || "";
+
+
+        const phone =
+          metadata.phone || "";
+
+
+        /* Display */
+
         document.getElementById("firstName").textContent =
-          metadata.first_name || "-";
+          firstName || "-";
 
 
         document.getElementById("lastName").textContent =
-          metadata.last_name || "-";
+          lastName || "-";
 
 
         document.getElementById("email").textContent =
@@ -460,30 +945,408 @@
 
 
         document.getElementById("phone").textContent =
-          metadata.phone || "-";
+          phone || "-";
+
+
+        /* Edit fields */
+
+        document.getElementById("editFirstName").value =
+          firstName;
+
+
+        document.getElementById("editLastName").value =
+          lastName;
+
+
+        document.getElementById("editPhone").value =
+          phone;
 
 
         loading.style.display =
           "none";
 
-        profile.style.display =
-          "block";
+
+        accountContent.classList.remove(
+          "hidden"
+        );
+
+      }
 
 
-      } catch (error) {
+      catch (error) {
 
         console.error(error);
 
+
         loading.style.display =
           "none";
 
-        message.textContent =
+
+        showMessage(
           currentLanguage === "fa"
             ? "خطا در دریافت اطلاعات حساب."
-            : "Unable to load account information.";
+            : "Unable to load account information.",
+          "error"
+        );
 
-        message.className =
-          "message error";
+      }
+
+    }
+
+
+    /* =========================================
+       SAVE PROFILE
+       ========================================= */
+
+    async function saveProfile() {
+
+      clearMessage();
+
+
+      const button =
+        document.getElementById(
+          "saveProfileButton"
+        );
+
+
+      const firstName =
+        document.getElementById(
+          "editFirstName"
+        ).value.trim();
+
+
+      const lastName =
+        document.getElementById(
+          "editLastName"
+        ).value.trim();
+
+
+      const phone =
+        document.getElementById(
+          "editPhone"
+        ).value.trim();
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        currentLanguage === "fa"
+          ? "در حال ذخیره..."
+          : "Saving...";
+
+
+      try {
+
+        /*
+          Update Supabase Auth metadata.
+          This keeps account information
+          synchronized with the user's session.
+        */
+
+        const {
+          data: authData,
+          error: authError
+        } =
+          await supabaseClient.auth.updateUser({
+
+            data: {
+
+              first_name: firstName,
+
+              last_name: lastName,
+
+              phone: phone
+
+            }
+
+          });
+
+
+        if (authError) {
+
+          throw authError;
+
+        }
+
+
+        /*
+          Also update the profiles table.
+          If RLS does not allow it yet,
+          Auth metadata will still be updated.
+        */
+
+        if (
+          authData &&
+          authData.user
+        ) {
+
+          const {
+            error: profileError
+          } =
+            await supabaseClient
+              .from("profiles")
+              .update({
+
+                first_name: firstName,
+
+                last_name: lastName,
+
+                phone: phone
+
+              })
+              .eq(
+                "id",
+                authData.user.id
+              );
+
+
+          if (profileError) {
+
+            console.warn(
+              "Profile table update:",
+              profileError
+            );
+
+          }
+
+        }
+
+
+        document.getElementById(
+          "firstName"
+        ).textContent =
+          firstName || "-";
+
+
+        document.getElementById(
+          "lastName"
+        ).textContent =
+          lastName || "-";
+
+
+        document.getElementById(
+          "phone"
+        ).textContent =
+          phone || "-";
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "اطلاعات حساب با موفقیت ذخیره شد."
+            : "Account information saved successfully.",
+          "success"
+        );
+
+      }
+
+
+      catch (error) {
+
+        console.error(error);
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "ذخیره اطلاعات انجام نشد."
+            : "Unable to save account information.",
+          "error"
+        );
+
+      }
+
+
+      finally {
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          currentLanguage === "fa"
+            ? "ذخیره تغییرات"
+            : "Save Changes";
+
+      }
+
+    }
+
+
+    /* =========================================
+       CHANGE PASSWORD
+       ========================================= */
+
+    async function changePassword() {
+
+      clearMessage();
+
+
+      const newPassword =
+        document.getElementById(
+          "newPassword"
+        ).value;
+
+
+      const confirmPassword =
+        document.getElementById(
+          "confirmPassword"
+        ).value;
+
+
+      const button =
+        document.getElementById(
+          "changePasswordButton"
+        );
+
+
+      if (
+        !newPassword ||
+        !confirmPassword
+      ) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "لطفاً هر دو قسمت رمز عبور را وارد کنید."
+            : "Please enter both password fields.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        newPassword.length < 6
+      ) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور باید حداقل ۶ کاراکتر باشد."
+            : "Password must be at least 6 characters.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        newPassword !== confirmPassword
+      ) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمزهای عبور یکسان نیستند."
+            : "Passwords do not match.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        currentLanguage === "fa"
+          ? "در حال تغییر..."
+          : "Changing...";
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient.auth.updateUser({
+
+            password:
+              newPassword,
+
+            data: {
+
+              needs_password_setup:
+                false
+
+            }
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        document.getElementById(
+          "newPassword"
+        ).value =
+          "";
+
+
+        document.getElementById(
+          "confirmPassword"
+        ).value =
+          "";
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "رمز عبور با موفقیت تغییر کرد. لطفاً دوباره وارد شوید."
+            : "Password changed successfully. Please log in again.",
+          "success"
+        );
+
+
+        /*
+          Sign out after password change.
+          User will return to login page.
+        */
+
+        setTimeout(
+          async function() {
+
+            await supabaseClient.auth.signOut();
+
+            window.location.href =
+              "auth.html";
+
+          },
+          1800
+        );
+
+      }
+
+
+      catch (error) {
+
+        console.error(error);
+
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "تغییر رمز عبور انجام نشد."
+            : "Unable to change password.",
+          "error"
+        );
+
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          currentLanguage === "fa"
+            ? "تغییر رمز عبور"
+            : "Change Password";
 
       }
 
@@ -496,11 +1359,23 @@
 
     async function logout() {
 
+      clearMessage();
+
+
       const button =
-        document.getElementById("logoutButton");
+        document.getElementById(
+          "logoutButton"
+        );
+
 
       button.disabled =
         true;
+
+
+      button.textContent =
+        currentLanguage === "fa"
+          ? "در حال خروج..."
+          : "Logging out...";
 
 
       const {
@@ -514,18 +1389,23 @@
         button.disabled =
           false;
 
-        const message =
-          document.getElementById("message");
 
-        message.textContent =
+        button.textContent =
+          currentLanguage === "fa"
+            ? "خروج از حساب"
+            : "Logout";
+
+
+        showMessage(
           currentLanguage === "fa"
             ? "خروج از حساب انجام نشد."
-            : "Logout failed.";
+            : "Logout failed.",
+          "error"
+        );
 
-        message.className =
-          "message error";
 
         return;
+
       }
 
 
@@ -543,8 +1423,10 @@
       function(event, session) {
 
         if (!session) {
+
           window.location.href =
             "auth.html";
+
         }
 
       }
@@ -555,9 +1437,13 @@
        START
        ========================================= */
 
+    updateLanguage();
+
     loadUser();
+
 
   </script>
 
 </body>
+
 </html>
