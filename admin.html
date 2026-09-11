@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSKRC | Admin Panel</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Tahoma, sans-serif;
+      background: #0d1117;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111820;
+      border-bottom: 1px solid #29313c;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #42d392;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    .button-link {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .green {
+      background: #42d392;
+      color: #07110c;
+      font-weight: bold;
+    }
+
+    .dark {
+      background: #202832;
+      color: #fff;
+      border: 1px solid #303b48;
+    }
+
+    .danger {
+      background: #8f3030;
+      color: #fff;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .loading,
+    .access-denied {
+      text-align: center;
+      padding: 60px 20px;
+      color: #aeb6c2;
+    }
+
+    .access-denied h2 {
+      color: #ff7777;
+      margin-bottom: 15px;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      background: #151a22;
+      border: 1px solid #29313c;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stat-number {
+      color: #42d392;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .panel {
+      background: #151a22;
+      border: 1px solid #29313c;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+
+    .panel h2 {
+      margin-bottom: 20px;
+      font-size: 21px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #d9dfe5;
+      font-size: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #303846;
+      background: #0d1117;
+      color: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #42d392;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .check-row input {
+      width: auto;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .books-table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px 10px;
+      border-bottom: 1px solid #29313c;
+      vertical-align: middle;
+    }
+
+    th {
+      color: #42d392;
+      font-size: 13px;
+    }
+
+    td {
+      color: #d8dee5;
+      font-size: 14px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .published {
+      background: #123c2a;
+      color: #7ff0b8;
+    }
+
+    .unpublished {
+      background: #3d3030;
+      color: #ffaaaa;
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .small-btn {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .success {
+      background: #123c2a;
+      color: #7ff0b8;
+    }
+
+    .error {
+      background: #3d1717;
+      color: #ff9999;
+    }
+
+    .file-name {
+      margin-top: 7px;
+      color: #899790;
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 700px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      header {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">HSKRC Admin</div>
+
+  <div class="header-actions">
+    <a href="index.html" class="button-link dark">View Site</a>
+    <button class="dark" onclick="changeLanguage()" id="languageButton">🌐 Persian</button>
+    <button class="danger" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<main>
+
+  <div id="loading" class="loading">
+    Checking administrator access...
+  </div>
+
+  <div id="accessDenied" class="access-denied hidden">
+    <h2>Access Denied</h2>
+    <p id="accessDeniedText">
+      You must be an administrator to access this page.
+    </p>
+    <br>
+    <a href="index.html" class="button-link dark">Back to Home</a>
+  </div>
+
+  <div id="dashboard" class="dashboard">
+
+    <div class="title-row">
+      <div>
+        <h1 id="pageTitle">Admin Dashboard</h1>
+        <p id="pageSubtitle" style="color:#899790;margin-top:7px;">
+          Manage the HSKRC digital library.
+        </p>
+      </div>
+
+      <button class="green" onclick="resetForm()" id="newBookButton">
+        + Add New Book
+      </button>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div id="totalBooksLabel">Total Books</div>
+        <div class="stat-number" id="totalBooks">0</div>
+      </div>
+
+      <div class="stat">
+        <div id="publishedBooksLabel">Published</div>
+        <div class="stat-number" id="publishedBooks">0</div>
+      </div>
+
+      <div class="stat">
+        <div id="hiddenBooksLabel">Hidden</div>
+        <div class="stat-number" id="hiddenBooks">0</div>
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         BOOK FORM
+         ========================= -->
+
+    <div class="panel">
+
+      <h2 id="formTitle">Add New Book</h2>
+
+      <form id="bookForm">
+
+        <input type="hidden" id="bookId">
+
+        <div class="form-grid">
+
+          <div>
+            <label id="titleLabel">Title *</label>
+            <input type="text" id="title">
+          </div>
+
+          <div>
+            <label id="authorLabel">Author *</label>
+            <input type="text" id="author">
+          </div>
+
+          <div>
+            <label id="translatorLabel">Translator</label>
+            <input type="text" id="translator">
+          </div>
+
+          <div>
+            <label id="categoryLabel">Category</label>
+            <input type="text" id="category">
+          </div>
+
+          <div>
+            <label id="languageLabel">Language</label>
+
+            <select id="bookLanguage">
+              <option value="English">English</option>
+              <option value="Persian">Persian</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label id="yearLabel">Publication Year</label>
+            <input type="number" id="publicationYear">
+          </div>
+
+          <div>
+            <label id="isbnLabel">ISBN</label>
+            <input type="text" id="isbn">
+          </div>
+
+          <div>
+            <label id="coverLabel">Cover Image</label>
+            <input
+              type="file"
+              id="coverFile"
+              accept="image/*">
+            <div class="file-name" id="coverFileName"></div>
+          </div>
+
+          <div>
+            <label id="pdfLabel">PDF File</label>
+            <input
+              type="file"
+              id="pdfFile"
+              accept="application/pdf">
+            <div class="file-name" id="pdfFileName"></div>
+          </div>
+
+          <div class="full">
+
+            <label id="descriptionLabel">
+              Description
+            </label>
+
+            <textarea id="description"></textarea>
+
+          </div>
+
+          <div class="full">
+
+            <label class="check-row">
+
+              <input
+                type="checkbox"
+                id="published"
+                checked>
+
+              <span id="publishedLabel">
+                Publish this book in the library
+              </span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            type="submit"
+            class="green"
+            id="saveButton">
+            Save Book
+          </button>
+
+          <button
+            type="button"
+            class="dark"
+            onclick="resetForm()"
+            id="cancelButton">
+            Clear
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <!-- =========================
+         BOOK LIST
+         ========================= -->
+
+    <div class="panel">
+
+      <h2 id="booksTitle">Books</h2>
+
+      <div class="books-table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th id="thTitle">Title</th>
+              <th id="thAuthor">Author</th>
+              <th id="thCategory">Category</th>
+              <th id="thLanguage">Language</th>
+              <th id="thStatus">Status</th>
+              <th id="thActions">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody id="booksTableBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+   ========================================= */
+
+const SUPABASE_URL =
+  "https://uwuklryzxexpofcxrbnm.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+let currentLanguage = "en";
+let books = [];
+
+
+/* =========================================
+   LANGUAGE
+   ========================================= */
+
+function changeLanguage() {
+
+  if (currentLanguage === "en") {
+
+    currentLanguage = "fa";
+
+    document.documentElement.lang = "fa";
+    document.documentElement.dir = "rtl";
+
+    document.getElementById("languageButton").textContent =
+      "🌐 English";
+
+    document.getElementById("pageTitle").textContent =
+      "داشبورد مدیریت";
+
+    document.getElementById("pageSubtitle").textContent =
+      "مدیریت کتابخانه دیجیتال HSKRC";
+
+    document.getElementById("newBookButton").textContent =
+      "+ افزودن کتاب";
+
+    document.getElementById("formTitle").textContent =
+      "افزودن کتاب جدید";
+
+    document.getElementById("titleLabel").textContent =
+      "عنوان *";
+
+    document.getElementById("authorLabel").textContent =
+      "نویسنده *";
+
+    document.getElementById("translatorLabel").textContent =
+      "مترجم";
+
+    document.getElementById("categoryLabel").textContent =
+      "دسته‌بندی";
+
+    document.getElementById("languageLabel").textContent =
+      "زبان";
+
+    document.getElementById("yearLabel").textContent =
+      "سال انتشار";
+
+    document.getElementById("isbnLabel").textContent =
+      "ISBN";
+
+    document.getElementById("coverLabel").textContent =
+      "تصویر جلد";
+
+    document.getElementById("pdfLabel").textContent =
+      "فایل PDF";
+
+    document.getElementById("descriptionLabel").textContent =
+      "توضیحات";
+
+    document.getElementById("publishedLabel").textContent =
+      "انتشار این کتاب در کتابخانه";
+
+    document.getElementById("saveButton").textContent =
+      "ذخیره کتاب";
+
+    document.getElementById("cancelButton").textContent =
+      "پاک کردن";
+
+    document.getElementById("booksTitle").textContent =
+      "کتاب‌ها";
+
+    document.getElementById("totalBooksLabel").textContent =
+      "مجموع کتاب‌ها";
+
+    document.getElementById("publishedBooksLabel").textContent =
+      "منتشر شده";
+
+    document.getElementById("hiddenBooksLabel").textContent =
+      "مخفی";
+
+    document.getElementById("thTitle").textContent =
+      "عنوان";
+
+    document.getElementById("thAuthor").textContent =
+      "نویسنده";
+
+    document.getElementById("thCategory").textContent =
+      "دسته‌بندی";
+
+    document.getElementById("thLanguage").textContent =
+      "زبان";
+
+    document.getElementById("thStatus").textContent =
+      "وضعیت";
+
+    document.getElementById("thActions").textContent =
+      "عملیات";
+
+  } else {
+
+    currentLanguage = "en";
+
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+
+    document.getElementById("languageButton").textContent =
+      "🌐 Persian";
+
+    document.getElementById("pageTitle").textContent =
+      "Admin Dashboard";
+
+    document.getElementById("pageSubtitle").textContent =
+      "Manage the HSKRC digital library.";
+
+    document.getElementById("newBookButton").textContent =
+      "+ Add New Book";
+
+    document.getElementById("formTitle").textContent =
+      "Add New Book";
+
+    document.getElementById("titleLabel").textContent =
+      "Title *";
+
+    document.getElementById("authorLabel").textContent =
+      "Author *";
+
+    document.getElementById("translatorLabel").textContent =
+      "Translator";
+
+    document.getElementById("categoryLabel").textContent =
+      "Category";
+
+    document.getElementById("languageLabel").textContent =
+      "Language";
+
+    document.getElementById("yearLabel").textContent =
+      "Publication Year";
+
+    document.getElementById("isbnLabel").textContent =
+      "ISBN";
+
+    document.getElementById("coverLabel").textContent =
+      "Cover Image";
+
+    document.getElementById("pdfLabel").textContent =
+      "PDF File";
+
+    document.getElementById("descriptionLabel").textContent =
+      "Description";
+
+    document.getElementById("publishedLabel").textContent =
+      "Publish this book in the library";
+
+    document.getElementById("saveButton").textContent =
+      "Save Book";
+
+    document.getElementById("cancelButton").textContent =
+      "Clear";
+
+    document.getElementById("booksTitle").textContent =
+      "Books";
+
+    document.getElementById("totalBooksLabel").textContent =
+      "Total Books";
+
+    document.getElementById("publishedBooksLabel").textContent =
+      "Published";
+
+    document.getElementById("hiddenBooksLabel").textContent =
+      "Hidden";
+
+    document.getElementById("thTitle").textContent =
+      "Title";
+
+    document.getElementById("thAuthor").textContent =
+      "Author";
+
+    document.getElementById("thCategory").textContent =
+      "Category";
+
+    document.getElementById("thLanguage").textContent =
+      "Language";
+
+    document.getElementById("thStatus").textContent =
+      "Status";
+
+    document.getElementById("thActions").textContent =
+      "Actions";
+  }
+
+  renderBooks();
+}
+
+
+/* =========================================
+   MESSAGE
+   ========================================= */
+
+function showMessage(text, type) {
+
+  const box =
+    document.getElementById("message");
+
+  box.textContent = text;
+  box.className = "message " + type;
+  box.style.display = "block";
+}
+
+
+function clearMessage() {
+
+  const box =
+    document.getElementById("message");
+
+  box.style.display = "none";
+  box.textContent = "";
+}
+
+
+/* =========================================
+   ADMIN CHECK
+   ========================================= */
+
+async function checkAdmin() {
+
+  try {
+
+    const {
+      data: sessionData
+    } = await supabaseClient.auth.getSession();
+
+    const session =
+      sessionData.session;
+
+
+    if (!session) {
+
+      showAccessDenied(
+        currentLanguage === "fa"
+          ? "ابتدا باید وارد حساب خود شوید."
+          : "Please log in first."
+      );
+
+      return;
+    }
+
+
+    const {
+      data: profile,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select("role")
+        .eq("id", session.user.id)
+        .single();
+
+
+    if (
+      error ||
+      !profile ||
+      profile.role !== "admin"
+    ) {
+
+      showAccessDenied(
+        currentLanguage === "fa"
+          ? "این حساب دسترسی مدیریت ندارد."
+          : "This account does not have administrator access."
+      );
+
+      return;
+    }
+
+
+    document.getElementById("loading")
+      .style.display = "none";
+
+    document.getElementById("dashboard")
+      .style.display = "block";
+
+    await loadBooks();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showAccessDenied(
+      currentLanguage === "fa"
+        ? "خطا در بررسی دسترسی."
+        : "Error checking administrator access."
+    );
+  }
+}
+
+
+/* =========================================
+   ACCESS DENIED
+   ========================================= */
+
+function showAccessDenied(text) {
+
+  document.getElementById("loading")
+    .style.display = "none";
+
+  document.getElementById("accessDenied")
+    .classList.remove("hidden");
+
+  document.getElementById("accessDeniedText")
+    .textContent = text;
+}
+
+
+/* =========================================
+   LOAD BOOKS
+   ========================================= */
+
+async function loadBooks() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("books")
+      .select("*")
+      .order(
+        "created_at",
+        { ascending: false }
+      );
+
+
+  if (error) {
+
+    console.error(error);
+
+    showMessage(
+      currentLanguage === "fa"
+        ? "خطا در دریافت کتاب‌ها: " + error.message
+        : "Error loading books: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  books = data || [];
+
+  updateStats();
+  renderBooks();
+}
+
+
+/* =========================================
+   STATS
+   ========================================= */
+
+function updateStats() {
+
+  const total =
+    books.length;
+
+  const published =
+    books.filter(
+      book => book.published === true
+    ).length;
+
+  const hidden =
+    total - published;
+
+
+  document.getElementById("totalBooks")
+    .textContent = total;
+
+  document.getElementById("publishedBooks")
+    .textContent = published;
+
+  document.getElementById("hiddenBooks")
+    .textContent = hidden;
+}
+
+
+/* =========================================
+   RENDER BOOKS
+   ========================================= */
+
+function renderBooks() {
+
+  const tbody =
+    document.getElementById("booksTableBody");
+
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+
+  if (!books.length) {
+
+    const row =
+      document.createElement("tr");
+
+    row.innerHTML =
+      '<td colspan="6" style="text-align:center;color:#899790;padding:30px;">' +
+      (
+        currentLanguage === "fa"
+          ? "هنوز کتابی اضافه نشده است."
+          : "No books have been added yet."
+      ) +
+      "</td>";
+
+    tbody.appendChild(row);
+
+    return;
+  }
+
+
+  books.forEach(function(book) {
+
+    const row =
+      document.createElement("tr");
+
+
+    const status =
+      book.published
+        ? '<span class="status published">' +
+          (currentLanguage === "fa"
+            ? "منتشر شده"
+            : "Published") +
+          "</span>"
+        : '<span class="status unpublished">' +
+          (currentLanguage === "fa"
+            ? "مخفی"
+            : "Hidden") +
+          "</span>";
+
+
+    row.innerHTML =
+
+      "<td>" +
+      escapeHtml(book.title || "") +
+      "</td>" +
+
+      "<td>" +
+      escapeHtml(book.author || "") +
+      "</td>" +
+
+      "<td>" +
+      escapeHtml(book.category || "-") +
+      "</td>" +
+
+      "<td>" +
+      escapeHtml(book.language || "-") +
+      "</td>" +
+
+      "<td>" +
+      status +
+      "</td>" +
+
+      '<td><div class="actions">' +
+
+      '<button class="dark small-btn" onclick="editBook(\'' +
+      escapeAttribute(book.id) +
+      '\')">' +
+      (
+        currentLanguage === "fa"
+          ? "ویرایش"
+          : "Edit"
+      ) +
+      "</button>" +
+
+      '<button class="danger small-btn" onclick="deleteBook(\'' +
+      escapeAttribute(book.id) +
+      '\')">' +
+      (
+        currentLanguage === "fa"
+          ? "حذف"
+          : "Delete"
+      ) +
+      "</button>" +
+
+      "</div></td>";
+
+
+    tbody.appendChild(row);
+
+  });
+}
+
+
+/* =========================================
+   ESCAPE
+   ========================================= */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+}
+
+
+/* =========================================
+   FILE NAME DISPLAY
+   ========================================= */
+
+document.getElementById("coverFile")
+  .addEventListener(
+    "change",
+    function() {
+
+      const file =
+        this.files[0];
+
+      document.getElementById("coverFileName")
+        .textContent =
+          file
+            ? file.name
+            : "";
+    }
+  );
+
+
+document.getElementById("pdfFile")
+  .addEventListener(
+    "change",
+    function() {
+
+      const file =
+        this.files[0];
+
+      document.getElementById("pdfFileName")
+        .textContent =
+          file
+            ? file.name
+            : "";
+    }
+  );
+
+
+/* =========================================
+   SAVE BOOK
+   ========================================= */
+
+document.getElementById("bookForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      clearMessage();
+
+
+      const id =
+        document.getElementById("bookId")
+          .value
+          .trim();
+
+      const title =
+        document.getElementById("title")
+          .value
+          .trim();
+
+      const author =
+        document.getElementById("author")
+          .value
+          .trim();
+
+      const translator =
+        document.getElementById("translator")
+          .value
+          .trim();
+
+      const category =
+        document.getElementById("category")
+          .value
+          .trim();
+
+      const language =
+        document.getElementById("bookLanguage")
+          .value;
+
+      const yearValue =
+        document.getElementById("publicationYear")
+          .value
+          .trim();
+
+      const isbn =
+        document.getElementById("isbn")
+          .value
+          .trim();
+
+      const description =
+        document.getElementById("description")
+          .value
+          .trim();
+
+      const published =
+        document.getElementById("published")
+          .checked;
+
+      const coverFile =
+        document.getElementById("coverFile")
+          .files[0];
+
+      const pdfFile =
+        document.getElementById("pdfFile")
+          .files[0];
+
+
+      if (!title || !author) {
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "عنوان و نویسنده الزامی است."
+            : "Title and author are required.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      const saveButton =
+        document.getElementById("saveButton");
+
+      saveButton.disabled = true;
+
+
+      try {
+
+        let coverPath = null;
+        let pdfPath = null;
+
+
+        /*
+         * Upload cover
+         */
+
+        if (coverFile) {
+
+          const safeName =
+            sanitizeFileName(
+              coverFile.name
+            );
+
+          coverPath =
+            "covers/" +
+            Date.now() +
+            "-" +
+            safeName;
+
+
+          const {
+            error: coverError
+          } =
+            await supabaseClient.storage
+              .from("Books")
+              .upload(
+                coverPath,
+                coverFile,
+                {
+                  upsert: false
+                }
+              );
+
+
+          if (coverError) {
+            throw coverError;
+          }
+        }
+
+
+        /*
+         * Upload PDF
+         */
+
+        if (pdfFile) {
+
+          if (
+            pdfFile.type !==
+            "application/pdf"
+          ) {
+
+            throw new Error(
+              currentLanguage === "fa"
+                ? "فقط فایل PDF مجاز است."
+                : "Only PDF files are allowed."
+            );
+          }
+
+
+          const safeName =
+            sanitizeFileName(
+              pdfFile.name
+            );
+
+          pdfPath =
+            "pdfs/" +
+            Date.now() +
+            "-" +
+            safeName;
+
+
+          const {
+            error: pdfError
+          } =
+            await supabaseClient.storage
+              .from("Books")
+              .upload(
+                pdfPath,
+                pdfFile,
+                {
+                  upsert: false,
+                  contentType: "application/pdf"
+                }
+              );
+
+
+          if (pdfError) {
+            throw pdfError;
+          }
+        }
+
+
+        /*
+         * Existing book
+         */
+
+        if (id) {
+
+          const updateData = {
+
+            title:
+              title,
+
+            author:
+              author,
+
+            category:
+              category || null,
+
+            language:
+              language || null,
+
+            publication_year:
+              yearValue
+                ? Number(yearValue)
+                : null,
+
+            description:
+              description || null,
+
+            published:
+              published
+
+          };
+
+
+          /*
+           * Add optional columns only if
+           * they exist in the database.
+           */
+
+          if (translator) {
+            updateData.translator =
+              translator;
+          }
+
+          if (isbn) {
+            updateData.isbn =
+              isbn;
+          }
+
+          if (coverPath) {
+            updateData.cover_path =
+              coverPath;
+
+            updateData.cover_url =
+              null;
+          }
+
+          if (pdfPath) {
+            updateData.pdf_path =
+              pdfPath;
+          }
+
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("books")
+              .update(updateData)
+              .eq("id", id);
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "کتاب با موفقیت ویرایش شد."
+              : "Book updated successfully.",
+            "success"
+          );
+
+
+        } else {
+
+
+          /*
+           * New book
+           */
+
+          const insertData = {
+
+            title:
+              title,
+
+            author:
+              author,
+
+            category:
+              category || null,
+
+            language:
+              language || null,
+
+            publication_year:
+              yearValue
+                ? Number(yearValue)
+                : null,
+
+            description:
+              description || null,
+
+            published:
+              published,
+
+            cover_path:
+              coverPath,
+
+            cover_url:
+              null,
+
+            pdf_path:
+              pdfPath
+
+          };
+
+
+          if (translator) {
+            insertData.translator =
+              translator;
+          }
+
+          if (isbn) {
+            insertData.isbn =
+              isbn;
+          }
+
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("books")
+              .insert(insertData);
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          showMessage(
+            currentLanguage === "fa"
+              ? "کتاب با موفقیت اضافه شد."
+              : "Book added successfully.",
+            "success"
+          );
+        }
+
+
+        resetForm();
+
+        await loadBooks();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          currentLanguage === "fa"
+            ? "خطا: " + error.message
+            : "Error: " + error.message,
+          "error"
+        );
+
+      }
+
+
+      saveButton.disabled = false;
+    }
+  );
+
+
+/* =========================================
+   SANITIZE FILE NAME
+   ========================================= */
+
+function sanitizeFileName(name) {
+
+  return name
+    .normalize("NFKD")
+    .replace(/[^\w.\-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+
+/* =========================================
+   EDIT BOOK
+   ========================================= */
+
+function editBook(id) {
+
+  const book =
+    books.find(
+      item => String(item.id) === String(id)
+    );
+
+
+  if (!book) return;
+
+
+  document.getElementById("bookId")
+    .value = book.id || "";
+
+  document.getElementById("title")
+    .value = book.title || "";
+
+  document.getElementById("author")
+    .value = book.author || "";
+
+  document.getElementById("translator")
+    .value = book.translator || "";
+
+  document.getElementById("category")
+    .value = book.category || "";
+
+  document.getElementById("bookLanguage")
+    .value = book.language || "English";
+
+  document.getElementById("publicationYear")
+    .value = book.publication_year || "";
+
+  document.getElementById("isbn")
+    .value = book.isbn || "";
+
+  document.getElementById("description")
+    .value = book.description || "";
+
+  document.getElementById("published")
+    .checked = book.published === true;
+
+
+  document.getElementById("coverFile")
+    .value = "";
+
+  document.getElementById("pdfFile")
+    .value = "";
+
+  document.getElementById("coverFileName")
+    .textContent =
+      book.cover_path
+        ? "Current: " + book.cover_path
+        : "";
+
+  document.getElementById("pdfFileName")
+    .textContent =
+      book.pdf_path
+        ? "Current: " + book.pdf_path
+        : "";
+
+
+  document.getElementById("formTitle")
+    .textContent =
+      currentLanguage === "fa"
+        ? "ویرایش کتاب"
+        : "Edit Book";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =========================================
+   DELETE BOOK
+   ========================================= */
+
+async function deleteBook(id) {
+
+  const book =
+    books.find(
+      item => String(item.id) === String(id)
+    );
+
+
+  if (!book) return;
+
+
+  const confirmed =
+    confirm(
+      currentLanguage === "fa"
+        ? "آیا مطمئن هستید که این کتاب حذف شود؟"
+        : "Are you sure you want to delete this book?"
+    );
+
+
+  if (!confirmed) return;
+
+
+  try {
+
+
+    /*
+     * Delete database record
+     */
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("books")
+        .delete()
+        .eq("id", id);
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    /*
+     * Delete files from private bucket
+     */
+
+    const paths = [];
+
+
+    if (book.cover_path) {
+      paths.push(book.cover_path);
+    }
+
+    if (book.pdf_path) {
+      paths.push(book.pdf_path);
+    }
+
+
+    if (paths.length) {
+
+      await supabaseClient.storage
+        .from("Books")
+        .remove(paths);
+    }
+
+
+    showMessage(
+      currentLanguage === "fa"
+        ? "کتاب حذف شد."
+        : "Book deleted successfully.",
+      "success"
+    );
+
+
+    await loadBooks();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      currentLanguage === "fa"
+        ? "خطا در حذف کتاب: " + error.message
+        : "Error deleting book: " + error.message,
+      "error"
+    );
+  }
+}
+
+
+/* =========================================
+   RESET FORM
+   ========================================= */
+
+function resetForm() {
+
+  document.getElementById("bookForm")
+    .reset();
+
+  document.getElementById("bookId")
+    .value = "";
+
+  document.getElementById("published")
+    .checked = true;
+
+  document.getElementById("coverFileName")
+    .textContent = "";
+
+  document.getElementById("pdfFileName")
+    .textContent = "";
+
+  document.getElementById("formTitle")
+    .textContent =
+      currentLanguage === "fa"
+        ? "افزودن کتاب جدید"
+        : "Add New Book";
+
+  clearMessage();
+}
+
+
+/* =========================================
+   LOGOUT
+   ========================================= */
+
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  window.location.href =
+    "auth.html";
+}
+
+
+/* =========================================
+   START
+   ========================================= */
+
+checkAdmin();
+
+</script>
+
+</body>
+</html>
