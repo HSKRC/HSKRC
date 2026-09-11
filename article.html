@@ -2,20 +2,14 @@
 <html lang="en" dir="ltr">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>HSKRC | Article</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -85,22 +79,35 @@
     }
 
     .article-page {
-      max-width: 950px;
+      max-width: 1050px;
       margin: auto;
-      padding: 70px 25px 90px;
+      padding: 60px 20px 90px;
     }
 
-    .back-link {
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .back-link,
+    .print-btn {
       display: inline-block;
       color: #42d392;
       text-decoration: none;
-      margin-bottom: 30px;
       border: 1px solid #42d392;
-      padding: 8px 16px;
+      padding: 9px 17px;
       border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
     }
 
-    .back-link:hover {
+    .back-link:hover,
+    .print-btn:hover {
       background: #42d392;
       color: #07110c;
     }
@@ -108,17 +115,41 @@
     .article-container {
       background: #151a22;
       border: 1px solid #252c36;
-      border-radius: 16px;
-      padding: 45px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .article-cover-wrapper {
+      width: 100%;
+      background: #0a0e13;
+      border-bottom: 1px solid #252c36;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 35px 20px;
+    }
+
+    .article-cover {
+      display: block;
+      width: 100%;
+      max-width: 620px;
+      max-height: 650px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid #252c36;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .article-body {
+      padding: 50px;
     }
 
     .article-title {
       color: #42d392;
-      font-size: 38px;
+      font-size: 40px;
       line-height: 1.5;
-      margin-bottom: 15px;
-
-      /* Automatic text direction */
+      margin-bottom: 18px;
       direction: auto;
       unicode-bidi: plaintext;
       text-align: start;
@@ -129,22 +160,23 @@
       font-size: 15px;
       margin-bottom: 35px;
       border-bottom: 1px solid #252c36;
-      padding-bottom: 20px;
-
-      /* Automatic text direction */
+      padding-bottom: 22px;
       direction: auto;
       unicode-bidi: plaintext;
       text-align: start;
+    }
+
+    .meta-item {
+      display: inline-block;
+      margin-bottom: 5px;
     }
 
     .article-content {
       color: #d0d5dc;
       font-size: 18px;
       white-space: pre-wrap;
-      line-height: 2.1;
+      line-height: 2.15;
       overflow-wrap: anywhere;
-
-      /* Automatic Persian / English direction */
       direction: auto;
       unicode-bidi: plaintext;
       text-align: start;
@@ -153,13 +185,13 @@
     .loading {
       text-align: center;
       color: #858c96;
-      padding: 70px 20px;
+      padding: 80px 20px;
     }
 
     .error {
       text-align: center;
       color: #d0d5dc;
-      padding: 70px 20px;
+      padding: 80px 20px;
     }
 
     .error h2 {
@@ -203,30 +235,88 @@
       }
 
       .article-page {
-        padding: 45px 15px 60px;
+        padding: 40px 12px 60px;
       }
 
-      .article-container {
-        padding: 25px 18px;
+      .article-body {
+        padding: 28px 20px;
       }
 
       .article-title {
         font-size: 28px;
+        line-height: 1.6;
       }
 
       .article-content {
         font-size: 16px;
+        line-height: 2;
       }
 
+      .article-cover-wrapper {
+        padding: 20px 12px;
+      }
+
+      .article-cover {
+        max-height: 500px;
+      }
+
+      .top-actions {
+        justify-content: center;
+      }
     }
 
+    @media print {
+
+      body {
+        background: white;
+        color: black;
+      }
+
+      header,
+      footer,
+      .top-actions {
+        display: none;
+      }
+
+      .article-page {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .article-container {
+        border: none;
+        box-shadow: none;
+        background: white;
+      }
+
+      .article-body {
+        padding: 20px;
+      }
+
+      .article-title {
+        color: black;
+      }
+
+      .article-meta,
+      .article-content {
+        color: black;
+      }
+
+      .article-cover-wrapper {
+        background: white;
+        border: none;
+      }
+
+      .article-cover {
+        max-height: 500px;
+        box-shadow: none;
+      }
+    }
   </style>
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -270,20 +360,33 @@
 </header>
 
 
-
 <main>
 
   <div class="article-page">
 
-    <a
-      href="articles.html"
-      class="back-link"
-      data-fa="← بازگشت به مقالات"
-      data-en="← Back to Articles">
+    <div class="top-actions">
 
-      ← Back to Articles
+      <a
+        href="articles.html"
+        class="back-link"
+        data-fa="← بازگشت به مقالات"
+        data-en="← Back to Articles">
 
-    </a>
+        ← Back to Articles
+
+      </a>
+
+      <button
+        class="print-btn"
+        onclick="window.print()"
+        data-fa="🖨️ چاپ / ذخیره PDF"
+        data-en="🖨️ Print / Save PDF">
+
+        🖨️ Print / Save PDF
+
+      </button>
+
+    </div>
 
 
     <div
@@ -301,7 +404,6 @@
 </main>
 
 
-
 <footer>
 
   <p class="founder">
@@ -315,17 +417,13 @@
 </footer>
 
 
-
 <script>
-
 
 const SUPABASE_URL =
   "https://uwuklryzxexpofcxrbnm.supabase.co";
 
-
 const SUPABASE_KEY =
   "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
-
 
 const supabaseClient =
   window.supabase.createClient(
@@ -334,9 +432,7 @@ const supabaseClient =
   );
 
 
-
 let currentLanguage = "en";
-
 
 
 function changeLanguage() {
@@ -346,16 +442,13 @@ function changeLanguage() {
       ? "fa"
       : "en";
 
-
   document.documentElement.lang =
     currentLanguage;
-
 
   document.documentElement.dir =
     currentLanguage === "fa"
       ? "rtl"
       : "ltr";
-
 
   document
     .querySelectorAll("[data-fa]")
@@ -368,7 +461,6 @@ function changeLanguage() {
 
     });
 
-
   document.getElementById(
     "languageButton"
   ).textContent =
@@ -376,11 +468,9 @@ function changeLanguage() {
       ? "🌐 English"
       : "🌐 Persian";
 
-
   updateAccountLink();
 
 }
-
 
 
 async function updateAccountLink() {
@@ -390,12 +480,10 @@ async function updateAccountLink() {
       "accountLink"
     );
 
-
   const {
     data
   } =
     await supabaseClient.auth.getSession();
-
 
   if (data.session) {
 
@@ -422,16 +510,59 @@ async function updateAccountLink() {
 }
 
 
-
 const urlParams =
   new URLSearchParams(
     window.location.search
   );
 
-
 const articleId =
   urlParams.get("id");
 
+
+async function getCoverUrl(coverPath) {
+
+  if (!coverPath) {
+    return null;
+  }
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .storage
+        .from("Books")
+        .createSignedUrl(
+          coverPath,
+          3600
+        );
+
+    if (error) {
+
+      console.error(
+        "Cover error:",
+        error
+      );
+
+      return null;
+    }
+
+    return data?.signedUrl || null;
+
+  } catch (error) {
+
+    console.error(
+      "Cover exception:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
 
 
 async function loadArticle() {
@@ -451,7 +582,6 @@ async function loadArticle() {
     );
 
     return;
-
   }
 
 
@@ -467,6 +597,7 @@ async function loadArticle() {
         author,
         category,
         content,
+        cover_path,
         published,
         published_at
       `)
@@ -495,7 +626,6 @@ async function loadArticle() {
     );
 
     return;
-
   }
 
 
@@ -508,7 +638,6 @@ async function loadArticle() {
     );
 
     return;
-
   }
 
 
@@ -517,61 +646,93 @@ async function loadArticle() {
     data.title;
 
 
+  const coverUrl =
+    await getCoverUrl(
+      data.cover_path
+    );
+
+
+  const coverHTML =
+    coverUrl
+      ? `
+        <div class="article-cover-wrapper">
+          <img
+            class="article-cover"
+            src="${escapeHTML(coverUrl)}"
+            alt="${escapeHTML(data.title)}"
+            loading="eager">
+        </div>
+      `
+      : "";
+
+
   area.innerHTML = `
 
-    <h1
-      class="article-title"
-      dir="auto">
+    ${coverHTML}
 
-      ${escapeHTML(
-        data.title
-      )}
+    <div class="article-body">
 
-    </h1>
+      <h1
+        class="article-title"
+        dir="auto">
 
+        ${escapeHTML(
+          data.title
+        )}
 
-    <div
-      class="article-meta"
-      dir="auto">
-
-      ${
-        currentLanguage === "fa"
-          ? "نویسنده: "
-          : "Author: "
-      }
-
-      ${escapeHTML(
-        data.author ||
-        "HSKRC Research Centre"
-      )}
-
-      &nbsp;&nbsp; | &nbsp;&nbsp;
-
-      ${
-        currentLanguage === "fa"
-          ? "دسته‌بندی: "
-          : "Category: "
-      }
-
-      ${escapeHTML(
-        data.category ||
-        (
-          currentLanguage === "fa"
-            ? "پژوهش"
-            : "Research"
-        )
-      )}
-
-    </div>
+      </h1>
 
 
-    <div
-      class="article-content"
-      dir="auto">
+      <div
+        class="article-meta"
+        dir="auto">
 
-      ${escapeHTML(
-        data.content || ""
-      )}
+        <span class="meta-item">
+          ${
+            currentLanguage === "fa"
+              ? "نویسنده: "
+              : "Author: "
+          }
+
+          ${escapeHTML(
+            data.author ||
+            "HSKRC Research Centre"
+          )}
+        </span>
+
+        &nbsp;&nbsp; | &nbsp;&nbsp;
+
+        <span class="meta-item">
+
+          ${
+            currentLanguage === "fa"
+              ? "دسته‌بندی: "
+              : "Category: "
+          }
+
+          ${escapeHTML(
+            data.category ||
+            (
+              currentLanguage === "fa"
+                ? "پژوهش"
+                : "Research"
+            )
+          )}
+
+        </span>
+
+      </div>
+
+
+      <div
+        class="article-content"
+        dir="auto">
+
+        ${escapeHTML(
+          data.content || ""
+        )}
+
+      </div>
 
     </div>
 
@@ -580,14 +741,12 @@ async function loadArticle() {
 }
 
 
-
 function showError(message) {
 
   const area =
     document.getElementById(
       "articleArea"
     );
-
 
   area.innerHTML = `
 
@@ -610,7 +769,6 @@ function showError(message) {
 }
 
 
-
 function escapeHTML(value) {
 
   if (
@@ -621,7 +779,6 @@ function escapeHTML(value) {
     return "";
 
   }
-
 
   return String(value)
 
@@ -653,7 +810,6 @@ function escapeHTML(value) {
 }
 
 
-
 supabaseClient.auth.onAuthStateChange(
   function() {
 
@@ -666,7 +822,6 @@ supabaseClient.auth.onAuthStateChange(
 updateAccountLink();
 
 loadArticle();
-
 
 </script>
 
