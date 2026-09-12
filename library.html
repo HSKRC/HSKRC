@@ -1352,7 +1352,20 @@
       .book-title,.book-description{min-height:auto}
     }
 
-</style>
+
+    .favorite-toggle{
+      position:absolute;top:12px;right:12px;z-index:3;width:38px;height:38px;
+      display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.14);
+      border-radius:11px;background:rgba(8,10,13,.78);backdrop-filter:blur(8px);
+      color:#d8dee7;font-size:19px;line-height:1;cursor:pointer;
+      transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease;
+    }
+    .favorite-toggle:hover{transform:translateY(-1px);border-color:rgba(66,211,146,.35);background:rgba(8,10,13,.92)}
+    .favorite-toggle.is-favorite{color:#42d392;border-color:rgba(66,211,146,.35);background:rgba(66,211,146,.10)}
+    .favorite-toggle:disabled{cursor:wait;opacity:.65;transform:none}
+    .book-cover{position:relative}
+
+  </style>
 
 </head>
 
@@ -2344,6 +2357,45 @@
 
   }
 
+  let favoriteBookIds = new Set();
+
+  async function loadFavoriteBookIds(){
+    favoriteBookIds = new Set();
+    const {data:{session}} = await supabaseClient.auth.getSession();
+    if(!session) return;
+    const {data,error} = await supabaseClient.from("favorites").select("book_id").eq("user_id",session.user.id);
+    if(error){ console.error("Favorite IDs load error:",error); return; }
+    (data || []).forEach(row=>{ if(row.book_id) favoriteBookIds.add(String(row.book_id)); });
+  }
+
+  async function toggleLibraryFavorite(bookId,button){
+    const {data:{session}} = await supabaseClient.auth.getSession();
+    if(!session){
+      window.location.href = `auth.html?redirect=${encodeURIComponent("library.html")}`;
+      return;
+    }
+    const id = String(bookId), isFavorite = favoriteBookIds.has(id);
+    button.disabled = true; const previous = button.textContent; button.textContent = "…";
+
+    if(isFavorite){
+      const {error} = await supabaseClient.from("favorites").delete()
+        .eq("user_id",session.user.id).eq("book_id",bookId);
+      if(error){ console.error("Favorite removal error:",error); button.textContent=previous; button.disabled=false; return; }
+      favoriteBookIds.delete(id); button.classList.remove("is-favorite"); button.textContent="♡";
+      button.setAttribute("aria-label",currentLanguage==="fa"?"افزودن به علاقه‌مندی‌ها":"Add to Favorites");
+      button.title=currentLanguage==="fa"?"افزودن به علاقه‌مندی‌ها":"Add to Favorites";
+    }else{
+      const {error} = await supabaseClient.from("favorites").insert({user_id:session.user.id,book_id:bookId});
+      if(error && error.code!=="23505"){ console.error("Favorite insert error:",error); button.textContent=previous; button.disabled=false; return; }
+      favoriteBookIds.add(id); button.classList.add("is-favorite"); button.textContent="♥";
+      button.setAttribute("aria-label",currentLanguage==="fa"?"حذف از علاقه‌مندی‌ها":"Remove from Favorites");
+      button.title=currentLanguage==="fa"?"حذف از علاقه‌مندی‌ها":"Remove from Favorites";
+    }
+    button.disabled=false;
+  }
+
+
+
 
   function renderBooks(books) {
     const container = document.getElementById("booksContainer");
@@ -2364,6 +2416,15 @@
           </div>
         </div>`;
       return;
+      const favoriteButton = card.querySelector(".favorite-toggle");
+      if(favoriteButton){
+        favoriteButton.addEventListener("click", event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          toggleLibraryFavorite(favoriteButton.dataset.favoriteBook,favoriteButton);
+        });
+      }
+
     }
 
     container.innerHTML = "";
@@ -2403,7 +2464,15 @@
             <a class="details-button" href="book.html?id=${encodeURIComponent(book.id || "")}">
               ${currentLanguage === "fa" ? "↗ جزئیات کتاب" : "↗ View Details"}
             </a>
-            <button class="read-button" type="button" ${pdfPath ? "" : "disabled"}>
+            <button class="favorite-toggle ${favoriteBookIds.has(String(book.id)) ? "is-favorite" : ""}"
+            type="button" data-favorite-book="${escapeHtml(book.id || "")}"
+            aria-label="${favoriteBookIds.has(String(book.id))
+              ? (currentLanguage==="fa"?"حذف از علاقه‌مندی‌ها":"Remove from Favorites")
+              : (currentLanguage==="fa"?"افزودن به علاقه‌مندی‌ها":"Add to Favorites")}"
+            title="${favoriteBookIds.has(String(book.id))
+              ? (currentLanguage==="fa"?"حذف از علاقه‌مندی‌ها":"Remove from Favorites")
+              : (currentLanguage==="fa"?"افزودن به علاقه‌مندی‌ها":"Add to Favorites")}">${favoriteBookIds.has(String(book.id)) ? "♥" : "♡"}</button>
+          <button class="read-button" type="button" ${pdfPath ? "" : "disabled"}>
               ${currentLanguage === "fa" ? "📖 مشاهده PDF" : "📖 View PDF"}
             </button>
           </div>
