@@ -761,7 +761,146 @@
       }
     }
 
-  </style>
+  
+    .favorites-section{
+      margin-top:34px;
+      padding-top:30px;
+      border-top:1px solid rgba(255,255,255,.07);
+    }
+    .favorites-heading{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .favorites-kicker{
+      color:#42d392;
+      font-size:10px;
+      font-weight:850;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:4px;
+    }
+    .favorites-heading h2{
+      font-size:clamp(22px,3vw,29px);
+      line-height:1.25;
+      letter-spacing:-.4px;
+    }
+    .favorites-count{
+      color:#9aa4b2;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .favorites-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:15px;
+    }
+    .favorite-card{
+      min-width:0;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:15px;
+      background:rgba(21,26,34,.72);
+      transition:transform .22s ease,border-color .22s ease,background .22s ease;
+    }
+    .favorite-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(66,211,146,.28);
+      background:#171d26;
+    }
+    .favorite-cover{
+      height:190px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:linear-gradient(145deg,#202731,#171d25);
+    }
+    .favorite-cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .35s ease;
+    }
+    .favorite-card:hover .favorite-cover img{transform:scale(1.035)}
+    .favorite-no-cover{font-size:34px;opacity:.75}
+    .favorite-body{padding:14px}
+    .favorite-title{
+      color:#42d392;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.45;
+      margin-bottom:5px;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+      direction:auto;
+      unicode-bidi:plaintext;
+      text-align:start;
+    }
+    .favorite-author{
+      color:#9aa4b2;
+      font-size:11px;
+      margin-bottom:10px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      direction:auto;
+      unicode-bidi:plaintext;
+      text-align:start;
+    }
+    .favorite-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+    .favorite-view,.favorite-remove{
+      min-height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:9px;
+      font-size:10px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .favorite-view{
+      color:#42d392;
+      border:1px solid rgba(66,211,146,.20);
+      background:rgba(66,211,146,.035);
+    }
+    .favorite-view:hover{background:rgba(66,211,146,.09)}
+    .favorite-remove{
+      color:#d8dee7;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.025);
+    }
+    .favorite-remove:hover{
+      color:#fff;
+      background:rgba(255,255,255,.07);
+    }
+    .favorites-empty,.favorites-loading,.favorites-error{
+      grid-column:1/-1;
+      padding:35px 20px;
+      text-align:center;
+      color:#9aa4b2;
+      border:1px dashed rgba(255,255,255,.10);
+      border-radius:15px;
+    }
+    .favorites-empty .empty-icon{font-size:30px;margin-bottom:8px}
+    @media(max-width:950px){
+      .favorites-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:700px){
+      .favorites-heading{align-items:start;flex-direction:column;gap:6px}
+      .favorites-grid{grid-template-columns:1fr}
+      .favorite-cover{height:240px}
+    }
+
+</style>
 </head>
 
 <body>
@@ -1138,7 +1277,21 @@
 
     </div>
 
-  </main>
+  
+    <section class="favorites-section" id="favoritesSection">
+      <div class="favorites-heading">
+        <div>
+          <div class="favorites-kicker" id="favoritesKicker">Reading List</div>
+          <h2 id="favoritesTitle">My Favorites</h2>
+        </div>
+        <div class="favorites-count" id="favoritesCount"></div>
+      </div>
+      <div class="favorites-grid" id="favoritesGrid">
+        <div class="favorites-loading" id="favoritesLoading">Loading your favorites...</div>
+      </div>
+    </section>
+
+</main>
 
 
   <footer class="site-footer">
@@ -2003,10 +2156,169 @@
     updateLanguage();
 
     loadUser();
+      loadFavorites();
 
 
   
-  </script>
+  
+
+    async function loadFavorites(){
+      const grid = document.getElementById("favoritesGrid");
+      const count = document.getElementById("favoritesCount");
+      if(!grid) return;
+
+      grid.innerHTML = `<div class="favorites-loading">${
+        currentLanguage === "fa" ? "در حال بارگذاری علاقه‌مندی‌ها..." : "Loading your favorites..."
+      }</div>`;
+
+      const {data:{session}} = await supabaseClient.auth.getSession();
+
+      if(!session){
+        grid.innerHTML = `
+          <div class="favorites-empty">
+            <div class="empty-icon">🔒</div>
+            <div>${
+              currentLanguage === "fa"
+                ? "برای مشاهده کتاب‌های ذخیره‌شده وارد حساب خود شوید."
+                : "Sign in to view your saved books."
+            }</div>
+          </div>`;
+        if(count) count.textContent = "";
+        return;
+      }
+
+      const {data,error} = await supabaseClient
+        .from("favorites")
+        .select(`
+          id,
+          book_id,
+          created_at,
+          books (
+            id,
+            title,
+            author,
+            category,
+            cover_path,
+            cover_url,
+            published
+          )
+        `)
+        .eq("user_id",session.user.id)
+        .order("created_at",{ascending:false});
+
+      if(error){
+        console.error("Favorites load error:",error);
+        grid.innerHTML = `
+          <div class="favorites-error">${
+            currentLanguage === "fa"
+              ? "بارگذاری علاقه‌مندی‌ها انجام نشد. دوباره تلاش کنید."
+              : "Could not load your favorites. Please try again."
+          }</div>`;
+        if(count) count.textContent = "";
+        return;
+      }
+
+      const items = (data || []).filter(item => item.books && item.books.published !== false);
+
+      if(count){
+        count.textContent = currentLanguage === "fa"
+          ? `${items.length} کتاب`
+          : `${items.length} ${items.length === 1 ? "book" : "books"}`;
+      }
+
+      if(!items.length){
+        grid.innerHTML = `
+          <div class="favorites-empty">
+            <div class="empty-icon">♡</div>
+            <div>${
+              currentLanguage === "fa"
+                ? "هنوز کتابی به علاقه‌مندی‌ها اضافه نکرده‌اید."
+                : "You haven't added any books to your favorites yet."
+            }</div>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = "";
+
+      items.forEach(item=>{
+        const book = item.books;
+        const card = document.createElement("article");
+        card.className = "favorite-card";
+
+        const title = String(book.title || (currentLanguage === "fa" ? "بدون عنوان" : "Untitled"));
+        const author = book.author || (currentLanguage === "fa" ? "نویسنده نامشخص" : "Unknown author");
+
+        card.innerHTML = `
+          <a href="book.html?id=${encodeURIComponent(book.id)}" aria-label="${escapeHtml(title)}">
+            <div class="favorite-cover"><div class="favorite-no-cover">📚</div></div>
+          </a>
+          <div class="favorite-body">
+            <div class="favorite-title" dir="auto">${escapeHtml(title)}</div>
+            <div class="favorite-author" dir="auto">${escapeHtml(author)}</div>
+            <div class="favorite-actions">
+              <a class="favorite-view" href="book.html?id=${encodeURIComponent(book.id)}">
+                ${currentLanguage === "fa" ? "جزئیات" : "View Details"}
+              </a>
+              <button class="favorite-remove" type="button"
+                data-favorite-id="${escapeHtml(item.id)}">
+                ${currentLanguage === "fa" ? "حذف" : "Remove"}
+              </button>
+            </div>
+          </div>`;
+
+        const removeButton = card.querySelector(".favorite-remove");
+        removeButton.addEventListener("click",()=>removeFavorite(item.id,card));
+        grid.appendChild(card);
+
+        const cover = card.querySelector(".favorite-cover");
+        if(book.cover_url){
+          setFavoriteCover(cover,book.cover_url,title);
+        }else if(book.cover_path){
+          supabaseClient.storage.from("Books").createSignedUrl(book.cover_path,3600)
+            .then(({data})=>{
+              if(data && data.signedUrl) setFavoriteCover(cover,data.signedUrl,title);
+            })
+            .catch(()=>{});
+        }
+      });
+    }
+
+    function setFavoriteCover(container,url,title){
+      container.innerHTML = `<img src="${escapeHtml(url)}" alt="${escapeHtml(title)}" loading="lazy">`;
+      const img = container.querySelector("img");
+      img.addEventListener("error",()=>{container.innerHTML='<div class="favorite-no-cover">📚</div>';});
+    }
+
+    async function removeFavorite(favoriteId,card){
+      const {data:{session}} = await supabaseClient.auth.getSession();
+      if(!session) return;
+
+      const button = card && card.querySelector(".favorite-remove");
+      if(button){
+        button.disabled = true;
+        button.textContent = currentLanguage === "fa" ? "در حال حذف..." : "Removing...";
+      }
+
+      const {error} = await supabaseClient
+        .from("favorites")
+        .delete()
+        .eq("id",favoriteId)
+        .eq("user_id",session.user.id);
+
+      if(error){
+        console.error("Favorite removal error:",error);
+        if(button){
+          button.disabled = false;
+          button.textContent = currentLanguage === "fa" ? "حذف" : "Remove";
+        }
+        return;
+      }
+
+      await loadFavorites();
+    }
+
+</script>
 
 </body>
 </html>
