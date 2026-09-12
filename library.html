@@ -2400,13 +2400,24 @@
       button.title=currentLanguage==="fa"?"افزودن به علاقه‌مندی‌ها":"Add to Favorites";
       button.setAttribute("aria-label",button.title);
     }else{
-      const {error}=await supabaseClient.from("favorites").insert({
-        user_id:session.user.id,book_id:bookId
-      });
-      if(error && error.code!=="23505"){
-        console.error("Favorite insert error:",error);
-        button.textContent=previous; button.disabled=false; return;
+      const {error}=await supabaseClient
+        .upsert(
+          { user_id: session.user.id, book_id: bookId },
+          { onConflict: "user_id,book_id", ignoreDuplicates: true }
+        );
+
+      if(error){
+        console.error("Favorite insert error:", error);
+        alert(
+          currentLanguage === "fa"
+            ? "ذخیره کتاب انجام نشد. لطفاً دوباره تلاش کنید."
+            : "The book could not be saved. Please try again."
+        );
+        button.textContent=previous;
+        button.disabled=false;
+        return;
       }
+
       favoriteBookIds.add(id);
       button.classList.add("is-favorite");
       button.textContent="♥";
