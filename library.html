@@ -1278,6 +1278,12 @@
     }
   
     /* Professional refinements */
+    .book-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:auto}
+    .details-button{min-height:45px;padding:10px 14px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid rgba(66,211,146,.28);border-radius:11px;color:var(--green);background:rgba(66,211,146,.045);font-size:13px;font-weight:800;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+    .details-button:hover{transform:translateY(-2px);background:rgba(66,211,146,.09);border-color:rgba(66,211,146,.48)}
+    .details-button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+    @media(max-width:700px){.book-actions{grid-template-columns:1fr}}
+
     .library-tools{position:relative}
     .search-box{
       padding:14px;
@@ -2393,9 +2399,14 @@
             ${category ? " • " + escapeHtml(category) : ""}
           </div>
           <p class="book-description" dir="auto">${escapeHtml(description)}</p>
-          <button class="read-button" type="button" ${pdfPath ? "" : "disabled"}>
-            ${currentLanguage === "fa" ? "📖 مشاهده PDF" : "📖 View PDF"}
-          </button>
+          <div class="book-actions">
+            <a class="details-button" href="book.html?id=${encodeURIComponent(book.id || "")}">
+              ${currentLanguage === "fa" ? "↗ جزئیات کتاب" : "↗ View Details"}
+            </a>
+            <button class="read-button" type="button" ${pdfPath ? "" : "disabled"}>
+              ${currentLanguage === "fa" ? "📖 مشاهده PDF" : "📖 View PDF"}
+            </button>
+          </div>
         </div>`;
 
       const image = article.querySelector(".cover img");
