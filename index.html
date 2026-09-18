@@ -6,15 +6,15 @@
 
   <title>HSKRC | Hassan Sabbah Knowledge & Research Centre</title>
   <meta name="description" content="Hassan Sabbah Knowledge & Research Centre — Digital Library & Research Centre.">
-  <meta name="theme-color" content="#0a0c0f">
+  <meta name="theme-color" content="#0b0b0c">
 
   <style>
     :root {
-      --bg: #0d1117;
-      --bg-soft: #10161f;
-      --panel: #151a22;
-      --panel-2: #181f29;
-      --panel-hover: #1c2530;
+      --bg: #0b0b0c;
+      --bg-soft: #101011;
+      --panel: #151413;
+      --panel-2: #1b1916;
+      --panel-hover: #211e1a;
       --border: rgba(255,255,255,.09);
       --border-green: rgba(201,164,92,.30);
       --text: #f5f7fa;
@@ -214,41 +214,51 @@
 
     .hero {
       position: relative;
-      min-height: 680px;
-      display: flex;
-      align-items: center;
-      padding: 115px 0 105px;
+      min-height: min(760px, calc(100vh - 76px));
+      padding: 120px 0 105px;
       overflow: hidden;
       isolation: isolate;
-      background-image:
-        linear-gradient(180deg, rgba(5,7,9,.55) 0%, rgba(5,7,9,.72) 52%, rgba(5,7,9,.94) 100%),
-        linear-gradient(90deg, rgba(5,7,9,.72) 0%, rgba(5,7,9,.30) 50%, rgba(5,7,9,.68) 100%),
-        url("https://upload.wikimedia.org/wikipedia/commons/8/87/Alamut_Castle%2C_Qazvin_-_1.jpg");
-      background-size: cover;
-      background-position: center 42%;
+      display: flex;
+      align-items: center;
+      background: #090a0b;
     }
-
 
     .hero::before {
       content: "";
       position: absolute;
       inset: 0;
-      z-index: -1;
-      background: radial-gradient(circle at 50% 35%, rgba(201,164,92,.10), transparent 42%);
-      pointer-events: none;
+      z-index: -3;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(5,6,7,.92) 0%,
+          rgba(5,6,7,.78) 38%,
+          rgba(5,6,7,.58) 68%,
+          rgba(5,6,7,.74) 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(5,6,7,.38) 0%,
+          rgba(5,6,7,.12) 42%,
+          rgba(5,6,7,.90) 100%
+        ),
+        url("alamut-home-assets/alamut-hero.jpg") center center / cover no-repeat;
+      transform: scale(1.015);
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      inset: auto 0 0;
-      height: 180px;
-      z-index: -1;
-      background: linear-gradient(to top, #0a0c0f, transparent);
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 78% 30%, rgba(201,164,92,.13), transparent 30%),
+        linear-gradient(180deg, transparent 60%, #0b0b0c 100%);
       pointer-events: none;
     }
 
     .hero-content {
+
       position: relative;
       z-index: 2;
       max-width: 920px;
@@ -335,13 +345,13 @@
     }
 
     .btn-primary {
-      color: #07110c;
+      color: #100e09;
       background: var(--gold);
       box-shadow: 0 12px 30px rgba(201,164,92,.17);
     }
 
     .btn-primary:hover {
-      background: #55dda0;
+      background: #d8b977;
       transform: translateY(-2px);
       box-shadow: 0 16px 36px rgba(201,164,92,.25);
     }
@@ -356,6 +366,23 @@
       background: rgba(255,255,255,.075);
       border-color: rgba(201,164,92,.28);
       transform: translateY(-2px);
+    }
+
+
+    .hero-image-credit {
+      position: absolute;
+      right: 18px;
+      bottom: 13px;
+      z-index: 4;
+      color: rgba(255,255,255,.42);
+      font-size: 10px;
+      letter-spacing: .25px;
+      pointer-events: none;
+    }
+
+    html[dir="rtl"] .hero-image-credit {
+      right: auto;
+      left: 18px;
     }
 
     /* =========================
@@ -979,6 +1006,7 @@
 
         </div>
       </div>
+      <div class="hero-image-credit">Alamut Castle · HSKRC</div>
     </section>
 
 
