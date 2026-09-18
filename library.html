@@ -2040,7 +2040,6 @@
   ========================================= */
 
   async function loadBooks() {
-    await loadFavoriteBookIds();
 
     const container =
       document.getElementById(
@@ -2106,6 +2105,7 @@
     allBooks =
       data || [];
 
+    await loadFavoriteBookIds();
 
     updateCategories();
 
@@ -2362,69 +2362,141 @@
 
   let favoriteBookIds = new Set();
 
-  async function loadFavoriteBookIds(){
+  async function loadFavoriteBookIds() {
     favoriteBookIds = new Set();
-    const {data:{session}} = await supabaseClient.auth.getSession();
-    if(!session) return;
-    const {data,error} = await supabaseClient
-      .from("favorites").select("book_id").eq("user_id",session.user.id);
-    if(error){ console.error("Favorite IDs load error:",error); return; }
-    (data || []).forEach(row=>{
-      if(row.book_id) favoriteBookIds.add(String(row.book_id));
-    });
-  }
 
-  async function toggleLibraryFavorite(bookId,button){
-    const {data:{session}} = await supabaseClient.auth.getSession();
-    if(!session){
-      window.location.href = `auth.html?redirect=${encodeURIComponent("library.html")}`;
+    const { data: sessionData, error: sessionError } =
+      await supabaseClient.auth.getSession();
+
+    if (sessionError) {
+      console.error("Favorite session error:", sessionError);
       return;
     }
 
-    const id=String(bookId);
-    const isFavorite=favoriteBookIds.has(id);
-    button.disabled=true;
-    const previous=button.textContent;
-    button.textContent="…";
+    const session = sessionData && sessionData.session;
+    if (!session) return;
 
-    if(isFavorite){
-      const {error}=await supabaseClient.from("favorites").delete()
-        .eq("user_id",session.user.id).eq("book_id",bookId);
-      if(error){
-        console.error("Favorite removal error:",error);
-        button.textContent=previous; button.disabled=false; return;
-      }
-      favoriteBookIds.delete(id);
-      button.classList.remove("is-favorite");
-      button.textContent="♡";
-      button.title=currentLanguage==="fa"?"افزودن به علاقه‌مندی‌ها":"Add to Favorites";
-      button.setAttribute("aria-label",button.title);
-    }else{
-      const {error}=await supabaseClient
-        .upsert(
-          { user_id: session.user.id, book_id: bookId },
-          { onConflict: "user_id,book_id", ignoreDuplicates: true }
-        );
+    const { data, error } = await supabaseClient
+      .from("favorites")
+      .select("book_id")
+      .eq("user_id", session.user.id);
 
-      if(error){
-        console.error("Favorite insert error:", error);
-        alert(
-          currentLanguage === "fa"
-            ? "ذخیره کتاب انجام نشد. لطفاً دوباره تلاش کنید."
-            : "The book could not be saved. Please try again."
-        );
-        button.textContent=previous;
-        button.disabled=false;
-        return;
-      }
-
-      favoriteBookIds.add(id);
-      button.classList.add("is-favorite");
-      button.textContent="♥";
-      button.title=currentLanguage==="fa"?"حذف از علاقه‌مندی‌ها":"Remove from Favorites";
-      button.setAttribute("aria-label",button.title);
+    if (error) {
+      console.error("Favorite IDs load error:", error);
+      return;
     }
-    button.disabled=false;
+
+    (data || []).forEach(row => {
+      if (row.book_id) {
+        favoriteBookIds.add(String(row.book_id));
+      }
+    });
+  }
+
+  async function toggleLibraryFavorite(bookId, button) {
+    const { data: sessionData, error: sessionError } =
+      await supabaseClient.auth.getSession();
+
+    if (sessionError) {
+      console.error("Favorite session error:", sessionError);
+      alert(
+        currentLanguage === "fa"
+          ? "وضعیت ورود به حساب بررسی نشد. لطفاً صفحه را تازه کنید."
+          : "Your login session could not be checked. Please refresh the page."
+      );
+      return;
+    }
+
+    const session = sessionData && sessionData.session;
+
+    if (!session) {
+      window.location.href =
+        `auth.html?redirect=${encodeURIComponent("library.html")}`;
+      return;
+    }
+
+    const id = String(bookId || "").trim();
+
+    if (!id) {
+      console.error("Favorite error: missing book ID");
+      alert(
+        currentLanguage === "fa"
+          ? "شناسه کتاب پیدا نشد."
+          : "The book ID is missing."
+      );
+      return;
+    }
+
+    button.disabled = true;
+    const previous = button.textContent;
+
+    try {
+      const isFavorite = favoriteBookIds.has(id);
+
+      if (isFavorite) {
+        const { error } = await supabaseClient
+          .from("favorites")
+          .delete()
+          .eq("user_id", session.user.id)
+          .eq("book_id", id);
+
+        if (error) throw error;
+
+        favoriteBookIds.delete(id);
+        button.classList.remove("is-favorite");
+        button.textContent = "♡";
+
+        const label =
+          currentLanguage === "fa"
+            ? "افزودن به علاقه‌مندی‌ها"
+            : "Add to Favorites";
+
+        button.title = label;
+        button.setAttribute("aria-label", label);
+      } else {
+        const { error } = await supabaseClient
+          .from("favorites")
+          .insert({
+            user_id: session.user.id,
+            book_id: id
+          });
+
+        if (error) {
+          // If the row already exists, treat it as already favorited.
+          if (error.code !== "23505") {
+            throw error;
+          }
+        }
+
+        favoriteBookIds.add(id);
+        button.classList.add("is-favorite");
+        button.textContent = "♥";
+
+        const label =
+          currentLanguage === "fa"
+            ? "حذف از علاقه‌مندی‌ها"
+            : "Remove from Favorites";
+
+        button.title = label;
+        button.setAttribute("aria-label", label);
+      }
+    } catch (error) {
+      console.error("Favorite action error:", error);
+
+      const message = error && error.message
+        ? error.message
+        : "Unknown error";
+
+      alert(
+        currentLanguage === "fa"
+          ? `ذخیره علاقه‌مندی انجام نشد.\n${message}`
+          : `The favorite could not be saved.\n${message}`
+      );
+
+      button.textContent = previous;
+    } finally {
+      button.disabled = false;
+    }
   }
 
   function renderBooks(books) {
@@ -2523,10 +2595,11 @@
 
       const favoriteButton = article.querySelector(".favorite-toggle");
       if (favoriteButton) {
-        favoriteButton.addEventListener("click", (event) => {
+        favoriteButton.addEventListener("click", async (event) => {
           event.preventDefault();
           event.stopPropagation();
-          toggleLibraryFavorite(
+
+          await toggleLibraryFavorite(
             favoriteButton.dataset.favoriteBook,
             favoriteButton
           );
