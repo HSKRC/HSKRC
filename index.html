@@ -6,7 +6,7 @@
 
   <title>HSKRC | Hassan Sabbah Knowledge & Research Centre</title>
   <meta name="description" content="Hassan Sabbah Knowledge & Research Centre — Digital Library & Research Centre.">
-  <meta name="theme-color" content="#0d1117">
+  <meta name="theme-color" content="#0a0c0f">
 
   <style>
     :root {
@@ -16,11 +16,11 @@
       --panel-2: #181f29;
       --panel-hover: #1c2530;
       --border: rgba(255,255,255,.09);
-      --border-green: rgba(66,211,146,.30);
+      --border-green: rgba(201,164,92,.30);
       --text: #f5f7fa;
       --muted: #9ba5b1;
-      --green: #42d392;
-      --green-dark: #2bb879;
+      --gold: #c9a45c;
+      --gold-dark: #a98545;
       --white: #ffffff;
       --shadow: 0 20px 60px rgba(0,0,0,.30);
       --radius: 18px;
@@ -47,8 +47,8 @@
         Arial,
         sans-serif;
       background:
-        radial-gradient(circle at 15% 10%, rgba(66,211,146,.07), transparent 28%),
-        radial-gradient(circle at 85% 25%, rgba(66,211,146,.045), transparent 25%),
+        radial-gradient(circle at 15% 10%, rgba(201,164,92,.07), transparent 28%),
+        radial-gradient(circle at 85% 25%, rgba(201,164,92,.045), transparent 25%),
         var(--bg);
       color: var(--text);
       line-height: 1.7;
@@ -120,13 +120,13 @@
       display: grid;
       place-items: center;
       background:
-        linear-gradient(145deg, rgba(66,211,146,.24), rgba(66,211,146,.06));
-      border: 1px solid rgba(66,211,146,.30);
-      color: var(--green);
+        linear-gradient(145deg, rgba(201,164,92,.24), rgba(201,164,92,.06));
+      border: 1px solid rgba(201,164,92,.30);
+      color: var(--gold);
       font-size: 16px;
       font-weight: 800;
       letter-spacing: .4px;
-      box-shadow: 0 8px 30px rgba(66,211,146,.08);
+      box-shadow: 0 8px 30px rgba(201,164,92,.08);
     }
 
     .brand-text {
@@ -186,7 +186,7 @@
       bottom: 4px;
       height: 2px;
       border-radius: 99px;
-      background: var(--green);
+      background: var(--gold);
       transform: scaleX(0);
       transform-origin: center;
       transition: transform .2s ease;
@@ -214,33 +214,37 @@
 
     .hero {
       position: relative;
-      padding: 105px 0 92px;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      padding: 115px 0 105px;
       overflow: hidden;
+      isolation: isolate;
+      background-image:
+        linear-gradient(180deg, rgba(5,7,9,.55) 0%, rgba(5,7,9,.72) 52%, rgba(5,7,9,.94) 100%),
+        linear-gradient(90deg, rgba(5,7,9,.72) 0%, rgba(5,7,9,.30) 50%, rgba(5,7,9,.68) 100%),
+        url("https://upload.wikimedia.org/wikipedia/commons/8/87/Alamut_Castle%2C_Qazvin_-_1.jpg");
+      background-size: cover;
+      background-position: center 42%;
     }
+
 
     .hero::before {
       content: "";
       position: absolute;
-      width: 620px;
-      height: 620px;
-      border-radius: 50%;
-      background: rgba(66,211,146,.065);
-      filter: blur(90px);
-      top: -260px;
-      right: -190px;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at 50% 35%, rgba(201,164,92,.10), transparent 42%);
       pointer-events: none;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: rgba(66,211,146,.035);
-      filter: blur(80px);
-      bottom: -260px;
-      left: -180px;
+      inset: auto 0 0;
+      height: 180px;
+      z-index: -1;
+      background: linear-gradient(to top, #0a0c0f, transparent);
       pointer-events: none;
     }
 
@@ -258,9 +262,9 @@
       gap: 8px;
       padding: 7px 13px;
       border-radius: 999px;
-      border: 1px solid rgba(66,211,146,.22);
-      background: rgba(66,211,146,.055);
-      color: var(--green);
+      border: 1px solid rgba(201,164,92,.22);
+      background: rgba(201,164,92,.055);
+      color: var(--gold);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.1px;
@@ -272,8 +276,8 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 14px rgba(66,211,146,.7);
+      background: var(--gold);
+      box-shadow: 0 0 14px rgba(201,164,92,.7);
     }
 
     .hero h1 {
@@ -285,7 +289,7 @@
     }
 
     .hero h1 .green {
-      color: var(--green);
+      color: var(--gold);
     }
 
     .hero-tagline {
@@ -332,14 +336,14 @@
 
     .btn-primary {
       color: #07110c;
-      background: var(--green);
-      box-shadow: 0 12px 30px rgba(66,211,146,.17);
+      background: var(--gold);
+      box-shadow: 0 12px 30px rgba(201,164,92,.17);
     }
 
     .btn-primary:hover {
       background: #55dda0;
       transform: translateY(-2px);
-      box-shadow: 0 16px 36px rgba(66,211,146,.25);
+      box-shadow: 0 16px 36px rgba(201,164,92,.25);
     }
 
     .btn-secondary {
@@ -350,7 +354,7 @@
 
     .btn-secondary:hover {
       background: rgba(255,255,255,.075);
-      border-color: rgba(66,211,146,.28);
+      border-color: rgba(201,164,92,.28);
       transform: translateY(-2px);
     }
 
@@ -372,7 +376,7 @@
     }
 
     .section-kicker {
-      color: var(--green);
+      color: var(--gold);
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 1.4px;
@@ -427,7 +431,7 @@
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      background: rgba(66,211,146,.07);
+      background: rgba(201,164,92,.07);
       filter: blur(45px);
       top: -80px;
       right: -60px;
@@ -437,7 +441,7 @@
 
     .feature-card:hover {
       transform: translateY(-6px);
-      border-color: var(--border-green);
+      border-color: var(--border-gold);
       background: var(--panel-hover);
       box-shadow: var(--shadow);
     }
@@ -452,9 +456,9 @@
       display: grid;
       place-items: center;
       border-radius: 14px;
-      border: 1px solid rgba(66,211,146,.2);
-      background: rgba(66,211,146,.07);
-      color: var(--green);
+      border: 1px solid rgba(201,164,92,.2);
+      background: rgba(201,164,92,.07);
+      color: var(--gold);
       font-size: 21px;
       margin-bottom: 22px;
     }
@@ -475,7 +479,7 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      color: var(--green);
+      color: var(--gold);
       font-size: 13px;
       font-weight: 700;
       margin-top: 18px;
@@ -496,7 +500,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background:
-        linear-gradient(135deg, rgba(66,211,146,.055), transparent 45%),
+        linear-gradient(135deg, rgba(201,164,92,.055), transparent 45%),
         var(--panel);
       display: flex;
       align-items: center;
@@ -511,7 +515,7 @@
       width: 260px;
       height: 260px;
       border-radius: 50%;
-      background: rgba(66,211,146,.055);
+      background: rgba(201,164,92,.055);
       filter: blur(55px);
       right: -120px;
       bottom: -150px;
@@ -559,9 +563,9 @@
 
     .about-panel.primary {
       background:
-        linear-gradient(145deg, rgba(66,211,146,.075), transparent 65%),
+        linear-gradient(145deg, rgba(201,164,92,.075), transparent 65%),
         var(--panel);
-      border-color: rgba(66,211,146,.17);
+      border-color: rgba(201,164,92,.17);
     }
 
     .about-panel h3 {
@@ -591,7 +595,7 @@
     }
 
     .about-list li span {
-      color: var(--green);
+      color: var(--gold);
       font-weight: 900;
       margin-top: 1px;
     }
@@ -607,10 +611,10 @@
     .cta-box {
       text-align: center;
       padding: 55px 30px;
-      border: 1px solid rgba(66,211,146,.16);
+      border: 1px solid rgba(201,164,92,.16);
       border-radius: 22px;
       background:
-        radial-gradient(circle at 50% 0%, rgba(66,211,146,.09), transparent 52%),
+        radial-gradient(circle at 50% 0%, rgba(201,164,92,.09), transparent 52%),
         var(--panel);
     }
 
