@@ -153,47 +153,76 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 3px;
       flex: 1;
     }
 
     .nav-links a,
     .language-btn {
       position: relative;
-      border: 0;
+      border: 1px solid transparent;
       background: transparent;
-      color: #c7cdd5;
-      padding: 9px 13px;
+      color: #aeb6c0;
+      padding: 9px 14px;
       border-radius: 10px;
       cursor: pointer;
       transition:
         color .2s ease,
         background .2s ease,
+        border-color .2s ease,
         transform .2s ease;
     }
 
     .nav-links a:hover,
     .language-btn:hover {
       color: var(--white);
-      background: rgba(255,255,255,.055);
+      background: rgba(255,255,255,.035);
+      border-color: rgba(255,255,255,.055);
     }
 
-    .nav-links a::after {
+    /* Current Home tab */
+    .nav-links a[href="#home"] {
+      color: #f4ead5;
+    }
+
+    .nav-links a[href="#home"]::after {
       content: "";
       position: absolute;
-      left: 13px;
-      right: 13px;
-      bottom: 4px;
+      left: 14px;
+      right: 14px;
+      bottom: 3px;
       height: 2px;
       border-radius: 99px;
       background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: center;
-      transition: transform .2s ease;
+      box-shadow: 0 0 10px rgba(201,164,92,.28);
     }
 
-    .nav-links a:hover::after {
-      transform: scaleX(1);
+    /* Knowledge Base is the main knowledge gateway */
+    .nav-links a[href="alamut-knowledge-base.html"] {
+      color: #e1c98f;
+      border-color: rgba(201,164,92,.20);
+      background: linear-gradient(
+        180deg,
+        rgba(201,164,92,.075),
+        rgba(201,164,92,.025)
+      );
+    }
+
+    .nav-links a[href="alamut-knowledge-base.html"]::before {
+      content: "◆";
+      display: inline-block;
+      margin-right: 7px;
+      color: var(--gold);
+      font-size: 7px;
+      vertical-align: 2px;
+      opacity: .9;
+    }
+
+    .nav-links a[href="alamut-knowledge-base.html"]:hover {
+      color: #f5e6bf;
+      border-color: rgba(201,164,92,.38);
+      background: rgba(201,164,92,.10);
+      transform: translateY(-1px);
     }
 
     .nav-actions {
@@ -203,9 +232,21 @@
     }
 
     .language-btn {
-      border: 1px solid var(--border);
+      border-color: var(--border);
       font-size: 13px;
       min-width: 78px;
+      background: rgba(255,255,255,.018);
+    }
+
+    #accountLink {
+      color: #d1d7de;
+      background: rgba(255,255,255,.018);
+    }
+
+    #accountLink:hover {
+      color: #ffffff;
+      border-color: rgba(201,164,92,.18);
+      background: rgba(201,164,92,.045);
     }
 
     /* =========================
@@ -732,13 +773,17 @@
       }
 
       .nav-links {
-        gap: 1px;
+        gap: 2px;
       }
 
       .nav-links a,
       .language-btn {
         padding: 8px 9px;
-        font-size: 13px;
+        font-size: 12.5px;
+      }
+
+      .nav-links a[href="alamut-knowledge-base.html"]::before {
+        margin-right: 5px;
       }
 
       .feature-grid {
