@@ -14,6 +14,12 @@ section{padding:62px 0}.head{max-width:760px;margin-bottom:24px}.head h2{font-si
 footer{border-top:1px solid var(--line);padding:25px 0;color:#77736c;font-size:11px}.foot{display:flex;justify-content:space-between;gap:15px}
 html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .timeline{border-left:0;border-right:1px solid rgba(201,164,92,.35);padding-left:0;padding-right:24px}html[dir=rtl] .event:before{left:auto;right:-29px}
 @media(max-width:800px){.grid,.linksgrid{grid-template-columns:1fr}.links{width:100%;overflow:auto}.nav{flex-wrap:wrap;padding:9px 0}.links{order:3}.brand small{display:none}}@media(max-width:560px){.wrap{width:calc(100% - 24px)}.hero{padding:60px 0}.foot{flex-direction:column;text-align:center}}
+
+.related-evidence{padding:60px 0}.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.evidence-card{display:block;background:#151413;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:20px;text-decoration:none;transition:.2s}
+.evidence-card:hover{transform:translateY(-3px);border-color:rgba(201,164,92,.45)}
+.evidence-card strong{display:block;color:#fff!important;margin-bottom:5px}.evidence-card span{color:#aaa39a;font-size:12px}
+@media(max-width:800px){.evidence-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -67,7 +73,14 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .timeline{b
 </div><div class="note" data-en="Research standard: a registry ID identifies a source; it does not mean that source supports every statement on this page. Claim-level citations are attached only where the referenced work is relevant." data-fa="استاندارد پژوهشی: شناسه سامانه یک منبع را مشخص می‌کند؛ به این معنی نیست که آن منبع از تمام مطالب این صفحه پشتیبانی می‌کند. ارجاع در سطح ادعا فقط جایی افزوده می‌شود که منبع مربوط باشد.">Research standard: a registry ID identifies a source; it does not mean that source supports every statement on this page.</div></div></section>
 </main>
 
-<footer><div class="wrap foot"><div>Founded by Kamal Barlas</div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
+<section class="related-evidence" id="related-evidence"><div class="wrap"><div class="kicker" data-en="Research Connections" data-fa="پیوندهای پژوهشی">Research Connections</div><h2 data-en="Evidence connected to Hassan Sabbah" data-fa="شواهد مرتبط با حسن صباح">Evidence connected to Hassan Sabbah</h2><p class="lead" data-en="Trace this biographical node into HSKRC's scholarly source registry and research collection." data-fa="این گره زندگی‌نامه‌ای را در دفتر منابع علمی و مجموعه پژوهشی HSKRC دنبال کنید.">Trace this biographical node into HSKRC's scholarly source registry and research collection.</p><div class="evidence-grid">
+<a class="evidence-card" href="sources.html#HSKRC-SRC-0008"><strong>Farhad Daftary · HSKRC-SRC-0008</strong><span data-en="“Ḥasan Ṣabbāḥ” — Encyclopaedia Iranica specialist reference." data-fa="«حسن صباح» — مدخل تخصصی دانشنامه ایرانیکا.">“Ḥasan Ṣabbāḥ” — Encyclopaedia Iranica specialist reference.</span></a>
+<a class="evidence-card" href="sources.html#HSKRC-SRC-0001"><strong>Farhad Daftary · HSKRC-SRC-0001</strong><span data-en="The Isma'ilis: Their History and Doctrines — major scholarly synthesis." data-fa="اسماعیلیان: تاریخ و عقاید آنان — پژوهش جامع دانشگاهی.">The Isma'ilis: Their History and Doctrines — major scholarly synthesis.</span></a>
+<a class="evidence-card" href="sources.html#HSKRC-SRC-0005"><strong>Miklós Sárközy · HSKRC-SRC-0005</strong><span data-en="Research on the early Nizari Ismailis and neighbouring powers." data-fa="پژوهش درباره نزاریان اسماعیلی نخستین و قدرت‌های همسایه.">Research on the early Nizari Ismailis and neighbouring powers.</span></a>
+<a class="evidence-card" href="library.html"><strong data-en="Related Books" data-fa="کتاب‌های مرتبط">Related Books</strong><span data-en="Continue to the HSKRC Library for scholarship on Hassan Sabbah and Nizari history." data-fa="برای پژوهش‌های حسن صباح و تاریخ نزاری به کتابخانه HSKRC بروید.">Continue to the HSKRC Library for scholarship on Hassan Sabbah and Nizari history.</span></a>
+<a class="evidence-card" href="articles.html"><strong data-en="Related Articles" data-fa="مقالات مرتبط">Related Articles</strong><span data-en="Open HSKRC's published historical and heritage articles." data-fa="مقالات تاریخی و میراثی منتشرشده HSKRC را باز کنید.">Open HSKRC's published historical and heritage articles.</span></a>
+<a class="evidence-card" href="sources.html"><strong data-en="Full Source Registry" data-fa="دفتر کامل منابع">Full Source Registry</strong><span data-en="Browse all registered sources and their HSKRC identifiers." data-fa="همه منابع ثبت‌شده و شناسه‌های HSKRC آنها را مرور کنید.">Browse all registered sources and their HSKRC identifiers.</span></a>
+</div></div></section><footer><div class="wrap foot"><div>Founded by Kamal Barlas</div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
 
 <script>
 const key="hskrc_language", root=document.documentElement, btn=document.getElementById("lang");
