@@ -37,9 +37,9 @@
       --text-soft: #c4ccd7;
       --muted: #8d98a7;
 
-      --green: #42d392;
-      --green-soft: rgba(66,211,146,0.12);
-      --green-border: rgba(66,211,146,0.28);
+      --green: #c9a45c;
+      --green-soft: rgba(201,164,92,0.12);
+      --green-border: rgba(201,164,92,0.30);
 
       --danger: #ff6b6b;
 
@@ -75,12 +75,12 @@
       background:
         radial-gradient(
           circle at 20% 0%,
-          rgba(66,211,146,0.07),
+          rgba(201,164,92,0.07),
           transparent 32%
         ),
         radial-gradient(
           circle at 80% 10%,
-          rgba(66,211,146,0.035),
+          rgba(201,164,92,0.035),
           transparent 28%
         ),
         var(--bg);
@@ -194,8 +194,8 @@
       background:
         linear-gradient(
           135deg,
-          rgba(66,211,146,0.18),
-          rgba(66,211,146,0.05)
+          rgba(201,164,92,0.18),
+          rgba(201,164,92,0.05)
         );
 
       border:
@@ -359,7 +359,7 @@
       border-radius: 50%;
 
       background:
-        rgba(66,211,146,0.08);
+        rgba(201,164,92,0.08);
 
       filter: blur(3px);
 
@@ -501,7 +501,7 @@
 
       box-shadow:
         0 0 0 3px
-        rgba(66,211,146,0.08);
+        rgba(201,164,92,0.08);
     }
 
 
@@ -624,7 +624,7 @@
         translateY(-5px);
 
       border-color:
-        rgba(66,211,146,0.22);
+        rgba(201,164,92,0.22);
 
       box-shadow:
         0 20px 42px rgba(0,0,0,0.28);
@@ -835,7 +835,7 @@
         var(--green);
 
       color:
-        #08110d;
+        #0d0b07;
 
       font-size: 13px;
       font-weight: 800;
@@ -1208,6 +1208,28 @@
 
     }
 
+  
+    /* =========================================
+       RESEARCH GATEWAY
+    ========================================= */
+    .research-gateway {
+      margin: 0 0 34px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(21,26,34,.72);
+    }
+    .research-gateway-head { display:flex; justify-content:space-between; gap:18px; align-items:flex-end; margin-bottom:15px; }
+    .research-gateway h2 { color:#fff; font-size:20px; margin:0 0 5px; }
+    .research-gateway p { color:var(--muted); font-size:13px; }
+    .research-links { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
+    .research-link { padding:15px; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.018); transition:.2s ease; }
+    .research-link:hover { transform:translateY(-2px); border-color:var(--green-border); background:var(--green-soft); }
+    .research-link strong { display:block; color:#fff !important; margin-bottom:4px; font-size:13px; }
+    .research-link span { color:var(--muted); font-size:11px; line-height:1.55; }
+    .article-title { color:#fff !important; }
+    @media(max-width:760px){.research-gateway-head{align-items:flex-start;flex-direction:column}.research-links{grid-template-columns:1fr}}
+
   </style>
 </head>
 
@@ -1252,6 +1274,15 @@
           data-fa="خانه"
         >
           Home
+        </a>
+
+
+        <a
+          href="alamut-knowledge-base.html"
+          data-en="Knowledge Base"
+          data-fa="پایگاه دانش"
+        >
+          Knowledge Base
         </a>
 
 
@@ -1354,6 +1385,37 @@
 
     </section>
 
+
+
+
+    <section class="research-gateway">
+      <div class="research-gateway-head">
+        <div>
+          <h2 data-en="Research pathways" data-fa="مسیرهای پژوهش">Research pathways</h2>
+          <p data-en="Move between published interpretation, knowledge nodes and traceable sources."
+             data-fa="میان تفسیرهای منتشرشده، گره‌های دانش و منابع قابل ردیابی حرکت کنید.">
+             Move between published interpretation, knowledge nodes and traceable sources.
+          </p>
+        </div>
+      </div>
+      <div class="research-links">
+        <a class="research-link" href="alamut-knowledge-base.html">
+          <strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong>
+          <span data-en="People, places, fortifications and historical connections."
+                data-fa="افراد، مکان‌ها، استحکامات و پیوندهای تاریخی.">People, places, fortifications and historical connections.</span>
+        </a>
+        <a class="research-link" href="sources.html">
+          <strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong>
+          <span data-en="Trace research claims to identifiable scholarly and institutional sources."
+                data-fa="ادعاهای پژوهشی را تا منابع دانشگاهی و نهادی قابل شناسایی دنبال کنید.">Trace research claims to identifiable scholarly and institutional sources.</span>
+        </a>
+        <a class="research-link" href="library.html">
+          <strong data-en="Digital Library" data-fa="کتابخانه دیجیتال">Digital Library</strong>
+          <span data-en="Books and research material will connect here as the archive grows."
+                data-fa="با گسترش آرشیو، کتاب‌ها و مواد پژوهشی در این بخش پیوند می‌خورند.">Books and research material will connect here as the archive grows.</span>
+        </a>
+      </div>
+    </section>
 
 
     <!-- =======================================
