@@ -503,17 +503,134 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
     animation:none!important;
   }
 }
-  </style>
+  
+/* Research Network Manager */
+.network-manager{border-color:rgba(201,164,92,.28)}
+.network-manager h2,.network-manager th{color:#c9a45c}
+.network-manager .section-note{max-width:900px}
+.network-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.network-tabs button.active{background:#c9a45c;color:#111;border-color:#c9a45c;font-weight:800}
+.network-pane{display:none}.network-pane.active{display:block}
+.network-manager input:focus,.network-manager select:focus,.network-manager textarea:focus{border-color:#c9a45c;box-shadow:0 0 0 3px rgba(201,164,92,.09)}
+.network-manager .gold{background:#c9a45c;color:#111;font-weight:800}
+.network-manager .gold:hover{background:#dfbd78}
+.network-manager .mini-list{display:grid;gap:8px;margin-top:14px}
+.network-manager .mini-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:#0c120f}
+.network-manager .mini-row span{font-size:12px;color:var(--text-soft)}
+.network-manager .relation-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.network-manager .relation-grid{grid-template-columns:1fr}}
+
+/* =========================================================
+   HSKRC PROFESSIONAL ADMIN — Bronze Research Console
+   ========================================================= */
+:root{
+  --bg:#090909;--bg-soft:#0d0d0d;--panel:#111111;--panel-2:#151515;
+  --panel-hover:#191919;--border:#2c2922;--border-light:#4a4030;
+  --green:#c9a45c;--green-light:#e1c17e;--text:#ffffff;
+  --text-soft:#dedbd4;--muted:#969187;--danger:#e37a7a;--danger-bg:#30191b;
+  --shadow:0 18px 50px rgba(0,0,0,.28);
+}
+body{
+  background:
+    radial-gradient(circle at 10% -5%,rgba(201,164,92,.10),transparent 28%),
+    radial-gradient(circle at 92% 5%,rgba(201,164,92,.045),transparent 24%),
+    #090909;
+}
+body::before{background:linear-gradient(90deg,rgba(201,164,92,.018) 1px,transparent 1px),linear-gradient(rgba(201,164,92,.018) 1px,transparent 1px);background-size:52px 52px}
+header{background:rgba(9,9,9,.92);border-bottom:1px solid rgba(201,164,92,.22);padding:13px clamp(18px,4vw,48px)}
+.logo{color:#fff;letter-spacing:.2px}.logo::before{background:#c9a45c;box-shadow:0 0 0 5px rgba(201,164,92,.08),0 0 18px rgba(201,164,92,.3)}
+.green,.network-manager .gold{background:linear-gradient(135deg,#d8b66d,#b99045);color:#111;box-shadow:0 8px 22px rgba(201,164,92,.12)}
+.green:hover,.network-manager .gold:hover{background:linear-gradient(135deg,#e4c57f,#c9a45c);box-shadow:0 10px 28px rgba(201,164,92,.18)}
+.dark{background:#151515;border-color:#302d27}.dark:hover{background:#1d1b18;border-color:#5b4c33}
+main{max-width:1440px;padding-top:28px}
+.title-row h1{font-size:clamp(27px,3vw,36px)}.title-row h1::after{background:#c9a45c;width:58px;height:2px}
+.stats{gap:12px}.stat{background:linear-gradient(145deg,#141414,#0f0f0f);border-color:#2c2922;border-radius:14px}
+.stat::before{background:radial-gradient(circle,rgba(201,164,92,.12),transparent 68%)}.stat:hover{border-color:rgba(201,164,92,.4)}
+.stat-number{color:#e1c17e}
+.panel{background:linear-gradient(145deg,rgba(18,18,18,.98),rgba(12,12,12,.98));border-color:#2c2922;border-radius:14px}
+.panel h2{color:#fff}
+input,select,textarea{background:#0b0b0b;border-color:#302d27;color:#fff}
+input:hover,select:hover,textarea:hover{border-color:#51462f}
+input:focus,select:focus,textarea:focus{border-color:#c9a45c;background:#0d0d0d;box-shadow:0 0 0 3px rgba(201,164,92,.09)}
+.check-row{background:#0d0d0d;border-color:#302d27}.check-row input{accent-color:#c9a45c}
+.table-wrap{background:#0b0b0b;border-color:#2c2922}th{color:#d8b66d;background:#12110f}td{color:#d7d3cb}
+tbody tr:hover{background:rgba(201,164,92,.035)}
+select option{background:#111;color:#fff}
+::-webkit-scrollbar-track{background:#090909}::-webkit-scrollbar-thumb{background:#383126}::-webkit-scrollbar-thumb:hover{background:#594a32}
+.network-manager{border:1px solid rgba(201,164,92,.34);box-shadow:0 18px 55px rgba(0,0,0,.24)}
+.network-manager h2,.network-manager th{color:#fff}
+.network-tabs{padding:6px;background:#0b0b0b;border:1px solid #2c2922;border-radius:11px;width:max-content;max-width:100%}
+.network-tabs button{border-radius:7px}.network-tabs button.active{background:#c9a45c;color:#111;border-color:#c9a45c}
+.network-manager .mini-row{background:#0d0d0d;border-color:#2c2922}.network-manager .mini-row:hover{border-color:#50442f}
+.admin-kicker{color:#c9a45c;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:7px}
+.admin-subtitle{color:#9e998f;font-size:14px;max-width:720px;margin-top:7px}
+.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px;padding:8px;background:#0d0d0d;border:1px solid #28251f;border-radius:12px;position:sticky;top:82px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.admin-nav a{padding:8px 12px;border-radius:7px;text-decoration:none;color:#c9c4ba;font-size:12px;font-weight:700;border:1px solid transparent}
+.admin-nav a:hover{color:#fff;background:#171512;border-color:#403722}
+.panel-section-label{display:flex;align-items:center;gap:9px;color:#c9a45c;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:8px}
+.panel-section-label::before{content:"";width:18px;height:1px;background:#c9a45c}
+@media(max-width:700px){.admin-nav{position:static}.network-tabs{width:100%}.network-tabs button{flex:1}}
+
+/* HSKRC Executive Admin v3 */
+body{letter-spacing:.005em}
+header{min-height:72px}
+.logo{font-family:Georgia,"Times New Roman",serif;font-size:24px;letter-spacing:.8px}
+main{max-width:1500px}
+.dashboard>.admin-kicker{margin-top:6px}
+.admin-subtitle{font-size:15px;margin-bottom:22px}
+.admin-nav{top:86px;padding:7px;border-radius:10px;background:rgba(12,12,12,.94);backdrop-filter:blur(15px)}
+.admin-nav a{padding:9px 14px}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:25px 0 30px}
+.stat{min-height:118px;padding:21px 22px;display:flex;flex-direction:column;justify-content:space-between}
+.stat>div:first-child{text-transform:uppercase;letter-spacing:1px;font-size:10px}
+.stat-number{font-family:Georgia,"Times New Roman",serif;font-size:36px}
+.panel{padding:28px;margin-bottom:28px}
+.panel>.title-row{border-bottom:1px solid #28251f;padding-bottom:17px;margin-bottom:22px}
+.panel h2{font-family:Georgia,"Times New Roman",serif;font-size:24px;letter-spacing:.1px}
+.form-grid{gap:19px 22px}
+label{text-transform:uppercase;letter-spacing:.7px;font-size:10px;color:#aaa49a}
+input,select,textarea{border-radius:7px;padding:12px 13px}
+button,.button-link{border-radius:7px}
+.table-wrap{border-radius:9px}
+th{padding:14px 13px;font-size:10px;letter-spacing:1px}
+td{padding:14px 13px}
+.network-manager{padding:0;overflow:hidden}
+.network-manager>.panel-section-label{margin:27px 28px 4px}
+.network-manager>.title-row{margin:0 28px;padding:0 0 21px}
+.network-tabs{margin:0;padding:0 28px;background:#0d0d0d;border:0;border-top:1px solid #28251f;border-bottom:1px solid #28251f;border-radius:0;width:100%;gap:0}
+.network-tabs button{background:transparent!important;border:0!important;border-radius:0;padding:15px 18px;color:#999}
+.network-tabs button.active{color:#e1c17e!important;box-shadow:inset 0 -2px #c9a45c}
+.network-pane{padding:28px}
+.network-manager .mini-list{margin-top:24px;border-top:1px solid #28251f;padding-top:18px}
+.network-manager .mini-row{border-radius:7px;padding:12px 14px}
+#bookFormPanel,#articleFormPanel{position:relative}
+#bookFormPanel::before,#articleFormPanel::before,#researchNetworkPanel::before,#usersPanel::before{
+ content:"";position:absolute;left:0;top:24px;width:2px;height:34px;background:#c9a45c
+}
+#researchNetworkPanel{position:relative}
+#usersPanel{position:relative}
+.dashboard>.title-row{margin-top:5px;margin-bottom:0;padding:26px 0 2px}
+.dashboard>.title-row h1{font-family:Georgia,"Times New Roman",serif;font-size:38px;font-weight:500}
+.dashboard>.title-row h1::after{display:none}
+.header-actions .dark{background:transparent}
+.header-actions .danger{background:transparent;border-color:#4a2828;color:#e7a1a1}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+ .panel{padding:20px}.network-manager{padding:0}.network-manager>.panel-section-label,.network-manager>.title-row{margin-left:20px;margin-right:20px}
+ .network-tabs{padding:0 10px;overflow-x:auto;flex-wrap:nowrap}.network-tabs button{white-space:nowrap}
+ .network-pane{padding:20px}.dashboard>.title-row h1{font-size:31px}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo" id="logoText">HSKRC Admin</div>
+  <div class="logo" id="logoText">HSKRC · Administration</div>
 
   <div class="header-actions">
-    <a href="index.html" class="button-link dark">🏠 Home</a>
-    <a href="library.html" class="button-link dark">📚 Library</a>
+    <a href="index.html" class="button-link dark">Home</a>
+    <a href="library.html" class="button-link dark">Library</a>
     <button id="languageBtn" class="dark" onclick="toggleLanguage()">🌐 Persian</button>
     <button class="danger" onclick="logout()">Logout</button>
   </div>
@@ -533,12 +650,20 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
   </div>
 
   <div id="dashboard" class="dashboard">
+    <div class="admin-kicker">HSKRC · Research Administration System</div>
+    <div class="admin-subtitle">A unified editorial and research console for the HSKRC knowledge archive.</div>
+    <nav class="admin-nav" aria-label="Admin sections">
+      <a href="#bookFormPanel">Books</a>
+      <a href="#articleFormPanel">Articles</a>
+      <a href="#researchNetworkPanel">Research Network</a>
+      <a href="#usersPanel">Users</a>
+    </nav>
 
     <div class="title-row">
       <h1 id="pageTitle">Admin Dashboard</h1>
 
       <button class="green" onclick="showAddBookForm()">
-        ➕ Add New Book
+        ＋ Add Book
       </button>
     </div>
 
@@ -577,7 +702,7 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
          BOOK FORM
          ========================= -->
 
-    <div id="bookFormPanel" class="panel">
+    <div id="bookFormPanel" class="panel"><div class="panel-section-label">Library Management</div>
 
       <h2 id="formTitle">Add New Book</h2>
 
@@ -716,7 +841,7 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
          ARTICLE FORM
          ========================= -->
 
-    <div id="articleFormPanel" class="panel">
+    <div id="articleFormPanel" class="panel"><div class="panel-section-label">Editorial Workspace</div>
 
       <div class="title-row">
 
@@ -891,11 +1016,98 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
     </div>
 
 
+
+    <!-- =========================
+         RESEARCH NETWORK MANAGER
+         ========================= -->
+    <div class="panel network-manager" id="researchNetworkPanel"><div class="panel-section-label">Research Infrastructure</div>
+      <div class="title-row">
+        <div>
+          <h2>Research Network Manager</h2>
+          <div class="section-note">Manage Knowledge Nodes, Sources, Researchers, and article relationships from the HSKRC Admin Panel.</div>
+        </div>
+        <button class="dark" onclick="loadResearchNetwork()">Refresh Network</button>
+      </div>
+
+      <div class="network-tabs">
+        <button class="dark active" data-network-tab="nodes" onclick="showNetworkTab('nodes',this)">Knowledge Nodes</button>
+        <button class="dark" data-network-tab="sources" onclick="showNetworkTab('sources',this)">Sources</button>
+        <button class="dark" data-network-tab="researchers" onclick="showNetworkTab('researchers',this)">Researchers</button>
+        <button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Article Connections</button>
+      </div>
+
+      <div class="network-pane active" id="network-pane-nodes">
+        <form id="nodeForm"><input type="hidden" id="networkNodeId">
+          <div class="form-grid">
+            <div><label>Slug *</label><input id="networkNodeSlug" required placeholder="e.g. alamut"></div>
+            <div><label>Node Type</label><select id="networkNodeType"><option value="topic">Topic</option><option value="person">Person</option><option value="place">Place</option><option value="fortification">Fortification</option></select></div>
+            <div><label>English Title *</label><input id="networkNodeTitle" required></div>
+            <div><label>Persian Title</label><input id="networkNodeTitleFa"></div>
+            <div class="full"><label>Description</label><textarea id="networkNodeDescription"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="gold" type="submit">Save Knowledge Node</button><button class="dark" type="button" onclick="resetNodeForm()">Clear</button></div>
+        </form>
+        <div class="mini-list" id="networkNodesList"></div>
+      </div>
+
+      <div class="network-pane" id="network-pane-sources">
+        <form id="sourceForm"><input type="hidden" id="networkSourceId">
+          <div class="form-grid">
+            <div><label>Source Code *</label><input id="networkSourceCode" required placeholder="HSKRC-SRC-0013"></div>
+            <div><label>Source Type</label><input id="networkSourceType" placeholder="Scholarly Book"></div>
+            <div class="full"><label>Title *</label><input id="networkSourceTitle" required></div>
+            <div><label>Author</label><input id="networkSourceAuthor"></div>
+            <div><label>Institution</label><input id="networkSourceInstitution"></div>
+            <div><label>Publication Year</label><input id="networkSourceYear" type="number"></div>
+            <div><label>Language</label><input id="networkSourceLanguage"></div>
+            <div><label>Reliability</label><input id="networkSourceReliability"></div>
+            <div class="full"><label>URL</label><input id="networkSourceUrl" type="url"></div>
+            <div class="full"><label>Notes</label><textarea id="networkSourceNotes"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="gold" type="submit">Save Source</button><button class="dark" type="button" onclick="resetSourceForm()">Clear</button></div>
+        </form>
+        <div class="mini-list" id="networkSourcesList"></div>
+      </div>
+
+      <div class="network-pane" id="network-pane-researchers">
+        <form id="researcherForm"><input type="hidden" id="networkResearcherId">
+          <div class="form-grid">
+            <div><label>Slug *</label><input id="networkResearcherSlug" required placeholder="farhad-daftary"></div>
+            <div><label>Field</label><input id="networkResearcherField" placeholder="Ismaili Studies"></div>
+            <div><label>Name *</label><input id="networkResearcherName" required></div>
+            <div><label>Persian Name</label><input id="networkResearcherNameFa"></div>
+            <div class="full"><label>Notes</label><textarea id="networkResearcherNotes"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="gold" type="submit">Save Researcher</button><button class="dark" type="button" onclick="resetResearcherForm()">Clear</button></div>
+        </form>
+        <div class="mini-list" id="networkResearchersList"></div>
+      </div>
+
+      <div class="network-pane" id="network-pane-relations">
+        <div class="relation-grid">
+          <div>
+            <label>Article</label><select id="relationArticle"></select>
+          </div>
+          <div>
+            <label>Knowledge Node</label><select id="relationNode"></select>
+          </div>
+          <div>
+            <label>Source</label><select id="relationSource"></select>
+          </div>
+          <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
+            <button class="gold" type="button" onclick="linkArticleNode()">Link Article → Node</button>
+            <button class="gold" type="button" onclick="linkArticleSource()">Link Article → Source</button>
+          </div>
+        </div>
+        <div class="mini-list" id="articleRelationsList"></div>
+      </div>
+    </div>
+
     <!-- =========================
          USERS
          ========================= -->
 
-    <div class="panel">
+    <div class="panel" id="usersPanel">
 
       <div class="title-row">
 
@@ -1163,6 +1375,7 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
       await loadArticles();
 
       await loadUsers();
+      await loadResearchNetwork();
 
 
     } catch (error) {
@@ -2805,6 +3018,144 @@ html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions
 
     }
 
+  }
+
+
+
+  /* =========================================
+     RESEARCH NETWORK MANAGER
+     ========================================= */
+
+  let networkNodes = [], networkSources = [], networkResearchers = [];
+  let networkArticleNodeLinks = [], networkArticleSourceLinks = [];
+
+  function showNetworkTab(name, btn){
+    document.querySelectorAll(".network-pane").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("[data-network-tab]").forEach(x=>x.classList.remove("active"));
+    document.getElementById("network-pane-"+name)?.classList.add("active");
+    btn?.classList.add("active");
+  }
+
+  async function loadResearchNetwork(){
+    try{
+      const [n,sr,r,an,as] = await Promise.all([
+        supabaseClient.from("knowledge_nodes").select("*").order("title"),
+        supabaseClient.from("research_sources").select("*").order("source_code"),
+        supabaseClient.from("researchers").select("*").order("name"),
+        supabaseClient.from("article_node_links").select("article_id,node_id"),
+        supabaseClient.from("article_source_links").select("article_id,source_id")
+      ]);
+      for(const [label,res] of [["knowledge_nodes",n],["research_sources",sr],["researchers",r],["article_node_links",an],["article_source_links",as]]){
+        if(res.error) throw new Error(label+": "+res.error.message);
+      }
+      networkNodes=n.data||[]; networkSources=sr.data||[]; networkResearchers=r.data||[];
+      networkArticleNodeLinks=an.data||[]; networkArticleSourceLinks=as.data||[];
+      renderNetworkManager();
+    }catch(error){
+      console.error("Research Network Manager:",error);
+      showMessage(error.message||"Unable to load Research Network.","error");
+    }
+  }
+
+  function renderNetworkManager(){
+    const nodesList=document.getElementById("networkNodesList");
+    const sourcesList=document.getElementById("networkSourcesList");
+    const researchersList=document.getElementById("networkResearchersList");
+    if(!nodesList) return;
+
+    nodesList.innerHTML=networkNodes.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.title)}</b> · ${escapeHtml(x.node_type||"topic")} · ${escapeHtml(x.slug)}</span><button class="dark small-btn" onclick="editNetworkNode('${x.id}')">Edit</button></div>`).join("");
+    sourcesList.innerHTML=networkSources.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.source_code)}</b> · ${escapeHtml(x.title)}</span><button class="dark small-btn" onclick="editNetworkSource('${x.id}')">Edit</button></div>`).join("");
+    researchersList.innerHTML=networkResearchers.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.name)}</b> · ${escapeHtml(x.field||"-")}</span><button class="dark small-btn" onclick="editNetworkResearcher('${x.id}')">Edit</button></div>`).join("");
+
+    const articleSel=document.getElementById("relationArticle");
+    const nodeSel=document.getElementById("relationNode");
+    const sourceSel=document.getElementById("relationSource");
+    articleSel.innerHTML=articles.map(x=>`<option value="${x.id}">${escapeHtml(x.title)}</option>`).join("");
+    nodeSel.innerHTML=networkNodes.map(x=>`<option value="${x.id}">${escapeHtml(x.title)}</option>`).join("");
+    sourceSel.innerHTML=networkSources.map(x=>`<option value="${x.id}">${escapeHtml(x.source_code+" — "+x.title)}</option>`).join("");
+    articleSel.onchange=renderArticleRelations;
+    renderArticleRelations();
+  }
+
+  function renderArticleRelations(){
+    const articleId=document.getElementById("relationArticle")?.value;
+    const host=document.getElementById("articleRelationsList");
+    if(!host||!articleId) return;
+    const nodes=networkArticleNodeLinks.filter(x=>x.article_id===articleId).map(x=>networkNodes.find(n=>n.id===x.node_id)).filter(Boolean);
+    const sources=networkArticleSourceLinks.filter(x=>x.article_id===articleId).map(x=>networkSources.find(n=>n.id===x.source_id)).filter(Boolean);
+    host.innerHTML=
+      `<div class="mini-row"><span><b>Knowledge Nodes:</b> ${nodes.length?nodes.map(x=>escapeHtml(x.title)).join(" · "):"None"}</span></div>`+
+      `<div class="mini-row"><span><b>Sources:</b> ${sources.length?sources.map(x=>escapeHtml(x.source_code)).join(" · "):"None"}</span></div>`;
+  }
+
+  function resetNodeForm(){document.getElementById("nodeForm").reset();document.getElementById("networkNodeId").value="";}
+  function resetSourceForm(){document.getElementById("sourceForm").reset();document.getElementById("networkSourceId").value="";}
+  function resetResearcherForm(){document.getElementById("researcherForm").reset();document.getElementById("networkResearcherId").value="";}
+
+  function editNetworkNode(id){
+    const x=networkNodes.find(v=>v.id===id); if(!x)return;
+    networkNodeId.value=x.id; networkNodeSlug.value=x.slug||""; networkNodeType.value=x.node_type||"topic";
+    networkNodeTitle.value=x.title||""; networkNodeTitleFa.value=x.title_fa||""; networkNodeDescription.value=x.description||"";
+    document.getElementById("network-pane-nodes").scrollIntoView({behavior:"smooth"});
+  }
+  function editNetworkSource(id){
+    const x=networkSources.find(v=>v.id===id); if(!x)return;
+    networkSourceId.value=x.id; networkSourceCode.value=x.source_code||""; networkSourceType.value=x.source_type||"";
+    networkSourceTitle.value=x.title||""; networkSourceAuthor.value=x.author||""; networkSourceInstitution.value=x.institution||"";
+    networkSourceYear.value=x.publication_year||""; networkSourceLanguage.value=x.language||""; networkSourceReliability.value=x.reliability||"";
+    networkSourceUrl.value=x.url||""; networkSourceNotes.value=x.notes||"";
+    document.getElementById("network-pane-sources").scrollIntoView({behavior:"smooth"});
+  }
+  function editNetworkResearcher(id){
+    const x=networkResearchers.find(v=>v.id===id); if(!x)return;
+    networkResearcherId.value=x.id; networkResearcherSlug.value=x.slug||""; networkResearcherField.value=x.field||"";
+    networkResearcherName.value=x.name||""; networkResearcherNameFa.value=x.name_fa||""; networkResearcherNotes.value=x.notes||"";
+    document.getElementById("network-pane-researchers").scrollIntoView({behavior:"smooth"});
+  }
+
+  document.getElementById("nodeForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    try{
+      const id=networkNodeId.value;
+      const data={slug:networkNodeSlug.value.trim(),title:networkNodeTitle.value.trim(),title_fa:networkNodeTitleFa.value.trim()||null,node_type:networkNodeType.value,description:networkNodeDescription.value.trim()||null,updated_at:new Date().toISOString()};
+      const res=id?await supabaseClient.from("knowledge_nodes").update(data).eq("id",id):await supabaseClient.from("knowledge_nodes").insert(data);
+      if(res.error)throw res.error; resetNodeForm(); await loadResearchNetwork(); showMessage("Knowledge Node saved.");
+    }catch(error){console.error(error);showMessage(error.message,"error");}
+  });
+
+  document.getElementById("sourceForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    try{
+      const id=networkSourceId.value, y=networkSourceYear.value.trim();
+      const data={source_code:networkSourceCode.value.trim(),title:networkSourceTitle.value.trim(),author:networkSourceAuthor.value.trim()||null,institution:networkSourceInstitution.value.trim()||null,source_type:networkSourceType.value.trim()||null,publication_year:y?parseInt(y,10):null,url:networkSourceUrl.value.trim()||null,language:networkSourceLanguage.value.trim()||null,reliability:networkSourceReliability.value.trim()||null,notes:networkSourceNotes.value.trim()||null,updated_at:new Date().toISOString()};
+      const res=id?await supabaseClient.from("research_sources").update(data).eq("id",id):await supabaseClient.from("research_sources").insert(data);
+      if(res.error)throw res.error; resetSourceForm(); await loadResearchNetwork(); showMessage("Source saved.");
+    }catch(error){console.error(error);showMessage(error.message,"error");}
+  });
+
+  document.getElementById("researcherForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    try{
+      const id=networkResearcherId.value;
+      const data={slug:networkResearcherSlug.value.trim(),name:networkResearcherName.value.trim(),name_fa:networkResearcherNameFa.value.trim()||null,field:networkResearcherField.value.trim()||null,notes:networkResearcherNotes.value.trim()||null,updated_at:new Date().toISOString()};
+      const res=id?await supabaseClient.from("researchers").update(data).eq("id",id):await supabaseClient.from("researchers").insert(data);
+      if(res.error)throw res.error; resetResearcherForm(); await loadResearchNetwork(); showMessage("Researcher saved.");
+    }catch(error){console.error(error);showMessage(error.message,"error");}
+  });
+
+  async function linkArticleNode(){
+    try{
+      const article_id=relationArticle.value,node_id=relationNode.value;if(!article_id||!node_id)return;
+      const res=await supabaseClient.from("article_node_links").upsert({article_id,node_id},{onConflict:"article_id,node_id"});
+      if(res.error)throw res.error; await loadResearchNetwork(); relationArticle.value=article_id; renderArticleRelations(); showMessage("Article linked to Knowledge Node.");
+    }catch(error){console.error(error);showMessage(error.message,"error");}
+  }
+  async function linkArticleSource(){
+    try{
+      const article_id=relationArticle.value,source_id=relationSource.value;if(!article_id||!source_id)return;
+      const res=await supabaseClient.from("article_source_links").upsert({article_id,source_id},{onConflict:"article_id,source_id"});
+      if(res.error)throw res.error; await loadResearchNetwork(); relationArticle.value=article_id; renderArticleRelations(); showMessage("Article linked to Source.");
+    }catch(error){console.error(error);showMessage(error.message,"error");}
   }
 
 
