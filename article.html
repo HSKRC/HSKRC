@@ -38,9 +38,9 @@
       --text-soft: #c4ccd7;
       --muted: #8d98a7;
 
-      --green: #42d392;
-      --green-soft: rgba(66,211,146,0.12);
-      --green-border: rgba(66,211,146,0.28);
+      --green: #c9a45c;
+      --green-soft: rgba(201,164,92,0.12);
+      --green-border: rgba(201,164,92,0.30);
 
       --danger: #ff6b6b;
 
@@ -75,12 +75,12 @@
       background:
         radial-gradient(
           circle at 20% 0%,
-          rgba(66,211,146,0.07),
+          rgba(201,164,92,0.07),
           transparent 30%
         ),
         radial-gradient(
           circle at 85% 8%,
-          rgba(66,211,146,0.035),
+          rgba(201,164,92,0.035),
           transparent 25%
         ),
         var(--bg);
@@ -832,7 +832,7 @@
         var(--green);
 
       color:
-        #08110d;
+        #0d0b07;
 
       font-size:
         13px;
@@ -1125,6 +1125,40 @@
 
     }
 
+  
+    /* =========================================
+       HSKRC RESEARCH SYSTEM
+    ========================================= */
+    .research-panel {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(21,26,34,.96), rgba(16,21,28,.96));
+      box-shadow: var(--shadow);
+    }
+    .research-kicker {
+      margin-bottom: 7px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .research-panel h2 { margin-bottom: 8px; font-size: 24px; color:#fff; }
+    .research-intro { margin-bottom: 18px; color: var(--muted); font-size: 13px; }
+    .research-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .research-link {
+      display:block; min-height:118px; padding:17px;
+      border:1px solid var(--border); border-radius:13px;
+      background:rgba(255,255,255,.018); transition:.2s ease;
+    }
+    .research-link:hover { transform:translateY(-2px); border-color:var(--green-border); background:var(--green-soft); }
+    .research-link strong { display:block; margin-bottom:6px; color:#fff; font-size:14px; }
+    .research-link span { display:block; color:var(--muted); font-size:12px; line-height:1.65; }
+    .research-note { margin-top:15px; padding-top:15px; border-top:1px solid var(--border); color:var(--muted); font-size:12px; }
+    @media(max-width:760px){ .research-grid{grid-template-columns:1fr}.research-panel{padding:21px} }
+
   </style>
 </head>
 
@@ -1167,6 +1201,15 @@
           data-fa="خانه"
         >
           Home
+        </a>
+
+
+        <a
+          href="alamut-knowledge-base.html"
+          data-en="Knowledge Base"
+          data-fa="پایگاه دانش"
+        >
+          Knowledge Base
         </a>
 
 
@@ -1317,6 +1360,36 @@
 
     </article>
 
+
+
+    <section class="research-panel" id="researchConnections">
+      <div class="research-kicker" data-en="Research Connections" data-fa="پیوندهای پژوهشی">Research Connections</div>
+      <h2 data-en="Continue from article to evidence" data-fa="از مقاله به شواهد ادامه دهید">Continue from article to evidence</h2>
+      <p class="research-intro"
+         data-en="HSKRC separates published interpretation from the source registry and knowledge nodes that support further research."
+         data-fa="HSKRC تفسیر منتشرشده را از دفتر منابع و گره‌های دانشی که پژوهش بیشتر را پشتیبانی می‌کنند جدا نگه می‌دارد.">
+        HSKRC separates published interpretation from the source registry and knowledge nodes that support further research.
+      </p>
+      <div class="research-grid">
+        <a class="research-link" href="alamut-knowledge-base.html">
+          <strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong>
+          <span data-en="Follow people, places, fortifications and historical connections." data-fa="افراد، مکان‌ها، استحکامات و پیوندهای تاریخی را دنبال کنید.">Follow people, places, fortifications and historical connections.</span>
+        </a>
+        <a class="research-link" href="sources.html">
+          <strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong>
+          <span data-en="Trace HSKRC source IDs to institutional and scholarly references." data-fa="شناسه‌های منابع HSKRC را تا منابع نهادی و دانشگاهی ردیابی کنید.">Trace HSKRC source IDs to institutional and scholarly references.</span>
+        </a>
+        <a class="research-link" href="articles.html">
+          <strong data-en="Related Research" data-fa="پژوهش‌های مرتبط">Related Research</strong>
+          <span data-en="Continue through HSKRC's published research collection." data-fa="در مجموعه پژوهش‌های منتشرشده HSKRC ادامه دهید.">Continue through HSKRC's published research collection.</span>
+        </a>
+      </div>
+      <div class="research-note"
+           data-en="Research standard: important historical and heritage claims should remain traceable to identifiable sources."
+           data-fa="استاندارد پژوهشی: ادعاهای مهم تاریخی و میراثی باید به منابع قابل شناسایی قابل ردیابی باقی بمانند.">
+        Research standard: important historical and heritage claims should remain traceable to identifiable sources.
+      </div>
+    </section>
 
   </main>
 
@@ -2651,13 +2724,13 @@
 
       .article-category {
         color:
-          #176b47 !important;
+          #7a5b20 !important;
 
         background:
-          #eefaf4 !important;
+          #faf6ec !important;
 
         border-color:
-          #b9e8d1 !important;
+          #dfcfaa !important;
       }
 
 
@@ -2706,7 +2779,7 @@
 
       .article-content a {
         color:
-          #176b47 !important;
+          #7a5b20 !important;
       }
 
     }
