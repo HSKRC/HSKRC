@@ -627,13 +627,45 @@ td{padding:14px 13px}
  .network-tabs{padding:0 10px;overflow-x:auto;flex-wrap:nowrap}.network-tabs button{white-space:nowrap}
  .network-pane{padding:20px}.dashboard>.title-row h1{font-size:31px}
 }
+
+/* HSKRC Executive Research Console v6 */
+:root{--side:252px;--gold:#c9a45c;--gold2:#e3c47f}
+body{padding-left:var(--side);background:#080808}
+header{position:fixed;left:var(--side);right:0;top:0;height:72px;min-height:72px;padding:0 28px;z-index:300;background:rgba(9,9,9,.96)}
+main{max-width:none;width:auto;margin:0;padding:96px 30px 60px}
+.admin-sidebar{position:fixed;z-index:400;inset:0 auto 0 0;width:var(--side);background:linear-gradient(180deg,#0d0c0a,#080808 70%);border-right:1px solid #2c2922;padding:24px 16px;display:flex;flex-direction:column}
+.sidebar-brand{padding:0 10px 22px;border-bottom:1px solid #29251e}.sidebar-brand strong{font:600 27px Georgia,serif;color:#fff;letter-spacing:1px}.sidebar-brand span{display:block;color:var(--gold);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:5px}
+.sidebar-label{color:#706b62;font-size:9px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase;padding:22px 11px 8px}.side-nav{display:grid;gap:5px}.side-nav a{display:flex;align-items:center;gap:11px;text-decoration:none;color:#aaa49a;padding:11px 12px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:650}.side-nav a:hover,.side-nav a.active{background:#17140f;color:#fff;border-color:#3c3325}.side-nav a.active{box-shadow:inset 2px 0 var(--gold)}.side-icon{width:20px;text-align:center;color:var(--gold)}
+.sidebar-foot{margin-top:auto;border-top:1px solid #29251e;padding:16px 10px 0;color:#706b62;font-size:10px;line-height:1.6}.sidebar-foot b{color:#b8b1a6}
+.admin-nav{display:none}.dashboard>.admin-kicker{color:var(--gold);letter-spacing:2.2px}.dashboard>.title-row{padding-top:12px}.dashboard>.title-row h1{font-size:42px}.admin-subtitle{max-width:850px}.stats{grid-template-columns:repeat(4,1fr)}
+.stat{border-radius:10px;min-height:126px}.stat-number{color:#fff}.stat::after{content:'';position:absolute;left:0;bottom:0;width:44px;height:2px;background:var(--gold)}
+.workspace-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 18px}.workspace-title{font:500 18px Georgia,serif;color:#fff}.workspace-meta{color:#7f796f;font-size:11px}
+.panel{border-radius:10px}.panel-section-label{letter-spacing:1.8px}.network-manager{border-radius:10px}
+.console-badge{display:inline-flex;align-items:center;gap:7px;color:#bdb6aa;font-size:11px}.console-badge:before{content:'';width:7px;height:7px;border-radius:50%;background:#79c99e;box-shadow:0 0 10px #79c99e66}
+@media(max-width:1050px){:root{--side:78px}.sidebar-brand strong{font-size:22px}.sidebar-brand span,.sidebar-label,.side-nav .side-text,.sidebar-foot{display:none}.admin-sidebar{padding:22px 10px}.side-nav a{justify-content:center;padding:12px}.side-icon{font-size:16px}header{padding:0 18px}main{padding-left:20px;padding-right:20px}}
+@media(max-width:700px){body{padding-left:0}.admin-sidebar{position:fixed;left:0;right:0;top:auto;bottom:0;width:auto;height:62px;padding:7px 9px;border-right:0;border-top:1px solid #332d23;display:block}.sidebar-brand,.sidebar-label,.sidebar-foot{display:none}.side-nav{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}.side-nav a{padding:8px 2px;min-width:0}.side-nav .side-text{display:none}.side-icon{font-size:15px}header{left:0;height:auto;min-height:68px}.header-actions .button-link{display:none}main{padding:90px 12px 88px}.dashboard>.title-row h1{font-size:31px}.stats{grid-template-columns:1fr 1fr}}
+
 </style>
 </head>
 
 <body>
+<aside class="admin-sidebar" aria-label="Administration navigation">
+  <div class="sidebar-brand"><strong>HSKRC</strong><span>Research Administration</span></div>
+  <div class="sidebar-label">Workspace</div>
+  <nav class="side-nav">
+    <a href="#dashboardTop" class="active"><span class="side-icon">◈</span><span class="side-text">Overview</span></a>
+    <a href="#bookFormPanel"><span class="side-icon">▤</span><span class="side-text">Library</span></a>
+    <a href="#articleFormPanel"><span class="side-icon">✦</span><span class="side-text">Articles</span></a>
+    <a href="#researchNetworkPanel"><span class="side-icon">⌘</span><span class="side-text">Research Database</span></a>
+    <a href="#network-pane-sources" onclick="showNetworkTab('sources',document.querySelector('[data-network-tab=\'sources\']'))"><span class="side-icon">◇</span><span class="side-text">Sources</span></a>
+    <a href="#usersPanel"><span class="side-icon">◎</span><span class="side-text">Users</span></a>
+  </nav>
+  <div class="sidebar-foot"><b>HSKRC Digital Archive</b><br>Editorial & research console<br>© 2026</div>
+</aside>
+
 
 <header>
-  <div class="logo" id="logoText">HSKRC · Administration</div>
+  <div><div class="logo" id="logoText">HSKRC · Administration</div><div class="console-badge">Secure research console</div></div>
 
   <div class="header-actions">
     <a href="index.html" class="button-link dark">Home</a>
@@ -656,7 +688,7 @@ td{padding:14px 13px}
     <a href="index.html" class="button-link dark">Return to Home</a>
   </div>
 
-  <div id="dashboard" class="dashboard">
+  <div id="dashboard" class="dashboard"><div id="dashboardTop"></div>
     <div class="admin-kicker">HSKRC · Research Administration System</div>
     <div class="admin-subtitle">A unified editorial and research console for the HSKRC knowledge archive.</div>
     <nav class="admin-nav" aria-label="Admin sections">
@@ -1091,7 +1123,7 @@ td{padding:14px 13px}
       </div>
 
       <div class="network-pane" id="network-pane-relations">
-        <div class="section-note" style="margin-bottom:18px"><b>Connection Manager v4</b> · Create and remove relationships across the HSKRC research database without writing SQL.</div>
+        <div class="section-note" style="margin-bottom:18px"><b>Connection Manager v6</b> · Create and remove relationships across the HSKRC research database without writing SQL.</div>
         <div class="connection-jumpbar" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
           <button class="gold" type="button" onclick="document.getElementById('articleConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Article Connections</button>
           <button class="dark" type="button" onclick="document.getElementById('sourceNodeConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Source ↔ Knowledge Node</button>
@@ -3399,6 +3431,12 @@ td{padding:14px 13px}
   /* =========================================
      START
      ========================================= */
+
+
+  // Executive console navigation state
+  document.querySelectorAll('.side-nav a').forEach(link=>{
+    link.addEventListener('click',()=>{document.querySelectorAll('.side-nav a').forEach(x=>x.classList.remove('active'));link.classList.add('active');});
+  });
 
   checkAdmin();
 
