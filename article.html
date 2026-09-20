@@ -1168,6 +1168,13 @@
     .dynamic-item a:hover { color:var(--green) !important; }
     .dynamic-meta { margin-top:4px; color:var(--muted); font-size:12px; line-height:1.6; }
     .dynamic-empty { color:var(--muted); font-size:13px; }
+    .network-status{padding:15px 16px;border:1px solid var(--green-border);border-radius:12px;background:var(--green-soft);margin-bottom:14px}
+    .network-status strong{display:block;color:#fff!important;font-size:13px;margin-bottom:3px}
+    .network-status span{display:block;color:var(--muted);font-size:12px}
+    .dynamic-network-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .dynamic-network-column{padding:16px;border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.015)}
+    .dynamic-network-column .dynamic-section-title{margin-top:0}
+    @media(max-width:860px){.dynamic-network-grid{grid-template-columns:1fr}}
 
   </style>
 </head>
@@ -1372,16 +1379,19 @@
 
 
 
-    <section class="research-panel" id="researchConnections">
+    <section class="research-panel" id="researchConnections" data-network-version="2">
       <div class="research-kicker" data-en="Research Connections" data-fa="پیوندهای پژوهشی">Research Connections</div>
-      <h2 data-en="Continue from article to evidence" data-fa="از مقاله به شواهد ادامه دهید">Continue from article to evidence</h2>
+      <h2 data-en="Research Evidence Network" data-fa="شبکه شواهد پژوهشی">Research Evidence Network</h2>
       <p class="research-intro"
          data-en="HSKRC separates published interpretation from the source registry and knowledge nodes that support further research."
          data-fa="HSKRC تفسیر منتشرشده را از دفتر منابع و گره‌های دانشی که پژوهش بیشتر را پشتیبانی می‌کنند جدا نگه می‌دارد.">
         HSKRC separates published interpretation from the source registry and knowledge nodes that support further research.
       </p>
       <div id="dynamicResearch" class="dynamic-research">
-        <p class="dynamic-empty" data-en="Loading connected research data…" data-fa="در حال بارگذاری داده‌های پژوهشی مرتبط…">Loading connected research data…</p>
+        <div class="network-status" id="networkStatus">
+          <strong data-en="Live Research Network" data-fa="شبکه پژوهشی زنده">Live Research Network</strong>
+          <span data-en="Loading Knowledge Nodes, Sources and Researchers from Supabase…" data-fa="در حال دریافت گره‌های دانش، منابع و پژوهشگران از Supabase…">Loading Knowledge Nodes, Sources and Researchers from Supabase…</span>
+        </div>
       </div>
       <div class="research-grid" style="margin-top:18px">
         <a class="research-link" href="alamut-knowledge-base.html"><strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong><span data-en="Explore the complete HSKRC knowledge map." data-fa="نقشه کامل دانش HSKRC را بررسی کنید.">Explore the complete HSKRC knowledge map.</span></a>
@@ -2233,7 +2243,7 @@
         renderResearchNetwork(host, nodes, sources, researchers);
       } catch (error) {
         console.error("Research network loading error:", error);
-        host.innerHTML = `<p class="dynamic-empty">${currentLanguage === "fa" ? "داده‌های پژوهشی مرتبط در حال حاضر قابل نمایش نیست." : "Connected research data is not available right now."}</p>`;
+        host.innerHTML = `<div class="network-status"><strong>${currentLanguage === "fa" ? "خطا در اتصال شبکه پژوهشی" : "Research Network Connection Error"}</strong><span>${currentLanguage === "fa" ? "داده‌های مقاله بارگذاری شد، اما روابط پژوهشی از Supabase دریافت نشد." : "The article loaded, but its research relationships could not be read from Supabase."}</span></div>`;
       }
     }
 
@@ -2253,6 +2263,7 @@
 
     function renderResearchNetwork(host, nodes, sources, researchers) {
       const fa = currentLanguage === "fa";
+
       const nodeHtml = nodes.length ? nodes.map(node => `
         <div class="dynamic-item">
           <a href="${escapeHtml(knowledgeNodeHref(node))}">${escapeHtml(node.title || node.slug || "Knowledge Node")}</a>
@@ -2262,31 +2273,42 @@
       const sourceHtml = sources.length ? sources.map(source => {
         const label = `${source.source_code || ""}${source.source_code ? " — " : ""}${source.title || "Source"}`;
         const meta = [source.author, source.institution].filter(Boolean).join(" · ");
-        const title = source.url
-          ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
-          : `<strong>${escapeHtml(label)}</strong>`;
-        return `<div class="dynamic-item">${title}${meta ? `<div class="dynamic-meta">${escapeHtml(meta)}</div>` : ""}</div>`;
+        return `<div class="dynamic-item">
+          <a href="sources.html#${escapeHtml(source.source_code || "")}">${escapeHtml(label)}</a>
+          ${meta ? `<div class="dynamic-meta">${escapeHtml(meta)}</div>` : ""}
+        </div>`;
       }).join("") : `<p class="dynamic-empty">${fa ? "منبع مرتبط ثبت نشده است." : "No source is linked yet."}</p>`;
 
       const researcherHtml = researchers.length ? researchers.map(r => `
         <div class="dynamic-item">
-          <strong>${escapeHtml(r.name || "Researcher")}</strong>
+          <a href="researchers.html">${escapeHtml(r.name || "Researcher")}</a>
           ${r.field ? `<div class="dynamic-meta">${escapeHtml(r.field)}</div>` : ""}
         </div>`).join("") : `<p class="dynamic-empty">${fa ? "پژوهشگر مرتبط ثبت نشده است." : "No linked researcher is registered for these sources."}</p>`;
 
+      const total = nodes.length + sources.length + researchers.length;
+
       host.innerHTML = `
-        <div class="dynamic-section">
-          <div class="dynamic-section-title">${fa ? "گره‌های دانشی" : "Knowledge Nodes"}</div>
-          <div class="dynamic-items">${nodeHtml}</div>
+        <div class="network-status">
+          <strong>${fa ? "شبکه پژوهشی متصل شد" : "Research Network Connected"}</strong>
+          <span>${fa
+            ? `${nodes.length} گره دانش · ${sources.length} منبع · ${researchers.length} پژوهشگر`
+            : `${nodes.length} Knowledge Node${nodes.length === 1 ? "" : "s"} · ${sources.length} Source${sources.length === 1 ? "" : "s"} · ${researchers.length} Researcher${researchers.length === 1 ? "" : "s"}`}</span>
         </div>
-        <div class="dynamic-section">
-          <div class="dynamic-section-title">${fa ? "منابع استفاده‌شده" : "Sources Used"}</div>
-          <div class="dynamic-items">${sourceHtml}</div>
+        <div class="dynamic-network-grid">
+          <div class="dynamic-network-column">
+            <div class="dynamic-section-title">${fa ? "Knowledge Node / گره دانش" : "Knowledge Node"}</div>
+            <div class="dynamic-items">${nodeHtml}</div>
+          </div>
+          <div class="dynamic-network-column">
+            <div class="dynamic-section-title">${fa ? "منابع استفاده‌شده" : "Sources Used"}</div>
+            <div class="dynamic-items">${sourceHtml}</div>
+          </div>
+          <div class="dynamic-network-column">
+            <div class="dynamic-section-title">${fa ? "پژوهشگران مرتبط" : "Researchers"}</div>
+            <div class="dynamic-items">${researcherHtml}</div>
+          </div>
         </div>
-        <div class="dynamic-section">
-          <div class="dynamic-section-title">${fa ? "پژوهشگران مرتبط" : "Researchers"}</div>
-          <div class="dynamic-items">${researcherHtml}</div>
-        </div>`;
+        ${total === 0 ? `<p class="dynamic-empty" style="margin-top:12px">${fa ? "برای این مقاله هنوز رابطه پژوهشی ثبت نشده است." : "No research relationships have been registered for this article yet."}</p>` : ""}`;
     }
 
     /* =========================================
