@@ -571,7 +571,7 @@ select option{background:#111;color:#fff}
 .panel-section-label::before{content:"";width:18px;height:1px;background:#c9a45c}
 @media(max-width:700px){.admin-nav{position:static}.network-tabs{width:100%}.network-tabs button{flex:1}}
 
-/* HSKRC Executive Admin v3 */
+/* HSKRC Executive Admin v4 */
 body{letter-spacing:.005em}
 header{min-height:72px}
 .logo{font-family:Georgia,"Times New Roman",serif;font-size:24px;letter-spacing:.8px}
@@ -1084,10 +1084,15 @@ td{padding:14px 13px}
       </div>
 
       <div class="network-pane" id="network-pane-relations">
-        <div class="section-note" style="margin-bottom:18px">Create and remove relationships across the HSKRC research database without writing SQL.</div>
+        <div class="section-note" style="margin-bottom:18px"><b>Connection Manager v4</b> · Create and remove relationships across the HSKRC research database without writing SQL.</div>
+        <div class="connection-jumpbar" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+          <button class="gold" type="button" onclick="document.getElementById('articleConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Article Connections</button>
+          <button class="dark" type="button" onclick="document.getElementById('sourceNodeConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Source ↔ Knowledge Node</button>
+          <button class="dark" type="button" onclick="document.getElementById('researcherSourceConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Researcher ↔ Source</button>
+        </div>
 
-        <div class="panel" style="margin:0 0 16px;padding:20px">
-          <h3 style="margin-top:0">Article Connections</h3>
+        <div class="panel" id="articleConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+          <h3 style="margin-top:0;color:#fff">Article Connections</h3>
           <div class="relation-grid">
             <div><label>Article</label><select id="relationArticle"></select></div>
             <div><label>Knowledge Node</label><select id="relationNode"></select></div>
@@ -1100,8 +1105,10 @@ td{padding:14px 13px}
           <div class="mini-list" id="articleRelationsList"></div>
         </div>
 
-        <div class="panel" style="margin:0 0 16px;padding:20px">
-          <h3 style="margin-top:0">Source ↔ Knowledge Node</h3>
+        <div class="panel" id="sourceNodeConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+          <div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
+          <h3 style="margin-top:0;color:#fff">Source ↔ Knowledge Node</h3>
+          <p style="color:#9f9a90;margin-top:-4px">Connect a documented source directly to Alamut, Hassan Sabbah, a fortification, or another knowledge node.</p>
           <div class="relation-grid">
             <div><label>Source</label><select id="sourceNodeSource"></select></div>
             <div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
@@ -1110,8 +1117,10 @@ td{padding:14px 13px}
           <div class="mini-list" id="sourceNodeRelationsList"></div>
         </div>
 
-        <div class="panel" style="margin:0;padding:20px">
-          <h3 style="margin-top:0">Researcher ↔ Source</h3>
+        <div class="panel" id="researcherSourceConnectionPanel" style="margin:0;padding:24px;border-color:#c9a45c66">
+          <div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
+          <h3 style="margin-top:0;color:#fff">Researcher ↔ Source</h3>
+          <p style="color:#9f9a90;margin-top:-4px">Associate a researcher with the scholarly sources represented in the HSKRC registry.</p>
           <div class="relation-grid">
             <div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
             <div><label>Source</label><select id="researcherSourceSource"></select></div>
