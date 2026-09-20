@@ -17,6 +17,12 @@ section{padding:62px 0}.head{max-width:780px;margin-bottom:24px}.head h2{font-si
 footer{border-top:1px solid var(--line);padding:25px 0;color:#77736c;font-size:11px}.foot{display:flex;justify-content:space-between;gap:15px}
 html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .timeline{border-left:0;border-right:1px solid rgba(201,164,92,.35);padding-left:0;padding-right:24px}html[dir=rtl] .event:before{left:auto;right:-29px}
 @media(max-width:800px){.grid,.linksgrid{grid-template-columns:1fr}.links{width:100%;overflow:auto}.nav{flex-wrap:wrap;padding:9px 0}.links{order:3}.brand small{display:none}}@media(max-width:560px){.wrap{width:calc(100% - 24px)}.hero{padding:60px 0}.foot{flex-direction:column;text-align:center}}
+
+.related-evidence{padding:60px 0}.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.evidence-card{display:block;background:#151413;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:20px;text-decoration:none;transition:.2s}
+.evidence-card:hover{transform:translateY(-3px);border-color:rgba(201,164,92,.45)}
+.evidence-card strong{display:block;color:#fff!important;margin-bottom:5px}.evidence-card span{color:#aaa39a;font-size:12px}
+@media(max-width:800px){.evidence-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -76,7 +82,14 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .timeline{b
 </div><div class="note" data-en="Research standard: institutional heritage documentation, modern scholarship, field research and primary texts answer different questions. HSKRC keeps these source types distinct and compares them rather than treating one source as sufficient for every claim." data-fa="استاندارد پژوهشی: اسناد نهادی میراث فرهنگی، پژوهش جدید، تحقیقات میدانی و متون اولیه به پرسش‌های متفاوت پاسخ می‌دهند. HSKRC این انواع منابع را از هم تفکیک و با یکدیگر مقایسه می‌کند، نه اینکه یک منبع را برای همه ادعاها کافی بداند.">Research standard: different source types answer different questions and should be compared rather than collapsed into one authority.</div></div></section>
 </main>
 
-<footer><div class="wrap foot"><div>Founded by Kamal Barlas</div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
+<section class="related-evidence" id="related-evidence"><div class="wrap"><div class="kicker" data-en="Research Connections" data-fa="پیوندهای پژوهشی">Research Connections</div><h2 data-en="Evidence connected to Alamut" data-fa="شواهد مرتبط با الموت">Evidence connected to Alamut</h2><p class="lead" data-en="Follow this node into HSKRC's source registry, library and published research." data-fa="این گره را در دفتر منابع، کتابخانه و پژوهش‌های منتشرشده HSKRC دنبال کنید.">Follow this node into HSKRC's source registry, library and published research.</p><div class="evidence-grid">
+<a class="evidence-card" href="sources.html#HSKRC-SRC-0009"><strong>UNESCO · HSKRC-SRC-0009</strong><span data-en="Alamūt Castle and Related Fortifications — official World Heritage property record." data-fa="قلعه الموت و استحکامات مرتبط — رکورد رسمی میراث جهانی.">Alamūt Castle and Related Fortifications — official World Heritage property record.</span></a>
+<a class="evidence-card" href="sources.html#HSKRC-SRC-0011"><strong>Encyclopaedia Iranica · HSKRC-SRC-0011</strong><span data-en="Bernard Hourcade, “ALAMŪT” — specialist historical and geographical reference." data-fa="برنار اورکاد، «الموت» — مرجع تخصصی تاریخی و جغرافیایی.">Bernard Hourcade, “ALAMŪT” — specialist historical and geographical reference.</span></a>
+<a class="evidence-card" href="sources.html#HSKRC-SRC-0012"><strong>ICOMOS · HSKRC-SRC-0012</strong><span data-en="2026 evaluation of the nominated serial property and its conservation context." data-fa="ارزیابی ۲۰۲۶ پرونده زنجیره‌ای و زمینه حفاظتی آن.">2026 evaluation of the nominated serial property and its conservation context.</span></a>
+<a class="evidence-card" href="library.html"><strong data-en="Related Books" data-fa="کتاب‌های مرتبط">Related Books</strong><span data-en="Continue to HSKRC Library for scholarship on Alamut and Nizari history." data-fa="برای پژوهش‌های مربوط به الموت و تاریخ نزاری به کتابخانه HSKRC بروید.">Continue to HSKRC Library for scholarship on Alamut and Nizari history.</span></a>
+<a class="evidence-card" href="articles.html"><strong data-en="Related Articles" data-fa="مقالات مرتبط">Related Articles</strong><span data-en="Open published HSKRC articles on Alamut and its cultural heritage." data-fa="مقالات منتشرشده HSKRC درباره الموت و میراث فرهنگی آن را باز کنید.">Open published HSKRC articles on Alamut and its cultural heritage.</span></a>
+<a class="evidence-card" href="sources.html"><strong data-en="Full Source Registry" data-fa="دفتر کامل منابع">Full Source Registry</strong><span data-en="Browse all registered academic, institutional and primary references." data-fa="همه منابع ثبت‌شده دانشگاهی، نهادی و اولیه را مرور کنید.">Browse all registered academic, institutional and primary references.</span></a>
+</div></div></section><footer><div class="wrap foot"><div>Founded by Kamal Barlas</div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
 
 <script>
 const key="hskrc_language",root=document.documentElement,btn=document.getElementById("lang");
