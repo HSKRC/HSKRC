@@ -794,7 +794,7 @@ html{scroll-padding-top:105px}
 
       <h2 id="formTitle">Add New Book</h2>
 
-      <form id="bookForm">
+      <form id="bookForm" action="javascript:void(0);" novalidate>
 
         <input type="hidden" id="bookId">
 
@@ -942,7 +942,7 @@ html{scroll-padding-top:105px}
 
       </div>
 
-      <form id="articleForm">
+      <form id="articleForm" action="javascript:void(0);" novalidate>
 
         <input type="hidden" id="articleId">
 
@@ -1859,7 +1859,13 @@ html{scroll-padding-top:105px}
   ).addEventListener(
     "submit",
     async function(event) {
-            const saveButton =
+
+      // Prevent the browser's normal form submission/page refresh.
+      // Saving is handled entirely by Supabase below.
+      event.preventDefault();
+      event.stopPropagation();
+
+      const saveButton =
         document.getElementById(
           "saveBookBtn"
         );
@@ -2596,6 +2602,7 @@ html{scroll-padding-top:105px}
     async function(event) {
 
       event.preventDefault();
+      event.stopPropagation();
 
       const saveButton =
         document.getElementById(
