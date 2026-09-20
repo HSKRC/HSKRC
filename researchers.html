@@ -4,6 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="HSKRC Researchers & Scholars Directory — scholars represented in the HSKRC source and research archive.">
 <title>Researchers & Scholars | HSKRC</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#0b0b0c;--panel:#151413;--panel2:#1b1916;--text:#f5f7fa;--muted:#9ba5b1;--gold:#c9a45c;--line:rgba(255,255,255,.09);--goldline:rgba(201,164,92,.27);--max:1180px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% 0,rgba(201,164,92,.07),transparent 28%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}.wrap{width:min(calc(100% - 40px),var(--max));margin:auto}
@@ -35,15 +36,7 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 <div class="toolbar"><input id="q" type="search" placeholder="Search researcher or field..." data-en-placeholder="Search researcher or field..." data-fa-placeholder="جستجوی پژوهشگر یا حوزه..."><select id="field"><option value="" data-en="All fields" data-fa="همه حوزه‌ها">All fields</option><option value="ismaili">Ismaili Studies</option><option value="castles">Castles & Fortifications</option><option value="medieval">Medieval Islamic History</option></select></div>
 
 <div class="grid" id="grid">
-<article class="card" data-search="farhad daftary ismaili shi'i nizaris alamut hassan sabbah" data-field="ismaili medieval"><div class="initial">FD</div><h3>Farhad Daftary</h3><div class="role" data-en="Ismaili & Shiʿi Studies" data-fa="مطالعات اسماعیلی و شیعی">Ismaili & Shiʿi Studies</div><p data-en="Scholar of Ismaili history and intellectual traditions; HSKRC currently registers multiple works by Daftary, including major reference works used across the archive." data-fa="پژوهشگر تاریخ و سنت‌های فکری اسماعیلی؛ HSKRC در حال حاضر چندین اثر از دفتری را در دفتر منابع خود ثبت کرده است.">Scholar of Ismaili history and intellectual traditions; HSKRC currently registers multiple works by Daftary, including major reference works used across the archive.</p><div class="tags"><span class="tag">Ismaili History</span><span class="tag">Nizari Studies</span><span class="tag">Historiography</span></div><div class="card-links"><a href="sources.html#HSKRC-SRC-0001">HSKRC-SRC-0001</a><a href="sources.html#HSKRC-SRC-0004">0004</a><a href="sources.html#HSKRC-SRC-0008">0008</a></div></article>
-
-<article class="card" data-search="peter willey castles fortifications alamut eagle's nest iran syria" data-field="castles medieval"><div class="initial">PW</div><h3>Peter Willey</h3><div class="role" data-en="Nizari Castles & Field Research" data-fa="قلعه‌های نزاری و پژوهش میدانی">Nizari Castles & Field Research</div><p data-en="Represented in the HSKRC registry through The Eagle's Nest, a work focused on Ismaili castles in Iran and Syria." data-fa="در دفتر منابع HSKRC با کتاب The Eagle's Nest، درباره قلعه‌های اسماعیلی در ایران و سوریه، نمایندگی می‌شود.">Represented in the HSKRC registry through <em>The Eagle's Nest</em>, a work focused on Ismaili castles in Iran and Syria.</p><div class="tags"><span class="tag">Fortifications</span><span class="tag">Alamut</span><span class="tag">Field Research</span></div><div class="card-links"><a href="sources.html#HSKRC-SRC-0002">HSKRC-SRC-0002</a></div></article>
-
-<article class="card" data-search="marshall hodgson order assassins nizari ismaili medieval islamic history" data-field="ismaili medieval"><div class="initial">MH</div><h3>Marshall G. S. Hodgson</h3><div class="role" data-en="Islamic & Nizari History" data-fa="تاریخ اسلام و نزاریان">Islamic & Nizari History</div><p data-en="Represented in the HSKRC registry through The Order of Assassins, an important twentieth-century study of the Nizari Ismailis." data-fa="در دفتر منابع HSKRC با کتاب The Order of Assassins، از پژوهش‌های مهم سده بیستم درباره نزاریان اسماعیلی، نمایندگی می‌شود.">Represented in the HSKRC registry through <em>The Order of Assassins</em>, an important twentieth-century study of the Nizari Ismailis.</p><div class="tags"><span class="tag">Medieval History</span><span class="tag">Nizari Studies</span><span class="tag">Historiography</span></div><div class="card-links"><a href="sources.html#HSKRC-SRC-0003">HSKRC-SRC-0003</a></div></article>
-
-<article class="card" data-search="miklos sarkozy early nizari ismailis neighbouring powers medieval iran" data-field="ismaili medieval"><div class="initial">MS</div><h3>Miklós Sárközy</h3><div class="role" data-en="Early Nizari History" data-fa="تاریخ آغازین نزاریان">Early Nizari History</div><p data-en="Represented by a recent study of the early Nizari Ismailis and their relations with neighbouring political powers." data-fa="با پژوهشی درباره نزاریان آغازین و روابط آنان با قدرت‌های سیاسی همسایه در دفتر منابع HSKRC حضور دارد.">Represented by a recent study of the early Nizari Ismailis and their relations with neighbouring political powers.</p><div class="tags"><span class="tag">Early Nizaris</span><span class="tag">Political History</span><span class="tag">Medieval Iran</span></div><div class="card-links"><a href="sources.html#HSKRC-SRC-0005">HSKRC-SRC-0005</a></div></article>
-
-<article class="card" data-search="bernard hourcade alamut iran geography iranica" data-field="castles medieval"><div class="initial">BH</div><h3>Bernard Hourcade</h3><div class="role" data-en="Iranian Geography & Alamut" data-fa="جغرافیای ایران و الموت">Iranian Geography & Alamut</div><p data-en="Represented in HSKRC by the Encyclopaedia Iranica entry on Alamut, used as a reference for the region and its historical geography." data-fa="در HSKRC با مدخل الموت در دانشنامه ایرانیکا حضور دارد که به‌عنوان مرجعی برای منطقه و جغرافیای تاریخی آن استفاده می‌شود.">Represented in HSKRC by the Encyclopaedia Iranica entry on Alamut, used as a reference for the region and its historical geography.</p><div class="tags"><span class="tag">Alamut</span><span class="tag">Iran</span><span class="tag">Historical Geography</span></div><div class="card-links"><a href="sources.html#HSKRC-SRC-0011">HSKRC-SRC-0011</a></div></article>
+<article class="card"><div class="initial">…</div><h3 data-en="Loading researchers…" data-fa="در حال بارگذاری پژوهشگران…">Loading researchers…</h3><p data-en="Reading the HSKRC Research Network from Supabase." data-fa="در حال دریافت شبکه پژوهشی HSKRC از Supabase.">Reading the HSKRC Research Network from Supabase.</p></article>
 </div><div class="empty" id="empty" data-en="No matching researcher found." data-fa="پژوهشگر مطابق جستجو پیدا نشد.">No matching researcher found.</div>
 </div></section>
 
@@ -55,8 +48,87 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 </main>
 <footer><div class="wrap foot"><span>Founded by Kamal Barlas</span><span>© 2026 HSKRC - All rights reserved.</span></div></footer>
 <script>
-const KEY="hskrc_language";let lang=localStorage.getItem(KEY)==="fa"?"fa":"en";const q=document.getElementById("q"),field=document.getElementById("field"),cards=[...document.querySelectorAll(".card")],empty=document.getElementById("empty");
-function filter(){let t=q.value.trim().toLowerCase(),f=field.value;let n=0;cards.forEach(c=>{let ok=(!t||c.dataset.search.includes(t))&&(!f||c.dataset.field.includes(f));c.style.display=ok?"flex":"none";if(ok)n++});empty.style.display=n?"none":"block"}
-function apply(l){lang=l;localStorage.setItem(KEY,l);document.documentElement.lang=l;document.documentElement.dir=l==="fa"?"rtl":"ltr";document.querySelectorAll("[data-en][data-fa]").forEach(e=>e.innerHTML=l==="fa"?e.dataset.fa:e.dataset.en);document.querySelectorAll("[data-en-placeholder][data-fa-placeholder]").forEach(e=>e.placeholder=l==="fa"?e.dataset.faPlaceholder:e.dataset.enPlaceholder);document.getElementById("lang").textContent=l==="fa"?"English":"فارسی";document.title=l==="fa"?"پژوهشگران | HSKRC":"Researchers & Scholars | HSKRC"}
-document.getElementById("lang").onclick=()=>apply(lang==="en"?"fa":"en");q.oninput=filter;field.onchange=filter;apply(lang);
+const SUPABASE_URL="https://uwuklryzxexpofcxrbnm.supabase.co";
+const SUPABASE_KEY="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const KEY="hskrc_language";
+let lang=localStorage.getItem(KEY)==="fa"?"fa":"en";
+let directory=[];
+
+const q=document.getElementById("q");
+const field=document.getElementById("field");
+const grid=document.getElementById("grid");
+const empty=document.getElementById("empty");
+
+function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function initials(name=""){return name.trim().split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]?.toUpperCase()||"").join("")||"R";}
+function fieldKey(v=""){
+  const x=v.toLowerCase();
+  if(x.includes("castle")||x.includes("fort")||x.includes("geography")||x.includes("alamut")) return "castles";
+  if(x.includes("ismail")||x.includes("shi")||x.includes("nizari")) return "ismaili medieval";
+  if(x.includes("history")||x.includes("medieval")) return "medieval";
+  return "";
+}
+function sourceLinks(sources=[]){
+  if(!sources.length) return `<span class="tag">${lang==="fa"?"منبع متصل ثبت نشده":"No linked source"}</span>`;
+  return sources.map(x=>`<a href="sources.html#${esc(x.source_code)}" title="${esc(x.title||"")}">${esc(x.source_code)}</a>`).join("");
+}
+function render(){
+  const term=q.value.trim().toLowerCase(), f=field.value;
+  const rows=directory.filter(r=>{
+    const hay=[r.name,r.name_fa,r.field,...r.sources.map(s=>`${s.source_code} ${s.title} ${s.author||""} ${s.institution||""}`)].join(" ").toLowerCase();
+    return (!term||hay.includes(term))&&(!f||fieldKey(r.field).includes(f));
+  });
+  grid.innerHTML=rows.map(r=>`
+    <article class="card">
+      <div class="initial">${esc(initials(r.name))}</div>
+      <h3>${esc(lang==="fa" && r.name_fa ? r.name_fa : r.name)}</h3>
+      <div class="role">${esc(r.field|| (lang==="fa"?"پژوهشگر":"Researcher"))}</div>
+      <p>${lang==="fa"
+        ? `این پژوهشگر از طریق ${r.sources.length} منبع ثبت‌شده به شبکه پژوهشی HSKRC متصل است.`
+        : `Connected to the HSKRC Research Network through ${r.sources.length} registered source${r.sources.length===1?"":"s"}.`}</p>
+      <div class="tags">${r.sources.slice(0,3).map(x=>`<span class="tag">${esc(x.source_type||x.institution||"Source")}</span>`).join("")}</div>
+      <div class="card-links">${sourceLinks(r.sources)}</div>
+    </article>`).join("");
+  empty.style.display=rows.length?"none":"block";
+}
+async function loadDirectory(){
+  try{
+    const rr=await db.from("researchers").select("id,slug,name,name_fa,field").order("name");
+    if(rr.error) throw rr.error;
+    const researchers=rr.data||[];
+
+    const links=await db.from("researcher_source_links").select("researcher_id,source_id");
+    if(links.error) throw links.error;
+
+    const sourceIds=[...new Set((links.data||[]).map(x=>x.source_id).filter(Boolean))];
+    let sources=[];
+    if(sourceIds.length){
+      const sr=await db.from("research_sources").select("id,source_code,title,author,institution,source_type,publication_year,url").in("id",sourceIds);
+      if(sr.error) throw sr.error;
+      sources=sr.data||[];
+    }
+    const sm=new Map(sources.map(x=>[x.id,x]));
+    directory=researchers.map(r=>({
+      ...r,
+      sources:(links.data||[]).filter(l=>l.researcher_id===r.id).map(l=>sm.get(l.source_id)).filter(Boolean).sort((a,b)=>(a.source_code||"").localeCompare(b.source_code||""))
+    }));
+    render();
+  }catch(e){
+    console.error("Researchers directory error:",e);
+    grid.innerHTML=`<article class="card"><div class="initial">!</div><h3>${lang==="fa"?"خطا در اتصال":"Directory Connection Error"}</h3><p>${lang==="fa"?"اطلاعات پژوهشگران از Supabase دریافت نشد.":"Researchers could not be loaded from Supabase."} ${esc(e?.message||"")}</p></article>`;
+  }
+}
+function apply(l){
+  lang=l;localStorage.setItem(KEY,l);
+  document.documentElement.lang=l;document.documentElement.dir=l==="fa"?"rtl":"ltr";
+  document.querySelectorAll("[data-en][data-fa]").forEach(e=>e.innerHTML=l==="fa"?e.dataset.fa:e.dataset.en);
+  document.querySelectorAll("[data-en-placeholder][data-fa-placeholder]").forEach(e=>e.placeholder=l==="fa"?e.dataset.faPlaceholder:e.dataset.enPlaceholder);
+  document.getElementById("lang").textContent=l==="fa"?"English":"فارسی";
+  document.title=l==="fa"?"پژوهشگران | HSKRC":"Researchers & Scholars | HSKRC";
+  if(directory.length) render();
+}
+document.getElementById("lang").onclick=()=>apply(lang==="en"?"fa":"en");
+q.oninput=render;field.onchange=render;
+apply(lang);loadDirectory();
 </script></body></html>
