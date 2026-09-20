@@ -651,13 +651,13 @@ main{max-width:none;width:auto;margin:0;padding:96px 30px 60px}
    ========================================================= */
 html{scroll-padding-top:105px}
 #dashboardTop,#bookFormPanel,#articleFormPanel,#researchNetworkPanel,#usersPanel,
-#network-pane-nodes,#network-pane-sources,#network-pane-researchers,#network-pane-relations{
+#network-pane-nodes,#network-pane-sources,#network-pane-researchers,#network-pane-relations,#network-pane-bookrelations{
   scroll-margin-top:105px;
 }
 @media(max-width:700px){
   html{scroll-padding-top:82px}
   #dashboardTop,#bookFormPanel,#articleFormPanel,#researchNetworkPanel,#usersPanel,
-  #network-pane-nodes,#network-pane-sources,#network-pane-researchers,#network-pane-relations{
+  #network-pane-nodes,#network-pane-sources,#network-pane-researchers,#network-pane-relations,#network-pane-bookrelations{
     scroll-margin-top:82px;
   }
 }
@@ -1122,6 +1122,7 @@ html{scroll-padding-top:105px}
         <button class="dark" data-network-tab="sources" onclick="showNetworkTab('sources',this)">Sources</button>
         <button class="dark" data-network-tab="researchers" onclick="showNetworkTab('researchers',this)">Researchers</button>
         <button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Connection Manager</button>
+        <button class="dark" data-network-tab="bookrelations" onclick="showNetworkTab('bookrelations',this)">Book Connections</button>
       </div>
 
       <div class="network-pane active" id="network-pane-nodes">
@@ -1218,6 +1219,26 @@ html{scroll-padding-top:105px}
         </div>
       </div>
     </div>
+
+
+      <div class="network-pane" id="network-pane-bookrelations">
+        <div class="section-note" style="margin-bottom:18px"><b>Book Research Integration</b> · Connect real library records to the HSKRC Research Network. No relationship is created automatically.</div>
+        <div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+          <h3 style="margin-top:0;color:#fff">Book ↔ Knowledge Node</h3>
+          <div class="relation-grid"><div><label>Book</label><select id="bookNodeBook"></select></div><div><label>Knowledge Node</label><select id="bookNodeNode"></select></div><div style="display:flex;align-items:end"><button class="gold" type="button" id="linkBookNodeBtn" onclick="linkBookNode()">Link Book → Node</button></div></div>
+          <div id="bookNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookNodeRelationsList"></div>
+        </div>
+        <div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+          <h3 style="margin-top:0;color:#fff">Book ↔ Research Source</h3>
+          <div class="relation-grid"><div><label>Book</label><select id="bookSourceBook"></select></div><div><label>Source</label><select id="bookSourceSource"></select></div><div style="display:flex;align-items:end"><button class="gold" type="button" id="linkBookSourceBtn" onclick="linkBookSource()">Link Book → Source</button></div></div>
+          <div id="bookSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookSourceRelationsList"></div>
+        </div>
+        <div class="panel" style="margin:0;padding:24px;border-color:#c9a45c66">
+          <h3 style="margin-top:0;color:#fff">Book ↔ Researcher</h3>
+          <div class="relation-grid"><div><label>Book</label><select id="bookResearcherBook"></select></div><div><label>Researcher</label><select id="bookResearcherResearcher"></select></div><div style="display:flex;align-items:end"><button class="gold" type="button" id="linkBookResearcherBtn" onclick="linkBookResearcher()">Link Book → Researcher</button></div></div>
+          <div id="bookResearcherStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookResearcherRelationsList"></div>
+        </div>
+      </div>
 
     <!-- =========================
          USERS
@@ -3145,6 +3166,7 @@ html{scroll-padding-top:105px}
   let networkNodes = [], networkSources = [], networkResearchers = [];
   let networkArticleNodeLinks = [], networkArticleSourceLinks = [];
   let networkSourceNodeLinks = [], networkResearcherSourceLinks = [];
+  let networkBookNodeLinks = [], networkBookSourceLinks = [], networkBookResearcherLinks = [];
 
   function showNetworkTab(name, btn){
     document.querySelectorAll(".network-pane").forEach(x=>x.classList.remove("active"));
@@ -3155,21 +3177,25 @@ html{scroll-padding-top:105px}
 
   async function loadResearchNetwork(){
     try{
-      const [n,sr,r,an,as,sn,rs] = await Promise.all([
+      const [n,sr,r,an,as,sn,rs,bn,bs,br] = await Promise.all([
         supabaseClient.from("knowledge_nodes").select("*").order("title"),
         supabaseClient.from("research_sources").select("*").order("source_code"),
         supabaseClient.from("researchers").select("*").order("name"),
         supabaseClient.from("article_node_links").select("article_id,node_id"),
         supabaseClient.from("article_source_links").select("article_id,source_id"),
         supabaseClient.from("source_node_links").select("source_id,node_id"),
-        supabaseClient.from("researcher_source_links").select("researcher_id,source_id")
+        supabaseClient.from("researcher_source_links").select("researcher_id,source_id"),
+        supabaseClient.from("book_node_links").select("book_id,node_id"),
+        supabaseClient.from("book_source_links").select("book_id,source_id"),
+        supabaseClient.from("book_researcher_links").select("book_id,researcher_id")
       ]);
-      for(const [label,res] of [["knowledge_nodes",n],["research_sources",sr],["researchers",r],["article_node_links",an],["article_source_links",as],["source_node_links",sn],["researcher_source_links",rs]]){
+      for(const [label,res] of [["knowledge_nodes",n],["research_sources",sr],["researchers",r],["article_node_links",an],["article_source_links",as],["source_node_links",sn],["researcher_source_links",rs],["book_node_links",bn],["book_source_links",bs],["book_researcher_links",br]]){
         if(res.error) throw new Error(label+": "+res.error.message);
       }
       networkNodes=n.data||[]; networkSources=sr.data||[]; networkResearchers=r.data||[];
       networkArticleNodeLinks=an.data||[]; networkArticleSourceLinks=as.data||[];
       networkSourceNodeLinks=sn.data||[]; networkResearcherSourceLinks=rs.data||[];
+      networkBookNodeLinks=bn.data||[]; networkBookSourceLinks=bs.data||[]; networkBookResearcherLinks=br.data||[];
       renderNetworkManager();
       updateStats();
     }catch(error){ console.error("Research Network Manager:",error); showMessage(error.message||"Unable to load Research Network.","error"); }
@@ -3192,10 +3218,22 @@ html{scroll-padding-top:105px}
     sourceNodeNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
     researcherSourceResearcher.innerHTML=optionHtml(networkResearchers,"id",x=>x.name);
     researcherSourceSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
+    const bookLabel=x=>(x.title||"Untitled")+" — "+(x.author||"Unknown author");
+    const bookNodeBook=document.getElementById("bookNodeBook"),bookNodeNode=document.getElementById("bookNodeNode"),bookSourceBook=document.getElementById("bookSourceBook"),bookSourceSource=document.getElementById("bookSourceSource"),bookResearcherBook=document.getElementById("bookResearcherBook"),bookResearcherResearcher=document.getElementById("bookResearcherResearcher");
+    if(bookNodeBook)bookNodeBook.innerHTML=optionHtml(books,"id",bookLabel);
+    if(bookNodeNode)bookNodeNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
+    if(bookSourceBook)bookSourceBook.innerHTML=optionHtml(books,"id",bookLabel);
+    if(bookSourceSource)bookSourceSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
+    if(bookResearcherBook)bookResearcherBook.innerHTML=optionHtml(books,"id",bookLabel);
+    if(bookResearcherResearcher)bookResearcherResearcher.innerHTML=optionHtml(networkResearchers,"id",x=>x.name);
     relationArticle.onchange=renderArticleRelations;
     sourceNodeSource.onchange=renderSourceNodeRelations;
     researcherSourceResearcher.onchange=renderResearcherSourceRelations;
     renderArticleRelations(); renderSourceNodeRelations(); renderResearcherSourceRelations();
+    if(bookNodeBook)bookNodeBook.onchange=renderBookNodeRelations;
+    if(bookSourceBook)bookSourceBook.onchange=renderBookSourceRelations;
+    if(bookResearcherBook)bookResearcherBook.onchange=renderBookResearcherRelations;
+    renderBookNodeRelations();renderBookSourceRelations();renderBookResearcherRelations();
   }
 
   function renderArticleRelations(){
@@ -3216,6 +3254,11 @@ html{scroll-padding-top:105px}
     const rows=networkResearcherSourceLinks.filter(x=>x.researcher_id===researcherId).map(l=>{const src=networkSources.find(x=>x.id===l.source_id);return src?`<div class="mini-row"><span><b>${escapeHtml(src.source_code)}</b> · ${escapeHtml(src.title)}</span>${removeButton('unlinkResearcherSource',[researcherId,src.id])}</div>`:""}).filter(Boolean);
     host.innerHTML=rows.join("")||`<div class="mini-row"><span>No Source connections yet.</span></div>`;
   }
+
+
+  function renderBookNodeRelations(){const e=document.getElementById("bookNodeBook"),host=document.getElementById("bookNodeRelationsList"),id=e?.value;if(!host)return;if(!books.length){host.innerHTML='<div class="mini-row"><span>No books are in the library yet.</span></div>';return;}const rows=networkBookNodeLinks.filter(x=>x.book_id===id).map(l=>{const n=networkNodes.find(x=>x.id===l.node_id);return n?`<div class="mini-row"><span><b>${escapeHtml(n.title)}</b> · ${escapeHtml(n.node_type||"topic")}</span>${removeButton("unlinkBookNode",[id,n.id])}</div>`:""}).filter(Boolean);host.innerHTML=rows.join("")||'<div class="mini-row"><span>No Knowledge Node connections yet.</span></div>';}
+  function renderBookSourceRelations(){const e=document.getElementById("bookSourceBook"),host=document.getElementById("bookSourceRelationsList"),id=e?.value;if(!host)return;if(!books.length){host.innerHTML='<div class="mini-row"><span>No books are in the library yet.</span></div>';return;}const rows=networkBookSourceLinks.filter(x=>x.book_id===id).map(l=>{const s=networkSources.find(x=>x.id===l.source_id);return s?`<div class="mini-row"><span><b>${escapeHtml(s.source_code)}</b> · ${escapeHtml(s.title)}</span>${removeButton("unlinkBookSource",[id,s.id])}</div>`:""}).filter(Boolean);host.innerHTML=rows.join("")||'<div class="mini-row"><span>No Source connections yet.</span></div>';}
+  function renderBookResearcherRelations(){const e=document.getElementById("bookResearcherBook"),host=document.getElementById("bookResearcherRelationsList"),id=e?.value;if(!host)return;if(!books.length){host.innerHTML='<div class="mini-row"><span>No books are in the library yet.</span></div>';return;}const rows=networkBookResearcherLinks.filter(x=>x.book_id===id).map(l=>{const r=networkResearchers.find(x=>x.id===l.researcher_id);return r?`<div class="mini-row"><span><b>${escapeHtml(r.name)}</b> · ${escapeHtml(r.field||"-")}</span>${removeButton("unlinkBookResearcher",[id,r.id])}</div>`:""}).filter(Boolean);host.innerHTML=rows.join("")||'<div class="mini-row"><span>No Researcher connections yet.</span></div>';}
 
   function resetNodeForm(){nodeForm.reset();networkNodeId.value="";} function resetSourceForm(){sourceForm.reset();networkSourceId.value="";} function resetResearcherForm(){researcherForm.reset();networkResearcherId.value="";}
   function editNetworkNode(id){const x=networkNodes.find(v=>v.id===id);if(!x)return;networkNodeId.value=x.id;networkNodeSlug.value=x.slug||"";networkNodeType.value=x.node_type||"topic";networkNodeTitle.value=x.title||"";networkNodeTitleFa.value=x.title_fa||"";networkNodeDescription.value=x.description||"";document.getElementById("network-pane-nodes").scrollIntoView({behavior:"smooth"});}
@@ -3269,6 +3312,29 @@ html{scroll-padding-top:105px}
     }catch(error){console.error("Researcher ↔ Source:",error);connectionStatus("researcherSourceStatus","✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
     finally{btn.disabled=false;btn.textContent=old;}
   }
+
+  async function linkBookRelation(kind){
+    const cfg={
+      node:["bookNodeBook","bookNodeNode","linkBookNodeBtn","bookNodeStatus","book_node_links","node_id",networkBookNodeLinks,renderBookNodeRelations,"Knowledge Node"],
+      source:["bookSourceBook","bookSourceSource","linkBookSourceBtn","bookSourceStatus","book_source_links","source_id",networkBookSourceLinks,renderBookSourceRelations,"Source"],
+      researcher:["bookResearcherBook","bookResearcherResearcher","linkBookResearcherBtn","bookResearcherStatus","book_researcher_links","researcher_id",networkBookResearcherLinks,renderBookResearcherRelations,"Researcher"]
+    }[kind];
+    const [bookId,targetId,btnId,statusId,table,targetKey,arr,renderer,label]=cfg;
+    const b=document.getElementById(bookId),t=document.getElementById(targetId),btn=document.getElementById(btnId),book_id=b?.value,target=t?.value;
+    if(!book_id||!target){connectionStatus(statusId,`Please select both a Book and a ${label}.`,"error");return;}
+    if(arr.some(x=>x.book_id===book_id&&x[targetKey]===target)){connectionStatus(statusId,"✓ This connection already exists.","info");return;}
+    const old=btn.textContent;btn.disabled=true;btn.textContent="Saving…";
+    try{const payload={book_id};payload[targetKey]=target;const {error}=await supabaseClient.from(table).insert(payload);if(error)throw error;await loadResearchNetwork();document.getElementById(bookId).value=book_id;renderer();connectionStatus(statusId,"✓ Connection saved successfully.");showMessage(`Book linked to ${label} successfully.`);}
+    catch(error){connectionStatus(statusId,"✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
+    finally{btn.disabled=false;btn.textContent=old;}
+  }
+  function linkBookNode(){linkBookRelation("node");}
+  function linkBookSource(){linkBookRelation("source");}
+  function linkBookResearcher(){linkBookRelation("researcher");}
+  function unlinkBookNode(book_id,node_id){removeLink("book_node_links",{book_id,node_id},"Book ↔ Node connection removed.",()=>{const e=document.getElementById("bookNodeBook");if(e)e.value=book_id;renderBookNodeRelations();});}
+  function unlinkBookSource(book_id,source_id){removeLink("book_source_links",{book_id,source_id},"Book ↔ Source connection removed.",()=>{const e=document.getElementById("bookSourceBook");if(e)e.value=book_id;renderBookSourceRelations();});}
+  function unlinkBookResearcher(book_id,researcher_id){removeLink("book_researcher_links",{book_id,researcher_id},"Book ↔ Researcher connection removed.",()=>{const e=document.getElementById("bookResearcherBook");if(e)e.value=book_id;renderBookResearcherRelations();});}
+
   function unlinkArticleNode(article_id,node_id){removeLink("article_node_links",{article_id,node_id},"Article ↔ Node connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
   function unlinkArticleSource(article_id,source_id){removeLink("article_source_links",{article_id,source_id},"Article ↔ Source connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
   function unlinkSourceNode(source_id,node_id){removeLink("source_node_links",{source_id,node_id},"Source ↔ Node connection removed.",()=>{sourceNodeSource.value=source_id;renderSourceNodeRelations();});}
@@ -3322,7 +3388,10 @@ html{scroll-padding-top:105px}
       networkArticleNodeLinks.length +
       networkArticleSourceLinks.length +
       networkSourceNodeLinks.length +
-      networkResearcherSourceLinks.length;
+      networkResearcherSourceLinks.length +
+      networkBookNodeLinks.length +
+      networkBookSourceLinks.length +
+      networkBookResearcherLinks.length;
 
     if (connectionEl) connectionEl.textContent = connectionTotal;
 
