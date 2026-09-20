@@ -1033,7 +1033,7 @@ td{padding:14px 13px}
         <button class="dark active" data-network-tab="nodes" onclick="showNetworkTab('nodes',this)">Knowledge Nodes</button>
         <button class="dark" data-network-tab="sources" onclick="showNetworkTab('sources',this)">Sources</button>
         <button class="dark" data-network-tab="researchers" onclick="showNetworkTab('researchers',this)">Researchers</button>
-        <button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Article Connections</button>
+        <button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Connection Manager</button>
       </div>
 
       <div class="network-pane active" id="network-pane-nodes">
@@ -1084,22 +1084,41 @@ td{padding:14px 13px}
       </div>
 
       <div class="network-pane" id="network-pane-relations">
-        <div class="relation-grid">
-          <div>
-            <label>Article</label><select id="relationArticle"></select>
+        <div class="section-note" style="margin-bottom:18px">Create and remove relationships across the HSKRC research database without writing SQL.</div>
+
+        <div class="panel" style="margin:0 0 16px;padding:20px">
+          <h3 style="margin-top:0">Article Connections</h3>
+          <div class="relation-grid">
+            <div><label>Article</label><select id="relationArticle"></select></div>
+            <div><label>Knowledge Node</label><select id="relationNode"></select></div>
+            <div><label>Source</label><select id="relationSource"></select></div>
+            <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
+              <button class="gold" type="button" onclick="linkArticleNode()">Link Article → Node</button>
+              <button class="gold" type="button" onclick="linkArticleSource()">Link Article → Source</button>
+            </div>
           </div>
-          <div>
-            <label>Knowledge Node</label><select id="relationNode"></select>
-          </div>
-          <div>
-            <label>Source</label><select id="relationSource"></select>
-          </div>
-          <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
-            <button class="gold" type="button" onclick="linkArticleNode()">Link Article → Node</button>
-            <button class="gold" type="button" onclick="linkArticleSource()">Link Article → Source</button>
-          </div>
+          <div class="mini-list" id="articleRelationsList"></div>
         </div>
-        <div class="mini-list" id="articleRelationsList"></div>
+
+        <div class="panel" style="margin:0 0 16px;padding:20px">
+          <h3 style="margin-top:0">Source ↔ Knowledge Node</h3>
+          <div class="relation-grid">
+            <div><label>Source</label><select id="sourceNodeSource"></select></div>
+            <div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
+            <div style="display:flex;align-items:end"><button class="gold" type="button" onclick="linkSourceNode()">Link Source → Node</button></div>
+          </div>
+          <div class="mini-list" id="sourceNodeRelationsList"></div>
+        </div>
+
+        <div class="panel" style="margin:0;padding:20px">
+          <h3 style="margin-top:0">Researcher ↔ Source</h3>
+          <div class="relation-grid">
+            <div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
+            <div><label>Source</label><select id="researcherSourceSource"></select></div>
+            <div style="display:flex;align-items:end"><button class="gold" type="button" onclick="linkResearcherSource()">Link Researcher → Source</button></div>
+          </div>
+          <div class="mini-list" id="researcherSourceRelationsList"></div>
+        </div>
       </div>
     </div>
 
@@ -3028,6 +3047,7 @@ td{padding:14px 13px}
 
   let networkNodes = [], networkSources = [], networkResearchers = [];
   let networkArticleNodeLinks = [], networkArticleSourceLinks = [];
+  let networkSourceNodeLinks = [], networkResearcherSourceLinks = [];
 
   function showNetworkTab(name, btn){
     document.querySelectorAll(".network-pane").forEach(x=>x.classList.remove("active"));
@@ -3038,125 +3058,86 @@ td{padding:14px 13px}
 
   async function loadResearchNetwork(){
     try{
-      const [n,sr,r,an,as] = await Promise.all([
+      const [n,sr,r,an,as,sn,rs] = await Promise.all([
         supabaseClient.from("knowledge_nodes").select("*").order("title"),
         supabaseClient.from("research_sources").select("*").order("source_code"),
         supabaseClient.from("researchers").select("*").order("name"),
         supabaseClient.from("article_node_links").select("article_id,node_id"),
-        supabaseClient.from("article_source_links").select("article_id,source_id")
+        supabaseClient.from("article_source_links").select("article_id,source_id"),
+        supabaseClient.from("source_node_links").select("source_id,node_id"),
+        supabaseClient.from("researcher_source_links").select("researcher_id,source_id")
       ]);
-      for(const [label,res] of [["knowledge_nodes",n],["research_sources",sr],["researchers",r],["article_node_links",an],["article_source_links",as]]){
+      for(const [label,res] of [["knowledge_nodes",n],["research_sources",sr],["researchers",r],["article_node_links",an],["article_source_links",as],["source_node_links",sn],["researcher_source_links",rs]]){
         if(res.error) throw new Error(label+": "+res.error.message);
       }
       networkNodes=n.data||[]; networkSources=sr.data||[]; networkResearchers=r.data||[];
       networkArticleNodeLinks=an.data||[]; networkArticleSourceLinks=as.data||[];
+      networkSourceNodeLinks=sn.data||[]; networkResearcherSourceLinks=rs.data||[];
       renderNetworkManager();
-    }catch(error){
-      console.error("Research Network Manager:",error);
-      showMessage(error.message||"Unable to load Research Network.","error");
-    }
+    }catch(error){ console.error("Research Network Manager:",error); showMessage(error.message||"Unable to load Research Network.","error"); }
   }
 
-  function renderNetworkManager(){
-    const nodesList=document.getElementById("networkNodesList");
-    const sourcesList=document.getElementById("networkSourcesList");
-    const researchersList=document.getElementById("networkResearchersList");
-    if(!nodesList) return;
+  function optionHtml(items, valueKey, labelFn){return items.map(x=>`<option value="${x[valueKey]}">${escapeHtml(labelFn(x))}</option>`).join("");}
+  function removeButton(fn,args){return `<button class="danger small-btn" type="button" onclick="${fn}(${args.map(x=>`'${x}'`).join(',')})">Remove</button>`;}
 
+  function renderNetworkManager(){
+    const nodesList=document.getElementById("networkNodesList"), sourcesList=document.getElementById("networkSourcesList"), researchersList=document.getElementById("networkResearchersList");
+    if(!nodesList) return;
     nodesList.innerHTML=networkNodes.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.title)}</b> · ${escapeHtml(x.node_type||"topic")} · ${escapeHtml(x.slug)}</span><button class="dark small-btn" onclick="editNetworkNode('${x.id}')">Edit</button></div>`).join("");
     sourcesList.innerHTML=networkSources.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.source_code)}</b> · ${escapeHtml(x.title)}</span><button class="dark small-btn" onclick="editNetworkSource('${x.id}')">Edit</button></div>`).join("");
     researchersList.innerHTML=networkResearchers.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.name)}</b> · ${escapeHtml(x.field||"-")}</span><button class="dark small-btn" onclick="editNetworkResearcher('${x.id}')">Edit</button></div>`).join("");
 
-    const articleSel=document.getElementById("relationArticle");
-    const nodeSel=document.getElementById("relationNode");
-    const sourceSel=document.getElementById("relationSource");
-    articleSel.innerHTML=articles.map(x=>`<option value="${x.id}">${escapeHtml(x.title)}</option>`).join("");
-    nodeSel.innerHTML=networkNodes.map(x=>`<option value="${x.id}">${escapeHtml(x.title)}</option>`).join("");
-    sourceSel.innerHTML=networkSources.map(x=>`<option value="${x.id}">${escapeHtml(x.source_code+" — "+x.title)}</option>`).join("");
-    articleSel.onchange=renderArticleRelations;
-    renderArticleRelations();
+    relationArticle.innerHTML=optionHtml(articles,"id",x=>x.title);
+    relationNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
+    relationSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
+    sourceNodeSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
+    sourceNodeNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
+    researcherSourceResearcher.innerHTML=optionHtml(networkResearchers,"id",x=>x.name);
+    researcherSourceSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
+    relationArticle.onchange=renderArticleRelations;
+    sourceNodeSource.onchange=renderSourceNodeRelations;
+    researcherSourceResearcher.onchange=renderResearcherSourceRelations;
+    renderArticleRelations(); renderSourceNodeRelations(); renderResearcherSourceRelations();
   }
 
   function renderArticleRelations(){
-    const articleId=document.getElementById("relationArticle")?.value;
-    const host=document.getElementById("articleRelationsList");
-    if(!host||!articleId) return;
-    const nodes=networkArticleNodeLinks.filter(x=>x.article_id===articleId).map(x=>networkNodes.find(n=>n.id===x.node_id)).filter(Boolean);
-    const sources=networkArticleSourceLinks.filter(x=>x.article_id===articleId).map(x=>networkSources.find(n=>n.id===x.source_id)).filter(Boolean);
-    host.innerHTML=
-      `<div class="mini-row"><span><b>Knowledge Nodes:</b> ${nodes.length?nodes.map(x=>escapeHtml(x.title)).join(" · "):"None"}</span></div>`+
-      `<div class="mini-row"><span><b>Sources:</b> ${sources.length?sources.map(x=>escapeHtml(x.source_code)).join(" · "):"None"}</span></div>`;
+    const articleId=relationArticle?.value, host=document.getElementById("articleRelationsList"); if(!host||!articleId)return;
+    const nodeLinks=networkArticleNodeLinks.filter(x=>x.article_id===articleId), sourceLinks=networkArticleSourceLinks.filter(x=>x.article_id===articleId);
+    const rows=[];
+    nodeLinks.forEach(l=>{const x=networkNodes.find(n=>n.id===l.node_id);if(x)rows.push(`<div class="mini-row"><span><b>Knowledge Node</b> · ${escapeHtml(x.title)}</span>${removeButton('unlinkArticleNode',[articleId,x.id])}</div>`)});
+    sourceLinks.forEach(l=>{const x=networkSources.find(n=>n.id===l.source_id);if(x)rows.push(`<div class="mini-row"><span><b>Source</b> · ${escapeHtml(x.source_code)} · ${escapeHtml(x.title)}</span>${removeButton('unlinkArticleSource',[articleId,x.id])}</div>`)});
+    host.innerHTML=rows.join("")||`<div class="mini-row"><span>No connections yet.</span></div>`;
+  }
+  function renderSourceNodeRelations(){
+    const sourceId=sourceNodeSource?.value,host=document.getElementById("sourceNodeRelationsList");if(!host||!sourceId)return;
+    const rows=networkSourceNodeLinks.filter(x=>x.source_id===sourceId).map(l=>{const n=networkNodes.find(x=>x.id===l.node_id);return n?`<div class="mini-row"><span><b>${escapeHtml(n.title)}</b> · ${escapeHtml(n.node_type||'topic')}</span>${removeButton('unlinkSourceNode',[sourceId,n.id])}</div>`:""}).filter(Boolean);
+    host.innerHTML=rows.join("")||`<div class="mini-row"><span>No Knowledge Node connections yet.</span></div>`;
+  }
+  function renderResearcherSourceRelations(){
+    const researcherId=researcherSourceResearcher?.value,host=document.getElementById("researcherSourceRelationsList");if(!host||!researcherId)return;
+    const rows=networkResearcherSourceLinks.filter(x=>x.researcher_id===researcherId).map(l=>{const src=networkSources.find(x=>x.id===l.source_id);return src?`<div class="mini-row"><span><b>${escapeHtml(src.source_code)}</b> · ${escapeHtml(src.title)}</span>${removeButton('unlinkResearcherSource',[researcherId,src.id])}</div>`:""}).filter(Boolean);
+    host.innerHTML=rows.join("")||`<div class="mini-row"><span>No Source connections yet.</span></div>`;
   }
 
-  function resetNodeForm(){document.getElementById("nodeForm").reset();document.getElementById("networkNodeId").value="";}
-  function resetSourceForm(){document.getElementById("sourceForm").reset();document.getElementById("networkSourceId").value="";}
-  function resetResearcherForm(){document.getElementById("researcherForm").reset();document.getElementById("networkResearcherId").value="";}
+  function resetNodeForm(){nodeForm.reset();networkNodeId.value="";} function resetSourceForm(){sourceForm.reset();networkSourceId.value="";} function resetResearcherForm(){researcherForm.reset();networkResearcherId.value="";}
+  function editNetworkNode(id){const x=networkNodes.find(v=>v.id===id);if(!x)return;networkNodeId.value=x.id;networkNodeSlug.value=x.slug||"";networkNodeType.value=x.node_type||"topic";networkNodeTitle.value=x.title||"";networkNodeTitleFa.value=x.title_fa||"";networkNodeDescription.value=x.description||"";document.getElementById("network-pane-nodes").scrollIntoView({behavior:"smooth"});}
+  function editNetworkSource(id){const x=networkSources.find(v=>v.id===id);if(!x)return;networkSourceId.value=x.id;networkSourceCode.value=x.source_code||"";networkSourceType.value=x.source_type||"";networkSourceTitle.value=x.title||"";networkSourceAuthor.value=x.author||"";networkSourceInstitution.value=x.institution||"";networkSourceYear.value=x.publication_year||"";networkSourceLanguage.value=x.language||"";networkSourceReliability.value=x.reliability||"";networkSourceUrl.value=x.url||"";networkSourceNotes.value=x.notes||"";document.getElementById("network-pane-sources").scrollIntoView({behavior:"smooth"});}
+  function editNetworkResearcher(id){const x=networkResearchers.find(v=>v.id===id);if(!x)return;networkResearcherId.value=x.id;networkResearcherSlug.value=x.slug||"";networkResearcherField.value=x.field||"";networkResearcherName.value=x.name||"";networkResearcherNameFa.value=x.name_fa||"";networkResearcherNotes.value=x.notes||"";document.getElementById("network-pane-researchers").scrollIntoView({behavior:"smooth"});}
 
-  function editNetworkNode(id){
-    const x=networkNodes.find(v=>v.id===id); if(!x)return;
-    networkNodeId.value=x.id; networkNodeSlug.value=x.slug||""; networkNodeType.value=x.node_type||"topic";
-    networkNodeTitle.value=x.title||""; networkNodeTitleFa.value=x.title_fa||""; networkNodeDescription.value=x.description||"";
-    document.getElementById("network-pane-nodes").scrollIntoView({behavior:"smooth"});
-  }
-  function editNetworkSource(id){
-    const x=networkSources.find(v=>v.id===id); if(!x)return;
-    networkSourceId.value=x.id; networkSourceCode.value=x.source_code||""; networkSourceType.value=x.source_type||"";
-    networkSourceTitle.value=x.title||""; networkSourceAuthor.value=x.author||""; networkSourceInstitution.value=x.institution||"";
-    networkSourceYear.value=x.publication_year||""; networkSourceLanguage.value=x.language||""; networkSourceReliability.value=x.reliability||"";
-    networkSourceUrl.value=x.url||""; networkSourceNotes.value=x.notes||"";
-    document.getElementById("network-pane-sources").scrollIntoView({behavior:"smooth"});
-  }
-  function editNetworkResearcher(id){
-    const x=networkResearchers.find(v=>v.id===id); if(!x)return;
-    networkResearcherId.value=x.id; networkResearcherSlug.value=x.slug||""; networkResearcherField.value=x.field||"";
-    networkResearcherName.value=x.name||""; networkResearcherNameFa.value=x.name_fa||""; networkResearcherNotes.value=x.notes||"";
-    document.getElementById("network-pane-researchers").scrollIntoView({behavior:"smooth"});
-  }
+  nodeForm.addEventListener("submit",async e=>{e.preventDefault();try{const id=networkNodeId.value,data={slug:networkNodeSlug.value.trim(),title:networkNodeTitle.value.trim(),title_fa:networkNodeTitleFa.value.trim()||null,node_type:networkNodeType.value,description:networkNodeDescription.value.trim()||null,updated_at:new Date().toISOString()};const res=id?await supabaseClient.from("knowledge_nodes").update(data).eq("id",id):await supabaseClient.from("knowledge_nodes").insert(data);if(res.error)throw res.error;resetNodeForm();await loadResearchNetwork();showMessage("Knowledge Node saved.");}catch(error){showMessage(error.message,"error");}});
+  sourceForm.addEventListener("submit",async e=>{e.preventDefault();try{const id=networkSourceId.value,y=networkSourceYear.value.trim(),data={source_code:networkSourceCode.value.trim(),title:networkSourceTitle.value.trim(),author:networkSourceAuthor.value.trim()||null,institution:networkSourceInstitution.value.trim()||null,source_type:networkSourceType.value.trim()||null,publication_year:y?parseInt(y,10):null,url:networkSourceUrl.value.trim()||null,language:networkSourceLanguage.value.trim()||null,reliability:networkSourceReliability.value.trim()||null,notes:networkSourceNotes.value.trim()||null,updated_at:new Date().toISOString()};const res=id?await supabaseClient.from("research_sources").update(data).eq("id",id):await supabaseClient.from("research_sources").insert(data);if(res.error)throw res.error;resetSourceForm();await loadResearchNetwork();showMessage("Source saved.");}catch(error){showMessage(error.message,"error");}});
+  researcherForm.addEventListener("submit",async e=>{e.preventDefault();try{const id=networkResearcherId.value,data={slug:networkResearcherSlug.value.trim(),name:networkResearcherName.value.trim(),name_fa:networkResearcherNameFa.value.trim()||null,field:networkResearcherField.value.trim()||null,notes:networkResearcherNotes.value.trim()||null,updated_at:new Date().toISOString()};const res=id?await supabaseClient.from("researchers").update(data).eq("id",id):await supabaseClient.from("researchers").insert(data);if(res.error)throw res.error;resetResearcherForm();await loadResearchNetwork();showMessage("Researcher saved.");}catch(error){showMessage(error.message,"error");}});
 
-  document.getElementById("nodeForm").addEventListener("submit",async e=>{
-    e.preventDefault();
-    try{
-      const id=networkNodeId.value;
-      const data={slug:networkNodeSlug.value.trim(),title:networkNodeTitle.value.trim(),title_fa:networkNodeTitleFa.value.trim()||null,node_type:networkNodeType.value,description:networkNodeDescription.value.trim()||null,updated_at:new Date().toISOString()};
-      const res=id?await supabaseClient.from("knowledge_nodes").update(data).eq("id",id):await supabaseClient.from("knowledge_nodes").insert(data);
-      if(res.error)throw res.error; resetNodeForm(); await loadResearchNetwork(); showMessage("Knowledge Node saved.");
-    }catch(error){console.error(error);showMessage(error.message,"error");}
-  });
-
-  document.getElementById("sourceForm").addEventListener("submit",async e=>{
-    e.preventDefault();
-    try{
-      const id=networkSourceId.value, y=networkSourceYear.value.trim();
-      const data={source_code:networkSourceCode.value.trim(),title:networkSourceTitle.value.trim(),author:networkSourceAuthor.value.trim()||null,institution:networkSourceInstitution.value.trim()||null,source_type:networkSourceType.value.trim()||null,publication_year:y?parseInt(y,10):null,url:networkSourceUrl.value.trim()||null,language:networkSourceLanguage.value.trim()||null,reliability:networkSourceReliability.value.trim()||null,notes:networkSourceNotes.value.trim()||null,updated_at:new Date().toISOString()};
-      const res=id?await supabaseClient.from("research_sources").update(data).eq("id",id):await supabaseClient.from("research_sources").insert(data);
-      if(res.error)throw res.error; resetSourceForm(); await loadResearchNetwork(); showMessage("Source saved.");
-    }catch(error){console.error(error);showMessage(error.message,"error");}
-  });
-
-  document.getElementById("researcherForm").addEventListener("submit",async e=>{
-    e.preventDefault();
-    try{
-      const id=networkResearcherId.value;
-      const data={slug:networkResearcherSlug.value.trim(),name:networkResearcherName.value.trim(),name_fa:networkResearcherNameFa.value.trim()||null,field:networkResearcherField.value.trim()||null,notes:networkResearcherNotes.value.trim()||null,updated_at:new Date().toISOString()};
-      const res=id?await supabaseClient.from("researchers").update(data).eq("id",id):await supabaseClient.from("researchers").insert(data);
-      if(res.error)throw res.error; resetResearcherForm(); await loadResearchNetwork(); showMessage("Researcher saved.");
-    }catch(error){console.error(error);showMessage(error.message,"error");}
-  });
-
-  async function linkArticleNode(){
-    try{
-      const article_id=relationArticle.value,node_id=relationNode.value;if(!article_id||!node_id)return;
-      const res=await supabaseClient.from("article_node_links").upsert({article_id,node_id},{onConflict:"article_id,node_id"});
-      if(res.error)throw res.error; await loadResearchNetwork(); relationArticle.value=article_id; renderArticleRelations(); showMessage("Article linked to Knowledge Node.");
-    }catch(error){console.error(error);showMessage(error.message,"error");}
-  }
-  async function linkArticleSource(){
-    try{
-      const article_id=relationArticle.value,source_id=relationSource.value;if(!article_id||!source_id)return;
-      const res=await supabaseClient.from("article_source_links").upsert({article_id,source_id},{onConflict:"article_id,source_id"});
-      if(res.error)throw res.error; await loadResearchNetwork(); relationArticle.value=article_id; renderArticleRelations(); showMessage("Article linked to Source.");
-    }catch(error){console.error(error);showMessage(error.message,"error");}
-  }
+  async function addLink(table,payload,conflict,msg,keep){try{const res=await supabaseClient.from(table).upsert(payload,{onConflict:conflict});if(res.error)throw res.error;await loadResearchNetwork();if(keep)keep();showMessage(msg);}catch(error){console.error(error);showMessage(error.message,"error");}}
+  async function removeLink(table,match,msg,keep){try{let q=supabaseClient.from(table).delete();Object.entries(match).forEach(([k,v])=>q=q.eq(k,v));const res=await q;if(res.error)throw res.error;await loadResearchNetwork();if(keep)keep();showMessage(msg);}catch(error){console.error(error);showMessage(error.message,"error");}}
+  function linkArticleNode(){const article_id=relationArticle.value,node_id=relationNode.value;if(!article_id||!node_id)return;addLink("article_node_links",{article_id,node_id},"article_id,node_id","Article linked to Knowledge Node.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
+  function linkArticleSource(){const article_id=relationArticle.value,source_id=relationSource.value;if(!article_id||!source_id)return;addLink("article_source_links",{article_id,source_id},"article_id,source_id","Article linked to Source.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
+  function linkSourceNode(){const source_id=sourceNodeSource.value,node_id=sourceNodeNode.value;if(!source_id||!node_id)return;addLink("source_node_links",{source_id,node_id},"source_id,node_id","Source linked to Knowledge Node.",()=>{sourceNodeSource.value=source_id;renderSourceNodeRelations();});}
+  function linkResearcherSource(){const researcher_id=researcherSourceResearcher.value,source_id=researcherSourceSource.value;if(!researcher_id||!source_id)return;addLink("researcher_source_links",{researcher_id,source_id},"researcher_id,source_id","Researcher linked to Source.",()=>{researcherSourceResearcher.value=researcher_id;renderResearcherSourceRelations();});}
+  function unlinkArticleNode(article_id,node_id){removeLink("article_node_links",{article_id,node_id},"Article ↔ Node connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
+  function unlinkArticleSource(article_id,source_id){removeLink("article_source_links",{article_id,source_id},"Article ↔ Source connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
+  function unlinkSourceNode(source_id,node_id){removeLink("source_node_links",{source_id,node_id},"Source ↔ Node connection removed.",()=>{sourceNodeSource.value=source_id;renderSourceNodeRelations();});}
+  function unlinkResearcherSource(researcher_id,source_id){removeLink("researcher_source_links",{researcher_id,source_id},"Researcher ↔ Source connection removed.",()=>{researcherSourceResearcher.value=researcher_id;renderResearcherSourceRelations();});}
 
 
   /* =========================================
