@@ -1159,6 +1159,16 @@
     .research-note { margin-top:15px; padding-top:15px; border-top:1px solid var(--border); color:var(--muted); font-size:12px; }
     @media(max-width:760px){ .research-grid{grid-template-columns:1fr}.research-panel{padding:21px} }
 
+    .dynamic-research { margin-top: 22px; }
+    .dynamic-section { margin-top: 18px; }
+    .dynamic-section-title { margin-bottom: 10px; color:#fff; font-size:15px; font-weight:800; }
+    .dynamic-items { display:grid; gap:10px; }
+    .dynamic-item { padding:14px 15px; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.018); }
+    .dynamic-item a, .dynamic-item strong { color:#fff !important; font-weight:800; }
+    .dynamic-item a:hover { color:var(--green) !important; }
+    .dynamic-meta { margin-top:4px; color:var(--muted); font-size:12px; line-height:1.6; }
+    .dynamic-empty { color:var(--muted); font-size:13px; }
+
   </style>
 </head>
 
@@ -1233,7 +1243,7 @@
 
 
         <a
-          href="index.html#about"
+          href="about.html"
           data-en="About"
           data-fa="درباره ما"
         >
@@ -1370,19 +1380,13 @@
          data-fa="HSKRC تفسیر منتشرشده را از دفتر منابع و گره‌های دانشی که پژوهش بیشتر را پشتیبانی می‌کنند جدا نگه می‌دارد.">
         HSKRC separates published interpretation from the source registry and knowledge nodes that support further research.
       </p>
-      <div class="research-grid">
-        <a class="research-link" href="alamut-knowledge-base.html">
-          <strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong>
-          <span data-en="Follow people, places, fortifications and historical connections." data-fa="افراد، مکان‌ها، استحکامات و پیوندهای تاریخی را دنبال کنید.">Follow people, places, fortifications and historical connections.</span>
-        </a>
-        <a class="research-link" href="sources.html">
-          <strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong>
-          <span data-en="Trace HSKRC source IDs to institutional and scholarly references." data-fa="شناسه‌های منابع HSKRC را تا منابع نهادی و دانشگاهی ردیابی کنید.">Trace HSKRC source IDs to institutional and scholarly references.</span>
-        </a>
-        <a class="research-link" href="articles.html">
-          <strong data-en="Related Research" data-fa="پژوهش‌های مرتبط">Related Research</strong>
-          <span data-en="Continue through HSKRC's published research collection." data-fa="در مجموعه پژوهش‌های منتشرشده HSKRC ادامه دهید.">Continue through HSKRC's published research collection.</span>
-        </a>
+      <div id="dynamicResearch" class="dynamic-research">
+        <p class="dynamic-empty" data-en="Loading connected research data…" data-fa="در حال بارگذاری داده‌های پژوهشی مرتبط…">Loading connected research data…</p>
+      </div>
+      <div class="research-grid" style="margin-top:18px">
+        <a class="research-link" href="alamut-knowledge-base.html"><strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong><span data-en="Explore the complete HSKRC knowledge map." data-fa="نقشه کامل دانش HSKRC را بررسی کنید.">Explore the complete HSKRC knowledge map.</span></a>
+        <a class="research-link" href="sources.html"><strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong><span data-en="Open the complete source registry." data-fa="دفتر کامل منابع را باز کنید.">Open the complete source registry.</span></a>
+        <a class="research-link" href="articles.html"><strong data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</strong><span data-en="Continue through HSKRC's published research collection." data-fa="در مجموعه پژوهش‌های منتشرشده HSKRC ادامه دهید.">Continue through HSKRC's published research collection.</span></a>
       </div>
       <div class="research-note"
            data-en="Research standard: important historical and heritage claims should remain traceable to identifiable sources."
@@ -1601,6 +1605,9 @@
 
         updateAccountLink();
 
+        const articleId = getArticleId();
+        if (articleId && currentArticle) loadResearchNetwork(articleId);
+
       }
     );
 
@@ -1745,6 +1752,8 @@
       await renderArticle(
         data
       );
+
+      await loadResearchNetwork(articleId);
 
     }
 
@@ -2175,6 +2184,110 @@
     }
 
 
+
+    /* =========================================
+       DYNAMIC RESEARCH NETWORK
+       ========================================= */
+
+    async function loadResearchNetwork(articleId) {
+      const host = document.getElementById("dynamicResearch");
+      if (!host) return;
+
+      try {
+        const [nodeResult, sourceResult] = await Promise.all([
+          supabaseClient.from("article_node_links").select("node_id").eq("article_id", articleId),
+          supabaseClient.from("article_source_links").select("source_id").eq("article_id", articleId)
+        ]);
+
+        if (nodeResult.error) throw nodeResult.error;
+        if (sourceResult.error) throw sourceResult.error;
+
+        const nodeIds = [...new Set((nodeResult.data || []).map(x => x.node_id).filter(Boolean))];
+        const sourceIds = [...new Set((sourceResult.data || []).map(x => x.source_id).filter(Boolean))];
+
+        let nodes = [];
+        let sources = [];
+        let researchers = [];
+
+        if (nodeIds.length) {
+          const r = await supabaseClient.from("knowledge_nodes").select("id,slug,title,node_type").in("id", nodeIds).order("title");
+          if (r.error) throw r.error;
+          nodes = r.data || [];
+        }
+
+        if (sourceIds.length) {
+          const r = await supabaseClient.from("research_sources").select("id,source_code,title,author,institution,url").in("id", sourceIds).order("source_code");
+          if (r.error) throw r.error;
+          sources = r.data || [];
+
+          const linkResult = await supabaseClient.from("researcher_source_links").select("researcher_id,source_id").in("source_id", sourceIds);
+          if (linkResult.error) throw linkResult.error;
+          const researcherIds = [...new Set((linkResult.data || []).map(x => x.researcher_id).filter(Boolean))];
+          if (researcherIds.length) {
+            const rr = await supabaseClient.from("researchers").select("id,slug,name,field").in("id", researcherIds).order("name");
+            if (rr.error) throw rr.error;
+            researchers = rr.data || [];
+          }
+        }
+
+        renderResearchNetwork(host, nodes, sources, researchers);
+      } catch (error) {
+        console.error("Research network loading error:", error);
+        host.innerHTML = `<p class="dynamic-empty">${currentLanguage === "fa" ? "داده‌های پژوهشی مرتبط در حال حاضر قابل نمایش نیست." : "Connected research data is not available right now."}</p>`;
+      }
+    }
+
+    function knowledgeNodeHref(node) {
+      const map = {
+        "hassan-sabbah": "hassan-sabbah.html",
+        "alamut": "alamut.html",
+        "lambesar": "lambesar.html",
+        "navizarshah": "navizarshah.html",
+        "shams-kelaye": "shams-kelaye.html",
+        "qostinlar": "qostinlar.html",
+        "shirkuh": "shirkuh.html",
+        "ilan": "ilan.html"
+      };
+      return map[node.slug] || "alamut-knowledge-base.html";
+    }
+
+    function renderResearchNetwork(host, nodes, sources, researchers) {
+      const fa = currentLanguage === "fa";
+      const nodeHtml = nodes.length ? nodes.map(node => `
+        <div class="dynamic-item">
+          <a href="${escapeHtml(knowledgeNodeHref(node))}">${escapeHtml(node.title || node.slug || "Knowledge Node")}</a>
+          <div class="dynamic-meta">${escapeHtml(node.node_type || "Knowledge node")}</div>
+        </div>`).join("") : `<p class="dynamic-empty">${fa ? "گره دانشی ثبت نشده است." : "No knowledge node is linked yet."}</p>`;
+
+      const sourceHtml = sources.length ? sources.map(source => {
+        const label = `${source.source_code || ""}${source.source_code ? " — " : ""}${source.title || "Source"}`;
+        const meta = [source.author, source.institution].filter(Boolean).join(" · ");
+        const title = source.url
+          ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+          : `<strong>${escapeHtml(label)}</strong>`;
+        return `<div class="dynamic-item">${title}${meta ? `<div class="dynamic-meta">${escapeHtml(meta)}</div>` : ""}</div>`;
+      }).join("") : `<p class="dynamic-empty">${fa ? "منبع مرتبط ثبت نشده است." : "No source is linked yet."}</p>`;
+
+      const researcherHtml = researchers.length ? researchers.map(r => `
+        <div class="dynamic-item">
+          <strong>${escapeHtml(r.name || "Researcher")}</strong>
+          ${r.field ? `<div class="dynamic-meta">${escapeHtml(r.field)}</div>` : ""}
+        </div>`).join("") : `<p class="dynamic-empty">${fa ? "پژوهشگر مرتبط ثبت نشده است." : "No linked researcher is registered for these sources."}</p>`;
+
+      host.innerHTML = `
+        <div class="dynamic-section">
+          <div class="dynamic-section-title">${fa ? "گره‌های دانشی" : "Knowledge Nodes"}</div>
+          <div class="dynamic-items">${nodeHtml}</div>
+        </div>
+        <div class="dynamic-section">
+          <div class="dynamic-section-title">${fa ? "منابع استفاده‌شده" : "Sources Used"}</div>
+          <div class="dynamic-items">${sourceHtml}</div>
+        </div>
+        <div class="dynamic-section">
+          <div class="dynamic-section-title">${fa ? "پژوهشگران مرتبط" : "Researchers"}</div>
+          <div class="dynamic-items">${researcherHtml}</div>
+        </div>`;
+    }
 
     /* =========================================
        FORMAT ARTICLE CONTENT
