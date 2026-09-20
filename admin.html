@@ -410,12 +410,19 @@ td:first-child{color:var(--text);font-weight:600}
 
 .message{
   display:none;
-  margin-bottom:18px;
-  padding:12px 14px;
-  border-radius:var(--radius-sm);
-  line-height:1.6;
+  position:fixed;
+  top:22px;
+  right:22px;
+  z-index:99999;
+  width:min(430px,calc(100vw - 44px));
+  margin:0;
+  padding:14px 16px;
+  border-radius:10px;
+  line-height:1.55;
   font-size:13px;
+  font-weight:700;
   border:1px solid transparent;
+  box-shadow:0 18px 55px rgba(0,0,0,.45);
 }
 
 .success{
@@ -1112,9 +1119,9 @@ td{padding:14px 13px}
           <div class="relation-grid">
             <div><label>Source</label><select id="sourceNodeSource"></select></div>
             <div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
-            <div style="display:flex;align-items:end"><button class="gold" type="button" onclick="linkSourceNode()">Link Source → Node</button></div>
+            <div style="display:flex;align-items:end"><button class="gold" type="button" id="linkSourceNodeBtn" onclick="linkSourceNode()">Link Source → Node</button></div>
           </div>
-          <div class="mini-list" id="sourceNodeRelationsList"></div>
+          <div id="sourceNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="sourceNodeRelationsList"></div>
         </div>
 
         <div class="panel" id="researcherSourceConnectionPanel" style="margin:0;padding:24px;border-color:#c9a45c66">
@@ -1124,9 +1131,9 @@ td{padding:14px 13px}
           <div class="relation-grid">
             <div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
             <div><label>Source</label><select id="researcherSourceSource"></select></div>
-            <div style="display:flex;align-items:end"><button class="gold" type="button" onclick="linkResearcherSource()">Link Researcher → Source</button></div>
+            <div style="display:flex;align-items:end"><button class="gold" type="button" id="linkResearcherSourceBtn" onclick="linkResearcherSource()">Link Researcher → Source</button></div>
           </div>
-          <div class="mini-list" id="researcherSourceRelationsList"></div>
+          <div id="researcherSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="researcherSourceRelationsList"></div>
         </div>
       </div>
     </div>
@@ -3141,8 +3148,45 @@ td{padding:14px 13px}
   async function removeLink(table,match,msg,keep){try{let q=supabaseClient.from(table).delete();Object.entries(match).forEach(([k,v])=>q=q.eq(k,v));const res=await q;if(res.error)throw res.error;await loadResearchNetwork();if(keep)keep();showMessage(msg);}catch(error){console.error(error);showMessage(error.message,"error");}}
   function linkArticleNode(){const article_id=relationArticle.value,node_id=relationNode.value;if(!article_id||!node_id)return;addLink("article_node_links",{article_id,node_id},"article_id,node_id","Article linked to Knowledge Node.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
   function linkArticleSource(){const article_id=relationArticle.value,source_id=relationSource.value;if(!article_id||!source_id)return;addLink("article_source_links",{article_id,source_id},"article_id,source_id","Article linked to Source.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
-  function linkSourceNode(){const source_id=sourceNodeSource.value,node_id=sourceNodeNode.value;if(!source_id||!node_id)return;addLink("source_node_links",{source_id,node_id},"source_id,node_id","Source linked to Knowledge Node.",()=>{sourceNodeSource.value=source_id;renderSourceNodeRelations();});}
-  function linkResearcherSource(){const researcher_id=researcherSourceResearcher.value,source_id=researcherSourceSource.value;if(!researcher_id||!source_id)return;addLink("researcher_source_links",{researcher_id,source_id},"researcher_id,source_id","Researcher linked to Source.",()=>{researcherSourceResearcher.value=researcher_id;renderResearcherSourceRelations();});}
+  function connectionStatus(id,text,type="success") {
+    const el=document.getElementById(id); if(!el)return;
+    el.textContent=text; el.style.display="block";
+    el.style.background=type==="error"?"rgba(61,23,23,.9)":type==="info"?"rgba(91,70,24,.45)":"rgba(18,60,42,.9)";
+    el.style.color=type==="error"?"#ff9999":type==="info"?"#f0d79a":"#7ff0b8";
+    el.style.border="1px solid "+(type==="error"?"rgba(239,107,115,.25)":type==="info"?"rgba(201,164,92,.35)":"rgba(66,211,146,.25)");
+  }
+
+  async function linkSourceNode(){
+    const sourceEl=document.getElementById("sourceNodeSource"), nodeEl=document.getElementById("sourceNodeNode"), btn=document.getElementById("linkSourceNodeBtn");
+    const source_id=sourceEl?.value, node_id=nodeEl?.value;
+    if(!source_id||!node_id){connectionStatus("sourceNodeStatus","Please select both a Source and a Knowledge Node.","error");showMessage("Please select both a Source and a Knowledge Node.","error");return;}
+    const exists=networkSourceNodeLinks.some(x=>x.source_id===source_id&&x.node_id===node_id);
+    if(exists){connectionStatus("sourceNodeStatus","✓ This connection already exists.","info");showMessage("This Source ↔ Knowledge Node connection already exists.");return;}
+    const old=btn.textContent; btn.disabled=true; btn.textContent="Saving…";
+    try{
+      const {error}=await supabaseClient.from("source_node_links").insert({source_id,node_id});
+      if(error)throw error;
+      await loadResearchNetwork(); sourceEl.value=source_id; renderSourceNodeRelations();
+      connectionStatus("sourceNodeStatus","✓ Connection saved successfully."); showMessage("Source linked to Knowledge Node successfully.");
+    }catch(error){console.error("Source ↔ Node:",error);connectionStatus("sourceNodeStatus","✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
+    finally{btn.disabled=false;btn.textContent=old;}
+  }
+
+  async function linkResearcherSource(){
+    const researcherEl=document.getElementById("researcherSourceResearcher"), sourceEl=document.getElementById("researcherSourceSource"), btn=document.getElementById("linkResearcherSourceBtn");
+    const researcher_id=researcherEl?.value, source_id=sourceEl?.value;
+    if(!researcher_id||!source_id){connectionStatus("researcherSourceStatus","Please select both a Researcher and a Source.","error");showMessage("Please select both a Researcher and a Source.","error");return;}
+    const exists=networkResearcherSourceLinks.some(x=>x.researcher_id===researcher_id&&x.source_id===source_id);
+    if(exists){connectionStatus("researcherSourceStatus","✓ This connection already exists.","info");showMessage("This Researcher ↔ Source connection already exists.");return;}
+    const old=btn.textContent; btn.disabled=true; btn.textContent="Saving…";
+    try{
+      const {error}=await supabaseClient.from("researcher_source_links").insert({researcher_id,source_id});
+      if(error)throw error;
+      await loadResearchNetwork(); researcherEl.value=researcher_id; renderResearcherSourceRelations();
+      connectionStatus("researcherSourceStatus","✓ Connection saved successfully."); showMessage("Researcher linked to Source successfully.");
+    }catch(error){console.error("Researcher ↔ Source:",error);connectionStatus("researcherSourceStatus","✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
+    finally{btn.disabled=false;btn.textContent=old;}
+  }
   function unlinkArticleNode(article_id,node_id){removeLink("article_node_links",{article_id,node_id},"Article ↔ Node connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
   function unlinkArticleSource(article_id,source_id){removeLink("article_source_links",{article_id,source_id},"Article ↔ Source connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
   function unlinkSourceNode(source_id,node_id){removeLink("source_node_links",{source_id,node_id},"Source ↔ Node connection removed.",()=>{sourceNodeSource.value=source_id;renderSourceNodeRelations();});}
