@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hskrc.github.io/HSKRC/sitemap.xml
