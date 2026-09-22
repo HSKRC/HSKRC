@@ -1433,6 +1433,9 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 .pdf-modal{background:rgba(0,0,0,.96)!important}.pdf-box{background:#0d0d0e!important;border-color:rgba(199,161,90,.24)!important;border-radius:12px!important}.pdf-header{background:#0d0d0e!important;border-bottom-color:rgba(199,161,90,.15)!important}.pdf-title{color:var(--green-light)!important;font-family:Georgia,serif!important}.pdf-action{border-color:rgba(199,161,90,.32)!important;background:rgba(199,161,90,.025)!important;color:var(--green-light)!important}.pdf-action:hover{background:var(--green)!important;color:#090909!important}
 @media(max-width:700px){main{padding:48px 0 70px!important}.title{font-size:38px!important}.search-box{grid-template-columns:1fr!important}.books{grid-template-columns:1fr!important}.cover{height:390px!important}.book:after{font-size:6px!important}}
 </style>
+<style>
+header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!important;border-color:rgba(199,161,90,.22)!important}
+</style>
 </head>
 
 
@@ -1467,51 +1470,15 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 
 
     <nav>
-
-      <a
-        href="index.html"
-        id="homeLink"
-      >
-        Home
-      </a>
-
-      <a
-        href="library.html"
-        id="libraryLink"
-      >
-        Library
-      </a>
-
-      <a
-        href="articles.html"
-        id="articlesLink"
-      >
-        Articles
-      </a>
-
-      <a
-        href="about.html"
-        id="aboutLink"
-      >
-        About
-      </a>
-
-      <a
-        href="auth.html"
-        id="accountLink"
-      >
-        Login / Register
-      </a>
-
-      <button
-        class="language"
-        id="languageButton"
-        type="button"
-        onclick="changeLanguage()"
-      >
-        فارسی
-      </button>
-
+      <a href="index.html" id="homeLink">Home</a>
+      <a href="alamut-knowledge-base.html" id="knowledgeLink">Knowledge Base</a>
+      <a href="library.html" id="libraryLink" class="nav-active">Library</a>
+      <a href="articles.html" id="articlesLink">Articles</a>
+      <a href="researchers.html" id="researchersLink">Researchers</a>
+      <a href="sources.html" id="sourcesLink">Sources</a>
+      <a href="about.html" id="aboutLink">About</a>
+      <a href="auth.html" id="accountLink">Login / Register</a>
+      <button class="language" id="languageButton" type="button" onclick="changeLanguage()">فارسی</button>
     </nav>
 
   </div>
@@ -1854,6 +1821,14 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 
 
     document.getElementById(
+      "knowledgeLink"
+    ).textContent =
+      fa
+        ? "پایگاه دانش"
+        : "Knowledge Base";
+
+
+    document.getElementById(
       "libraryLink"
     ).textContent =
       fa
@@ -1867,6 +1842,22 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
       fa
         ? "مقالات"
         : "Articles";
+
+
+    document.getElementById(
+      "researchersLink"
+    ).textContent =
+      fa
+        ? "پژوهشگران"
+        : "Researchers";
+
+
+    document.getElementById(
+      "sourcesLink"
+    ).textContent =
+      fa
+        ? "منابع"
+        : "Sources";
 
 
     document.getElementById(
