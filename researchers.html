@@ -1,35 +1,137 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HSKRC | Researcher Profile</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HSKRC Researchers & Scholars Directory — scholars represented in the HSKRC source and research archive.">
+<title>Researchers & Scholars | HSKRC</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--b:#090b0e;--s:#12161b;--g:#c7a15a;--g2:#e2c47f;--t:#fff;--m:#9ca3ad;--bd:rgba(255,255,255,.1)}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,rgba(199,161,90,.09),transparent 28%),var(--b);color:var(--t);font-family:Inter,system-ui,sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}
-header{border-bottom:1px solid var(--bd);background:#090b0eee;position:sticky;top:0;z-index:5}.bar{max-width:1180px;margin:auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font:700 24px Georgia,serif}.brand b{color:var(--g)}
-nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}nav a,button{padding:8px 10px;border-radius:8px;font-size:13px}nav a:hover,.active{color:var(--g2);background:#c7a15a12}button{background:transparent;border:1px solid var(--bd);color:#ddd;cursor:pointer}
-main{max-width:1180px;margin:auto;padding:45px 24px 80px}.back{color:#bbb;font-size:13px}.hero{margin-top:22px;padding:42px;border:1px solid #c7a15a40;border-radius:20px;background:linear-gradient(145deg,#c7a15a12,#12161bf7 45%)}.kick{color:var(--g);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.hero h1{font:700 clamp(36px,5vw,58px)/1.08 Georgia,serif;margin:12px 0}.field{color:var(--g2);font-weight:700}.notes{max-width:850px;color:#c9cdd2;margin-top:18px}.notice{border-top:1px solid var(--bd);margin-top:22px;padding-top:16px;color:var(--m);font-size:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}.panel{padding:26px;border:1px solid var(--bd);border-radius:17px;background:#12161bf5}.wide{grid-column:1/-1}.panel h2{font:700 24px Georgia,serif;margin:0 0 5px}.intro,.meta,.empty{color:var(--m);font-size:12px}.item{display:block;margin-top:10px;padding:15px;border:1px solid var(--bd);border-radius:11px;background:#ffffff04}.item:hover{border-color:#c7a15a66;background:#c7a15a0c}.item strong{display:block;color:#fff}.code{color:var(--g2);font-size:11px;font-weight:800}.state{padding:100px 20px;text-align:center;color:var(--m)}
-footer{border-top:1px solid var(--bd)}.foot{max-width:1180px;margin:auto;padding:30px 24px;display:flex;justify-content:space-between;color:var(--m);font-size:12px}.foot strong{color:var(--g)}
-@media(max-width:760px){.bar{flex-wrap:wrap;padding:13px 16px}nav{order:3;width:100%;overflow:auto;flex-wrap:nowrap}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.hero{padding:28px 22px}main{padding:30px 16px 60px}.foot{flex-direction:column;gap:7px}}
-</style></head><body>
-<header><div class="bar"><a class="brand" href="index.html">HSKRC <b>Research Archive</b></a><nav>
-<a href="index.html" data-en="Home" data-fa="خانه">Home</a><a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a><a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a><a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a><a class="active" href="researchers.html" data-en="Researchers" data-fa="پژوهشگران">Researchers</a><a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a></nav><button id="lang">فارسی</button></div></header>
-<main><a class="back" href="researchers.html" data-en="← Researchers Directory" data-fa="→ فهرست پژوهشگران">← Researchers Directory</a><div id="app"><div class="state">Loading researcher profile…</div></div></main>
-<footer><div class="foot"><div data-en="Founded by <strong>Kamal Barlas</strong>" data-fa="بنیان‌گذاری شده توسط <strong>کمال بارلاس</strong>">Founded by <strong>Kamal Barlas</strong></div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
+:root{--bg:#0b0b0c;--panel:#151413;--panel2:#1b1916;--text:#f5f7fa;--muted:#9ba5b1;--gold:#c9a45c;--line:rgba(255,255,255,.09);--goldline:rgba(201,164,92,.27);--max:1180px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% 0,rgba(201,164,92,.07),transparent 28%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}.wrap{width:min(calc(100% - 40px),var(--max));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(11,11,12,.9);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:11px;font-weight:850}.mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--goldline);background:rgba(201,164,92,.08);color:var(--gold)}.links{display:flex;gap:3px;align-items:center}.links a{padding:9px 11px;border-radius:9px;color:#aeb6c0;font-size:13px;font-weight:650}.links a:hover{color:#fff;background:#ffffff08}.links a.active{color:var(--gold);background:rgba(201,164,92,.09)}.lang{padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:#ffffff05;color:#ddd;cursor:pointer}
+.hero{padding:82px 0 55px;border-bottom:1px solid #ffffff09}.eyebrow{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.05;letter-spacing:-.045em;margin:12px 0 18px}.hero h1 span{color:var(--gold)}.lead{max-width:800px;color:#bbb7af;font-size:16px}.notice{margin-top:25px;max-width:900px;padding:15px 18px;border-left:2px solid var(--gold);background:rgba(201,164,92,.045);color:#aaa69e;font-size:12px}
+main section{padding:58px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:24px}.section-head h2{margin:5px 0 0;font-size:28px}.section-head p{max-width:610px;color:var(--muted);font-size:13px;margin:0}
+.toolbar{display:grid;grid-template-columns:1fr 240px;gap:12px;margin-bottom:23px}.toolbar input,.toolbar select{width:100%;height:49px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:#fff;padding:0 14px;outline:none}.toolbar input:focus,.toolbar select:focus{border-color:var(--goldline)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{display:flex;flex-direction:column;padding:23px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(180deg,var(--panel),#111213);transition:.22s}.card:hover{transform:translateY(-3px);border-color:var(--goldline)}.initial{width:47px;height:47px;border-radius:13px;display:grid;place-items:center;background:rgba(201,164,92,.08);border:1px solid var(--goldline);color:var(--gold);font-weight:900;margin-bottom:17px}.card h3{color:#fff!important;font-size:19px;margin:0 0 5px}.card h3 a{color:#fff!important}.card h3 a:hover{color:var(--gold)!important}.role{color:var(--gold);font-size:11px;font-weight:800;margin-bottom:12px}.card p{color:var(--muted);font-size:12.5px;margin:0 0 17px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}.tag{padding:4px 7px;border:1px solid #ffffff0d;border-radius:7px;color:#aaa69e;font-size:10px}.card-links{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}.card-links a{padding:8px 10px;border:1px solid var(--line);border-radius:8px;color:#fff!important;font-size:11px;font-weight:750}.card-links a:hover{border-color:var(--goldline);background:rgba(201,164,92,.07)}.profile-link{border-color:var(--goldline)!important;background:rgba(201,164,92,.07)!important;color:var(--gold)!important}.profile-link:hover{background:rgba(201,164,92,.14)!important;color:#fff!important}
+.empty{display:none;padding:35px;border:1px solid var(--line);border-radius:15px;text-align:center;color:var(--muted)}
+.network{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.node{padding:18px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.node small{color:var(--gold);font-weight:900}.node strong{display:block;color:#fff;margin:5px 0}.node span{color:var(--muted);font-size:11px}
+.gateway{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.gateway a{padding:19px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.gateway a:hover{border-color:var(--goldline)}.gateway strong{display:block;color:#fff!important}.gateway span{font-size:11px;color:var(--muted)}
+footer{border-top:1px solid var(--line);background:#08090a;padding:27px 0}.foot{display:flex;justify-content:space-between;gap:15px;color:#747b84;font-size:11px}
+html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{letter-spacing:0}html[dir=rtl] .notice{border-left:0;border-right:2px solid var(--gold)}
+@media(max-width:900px){.nav{flex-wrap:wrap;padding:11px 0}.links{order:3;width:100%;overflow:auto}.links a{flex-shrink:0}.grid{grid-template-columns:repeat(2,1fr)}.network{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.grid,.network,.gateway,.toolbar{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.foot{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">H</span><span>HSKRC</span></a><nav class="links">
+<a href="index.html" data-en="Home" data-fa="خانه">Home</a><a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a><a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a><a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a><a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a><a class="active" href="researchers.html" data-en="Researchers" data-fa="پژوهشگران">Researchers</a><a href="about.html" data-en="About" data-fa="درباره">About</a>
+</nav><button class="lang" id="lang">فارسی</button></div></header>
+
+<div class="hero"><div class="wrap"><div class="eyebrow" data-en="HSKRC Research Network" data-fa="شبکه پژوهشی HSKRC">HSKRC Research Network</div>
+<h1 data-en="Researchers & <span>Scholars</span>" data-fa="پژوهشگران و <span>محققان</span>">Researchers & <span>Scholars</span></h1>
+<p class="lead" data-en="A directory of scholars whose published work is represented in, or directly relevant to, the HSKRC research archive." data-fa="فهرستی از پژوهشگرانی که آثار منتشرشده آنان در آرشیو پژوهشی HSKRC ثبت شده یا مستقیماً با حوزه پژوهشی آن مرتبط است.">A directory of scholars whose published work is represented in, or directly relevant to, the HSKRC research archive.</p>
+<div class="notice" data-en="Directory rule: inclusion documents research relevance; it does not imply affiliation with, participation in, or endorsement of HSKRC." data-fa="اصل فهرست: حضور در این صفحه فقط ارتباط پژوهشی را ثبت می‌کند و به معنی وابستگی، مشارکت یا تأیید HSKRC از سوی پژوهشگر نیست.">Directory rule: inclusion documents research relevance; it does not imply affiliation with, participation in, or endorsement of HSKRC.</div></div></div>
+
+<main><section><div class="wrap">
+<div class="section-head"><div><div class="eyebrow" data-en="Directory" data-fa="فهرست">Directory</div><h2 data-en="Scholars represented in the archive" data-fa="پژوهشگران حاضر در آرشیو">Scholars represented in the archive</h2></div><p data-en="This first directory is intentionally limited to researchers already represented by identifiable HSKRC source records." data-fa="نسخه نخست این فهرست عمداً به پژوهشگرانی محدود شده که منابع قابل شناسایی آنان از قبل در دفتر منابع HSKRC ثبت شده است.">This first directory is intentionally limited to researchers already represented by identifiable HSKRC source records.</p></div>
+<div class="toolbar"><input id="q" type="search" placeholder="Search researcher or field..." data-en-placeholder="Search researcher or field..." data-fa-placeholder="جستجوی پژوهشگر یا حوزه..."><select id="field"><option value="" data-en="All fields" data-fa="همه حوزه‌ها">All fields</option><option value="ismaili">Ismaili Studies</option><option value="castles">Castles & Fortifications</option><option value="medieval">Medieval Islamic History</option></select></div>
+
+<div class="grid" id="grid">
+<article class="card"><div class="initial">…</div><h3 data-en="Loading researchers…" data-fa="در حال بارگذاری پژوهشگران…">Loading researchers…</h3><p data-en="Reading the HSKRC Research Network from Supabase." data-fa="در حال دریافت شبکه پژوهشی HSKRC از Supabase.">Reading the HSKRC Research Network from Supabase.</p></article>
+</div><div class="empty" id="empty" data-en="No matching researcher found." data-fa="پژوهشگر مطابق جستجو پیدا نشد.">No matching researcher found.</div>
+</div></section>
+
+<section><div class="wrap"><div class="section-head"><div><div class="eyebrow" data-en="Research Architecture" data-fa="معماری پژوهش">Research Architecture</div><h2 data-en="A connected evidence network" data-fa="شبکه متصل شواهد">A connected evidence network</h2></div></div>
+<div class="network"><div class="node"><small>01</small><strong data-en="Researcher" data-fa="پژوهشگر">Researcher</strong><span data-en="Who produced the scholarship?" data-fa="چه کسی پژوهش را تولید کرده است؟">Who produced the scholarship?</span></div><div class="node"><small>02</small><strong data-en="Source" data-fa="منبع">Source</strong><span data-en="Which identifiable work supports the record?" data-fa="کدام اثر قابل شناسایی از سابقه پشتیبانی می‌کند؟">Which identifiable work supports the record?</span></div><div class="node"><small>03</small><strong data-en="Article" data-fa="مقاله">Article</strong><span data-en="Where is the evidence interpreted?" data-fa="شواهد کجا تفسیر می‌شوند؟">Where is the evidence interpreted?</span></div><div class="node"><small>04</small><strong data-en="Knowledge Node" data-fa="گره دانش">Knowledge Node</strong><span data-en="Which person, place or theme does it document?" data-fa="کدام شخص، مکان یا موضوع را مستند می‌کند؟">Which person, place or theme does it document?</span></div></div>
+</div></section>
+
+<section><div class="wrap"><div class="gateway"><a href="sources.html"><strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong><span data-en="Inspect HSKRC source records." data-fa="سوابق منابع HSKRC را بررسی کنید.">Inspect HSKRC source records.</span></a><a href="articles.html"><strong data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</strong><span data-en="Read published research." data-fa="پژوهش‌های منتشرشده را بخوانید.">Read published research.</span></a><a href="alamut-knowledge-base.html"><strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong><span data-en="Explore connected knowledge nodes." data-fa="گره‌های دانش مرتبط را بررسی کنید.">Explore connected knowledge nodes.</span></a></div></div></section>
+</main>
+<footer><div class="wrap foot"><span>Founded by Kamal Barlas</span><span>© 2026 HSKRC - All rights reserved.</span></div></footer>
 <script>
-const db=supabase.createClient("https://uwuklryzxexpofcxrbnm.supabase.co","sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2"),app=document.getElementById("app"),btn=document.getElementById("lang");
-let L=localStorage.getItem("hskrc_language")==="fa"?"fa":"en";
-const E=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-function tr(){document.documentElement.lang=L;document.documentElement.dir=L==="fa"?"rtl":"ltr";document.querySelectorAll("[data-en][data-fa]").forEach(x=>x.innerHTML=L==="fa"?x.dataset.fa:x.dataset.en);btn.textContent=L==="fa"?"English":"فارسی";localStorage.setItem("hskrc_language",L)}
-btn.onclick=()=>{L=L==="en"?"fa":"en";tr();load()}
-function nh(s){return {"hassan-sabbah":"hassan-sabbah.html","alamut":"alamut.html","lambesar":"lambesar.html","navizarshah":"navizarshah.html","shams-kelaye":"shams-kelaye.html","qostinlar":"qostinlar.html","shirkuh":"shirkuh.html","ilan":"ilan.html"}[s]||"alamut-knowledge-base.html"}
-async function load(){
- let p=new URLSearchParams(location.search),id=p.get("id"),slug=p.get("slug"); if(!id&&!slug){app.innerHTML='<div class="state">Researcher identifier not found.</div>';return}
- let q=db.from("researchers").select("*");q=id?q.eq("id",id):q.eq("slug",slug);let {data:r,error}=await q.maybeSingle();if(error||!r){app.innerHTML='<div class="state">Researcher not found.</div>';return}document.title=(r.name||"Researcher")+" | HSKRC";
- let lr=await db.from("researcher_source_links").select("source_id").eq("researcher_id",r.id),ids=[...new Set((lr.data||[]).map(x=>x.source_id).filter(Boolean))],ss=[],aa=[],nn=[];
- if(ids.length){let s=await db.from("research_sources").select("*").in("id",ids).order("source_code");ss=s.data||[];let [al,nl]=await Promise.all([db.from("article_source_links").select("article_id").in("source_id",ids),db.from("source_node_links").select("node_id").in("source_id",ids)]);let ai=[...new Set((al.data||[]).map(x=>x.article_id).filter(Boolean))],ni=[...new Set((nl.data||[]).map(x=>x.node_id).filter(Boolean))];if(ai.length){let a=await db.from("articles").select("id,title,author,category,published").in("id",ai).eq("published",true);aa=a.data||[]}if(ni.length){let n=await db.from("knowledge_nodes").select("id,slug,title,node_type").in("id",ni);nn=n.data||[]}}
- let S=ss.length?ss.map(s=>`<a class="item" href="sources.html#${E(s.source_code)}"><div class="code">${E(s.source_code)}</div><strong>${E(s.title)}</strong><div class="meta">${E([s.author,s.institution,s.publication_year].filter(Boolean).join(" · "))}</div></a>`).join(""):`<div class="empty">${L==="fa"?"منبع مرتبط ثبت نشده است.":"No linked sources registered."}</div>`;
- let N=nn.length?nn.map(n=>`<a class="item" href="${nh(n.slug)}"><strong>${E(n.title)}</strong><div class="meta">${E(n.node_type||"Knowledge Node")}</div></a>`).join(""):`<div class="empty">${L==="fa"?"گره دانشی مرتبط ثبت نشده است.":"No connected knowledge nodes."}</div>`;
- let A=aa.length?aa.map(a=>`<a class="item" href="article.html?id=${encodeURIComponent(a.id)}"><strong>${E(a.title)}</strong><div class="meta">${E([a.author,a.category].filter(Boolean).join(" · "))}</div></a>`).join(""):`<div class="empty">${L==="fa"?"مقاله مرتبط ثبت نشده است.":"No related published articles."}</div>`;
- app.innerHTML=`<section class="hero"><div class="kick">${L==="fa"?"پروفایل پژوهشگر":"Researcher Profile"}</div><h1>${E(L==="fa"&&r.name_fa?r.name_fa:r.name)}</h1>${r.field?`<div class="field">${E(r.field)}</div>`:""}${r.notes?`<div class="notes">${E(r.notes)}</div>`:""}<div class="notice">${L==="fa"?"درج نام پژوهشگر در HSKRC نشان‌دهنده ارتباط پژوهشی آثار او است و به معنی وابستگی، همکاری یا تأیید HSKRC نیست.":"Inclusion in HSKRC indicates research relevance of the scholar's work and does not imply affiliation, collaboration, or endorsement."}</div></section><div class="grid"><section class="panel"><h2>${L==="fa"?"منابع ثبت‌شده":"Registered Sources"}</h2><p class="intro">${L==="fa"?"آثار ثبت‌شده این پژوهشگر در دفتر منابع HSKRC.":"Works by this researcher in the HSKRC Source Registry."}</p>${S}</section><section class="panel"><h2>${L==="fa"?"موضوعات مرتبط":"Connected Knowledge"}</h2><p class="intro">${L==="fa"?"گره‌های دانشی مرتبط از طریق منابع ثبت‌شده.":"Knowledge nodes connected through registered sources."}</p>${N}</section><section class="panel wide"><h2>${L==="fa"?"مقالات مرتبط HSKRC":"Related HSKRC Articles"}</h2><p class="intro">${L==="fa"?"مقالات منتشرشده مرتبط با منابع این پژوهشگر.":"Published HSKRC articles linked through this researcher's sources."}</p>${A}</section></div>`;tr()
+const SUPABASE_URL="https://uwuklryzxexpofcxrbnm.supabase.co";
+const SUPABASE_KEY="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const KEY="hskrc_language";
+let lang=localStorage.getItem(KEY)==="fa"?"fa":"en";
+let directory=[];
+
+const q=document.getElementById("q");
+const field=document.getElementById("field");
+const grid=document.getElementById("grid");
+const empty=document.getElementById("empty");
+
+function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function initials(name=""){return name.trim().split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]?.toUpperCase()||"").join("")||"R";}
+function fieldKey(v=""){
+  const x=v.toLowerCase();
+  if(x.includes("castle")||x.includes("fort")||x.includes("geography")||x.includes("alamut")) return "castles";
+  if(x.includes("ismail")||x.includes("shi")||x.includes("nizari")) return "ismaili medieval";
+  if(x.includes("history")||x.includes("medieval")) return "medieval";
+  return "";
 }
-tr();load();
+function sourceLinks(sources=[]){
+  if(!sources.length) return `<span class="tag">${lang==="fa"?"منبع متصل ثبت نشده":"No linked source"}</span>`;
+  return sources.map(x=>`<a href="sources.html#${esc(x.source_code)}" title="${esc(x.title||"")}">${esc(x.source_code)}</a>`).join("");
+}
+function render(){
+  const term=q.value.trim().toLowerCase(), f=field.value;
+  const rows=directory.filter(r=>{
+    const hay=[r.name,r.name_fa,r.field,...r.sources.map(s=>`${s.source_code} ${s.title} ${s.author||""} ${s.institution||""}`)].join(" ").toLowerCase();
+    return (!term||hay.includes(term))&&(!f||fieldKey(r.field).includes(f));
+  });
+  grid.innerHTML=rows.map(r=>`
+    <article class="card">
+      <div class="initial">${esc(initials(r.name))}</div>
+      <h3><a href="researcher.html?id=${encodeURIComponent(r.id)}">${esc(lang==="fa" && r.name_fa ? r.name_fa : r.name)}</a></h3>
+      <div class="role">${esc(r.field|| (lang==="fa"?"پژوهشگر":"Researcher"))}</div>
+      <p>${lang==="fa"
+        ? `این پژوهشگر از طریق ${r.sources.length} منبع ثبت‌شده به شبکه پژوهشی HSKRC متصل است.`
+        : `Connected to the HSKRC Research Network through ${r.sources.length} registered source${r.sources.length===1?"":"s"}.`}</p>
+      <div class="tags">${r.sources.slice(0,3).map(x=>`<span class="tag">${esc(x.source_type||x.institution||"Source")}</span>`).join("")}</div>
+      <div class="card-links">
+        <a class="profile-link" href="researcher.html?id=${encodeURIComponent(r.id)}">${lang==="fa"?"مشاهده پروفایل":"View Research Profile"}</a>
+        ${sourceLinks(r.sources)}
+      </div>
+    </article>`).join("");
+  empty.style.display=rows.length?"none":"block";
+}
+async function loadDirectory(){
+  try{
+    const rr=await db.from("researchers").select("id,slug,name,name_fa,field").order("name");
+    if(rr.error) throw rr.error;
+    const researchers=rr.data||[];
+
+    const links=await db.from("researcher_source_links").select("researcher_id,source_id");
+    if(links.error) throw links.error;
+
+    const sourceIds=[...new Set((links.data||[]).map(x=>x.source_id).filter(Boolean))];
+    let sources=[];
+    if(sourceIds.length){
+      const sr=await db.from("research_sources").select("id,source_code,title,author,institution,source_type,publication_year,url").in("id",sourceIds);
+      if(sr.error) throw sr.error;
+      sources=sr.data||[];
+    }
+    const sm=new Map(sources.map(x=>[x.id,x]));
+    directory=researchers.map(r=>({
+      ...r,
+      sources:(links.data||[]).filter(l=>l.researcher_id===r.id).map(l=>sm.get(l.source_id)).filter(Boolean).sort((a,b)=>(a.source_code||"").localeCompare(b.source_code||""))
+    }));
+    render();
+  }catch(e){
+    console.error("Researchers directory error:",e);
+    grid.innerHTML=`<article class="card"><div class="initial">!</div><h3>${lang==="fa"?"خطا در اتصال":"Directory Connection Error"}</h3><p>${lang==="fa"?"اطلاعات پژوهشگران از Supabase دریافت نشد.":"Researchers could not be loaded from Supabase."} ${esc(e?.message||"")}</p></article>`;
+  }
+}
+function apply(l){
+  lang=l;localStorage.setItem(KEY,l);
+  document.documentElement.lang=l;document.documentElement.dir=l==="fa"?"rtl":"ltr";
+  document.querySelectorAll("[data-en][data-fa]").forEach(e=>e.innerHTML=l==="fa"?e.dataset.fa:e.dataset.en);
+  document.querySelectorAll("[data-en-placeholder][data-fa-placeholder]").forEach(e=>e.placeholder=l==="fa"?e.dataset.faPlaceholder:e.dataset.enPlaceholder);
+  document.getElementById("lang").textContent=l==="fa"?"English":"فارسی";
+  document.title=l==="fa"?"پژوهشگران | HSKRC":"Researchers & Scholars | HSKRC";
+  if(directory.length) render();
+}
+document.getElementById("lang").onclick=()=>apply(lang==="en"?"fa":"en");
+q.oninput=render;field.onchange=render;
+apply(lang);loadDirectory();
 </script></body></html>
