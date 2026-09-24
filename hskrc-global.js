@@ -17,6 +17,31 @@
   const SUPABASE_URL="https://uwuklryzxexpofcxrbnm.supabase.co";
   const SUPABASE_KEY="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
+  function storedSessionActive(){
+    try{
+      const raw=localStorage.getItem("sb-uwuklryzxexpofcxrbnm-auth-token");
+      if(!raw) return false;
+      const data=JSON.parse(raw);
+
+      const accessToken =
+        data?.access_token ||
+        data?.currentSession?.access_token ||
+        data?.session?.access_token;
+
+      const expiresAt =
+        data?.expires_at ||
+        data?.currentSession?.expires_at ||
+        data?.session?.expires_at;
+
+      if(!accessToken) return false;
+      if(expiresAt && Number(expiresAt) * 1000 <= Date.now()) return false;
+
+      return true;
+    }catch(_){
+      return false;
+    }
+  }
+
   function lang(){
     return localStorage.getItem("hskrc_language")==="fa" ? "fa" : "en";
   }
@@ -52,6 +77,9 @@
 
   function renderHeader(){
     const L=LABELS[lang()];
+    const loggedIn=storedSessionActive();
+    const accountText=loggedIn ? L.myAccount : L.account;
+    const accountHref=loggedIn ? "account.html" : "auth.html";
     const header=document.createElement("header");
     header.className="hskrc-global-header";
     header.innerHTML=`
@@ -76,7 +104,7 @@
         </nav>
 
         <div class="hskrc-global-actions">
-          <a id="hskrcGlobalAccount" class="hskrc-global-account${activeSection()==="account"?" is-active":""}" href="auth.html">${L.account}</a>
+          <a id="hskrcGlobalAccount" class="hskrc-global-account${activeSection()==="account"?" is-active":""}" href="${accountHref}">${accountText}</a>
           <button id="hskrcGlobalLang" class="hskrc-global-lang" type="button">${L.lang}</button>
         </div>
       </div>`;
@@ -145,10 +173,21 @@
   async function syncAccount(){
     const a=document.getElementById("hskrcGlobalAccount");
     if(!a) return;
-    const L=LABELS[lang()];
-    a.textContent=L.account;
-    a.href="auth.html";
 
+    const L=LABELS[lang()];
+
+    // Fast path: Supabase persists the login session in localStorage.
+    // This works even on static pages that do not load the Supabase SDK.
+    if(storedSessionActive()){
+      a.href="account.html";
+      a.textContent=L.myAccount;
+      return;
+    }
+
+    a.href="auth.html";
+    a.textContent=L.account;
+
+    // Fallback for pages that already load Supabase.
     try{
       if(window.supabase && typeof window.supabase.createClient==="function"){
         const c=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
