@@ -1,0 +1,279 @@
+/* HSKRC Global Institutional Header & Footer
+   Shared across public pages. Page content remains untouched. */
+
+:root{
+  --hskrc-g-bg:#0a0d11;
+  --hskrc-g-bg2:#0f1318;
+  --hskrc-g-panel:#13181f;
+  --hskrc-g-line:rgba(255,255,255,.09);
+  --hskrc-g-line-gold:rgba(201,164,92,.28);
+  --hskrc-g-gold:#c9a45c;
+  --hskrc-g-gold2:#e1c785;
+  --hskrc-g-text:#f6f7f8;
+  --hskrc-g-muted:#949da8;
+}
+
+/* Keep legacy page headers/footers in the DOM for their existing JS,
+   but render only the shared institutional UI. */
+body > header:not(.hskrc-global-header),
+body > footer:not(.hskrc-global-footer){
+  display:none !important;
+}
+
+.hskrc-global-header,
+.hskrc-global-header *,
+.hskrc-global-footer,
+.hskrc-global-footer *{
+  box-sizing:border-box;
+}
+
+.hskrc-global-header{
+  position:sticky !important;
+  top:0 !important;
+  z-index:99999 !important;
+  width:100% !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-bottom:1px solid var(--hskrc-g-line) !important;
+  background:rgba(10,13,17,.94) !important;
+  -webkit-backdrop-filter:blur(18px) !important;
+  backdrop-filter:blur(18px) !important;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif !important;
+  color:var(--hskrc-g-text) !important;
+  direction:ltr !important;
+  box-shadow:0 8px 30px rgba(0,0,0,.14) !important;
+}
+
+.hskrc-global-shell{
+  width:min(1320px,calc(100% - 36px)) !important;
+  min-height:72px !important;
+  margin:0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:18px !important;
+}
+
+.hskrc-global-brand{
+  flex:0 0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  min-width:188px !important;
+  color:var(--hskrc-g-text) !important;
+  text-decoration:none !important;
+}
+
+.hskrc-global-mark{
+  width:39px !important;
+  height:39px !important;
+  flex:0 0 39px !important;
+  display:grid !important;
+  place-items:center !important;
+  border-radius:10px !important;
+  border:1px solid var(--hskrc-g-line-gold) !important;
+  background:linear-gradient(145deg,rgba(201,164,92,.16),rgba(201,164,92,.04)) !important;
+  color:var(--hskrc-g-gold2) !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+.hskrc-global-brandcopy{
+  min-width:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  line-height:1.08 !important;
+}
+
+.hskrc-global-brandcopy strong{
+  color:#fff !important;
+  font-size:14px !important;
+  font-weight:850 !important;
+  letter-spacing:.035em !important;
+}
+
+.hskrc-global-brandcopy small{
+  margin-top:4px !important;
+  color:#8e98a3 !important;
+  font-size:8px !important;
+  font-weight:700 !important;
+  letter-spacing:.13em !important;
+  text-transform:uppercase !important;
+  white-space:nowrap !important;
+}
+
+.hskrc-global-nav{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:3px !important;
+  overflow-x:auto !important;
+  scrollbar-width:none !important;
+  direction:ltr !important;
+  padding:8px 0 !important;
+}
+.hskrc-global-nav::-webkit-scrollbar{display:none !important}
+
+.hskrc-global-nav a{
+  position:relative !important;
+  flex:0 0 auto !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:38px !important;
+  padding:0 10px !important;
+  border:1px solid transparent !important;
+  border-radius:9px !important;
+  color:#aab2bc !important;
+  background:transparent !important;
+  text-decoration:none !important;
+  font-size:12px !important;
+  font-weight:690 !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+  transition:color .18s ease,background .18s ease,border-color .18s ease !important;
+}
+
+.hskrc-global-nav a:hover{
+  color:#fff !important;
+  background:rgba(255,255,255,.045) !important;
+  border-color:rgba(255,255,255,.055) !important;
+}
+
+.hskrc-global-nav a.is-active{
+  color:#f1ddb0 !important;
+  background:rgba(201,164,92,.095) !important;
+  border-color:rgba(201,164,92,.19) !important;
+}
+
+.hskrc-global-nav a.is-active::after{
+  content:"" !important;
+  position:absolute !important;
+  left:10px !important;
+  right:10px !important;
+  bottom:3px !important;
+  height:2px !important;
+  border-radius:99px !important;
+  background:var(--hskrc-g-gold) !important;
+}
+
+.hskrc-global-actions{
+  flex:0 0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:7px !important;
+}
+
+.hskrc-global-account,
+.hskrc-global-lang{
+  min-height:38px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 11px !important;
+  border-radius:9px !important;
+  border:1px solid var(--hskrc-g-line) !important;
+  background:rgba(255,255,255,.025) !important;
+  color:#d6dce2 !important;
+  font:700 11px/1 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif !important;
+  text-decoration:none !important;
+  white-space:nowrap !important;
+  cursor:pointer !important;
+}
+.hskrc-global-account:hover,
+.hskrc-global-lang:hover{
+  color:#fff !important;
+  border-color:var(--hskrc-g-line-gold) !important;
+  background:rgba(201,164,92,.07) !important;
+}
+.hskrc-global-account.is-active{
+  color:var(--hskrc-g-gold2) !important;
+  border-color:var(--hskrc-g-line-gold) !important;
+  background:rgba(201,164,92,.08) !important;
+}
+
+/* Unified footer */
+.hskrc-global-footer{
+  width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-top:1px solid var(--hskrc-g-line) !important;
+  background:#080a0d !important;
+  color:var(--hskrc-g-muted) !important;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif !important;
+}
+.hskrc-global-footer-inner{
+  width:min(1320px,calc(100% - 36px)) !important;
+  min-height:84px !important;
+  margin:0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:18px !important;
+  font-size:11px !important;
+}
+.hskrc-global-founder{
+  color:#c9cfd6 !important;
+  text-decoration:none !important;
+}
+.hskrc-global-founder strong{color:var(--hskrc-g-gold2) !important}
+.hskrc-global-founder:hover strong{text-decoration:underline !important}
+.hskrc-global-copy{color:#737d88 !important}
+
+/* Bring Account page into the same charcoal + bronze institutional identity */
+body.hskrc-page-account{
+  --green:#c9a45c !important;
+  --green-dark:#a98545 !important;
+  --green-soft:rgba(201,164,92,.10) !important;
+  --success:#e1c785 !important;
+  --success-bg:rgba(201,164,92,.10) !important;
+  --success-border:rgba(201,164,92,.28) !important;
+  background:
+    radial-gradient(circle at top right,rgba(201,164,92,.07),transparent 32%),
+    radial-gradient(circle at top left,rgba(201,164,92,.035),transparent 28%),
+    #0d1117 !important;
+}
+
+@media(max-width:1120px){
+  .hskrc-global-shell{gap:10px !important}
+  .hskrc-global-brand{min-width:150px !important}
+  .hskrc-global-brandcopy small{display:none !important}
+  .hskrc-global-nav a{padding:0 8px !important;font-size:11.5px !important}
+}
+
+@media(max-width:820px){
+  .hskrc-global-shell{
+    width:min(100% - 24px,1320px) !important;
+    min-height:auto !important;
+    flex-wrap:wrap !important;
+    padding:10px 0 8px !important;
+  }
+  .hskrc-global-brand{min-width:0 !important;flex:1 1 auto !important}
+  .hskrc-global-actions{margin-left:auto !important}
+  .hskrc-global-nav{
+    order:3 !important;
+    width:100% !important;
+    flex:1 0 100% !important;
+    justify-content:flex-start !important;
+    padding:3px 0 1px !important;
+  }
+}
+
+@media(max-width:480px){
+  .hskrc-global-brandcopy strong{font-size:13px !important}
+  .hskrc-global-account,.hskrc-global-lang{padding:0 9px !important;font-size:10.5px !important}
+  .hskrc-global-nav a{font-size:11px !important}
+  .hskrc-global-footer-inner{
+    min-height:94px !important;
+    padding:20px 0 !important;
+    align-items:flex-start !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    gap:6px !important;
+  }
+}
