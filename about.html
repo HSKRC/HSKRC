@@ -17,11 +17,21 @@ footer{border-top:1px solid #ffffff0d;padding:28px 0;color:#817d76;font-size:11p
 html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{letter-spacing:0}
 @media(max-width:820px){.nav{flex-wrap:wrap;padding:11px 0}.links{order:3;width:100%;overflow:auto}.links a{flex-shrink:0}.grid,.path,.linksgrid{grid-template-columns:1fr}.hero{padding:60px 0}.foot{flex-direction:column;text-align:center}}
 </style>
+
+<link rel="stylesheet" href="hskrc-global.css">
+<script defer src="hskrc-global.js"></script>
 </head>
 <body>
 <header><div class="wrap nav">
 <a class="brand" href="index.html"><span class="mark">HSKRC</span><span>HSKRC</span></a>
-<nav class="links"><a href="index.html" data-en="Home" data-fa="خانه">Home</a><a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a><a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a><a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a><a href="researchers.html" data-en="Researchers" data-fa="پژوهشگران">Researchers</a><a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a><a class="active" href="about.html" data-en="About" data-fa="درباره">About</a><a href="account.html" data-en="Account" data-fa="حساب">Account</a></nav>
+<nav class="links">
+<a href="index.html" data-en="Home" data-fa="خانه">Home</a>
+<a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a>
+<a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a>
+<a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a>
+<a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a>
+<a class="active" href="about.html" data-en="About" data-fa="درباره">About</a>
+</nav>
 <button class="lang" id="lang">فارسی</button>
 </div></header>
 
@@ -66,7 +76,7 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 </div></div></section>
 </main>
 
-<footer><div class="wrap foot"><span>Founded by Kamal Barlas</span><span>© 2026 HSKRC - All rights reserved.</span></div></footer>
+<footer><div class="wrap foot"><span>Founded by Kamaluddin Barlas</span><span>© 2026 HSKRC - All rights reserved.</span></div></footer>
 <script>
 const KEY="hskrc_language";let lang=localStorage.getItem(KEY)==="fa"?"fa":"en";
 function apply(l){lang=l;localStorage.setItem(KEY,l);document.documentElement.lang=l;document.documentElement.dir=l==="fa"?"rtl":"ltr";document.querySelectorAll("[data-en][data-fa]").forEach(e=>e.innerHTML=l==="fa"?e.dataset.fa:e.dataset.en);document.getElementById("lang").textContent=l==="fa"?"English":"فارسی";document.title=l==="fa"?"درباره و استانداردهای پژوهش | HSKRC":"About & Research Standards | HSKRC"}
