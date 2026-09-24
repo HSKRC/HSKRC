@@ -368,3 +368,17 @@ html[dir="rtl"] body strong{
     sans-serif !important;
   letter-spacing:0 !important;
 }
+
+
+/* =========================================================
+   HSKRC ACCOUNT WIDTH STABILITY
+   Prevents header/tab movement when Account -> My Account.
+   ========================================================= */
+.hskrc-global-account{
+  min-width:96px !important;
+}
+@media(max-width:480px){
+  .hskrc-global-account{
+    min-width:88px !important;
+  }
+}
