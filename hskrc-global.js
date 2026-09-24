@@ -188,3 +188,45 @@
     init();
   }
 })();
+
+
+/* =========================================================
+   HSKRC SAME-TAB INTERNAL NAVIGATION
+   Force normal clicks on internal HSKRC links to stay in the
+   current browser tab. External source links are unaffected.
+   ========================================================= */
+document.addEventListener("click", function(event) {
+  if (event.defaultPrevented) return;
+  if (event.button !== 0) return;
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+
+  const anchor = event.target.closest("a[href]");
+  if (!anchor) return;
+
+  const rawHref = anchor.getAttribute("href");
+  if (!rawHref) return;
+
+  if (
+    rawHref.startsWith("#") ||
+    rawHref.startsWith("mailto:") ||
+    rawHref.startsWith("tel:") ||
+    rawHref.startsWith("javascript:")
+  ) {
+    return;
+  }
+
+  let url;
+  try {
+    url = new URL(anchor.href, window.location.href);
+  } catch (_) {
+    return;
+  }
+
+  const sameOrigin = url.origin === window.location.origin;
+  const insideHSKRC = url.pathname.includes("/HSKRC/");
+
+  if (sameOrigin && insideHSKRC) {
+    event.preventDefault();
+    window.location.assign(url.href);
+  }
+}, true);
