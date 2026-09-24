@@ -22,18 +22,18 @@
       --panel: #151a22;
       --panel-soft: #181f29;
       --border: #29313c;
-      --green: #42d392;
-      --green-dark: #2db878;
-      --green-soft: rgba(66, 211, 146, 0.10);
+      --green: #c9a45c;
+      --green-dark: #a98545;
+      --green-soft: rgba(201, 164, 92, 0.10);
       --text: #f4f7f6;
       --text-soft: #c4ccd5;
       --muted: #8f98a5;
       --danger: #ff7777;
       --danger-bg: rgba(255, 80, 80, 0.08);
       --danger-border: rgba(255, 100, 100, 0.28);
-      --success: #7ee2ad;
-      --success-bg: rgba(66, 211, 146, 0.10);
-      --success-border: rgba(66, 211, 146, 0.28);
+      --success: #e1c785;
+      --success-bg: rgba(201, 164, 92, 0.10);
+      --success-border: rgba(201, 164, 92, 0.28);
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
       --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
       --radius-lg: 22px;
@@ -55,8 +55,8 @@
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Arial, Tahoma, sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(66, 211, 146, 0.08), transparent 32%),
-        radial-gradient(circle at top left, rgba(66, 211, 146, 0.045), transparent 28%),
+        radial-gradient(circle at top right, rgba(201, 164, 92, 0.08), transparent 32%),
+        radial-gradient(circle at top left, rgba(201, 164, 92, 0.045), transparent 28%),
         var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -77,7 +77,7 @@
       top: 0;
       z-index: 100;
       background: rgba(13, 17, 23, 0.90);
-      border-bottom: 1px solid rgba(66, 211, 146, 0.10);
+      border-bottom: 1px solid rgba(201, 164, 92, 0.10);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
@@ -109,8 +109,8 @@
       place-items: center;
       flex: 0 0 auto;
       border-radius: 12px;
-      background: linear-gradient(145deg, rgba(66, 211, 146, 0.18), rgba(66, 211, 146, 0.05));
-      border: 1px solid rgba(66, 211, 146, 0.28);
+      background: linear-gradient(145deg, rgba(201, 164, 92, 0.18), rgba(201, 164, 92, 0.05));
+      border: 1px solid rgba(201, 164, 92, 0.28);
       color: var(--green);
       font-weight: 800;
       letter-spacing: 0.5px;
@@ -177,7 +177,7 @@
       padding: 8px 12px;
       background: transparent;
       color: var(--green);
-      border: 1px solid rgba(66, 211, 146, 0.35);
+      border: 1px solid rgba(201, 164, 92, 0.35);
       border-radius: 9px;
       font-size: 12px;
       font-weight: 700;
@@ -220,7 +220,7 @@
       height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 0 5px rgba(66, 211, 146, 0.08);
+      box-shadow: 0 0 0 5px rgba(201, 164, 92, 0.08);
     }
 
     .page-title {
@@ -246,7 +246,7 @@
       padding: 24px;
       margin-bottom: 22px;
       background:
-        linear-gradient(135deg, rgba(66, 211, 146, 0.09), rgba(66, 211, 146, 0.025) 55%, rgba(255,255,255,0.015)),
+        linear-gradient(135deg, rgba(201, 164, 92, 0.09), rgba(201, 164, 92, 0.025) 55%, rgba(255,255,255,0.015)),
         var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -262,7 +262,7 @@
       right: -100px;
       top: -120px;
       border-radius: 50%;
-      background: rgba(66, 211, 146, 0.08);
+      background: rgba(201, 164, 92, 0.08);
       filter: blur(10px);
       pointer-events: none;
     }
@@ -279,7 +279,7 @@
       color: #07110c;
       font-size: 25px;
       font-weight: 800;
-      box-shadow: 0 12px 30px rgba(66, 211, 146, 0.18);
+      box-shadow: 0 12px 30px rgba(201, 164, 92, 0.18);
     }
 
     .hero-info {
@@ -311,7 +311,7 @@
       padding: 8px 12px;
       border-radius: 999px;
       background: var(--green-soft);
-      border: 1px solid rgba(66, 211, 146, 0.18);
+      border: 1px solid rgba(201, 164, 92, 0.18);
       color: var(--green);
       font-size: 11px;
       font-weight: 700;
@@ -380,7 +380,7 @@
       place-items: center;
       border-radius: 11px;
       background: var(--green-soft);
-      border: 1px solid rgba(66,211,146,0.18);
+      border: 1px solid rgba(201,164,92,0.18);
       font-size: 17px;
     }
 
@@ -460,7 +460,7 @@
     input:focus {
       background: #111821;
       border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(66,211,146,0.10);
+      box-shadow: 0 0 0 3px rgba(201,164,92,0.10);
     }
 
     .password-note {
@@ -513,7 +513,7 @@
       background: var(--green);
       color: #07110c;
       border-color: var(--green);
-      box-shadow: 0 8px 22px rgba(66,211,146,0.10);
+      box-shadow: 0 8px 22px rgba(201,164,92,0.10);
     }
 
     .primary:hover,
@@ -525,7 +525,7 @@
     .secondary {
       background: transparent;
       color: var(--green);
-      border-color: rgba(66,211,146,0.35);
+      border-color: rgba(201,164,92,0.35);
     }
 
     .secondary:hover {
@@ -548,7 +548,7 @@
 
     .home:hover {
       color: var(--green);
-      border-color: rgba(66,211,146,0.35);
+      border-color: rgba(201,164,92,0.35);
       background: var(--green-soft);
     }
 
@@ -603,7 +603,7 @@
       height: 30px;
       margin: 0 auto 14px;
       border-radius: 50%;
-      border: 3px solid rgba(66,211,146,0.15);
+      border: 3px solid rgba(201,164,92,0.15);
       border-top-color: var(--green);
       animation: spin 0.8s linear infinite;
     }
@@ -775,7 +775,7 @@
       margin-bottom:18px;
     }
     .favorites-kicker{
-      color:#42d392;
+      color:#c9a45c;
       font-size:10px;
       font-weight:850;
       letter-spacing:1px;
@@ -807,7 +807,7 @@
     }
     .favorite-card:hover{
       transform:translateY(-4px);
-      border-color:rgba(66,211,146,.28);
+      border-color:rgba(201,164,92,.28);
       background:#171d26;
     }
     .favorite-cover{
@@ -828,7 +828,7 @@
     .favorite-no-cover{font-size:34px;opacity:.75}
     .favorite-body{padding:14px}
     .favorite-title{
-      color:#42d392;
+      color:#c9a45c;
       font-size:14px;
       font-weight:800;
       line-height:1.45;
@@ -868,11 +868,11 @@
       cursor:pointer;
     }
     .favorite-view{
-      color:#42d392;
-      border:1px solid rgba(66,211,146,.20);
-      background:rgba(66,211,146,.035);
+      color:#c9a45c;
+      border:1px solid rgba(201,164,92,.20);
+      background:rgba(201,164,92,.035);
     }
-    .favorite-view:hover{background:rgba(66,211,146,.09)}
+    .favorite-view:hover{background:rgba(201,164,92,.09)}
     .favorite-remove{
       color:#d8dee7;
       border:1px solid rgba(255,255,255,.10);
@@ -901,6 +901,9 @@
     }
 
 </style>
+
+<link rel="stylesheet" href="hskrc-global.css">
+<script defer src="hskrc-global.js"></script>
 </head>
 
 <body>
@@ -1297,7 +1300,7 @@
   <footer class="site-footer">
 
     <div class="footer-title" id="footerTitle">
-      Founded by Kamal Barlas
+      Founded by Kamaluddin Barlas
     </div>
 
     <div class="footer-copy" id="footerCopy">
