@@ -277,3 +277,94 @@ body.hskrc-page-account{
     gap:6px !important;
   }
 }
+
+
+/* =========================================================
+   HSKRC TYPOGRAPHY — MATCHES SOURCES PAGE
+   Body/UI: Inter / Segoe UI / Arial
+   Editorial headings: Georgia
+   ========================================================= */
+
+html body{
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif !important;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* Main editorial headings use the same serif face as Sources */
+html body h1,
+html body h2,
+html body h3,
+html body .article-title,
+html body .book-title{
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif !important;
+  letter-spacing:-0.015em;
+}
+
+/* Navigation, interface, metadata and body copy stay clean sans-serif */
+html body p,
+html body a,
+html body button,
+html body input,
+html body select,
+html body textarea,
+html body label,
+html body small,
+html body strong,
+html body .meta,
+html body .author,
+html body .tag,
+html body .eyebrow,
+html body .kicker,
+html body .section-kicker{
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif !important;
+}
+
+/* Shared HSKRC logo follows the Sources visual language */
+.hskrc-global-brandcopy strong{
+  font-family:Georgia,"Times New Roman",serif !important;
+  letter-spacing:.01em !important;
+}
+.hskrc-global-nav a,
+.hskrc-global-account,
+.hskrc-global-lang{
+  font-family:Inter,"Segoe UI",Arial,sans-serif !important;
+}
+
+/* Persian remains readable and consistent */
+html[dir="rtl"] body,
+html[dir="rtl"] body h1,
+html[dir="rtl"] body h2,
+html[dir="rtl"] body h3,
+html[dir="rtl"] body h4,
+html[dir="rtl"] body h5,
+html[dir="rtl"] body h6,
+html[dir="rtl"] body p,
+html[dir="rtl"] body a,
+html[dir="rtl"] body button,
+html[dir="rtl"] body input,
+html[dir="rtl"] body select,
+html[dir="rtl"] body textarea,
+html[dir="rtl"] body label,
+html[dir="rtl"] body small,
+html[dir="rtl"] body strong{
+  font-family:
+    Tahoma,
+    Arial,
+    "Segoe UI",
+    sans-serif !important;
+  letter-spacing:0 !important;
+}
