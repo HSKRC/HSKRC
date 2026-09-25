@@ -1,531 +1,554 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <link rel="stylesheet" href="hskrc-global.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="hskrc-global.css">
 
-  <title>Support HSKRC | HSKRC</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <meta
-    name="description"
-    content="Support HSKRC and record your contribution interest securely."
-  >
+<title>Support HSKRC | HSKRC</title>
 
-  <link rel="canonical" href="https://hskrc.org/support.html">
+<meta
+  name="description"
+  content="Support HSKRC and record your contribution interest securely."
+>
 
-  <style>
-    :root {
-      --bg: #0b0b0c;
-      --panel: #151413;
-      --gold: #c9a45c;
-      --text: #f5f2eb;
-      --muted: #aaa39a;
-      --border: rgba(255,255,255,.10);
-    }
+<link
+  rel="canonical"
+  href="https://hskrc.org/support.html"
+>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font: 16px/1.65 Arial, sans-serif;
-    }
+:root{
+  --bg:#0b0b0c;
+  --panel:#151413;
+  --gold:#c9a45c;
+  --text:#f5f2eb;
+  --muted:#aaa39a;
+  --border:rgba(255,255,255,.10);
+}
 
-    .page {
-      width: min(860px, calc(100% - 32px));
-      margin: auto;
-      padding: 72px 0 90px;
-    }
+*{box-sizing:border-box}
 
-    .eyebrow {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.65 Arial,sans-serif;
+}
 
-    h1 {
-      font-size: clamp(38px, 7vw, 64px);
-      line-height: 1.05;
-      margin: 10px 0 18px;
-    }
+.page{
+  width:min(860px,calc(100% - 32px));
+  margin:auto;
+  padding:72px 0 90px;
+}
 
-    .lead {
-      color: var(--muted);
-      font-size: 18px;
-      max-width: 720px;
-    }
+.eyebrow{
+  color:var(--gold);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
 
-    .card {
-      margin-top: 30px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 26px;
-    }
+h1{
+  font-size:clamp(38px,7vw,64px);
+  line-height:1.05;
+  margin:10px 0 18px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
+.lead{
+  color:var(--muted);
+  font-size:18px;
+  max-width:720px;
+}
 
-    .field {
-      display: grid;
-      gap: 7px;
-      margin-bottom: 16px;
-    }
+.card{
+  margin-top:30px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:26px;
+}
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
 
-    label {
-      font-weight: 700;
-    }
+.field{
+  display:grid;
+  gap:7px;
+  margin-bottom:16px;
+}
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      background: #0e0e0f;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 13px;
-      font: inherit;
-    }
+.field.full{
+  grid-column:1/-1;
+}
 
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
+label{
+  font-weight:700;
+}
 
-    .check {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: var(--muted);
-      margin: 6px 0 18px;
-    }
+input,
+select,
+textarea{
+  width:100%;
+  background:#0e0e0f;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 13px;
+  font:inherit;
+}
 
-    .check input {
-      width: auto;
-      margin-top: 5px;
-    }
+textarea{
+  min-height:150px;
+  resize:vertical;
+}
 
-    .btn {
-      border: 0;
-      border-radius: 10px;
-      background: var(--gold);
-      color: #17120a;
-      padding: 12px 18px;
-      font-weight: 800;
-      cursor: pointer;
-    }
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  color:var(--muted);
+  margin:6px 0 18px;
+}
 
-    .btn:disabled {
-      opacity: .55;
-      cursor: wait;
-    }
+.check input{
+  width:auto;
+  margin-top:5px;
+}
 
-    .status {
-      display: none;
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 10px;
-    }
+.btn{
+  border:0;
+  border-radius:10px;
+  background:var(--gold);
+  color:#17120a;
+  padding:12px 18px;
+  font-weight:800;
+  cursor:pointer;
+}
 
-    .status.ok {
-      display: block;
-      background: rgba(68,180,110,.12);
-      border: 1px solid rgba(68,180,110,.35);
-    }
+.btn:disabled{
+  opacity:.55;
+  cursor:wait;
+}
 
-    .status.err {
-      display: block;
-      background: rgba(220,70,70,.12);
-      border: 1px solid rgba(220,70,70,.35);
-    }
+.status{
+  display:none;
+  margin-top:16px;
+  padding:12px 14px;
+  border-radius:10px;
+}
 
-    .note {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 18px;
-    }
+.status.ok{
+  display:block;
+  background:rgba(68,180,110,.12);
+  border:1px solid rgba(68,180,110,.35);
+}
 
-    .amount-row {
-      display: flex;
-      gap: 10px;
-    }
+.status.err{
+  display:block;
+  background:rgba(220,70,70,.12);
+  border:1px solid rgba(220,70,70,.35);
+}
 
-    .amount-row input {
-      flex: 1;
-    }
+.note{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:18px;
+}
 
-    .amount-row select {
-      width: 110px;
-    }
+.amount-row{
+  display:flex;
+  gap:10px;
+}
 
-    @media (max-width: 680px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
+.amount-row input{
+  flex:1;
+}
 
-      .page {
-        padding-top: 46px;
-      }
+.amount-row select{
+  width:110px;
+}
 
-      .card {
-        padding: 20px;
-      }
-    }
-  </style>
+@media(max-width:680px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .page{
+    padding-top:46px;
+  }
+
+  .card{
+    padding:20px;
+  }
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <main class="page">
+<main class="page">
 
-    <div class="eyebrow">Support HSKRC</div>
+<div class="eyebrow">
+Support HSKRC
+</div>
 
-    <h1>Support independent research and preservation</h1>
+<h1>
+Support independent research and preservation
+</h1>
 
-    <p class="lead">
-      Use this form to record your support or contribution interest.
-      This page does not process a card or bank payment; HSKRC can
-      follow up separately when needed.
-    </p>
+<p class="lead">
+Use this form to record your support or contribution interest.
+This page does not process a card or bank payment; HSKRC can
+follow up separately when needed.
+</p>
 
-    <section class="card">
+<section class="card">
 
-      <form id="donationForm">
+<form id="donationForm">
 
-        <div class="grid">
+<div class="grid">
 
-          <div class="field">
-            <label for="donor">Name (optional)</label>
-            <input
-              id="donor"
-              maxlength="120"
-              autocomplete="name"
-            >
-          </div>
+<div class="field">
 
-          <div class="field">
-            <label for="method">Method (optional)</label>
+<label for="donor">
+Name (optional)
+</label>
 
-            <select id="method">
-              <option value="">Not specified</option>
-              <option>Bank transfer</option>
-              <option>Cash</option>
-              <option>Other</option>
-            </select>
-          </div>
+<input
+  id="donor"
+  maxlength="120"
+  autocomplete="name"
+>
 
-          <div class="field full">
+</div>
 
-            <label for="amount">
-              Contribution amount (optional)
-            </label>
+<div class="field">
 
-            <div class="amount-row">
+<label for="method">
+Method (optional)
+</label>
 
-              <input
-                id="amount"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="0.00"
-              >
+<select id="method">
 
-              <select id="currency">
-                <option>AUD</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>GBP</option>
-              </select>
+<option value="">
+Not specified
+</option>
 
-            </div>
-          </div>
+<option value="Bank transfer">
+Bank transfer
+</option>
 
-          <div class="field full">
+<option value="Cash">
+Cash
+</option>
 
-            <label for="message">
-              Message (optional)
-            </label>
+<option value="Other">
+Other
+</option>
 
-            <textarea
-              id="message"
-              maxlength="2000"
-              placeholder="Tell us how you would like to support HSKRC."
-            ></textarea>
+</select>
 
-          </div>
+</div>
 
-        </div>
+<div class="field full">
 
-        <label class="check">
+<label for="amount">
+Contribution amount (optional)
+</label>
 
-          <input
-            id="display"
-            type="checkbox"
-          >
+<div class="amount-row">
 
-          I would be happy for HSKRC to consider displaying my support
-          publicly after administrator approval.
+<input
+  id="amount"
+  type="number"
+  min="0.01"
+  step="0.01"
+  placeholder="0.00"
+>
 
-        </label>
+<select id="currency">
+<option value="AUD">AUD</option>
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+</select>
 
-        <button
-          class="btn"
-          id="submitBtn"
-          type="submit"
-        >
-          Submit support record
-        </button>
+</div>
 
-        <div
-          id="status"
-          class="status"
-          role="status"
-          aria-live="polite"
-        ></div>
+</div>
 
-        <p class="note">
-          Your submission is private by default.
-          Public display requires a separate administrator decision.
-        </p>
+<div class="field full">
 
-      </form>
+<label for="message">
+Message (optional)
+</label>
 
-    </section>
+<textarea
+  id="message"
+  maxlength="2000"
+  placeholder="Tell us how you would like to support HSKRC."
+></textarea>
 
-  </main>
+</div>
 
+</div>
 
-  <script>
+<label class="check">
 
-    const SUPABASE_URL =
-      "https://uwuklryzxexpofcxrbnm.supabase.co";
+<input
+  id="display"
+  type="checkbox"
+>
 
-    const SUPABASE_KEY =
-      "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+<span>
+I would be happy for HSKRC to consider displaying my support publicly after administrator approval.
+</span>
 
+</label>
 
-    const db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
+<button
+  class="btn"
+  id="submitBtn"
+  type="submit"
+>
+Submit support record
+</button>
+
+<div
+  id="status"
+  class="status"
+  role="status"
+  aria-live="polite"
+></div>
+
+<p class="note">
+Your submission is private by default.
+Selecting the public-display option only sends a request.
+An HSKRC administrator must approve it before anything is displayed publicly.
+</p>
+
+</form>
+
+</section>
+
+</main>
+
+<script>
+
+const SUPABASE_URL =
+"https://uwuklryzxexpofcxrbnm.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+const db =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function uid(){
+
+  const {data} =
+    await db.auth.getSession();
+
+  return data.session?.user?.id || null;
+}
+
+function showStatus(
+  element,
+  message,
+  ok=true
+){
+
+  element.textContent =
+    message;
+
+  element.className =
+    "status " +
+    (ok ? "ok" : "err");
+}
+
+const form =
+document.getElementById(
+  "donationForm"
+);
+
+const out =
+document.getElementById(
+  "status"
+);
+
+const btn =
+document.getElementById(
+  "submitBtn"
+);
+
+form.addEventListener(
+"submit",
+async event=>{
+
+  event.preventDefault();
+
+  const donorName =
+    document
+      .getElementById("donor")
+      .value
+      .trim();
+
+  const rawAmount =
+    document
+      .getElementById("amount")
+      .value;
+
+  const message =
+    document
+      .getElementById("message")
+      .value
+      .trim();
+
+  const publicRequest =
+    document
+      .getElementById("display")
+      .checked;
+
+  if(
+    !donorName &&
+    !rawAmount &&
+    !message
+  ){
+
+    showStatus(
+      out,
+      "Please provide at least your name, contribution amount, or a message.",
+      false
     );
 
+    return;
+  }
 
-    async function uid() {
+  const amount =
+    rawAmount === ""
+      ? null
+      : Number(rawAmount);
 
-      const { data } = await db.auth.getSession();
+  if(
+    amount !== null &&
+    (
+      !Number.isFinite(amount) ||
+      amount <= 0
+    )
+  ){
 
-      return data.session?.user?.id || null;
+    showStatus(
+      out,
+      "Please enter a valid contribution amount greater than 0.",
+      false
+    );
+
+    return;
+  }
+
+  btn.disabled = true;
+
+  try{
+
+    const user_id =
+      await uid();
+
+    const payload = {
+
+      user_id:user_id,
+
+      donor_name:
+        donorName || null,
+
+      amount:amount,
+
+      currency:
+        document
+          .getElementById("currency")
+          .value,
+
+      method:
+        document
+          .getElementById("method")
+          .value || null,
+
+      message:
+        message || null,
+
+      public_display:
+        publicRequest,
+
+      is_public:false
+
+    };
+
+    const {error} =
+      await db
+        .from("donations")
+        .insert(payload);
+
+    if(error){
+      throw error;
+    }
+
+    form.reset();
+
+    if(publicRequest){
+
+      showStatus(
+        out,
+        "Thank you. Your support record was submitted privately and your public-display request is awaiting administrator approval."
+      );
+
+    }else{
+
+      showStatus(
+        out,
+        "Thank you. Your support record was submitted privately."
+      );
 
     }
 
-
-    function showStatus(el, msg, ok = true) {
-
-      el.textContent = msg;
-
-      el.className =
-        "status " + (ok ? "ok" : "err");
-
-    }
-
-
-    const form =
-      document.getElementById("donationForm");
-
-    const out =
-      document.getElementById("status");
-
-    const btn =
-      document.getElementById("submitBtn");
-
-
-    form.addEventListener(
-      "submit",
-
-      async (e) => {
-
-        e.preventDefault();
-
-
-        const donorName =
-          document
-            .getElementById("donor")
-            .value
-            .trim();
-
-
-        const rawAmount =
-          document
-            .getElementById("amount")
-            .value;
-
-
-        const message =
-          document
-            .getElementById("message")
-            .value
-            .trim();
-
-
-        /*
-          Prevent completely empty submissions.
-          At least Name, Amount or Message is required.
-        */
-
-        if (
-          !donorName &&
-          !rawAmount &&
-          !message
-        ) {
-
-          showStatus(
-            out,
-            "Please provide at least your name, contribution amount, or a message.",
-            false
-          );
-
-          return;
-
-        }
-
-
-        const amount =
-          rawAmount === ""
-            ? null
-            : Number(rawAmount);
-
-
-        if (
-          amount !== null &&
-          (
-            !Number.isFinite(amount) ||
-            amount <= 0
-          )
-        ) {
-
-          showStatus(
-            out,
-            "Please enter a valid contribution amount greater than 0.",
-            false
-          );
-
-          return;
-
-        }
-
-
-        btn.disabled = true;
-
-
-        try {
-
-          const user_id =
-            await uid();
-
-
-          const payload = {
-
-            user_id: user_id,
-
-            donor_name:
-              donorName || null,
-
-            amount:
-              amount,
-
-            currency:
-              document
-                .getElementById("currency")
-                .value,
-
-            method:
-              document
-                .getElementById("method")
-                .value || null,
-
-            message:
-              message || null,
-
-            /*
-              Public display is NEVER automatically approved.
-              Administrator approval remains required.
-            */
-
-            is_public: false,
-
-            public_display: false
-
-          };
-
-
-          const { error } =
-            await db
-              .from("donations")
-              .insert(payload);
-
-
-          if (error) {
-
-            throw error;
-
-          }
-
-
-          form.reset();
-
-
-          showStatus(
-            out,
-            "Thank you. Your support record was submitted privately."
-          );
-
-
-        } catch (err) {
-
-          console.error(
-            "Donation submission error:",
-            err
-          );
-
-
-          showStatus(
-            out,
-            "Submission failed. Please try again later.",
-            false
-          );
-
-
-        } finally {
-
-          btn.disabled = false;
-
-        }
-
-      }
-
+  }catch(error){
+
+    console.error(
+      "Donation submission error:",
+      error
     );
 
-  </script>
+    showStatus(
+      out,
+      "Submission failed. Please try again later.",
+      false
+    );
 
+  }finally{
 
-  <script src="hskrc-global.js"></script>
+    btn.disabled = false;
+
+  }
+
+});
+
+</script>
+
+<script src="hskrc-global.js"></script>
 
 </body>
 </html>
