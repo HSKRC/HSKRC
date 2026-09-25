@@ -1,3411 +1,1287 @@
-<!DOCTYPE html>
-
-<html dir="ltr" lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>HSKRC | Admin Panel</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{
-  --bg:#0a0f0d;
-  --bg-soft:#0f1512;
-  --panel:#121a16;
-  --panel-2:#151f1a;
-  --panel-hover:#19251f;
-  --border:#26342d;
-  --border-light:#35483d;
-  --green:#42d392;
-  --green-light:#6ee7ad;
-  --text:#f4f7f5;
-  --text-soft:#c6d0ca;
-  --muted:#87958e;
-  --danger:#ef6b73;
-  --danger-bg:#421d22;
-  --radius-sm:8px;
-  --radius-md:12px;
-  --radius-lg:16px;
-  --radius-xl:20px;
-  --shadow:0 14px 40px rgba(0,0,0,.22);
-  --transition:.2s ease;
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-html{scroll-behavior:smooth}
-
-body{
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Tahoma,sans-serif;
-  background:
-    radial-gradient(circle at 12% -10%,rgba(66,211,146,.09),transparent 30%),
-    radial-gradient(circle at 100% 0%,rgba(66,211,146,.045),transparent 27%),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  line-height:1.65;
-}
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px),
-    linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px);
-  background-size:48px 48px;
-  mask-image:linear-gradient(to bottom,black,transparent 75%);
-}
-
-a{color:inherit}
-
-button,input,select,textarea{font:inherit}
-
-button,.button-link{
-  border:1px solid transparent;
-  border-radius:var(--radius-sm);
-  padding:10px 15px;
-  cursor:pointer;
-  font-size:14px;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-  transition:transform var(--transition),background var(--transition),border-color var(--transition),box-shadow var(--transition),opacity var(--transition);
-}
-
-button:hover,.button-link:hover{transform:translateY(-1px)}
-button:active,.button-link:active{transform:translateY(0)}
-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-
-.green{
-  background:linear-gradient(135deg,#42d392,#32bd7e);
-  color:#06110b;
-  font-weight:750;
-  box-shadow:0 8px 22px rgba(66,211,146,.14);
-}
-
-.green:hover{box-shadow:0 10px 28px rgba(66,211,146,.22)}
-
-.dark{
-  background:#17201c;
-  color:var(--text);
-  border-color:var(--border);
-}
-
-.dark:hover{background:#1d2923;border-color:var(--border-light)}
-
-.danger{
-  background:var(--danger-bg);
-  color:#ffb7bc;
-  border-color:rgba(239,107,115,.22);
-}
-
-.danger:hover{background:#552329}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(10,15,13,.88);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(66,211,146,.12);
-  padding:15px clamp(18px,4vw,42px);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.logo{
-  color:var(--green);
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:-.3px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo::before{
-  content:"";
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 0 5px rgba(66,211,146,.08),0 0 18px rgba(66,211,146,.35);
-}
-
-.header-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-main{
-  width:100%;
-  max-width:1320px;
-  margin:auto;
-  padding:34px clamp(16px,3vw,30px) 60px;
-  position:relative;
-  z-index:1;
-}
-
-.loading,.access-denied{
-  max-width:620px;
-  margin:80px auto;
-  text-align:center;
-  padding:45px 25px;
-  background:rgba(18,26,22,.88);
-  border:1px solid var(--border);
-  border-radius:var(--radius-xl);
-  box-shadow:var(--shadow);
-}
-
-.loading{color:var(--muted)}
-
-.access-denied h2{color:var(--danger);margin-bottom:12px;font-size:25px}
-.access-denied p{color:var(--muted)}
-.dashboard{display:none}
-
-.title-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-
-h1{
-  font-size:clamp(25px,3vw,32px);
-  line-height:1.2;
-  letter-spacing:-.7px;
-}
-
-h2{
-  font-size:20px;
-  line-height:1.3;
-  letter-spacing:-.2px;
-}
-
-.title-row h1::after{
-  content:"";
-  display:block;
-  width:42px;
-  height:3px;
-  border-radius:5px;
-  background:var(--green);
-  margin-top:10px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:14px;
-  margin-bottom:22px;
-}
-
-.stat{
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(145deg,rgba(21,31,26,.98),rgba(15,22,19,.98));
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  padding:20px;
-  box-shadow:0 8px 28px rgba(0,0,0,.12);
-  transition:transform var(--transition),border-color var(--transition);
-}
-
-.stat::before{
-  content:"";
-  position:absolute;
-  width:90px;
-  height:90px;
-  right:-35px;
-  top:-35px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(66,211,146,.13),transparent 68%);
-}
-
-.stat:hover{transform:translateY(-2px);border-color:rgba(66,211,146,.3)}
-.stat>div:first-child{color:var(--muted);font-size:13px;font-weight:600}
-.stat-number{color:var(--green);font-size:31px;font-weight:800;margin-top:5px;line-height:1.2}
-
-.panel{
-  background:linear-gradient(145deg,rgba(18,26,22,.98),rgba(14,21,18,.98));
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  padding:clamp(18px,3vw,26px);
-  margin-bottom:22px;
-  box-shadow:0 10px 35px rgba(0,0,0,.12);
-}
-
-.panel h2{margin-bottom:17px}
-.panel>.title-row{margin-bottom:18px}
-
-.section-note{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:-9px;
-  margin-bottom:18px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:17px;
-}
-
-.full{grid-column:1/-1}
-
-label{
-  display:block;
-  margin-bottom:7px;
-  color:var(--text-soft);
-  font-size:13px;
-  font-weight:600;
-}
-
-input,select,textarea{
-  width:100%;
-  padding:11px 13px;
-  border-radius:var(--radius-sm);
-  border:1px solid var(--border);
-  background:#0b110e;
-  color:var(--text);
-  outline:none;
-  font-size:14px;
-  transition:border-color var(--transition),box-shadow var(--transition),background var(--transition);
-}
-
-input::placeholder,textarea::placeholder{color:#64716a}
-
-input:hover,select:hover,textarea:hover{border-color:#35473d}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--green);
-  background:#0d1511;
-  box-shadow:0 0 0 3px rgba(66,211,146,.09);
-}
-
-input[type=file]{padding:9px;cursor:pointer}
-
-input[type=file]::file-selector-button{
-  border:1px solid var(--border);
-  border-radius:7px;
-  background:#18231d;
-  color:var(--text-soft);
-  padding:7px 10px;
-  margin-right:9px;
-  cursor:pointer;
-}
-
-textarea{min-height:120px;resize:vertical}
-.article-content{min-height:300px;line-height:1.8}
-
-.check-row{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  margin-top:4px;
-  padding:11px 13px;
-  background:#0d1410;
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-}
-
-.check-row input{width:17px;height:17px;accent-color:var(--green);cursor:pointer}
-.check-row label{margin:0!important;cursor:pointer}
-
-.form-actions{
-  display:flex;
-  gap:9px;
-  margin-top:20px;
-  flex-wrap:wrap;
-}
-
-.table-wrap{
-  overflow-x:auto;
-  border:1px solid var(--border);
-  border-radius:var(--radius-md);
-  background:#0c120f;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:850px;
-}
-
-th,td{
-  text-align:left;
-  padding:13px 12px;
-  border-bottom:1px solid rgba(49,66,57,.62);
-  vertical-align:middle;
-}
-
-tr:last-child td{border-bottom:none}
-
-tbody tr{transition:background var(--transition)}
-tbody tr:hover{background:rgba(66,211,146,.035)}
-
-th{
-  color:var(--green);
-  background:#111914;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.7px;
-  font-weight:750;
-  white-space:nowrap;
-}
-
-td{color:var(--text-soft);font-size:13px}
-td:first-child{color:var(--text);font-weight:600}
-
-.status{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:5px 9px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:700;
-  white-space:nowrap;
-}
-
-.status::before{
-  content:"";
-  width:6px;
-  height:6px;
-  border-radius:50%;
-}
-
-.published{
-  background:rgba(18,60,42,.85);
-  color:#7ff0b8;
-  border:1px solid rgba(66,211,146,.14);
-}
-
-.published::before{
-  background:#42d392;
-  box-shadow:0 0 7px rgba(66,211,146,.5);
-}
-
-.unpublished{
-  background:rgba(61,48,48,.75);
-  color:#ffaaaa;
-  border:1px solid rgba(239,107,115,.12);
-}
-
-.unpublished::before{background:#ef6b73}
-
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-.small-btn{padding:7px 10px;font-size:11px;border-radius:7px}
-
-.message{
-  display:none;
-  position:fixed;
-  top:22px;
-  right:22px;
-  z-index:99999;
-  width:min(430px,calc(100vw - 44px));
-  margin:0;
-  padding:14px 16px;
-  border-radius:10px;
-  line-height:1.55;
-  font-size:13px;
-  font-weight:700;
-  border:1px solid transparent;
-  box-shadow:0 18px 55px rgba(0,0,0,.45);
-}
-
-.success{
-  background:rgba(18,60,42,.9);
-  color:#7ff0b8;
-  border-color:rgba(66,211,146,.18);
-}
-
-.error{
-  background:rgba(61,23,23,.9);
-  color:#ff9999;
-  border-color:rgba(239,107,115,.18);
-}
-
-.file-name{
-  margin-top:7px;
-  color:var(--muted);
-  font-size:11px;
-  word-break:break-word;
-}
-
-.hidden{display:none!important}
-
-.article-preview{
-  max-width:360px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-select{cursor:pointer}
-select option{background:#101713;color:#fff}
-
-::-webkit-scrollbar{width:9px;height:9px}
-::-webkit-scrollbar-track{background:#0a0f0d}
-::-webkit-scrollbar-thumb{background:#26352d;border-radius:10px}
-::-webkit-scrollbar-thumb:hover{background:#355044}
-
-html[dir=rtl] body{
-  font-family:Tahoma,"Segoe UI",Arial,sans-serif;
-}
-
-html[dir=rtl] th,html[dir=rtl] td{text-align:right}
-html[dir=rtl] input,html[dir=rtl] textarea,html[dir=rtl] select{text-align:right}
-html[dir=rtl] .title-row{direction:rtl}
-html[dir=rtl] .actions,html[dir=rtl] .form-actions,html[dir=rtl] .header-actions{direction:rtl}
-
-@media(max-width:1000px){
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .panel{padding:20px}
-}
-
-@media(max-width:700px){
-  header{padding:13px 16px}
-  .logo{font-size:19px}
-  .header-actions{width:100%}
-  .header-actions>*{flex:1}
-  main{padding:24px 13px 45px}
-  h1{font-size:25px}
-  .stats{grid-template-columns:1fr 1fr;gap:10px}
-  .stat{padding:15px}
-  .stat-number{font-size:25px}
-  .form-grid{grid-template-columns:1fr}
-  .full{grid-column:auto}
-  .panel{padding:16px;border-radius:13px}
-  .title-row{align-items:flex-start}
-  .title-row>button,.title-row>.actions{width:100%}
-  .title-row>.actions>button{flex:1}
-  .form-actions>button{flex:1}
-  .table-wrap{margin-left:-2px;margin-right:-2px}
-}
-
-@media(max-width:430px){
-  .stats{grid-template-columns:1fr}
-  .header-actions{display:grid;grid-template-columns:1fr 1fr}
-  .header-actions>button:last-child{grid-column:1/-1}
-  .form-actions{flex-direction:column}
-  .form-actions>button{width:100%}
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    scroll-behavior:auto!important;
-    transition:none!important;
-    animation:none!important;
-  }
-}
-  
-/* Research Network Manager */
-.network-manager{border-color:rgba(201,164,92,.28)}
-.network-manager h2,.network-manager th{color:#c9a45c}
-.network-manager .section-note{max-width:900px}
-.network-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
-.network-tabs button.active{background:#c9a45c;color:#111;border-color:#c9a45c;font-weight:800}
-.network-pane{display:none}.network-pane.active{display:block}
-.network-manager input:focus,.network-manager select:focus,.network-manager textarea:focus{border-color:#c9a45c;box-shadow:0 0 0 3px rgba(201,164,92,.09)}
-.network-manager .gold{background:#c9a45c;color:#111;font-weight:800}
-.network-manager .gold:hover{background:#dfbd78}
-.network-manager .mini-list{display:grid;gap:8px;margin-top:14px}
-.network-manager .mini-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:#0c120f}
-.network-manager .mini-row span{font-size:12px;color:var(--text-soft)}
-.network-manager .relation-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:700px){.network-manager .relation-grid{grid-template-columns:1fr}}
-
-/* =========================================================
-   HSKRC PROFESSIONAL ADMIN — Bronze Research Console
-   ========================================================= */
-:root{
-  --bg:#090909;--bg-soft:#0d0d0d;--panel:#111111;--panel-2:#151515;
-  --panel-hover:#191919;--border:#2c2922;--border-light:#4a4030;
-  --green:#c9a45c;--green-light:#e1c17e;--text:#ffffff;
-  --text-soft:#dedbd4;--muted:#969187;--danger:#e37a7a;--danger-bg:#30191b;
-  --shadow:0 18px 50px rgba(0,0,0,.28);
-}
-body{
-  background:
-    radial-gradient(circle at 10% -5%,rgba(201,164,92,.10),transparent 28%),
-    radial-gradient(circle at 92% 5%,rgba(201,164,92,.045),transparent 24%),
-    #090909;
-}
-body::before{background:linear-gradient(90deg,rgba(201,164,92,.018) 1px,transparent 1px),linear-gradient(rgba(201,164,92,.018) 1px,transparent 1px);background-size:52px 52px}
-header{background:rgba(9,9,9,.92);border-bottom:1px solid rgba(201,164,92,.22);padding:13px clamp(18px,4vw,48px)}
-.logo{color:#fff;letter-spacing:.2px}.logo::before{background:#c9a45c;box-shadow:0 0 0 5px rgba(201,164,92,.08),0 0 18px rgba(201,164,92,.3)}
-.green,.network-manager .gold{background:linear-gradient(135deg,#d8b66d,#b99045);color:#111;box-shadow:0 8px 22px rgba(201,164,92,.12)}
-.green:hover,.network-manager .gold:hover{background:linear-gradient(135deg,#e4c57f,#c9a45c);box-shadow:0 10px 28px rgba(201,164,92,.18)}
-.dark{background:#151515;border-color:#302d27}.dark:hover{background:#1d1b18;border-color:#5b4c33}
-main{max-width:1440px;padding-top:28px}
-.title-row h1{font-size:clamp(27px,3vw,36px)}.title-row h1::after{background:#c9a45c;width:58px;height:2px}
-.stats{gap:12px}.stat{background:linear-gradient(145deg,#141414,#0f0f0f);border-color:#2c2922;border-radius:14px}
-.stat::before{background:radial-gradient(circle,rgba(201,164,92,.12),transparent 68%)}.stat:hover{border-color:rgba(201,164,92,.4)}
-.stat-number{color:#e1c17e}
-.panel{background:linear-gradient(145deg,rgba(18,18,18,.98),rgba(12,12,12,.98));border-color:#2c2922;border-radius:14px}
-.panel h2{color:#fff}
-input,select,textarea{background:#0b0b0b;border-color:#302d27;color:#fff}
-input:hover,select:hover,textarea:hover{border-color:#51462f}
-input:focus,select:focus,textarea:focus{border-color:#c9a45c;background:#0d0d0d;box-shadow:0 0 0 3px rgba(201,164,92,.09)}
-.check-row{background:#0d0d0d;border-color:#302d27}.check-row input{accent-color:#c9a45c}
-.table-wrap{background:#0b0b0b;border-color:#2c2922}th{color:#d8b66d;background:#12110f}td{color:#d7d3cb}
-tbody tr:hover{background:rgba(201,164,92,.035)}
-select option{background:#111;color:#fff}
-::-webkit-scrollbar-track{background:#090909}::-webkit-scrollbar-thumb{background:#383126}::-webkit-scrollbar-thumb:hover{background:#594a32}
-.network-manager{border:1px solid rgba(201,164,92,.34);box-shadow:0 18px 55px rgba(0,0,0,.24)}
-.network-manager h2,.network-manager th{color:#fff}
-.network-tabs{padding:6px;background:#0b0b0b;border:1px solid #2c2922;border-radius:11px;width:max-content;max-width:100%}
-.network-tabs button{border-radius:7px}.network-tabs button.active{background:#c9a45c;color:#111;border-color:#c9a45c}
-.network-manager .mini-row{background:#0d0d0d;border-color:#2c2922}.network-manager .mini-row:hover{border-color:#50442f}
-.admin-kicker{color:#c9a45c;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:7px}
-.admin-subtitle{color:#9e998f;font-size:14px;max-width:720px;margin-top:7px}
-.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px;padding:8px;background:#0d0d0d;border:1px solid #28251f;border-radius:12px;position:sticky;top:82px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.18)}
-.admin-nav a{padding:8px 12px;border-radius:7px;text-decoration:none;color:#c9c4ba;font-size:12px;font-weight:700;border:1px solid transparent}
-.admin-nav a:hover{color:#fff;background:#171512;border-color:#403722}
-.panel-section-label{display:flex;align-items:center;gap:9px;color:#c9a45c;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:8px}
-.panel-section-label::before{content:"";width:18px;height:1px;background:#c9a45c}
-@media(max-width:700px){.admin-nav{position:static}.network-tabs{width:100%}.network-tabs button{flex:1}}
-
-/* HSKRC Executive Admin v4 */
-body{letter-spacing:.005em}
-header{min-height:72px}
-.logo{font-family:Georgia,"Times New Roman",serif;font-size:24px;letter-spacing:.8px}
-main{max-width:1500px}
-.dashboard>.admin-kicker{margin-top:6px}
-.admin-subtitle{font-size:15px;margin-bottom:22px}
-.admin-nav{top:86px;padding:7px;border-radius:10px;background:rgba(12,12,12,.94);backdrop-filter:blur(15px)}
-.admin-nav a{padding:9px 14px}
-.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:25px 0 30px}
-.stat{min-height:118px;padding:21px 22px;display:flex;flex-direction:column;justify-content:space-between}
-.stat>div:first-child{text-transform:uppercase;letter-spacing:1px;font-size:10px}
-.stat-number{font-family:Georgia,"Times New Roman",serif;font-size:36px}
-.panel{padding:28px;margin-bottom:28px}
-.panel>.title-row{border-bottom:1px solid #28251f;padding-bottom:17px;margin-bottom:22px}
-.panel h2{font-family:Georgia,"Times New Roman",serif;font-size:24px;letter-spacing:.1px}
-.form-grid{gap:19px 22px}
-label{text-transform:uppercase;letter-spacing:.7px;font-size:10px;color:#aaa49a}
-input,select,textarea{border-radius:7px;padding:12px 13px}
-button,.button-link{border-radius:7px}
-.table-wrap{border-radius:9px}
-th{padding:14px 13px;font-size:10px;letter-spacing:1px}
-td{padding:14px 13px}
-.network-manager{padding:0;overflow:hidden}
-.network-manager>.panel-section-label{margin:27px 28px 4px}
-.network-manager>.title-row{margin:0 28px;padding:0 0 21px}
-.network-tabs{margin:0;padding:0 28px;background:#0d0d0d;border:0;border-top:1px solid #28251f;border-bottom:1px solid #28251f;border-radius:0;width:100%;gap:0}
-.network-tabs button{background:transparent!important;border:0!important;border-radius:0;padding:15px 18px;color:#999}
-.network-tabs button.active{color:#e1c17e!important;box-shadow:inset 0 -2px #c9a45c}
-.network-pane{padding:28px}
-.network-manager .mini-list{margin-top:24px;border-top:1px solid #28251f;padding-top:18px}
-.network-manager .mini-row{border-radius:7px;padding:12px 14px}
-#bookFormPanel,#articleFormPanel{position:relative}
-#bookFormPanel::before,#articleFormPanel::before,#researchNetworkPanel::before,#usersPanel::before{
- content:"";position:absolute;left:0;top:24px;width:2px;height:34px;background:#c9a45c
-}
-#researchNetworkPanel{position:relative}
-#usersPanel{position:relative}
-.dashboard>.title-row{margin-top:5px;margin-bottom:0;padding:26px 0 2px}
-.dashboard>.title-row h1{font-family:Georgia,"Times New Roman",serif;font-size:38px;font-weight:500}
-.dashboard>.title-row h1::after{display:none}
-.header-actions .dark{background:transparent}
-.header-actions .danger{background:transparent;border-color:#4a2828;color:#e7a1a1}
-@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){
- .panel{padding:20px}.network-manager{padding:0}.network-manager>.panel-section-label,.network-manager>.title-row{margin-left:20px;margin-right:20px}
- .network-tabs{padding:0 10px;overflow-x:auto;flex-wrap:nowrap}.network-tabs button{white-space:nowrap}
- .network-pane{padding:20px}.dashboard>.title-row h1{font-size:31px}
-}
-
-/* HSKRC Executive Research Console v6 */
-:root{--side:252px;--gold:#c9a45c;--gold2:#e3c47f}
-body{padding-left:var(--side);background:#080808}
-header{position:fixed;left:var(--side);right:0;top:0;height:72px;min-height:72px;padding:0 28px;z-index:300;background:rgba(9,9,9,.96)}
-main{max-width:none;width:auto;margin:0;padding:96px 30px 60px}
-.admin-sidebar{position:fixed;z-index:400;inset:0 auto 0 0;width:var(--side);background:linear-gradient(180deg,#0d0c0a,#080808 70%);border-right:1px solid #2c2922;padding:24px 16px;display:flex;flex-direction:column}
-.sidebar-brand{padding:0 10px 22px;border-bottom:1px solid #29251e}.sidebar-brand strong{font:600 27px Georgia,serif;color:#fff;letter-spacing:1px}.sidebar-brand span{display:block;color:var(--gold);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:5px}
-.sidebar-label{color:#706b62;font-size:9px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase;padding:22px 11px 8px}.side-nav{display:grid;gap:5px}.side-nav a{display:flex;align-items:center;gap:11px;text-decoration:none;color:#aaa49a;padding:11px 12px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:650}.side-nav a:hover,.side-nav a.active{background:#17140f;color:#fff;border-color:#3c3325}.side-nav a.active{box-shadow:inset 2px 0 var(--gold)}.side-icon{width:20px;text-align:center;color:var(--gold)}
-.sidebar-foot{margin-top:auto;border-top:1px solid #29251e;padding:16px 10px 0;color:#706b62;font-size:10px;line-height:1.6}.sidebar-foot b{color:#b8b1a6}
-.admin-nav{display:none}.dashboard>.admin-kicker{color:var(--gold);letter-spacing:2.2px}.dashboard>.title-row{padding-top:12px}.dashboard>.title-row h1{font-size:42px}.admin-subtitle{max-width:850px}.stats{grid-template-columns:repeat(4,1fr)}
-.stat{border-radius:10px;min-height:126px}.stat-number{color:#fff}.stat::after{content:'';position:absolute;left:0;bottom:0;width:44px;height:2px;background:var(--gold)}
-.workspace-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 18px}.workspace-title{font:500 18px Georgia,serif;color:#fff}.workspace-meta{color:#7f796f;font-size:11px}
-.panel{border-radius:10px}.panel-section-label{letter-spacing:1.8px}.network-manager{border-radius:10px}
-.console-badge{display:inline-flex;align-items:center;gap:7px;color:#bdb6aa;font-size:11px}.console-badge:before{content:'';width:7px;height:7px;border-radius:50%;background:#79c99e;box-shadow:0 0 10px #79c99e66}
-@media(max-width:1050px){:root{--side:78px}.sidebar-brand strong{font-size:22px}.sidebar-brand span,.sidebar-label,.side-nav .side-text,.sidebar-foot{display:none}.admin-sidebar{padding:22px 10px}.side-nav a{justify-content:center;padding:12px}.side-icon{font-size:16px}header{padding:0 18px}main{padding-left:20px;padding-right:20px}}
-@media(max-width:700px){body{padding-left:0}.admin-sidebar{position:fixed;left:0;right:0;top:auto;bottom:0;width:auto;height:62px;padding:7px 9px;border-right:0;border-top:1px solid #332d23;display:block}.sidebar-brand,.sidebar-label,.sidebar-foot{display:none}.side-nav{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.side-nav a{padding:8px 2px;min-width:0}.side-nav .side-text{display:none}.side-icon{font-size:15px}header{left:0;height:auto;min-height:68px}.header-actions .button-link{display:none}main{padding:90px 12px 88px}.dashboard>.title-row h1{font-size:31px}.stats{grid-template-columns:1fr 1fr}}
-
-
-/* =========================================================
-   HSKRC Executive Admin v7 — anchor + overview refinements
-   ========================================================= */
-html{scroll-padding-top:105px}
-#dashboardTop,#bookFormPanel,#articleFormPanel,#researchNetworkPanel,#usersPanel,
-#network-pane-nodes,#network-pane-sources,#network-pane-researchers,#network-pane-relations,#network-pane-bookrelations{
-  scroll-margin-top:105px;
-}
-@media(max-width:700px){
-  html{scroll-padding-top:82px}
-  #dashboardTop,#bookFormPanel,#articleFormPanel,#researchNetworkPanel,#usersPanel,
-  #network-pane-nodes,#network-pane-sources,#network-pane-researchers,#network-pane-relations,#network-pane-bookrelations{
-    scroll-margin-top:82px;
-  }
-}
-.stats.research-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
-.stat .stat-detail{color:#777168;font-size:10px;margin-top:5px;letter-spacing:.35px}
-@media(max-width:900px){.stats.research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:430px){.stats.research-stats{grid-template-columns:1fr}}
-</style>
-<meta content="noindex,nofollow" name="robots"/></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+
+  <title>HSKRC | Admin Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="hskrc-global.css">
+
+  <style>
+    :root{
+      --bg:#0d1117;
+      --panel:#151a22;
+      --panel2:#10161e;
+      --border:#29313c;
+      --gold:#c9a45c;
+      --gold2:#a98545;
+      --text:#f4f7f6;
+      --muted:#8f98a5;
+      --danger:#ff7777;
+      --success:#78d49a;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top right,rgba(201,164,92,.08),transparent 30%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(13,17,23,.94);
+      border-bottom:1px solid rgba(201,164,92,.12);
+      backdrop-filter:blur(16px);
+    }
+
+    .header-inner{
+      max-width:1250px;
+      min-height:70px;
+      margin:auto;
+      padding:0 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-weight:800;
+    }
+
+    .brand-mark{
+      width:40px;
+      height:40px;
+      display:grid;
+      place-items:center;
+      border-radius:11px;
+      color:var(--gold);
+      background:rgba(201,164,92,.10);
+      border:1px solid rgba(201,164,92,.25);
+    }
+
+    .brand small{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:500;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:8px;
+    }
+
+    .header-link{
+      padding:9px 12px;
+      border-radius:9px;
+      color:#c4ccd5;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .header-link:hover{
+      background:rgba(201,164,92,.08);
+      color:var(--gold);
+    }
+
+    .page{
+      max-width:1250px;
+      margin:auto;
+      padding:45px 22px 70px;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      font-size:11px;
+      font-weight:850;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:8px 0 8px;
+      font-size:clamp(32px,5vw,48px);
+      line-height:1.1;
+    }
+
+    .lead{
+      margin:0;
+      color:var(--muted);
+      max-width:720px;
+      line-height:1.65;
+    }
+
+    .admin-info{
+      margin-top:20px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .admin-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--success);
+    }
+
+    .stats{
+      margin-top:28px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .stat{
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:15px;
+      background:var(--panel);
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+
+    .stat-value{
+      margin-top:7px;
+      color:var(--gold);
+      font-size:30px;
+      font-weight:850;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      margin:30px 0 18px;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    }
+
+    .tab{
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--muted);
+      padding:10px 15px;
+      border-radius:9px;
+      cursor:pointer;
+      font-weight:750;
+    }
+
+    .tab:hover,
+    .tab.active{
+      color:var(--gold);
+      background:rgba(201,164,92,.08);
+      border-color:rgba(201,164,92,.16);
+    }
+
+    .panel{
+      display:none;
+    }
+
+    .panel.active{
+      display:block;
+    }
+
+    .panel-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:14px;
+    }
+
+    .panel-title{
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .refresh{
+      border:1px solid rgba(201,164,92,.30);
+      background:transparent;
+      color:var(--gold);
+      border-radius:9px;
+      padding:9px 13px;
+      cursor:pointer;
+      font-weight:750;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--border);
+      border-radius:15px;
+      background:var(--panel);
+    }
+
+    table{
+      width:100%;
+      min-width:900px;
+      border-collapse:collapse;
+    }
+
+    th,
+    td{
+      padding:13px 14px;
+      text-align:left;
+      vertical-align:top;
+      border-bottom:1px solid rgba(255,255,255,.055);
+      font-size:12px;
+    }
+
+    th{
+      color:var(--gold);
+      background:#11171f;
+      font-size:10px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+    }
+
+    td{
+      color:#d8dee7;
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    .message-cell{
+      max-width:330px;
+      white-space:normal;
+      line-height:1.55;
+    }
+
+    .status-select{
+      background:#0d131a;
+      color:var(--text);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:7px 8px;
+      font-size:11px;
+    }
+
+    .badge{
+      display:inline-flex;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .yes{
+      color:#86d9a4;
+      background:rgba(70,180,110,.10);
+    }
+
+    .no{
+      color:#aeb6c1;
+      background:rgba(255,255,255,.05);
+    }
+
+    .loading,
+    .empty,
+    .error{
+      padding:45px 20px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    .error{
+      color:var(--danger);
+    }
+
+    .gate{
+      min-height:70vh;
+      display:grid;
+      place-items:center;
+      text-align:center;
+    }
+
+    .gate-box{
+      width:min(500px,100%);
+      padding:35px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:var(--panel);
+    }
+
+    .gate-title{
+      margin:0 0 8px;
+      font-size:22px;
+    }
+
+    .gate-text{
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .hidden{display:none!important}
+
+    @media(max-width:850px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .header-actions{display:none}
+    }
+
+    @media(max-width:520px){
+      .stats{grid-template-columns:1fr}
+      .page{padding:30px 13px 50px}
+      .tabs{overflow:auto}
+      .panel-header{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
 <body>
-<aside aria-label="Administration navigation" class="admin-sidebar">
-<div class="sidebar-brand"><strong>HSKRC</strong><span>Research Administration</span></div>
-<div class="sidebar-label">Workspace</div>
-<nav class="side-nav">
-<a class="active" href="#dashboardTop"><span class="side-icon">◈</span><span class="side-text">Overview</span></a>
-<a href="#bookFormPanel"><span class="side-icon">▤</span><span class="side-text">Library</span></a>
-<a href="#articleFormPanel"><span class="side-icon">✦</span><span class="side-text">Articles</span></a>
-<a href="#researchNetworkPanel"><span class="side-icon">⌘</span><span class="side-text">Research Database</span></a>
-<a href="#network-pane-sources" onclick="showNetworkTab('sources',document.querySelector('[data-network-tab=\'sources\']'))"><span class="side-icon">◇</span><span class="side-text">Sources</span></a>
-<a href="#network-pane-researchers" onclick="showNetworkTab('researchers',document.querySelector('[data-network-tab=\'researchers\']'))"><span class="side-icon">◉</span><span class="side-text">Researchers</span></a>
-<a href="#usersPanel"><span class="side-icon">◎</span><span class="side-text">Users</span></a>
-</nav>
-<div class="sidebar-foot"><b>HSKRC Digital Archive</b><br/>Editorial &amp; research console<br/>© 2026</div>
-</aside>
-<header>
-<div><div class="logo" id="logoText">HSKRC · Administration</div><div class="console-badge">Secure research console</div></div>
-<div class="header-actions">
-<a class="button-link dark" href="index.html">Home</a>
-<a class="button-link dark" href="library.html">Library</a>
-<button class="dark" id="languageBtn" onclick="toggleLanguage()">🌐 Persian</button>
-<button class="danger" onclick="logout()">Logout</button>
-</div>
-</header>
-<main>
-<div class="loading" id="loading">
-    Checking administrator access...
+
+<header class="header">
+  <div class="header-inner">
+
+    <a class="brand" href="index.html">
+      <div class="brand-mark">H</div>
+      <div>
+        HSKRC Admin
+        <small>Hassan Sabbah Knowledge & Research Centre</small>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <a class="header-link" href="index.html">Home</a>
+      <a class="header-link" href="library.html">Library</a>
+      <a class="header-link" href="account.html">My Account</a>
+      <a class="header-link" href="#" id="logoutLink">Logout</a>
+    </div>
+
   </div>
-<div class="access-denied hidden" id="accessDenied">
-<h2>Access Denied</h2>
-<p>You do not have administrator access.</p>
-<br/>
-<a class="button-link dark" href="index.html">Return to Home</a>
-</div>
-<div class="dashboard" id="dashboard"><div id="dashboardTop"></div>
-<div class="admin-kicker">HSKRC · Research Administration System</div>
-<div class="admin-subtitle">A unified editorial and research console for the HSKRC knowledge archive.</div>
-<nav aria-label="Admin sections" class="admin-nav">
-<a href="#bookFormPanel">Books</a>
-<a href="#articleFormPanel">Articles</a>
-<a href="#researchNetworkPanel">Research Network</a>
-<a href="#usersPanel">Users</a>
-</nav>
-<div class="title-row">
-<h1 id="pageTitle">Admin Dashboard</h1>
-<button class="green" onclick="showAddBookForm()">
-        ＋ Add Book
+</header>
+
+
+<main class="page">
+
+  <div id="checking" class="gate">
+    <div class="gate-box">
+      <h2 class="gate-title">Checking administrator access</h2>
+      <div class="gate-text">
+        Please wait while HSKRC verifies your account.
+      </div>
+    </div>
+  </div>
+
+
+  <div id="denied" class="gate hidden">
+    <div class="gate-box">
+      <h2 class="gate-title">Access denied</h2>
+      <div class="gate-text">
+        This area is available only to authorised HSKRC administrators.
+      </div>
+    </div>
+  </div>
+
+
+  <div id="dashboard" class="hidden">
+
+    <div class="eyebrow">Administration</div>
+
+    <h1>HSKRC Admin Dashboard</h1>
+
+    <p class="lead">
+      Review feedback and private support records submitted through HSKRC.
+    </p>
+
+    <div class="admin-info">
+      <span class="admin-dot"></span>
+      <span id="adminEmail">Administrator</span>
+    </div>
+
+
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-label">Feedback</div>
+        <div class="stat-value" id="feedbackCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">New Feedback</div>
+        <div class="stat-value" id="newFeedbackCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Support Records</div>
+        <div class="stat-value" id="donationCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">New Support</div>
+        <div class="stat-value" id="newDonationCount">0</div>
+      </div>
+
+    </section>
+
+
+    <div class="tabs">
+
+      <button
+        class="tab active"
+        data-panel="feedbackPanel"
+      >
+        Feedback
       </button>
-</div>
-<div class="message" id="message"></div>
-<!-- =========================
-         STATISTICS
-         ========================= -->
-<div class="stats research-stats">
-<div class="stat">
-<div>Total Books</div>
-<div class="stat-number" id="totalBooks">0</div>
-<div class="stat-detail">Digital library records</div>
-</div>
-<div class="stat">
-<div>Published Books</div>
-<div class="stat-number" id="publishedBooks">0</div>
-<div class="stat-detail">Public library records</div>
-</div>
-<div class="stat">
-<div>Articles</div>
-<div class="stat-number" id="totalArticles">0</div>
-<div class="stat-detail">Editorial &amp; research content</div>
-</div>
-<div class="stat">
-<div>Users</div>
-<div class="stat-number" id="totalUsers">0</div>
-<div class="stat-detail">Registered profiles</div>
-</div>
-<div class="stat">
-<div>Knowledge Nodes</div>
-<div class="stat-number" id="totalKnowledgeNodes">0</div>
-<div class="stat-detail">People, places &amp; fortifications</div>
-</div>
-<div class="stat">
-<div>Research Sources</div>
-<div class="stat-number" id="totalResearchSources">0</div>
-<div class="stat-detail">Documented source registry</div>
-</div>
-<div class="stat">
-<div>Researchers</div>
-<div class="stat-number" id="totalResearchers">0</div>
-<div class="stat-detail">Research directory records</div>
-</div>
-<div class="stat">
-<div>Connections</div>
-<div class="stat-number" id="totalResearchConnections">0</div>
-<div class="stat-detail">Research network relationships</div>
-</div>
-</div>
-<!-- =========================
-         BOOK FORM
-         ========================= -->
-<div class="panel" id="bookFormPanel"><div class="panel-section-label">Library Management</div>
-<h2 id="formTitle">Add New Book</h2>
-<form action="javascript:void(0);" id="bookForm" novalidate="">
-<input id="bookId" type="hidden"/>
-<div class="form-grid">
-<div>
-<label for="title">Book Title *</label>
-<input id="title" placeholder="Enter book title" required="" type="text"/>
-</div>
-<div>
-<label for="author">Author *</label>
-<input id="author" placeholder="Enter author name" required="" type="text"/>
-</div>
-<div>
-<label for="category">Category</label>
-<input id="category" placeholder="e.g. History, Philosophy" type="text"/>
-</div>
-<div>
-<label for="publicationYear">Publication Year</label>
-<input id="publicationYear" placeholder="e.g. 2024" type="number"/>
-</div>
-<div>
-<label for="language">Language</label>
-<select id="language">
-<option value="English">English</option>
-<option value="Persian">Persian</option>
-<option value="Arabic">Arabic</option>
-<option value="Other">Other</option>
-</select>
-</div>
-<div>
-<label for="isbn">ISBN</label>
-<input id="isbn" placeholder="ISBN" type="text"/>
-</div>
-<div class="full">
-<label for="translator">Translator</label>
-<input id="translator" placeholder="Translator name (optional)" type="text"/>
-</div>
-<div class="full">
-<label for="description">Description</label>
-<textarea id="description" placeholder="Write a short description of the book..."></textarea>
-</div>
-<div>
-<label for="coverFile">Book Cover</label>
-<input accept="image/*" id="coverFile" type="file"/>
-<div class="file-name" id="coverFileName"></div>
-</div>
-<div>
-<label for="pdfFile">PDF File *</label>
-<input accept="application/pdf,.pdf" id="pdfFile" type="file"/>
-<div class="file-name" id="pdfFileName"></div>
-</div>
-<div class="full">
-<div class="check-row">
-<input checked="" id="published" type="checkbox"/>
-<label for="published" style="margin:0;">Published</label>
-</div>
-</div>
-</div>
-<div class="form-actions">
-<button class="green" id="saveBookBtn" type="submit">
-            Save Book
-          </button>
-<button class="dark" onclick="resetBookForm()" type="button">
-            Cancel
-          </button>
-</div>
-</form>
-</div>
-<!-- =========================
-         BOOKS
-         ========================= -->
-<div class="panel">
-<div class="title-row">
-<h2>Books</h2>
-<button class="dark" onclick="loadBooks()">
-          🔄 Refresh
+
+      <button
+        class="tab"
+        data-panel="donationsPanel"
+      >
+        Support / Donations
+      </button>
+
+    </div>
+
+
+    <section
+      class="panel active"
+      id="feedbackPanel"
+    >
+
+      <div class="panel-header">
+
+        <div class="panel-title">
+          Feedback
+        </div>
+
+        <button
+          class="refresh"
+          onclick="loadFeedback()"
+        >
+          Refresh
         </button>
-</div>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Title</th>
-<th>Author</th>
-<th>Category</th>
-<th>Language</th>
-<th>Status</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="booksTableBody">
-<tr>
-<td colspan="6">Loading books...</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- =========================
-         ARTICLE FORM
-         ========================= -->
-<div class="panel" id="articleFormPanel"><div class="panel-section-label">Editorial Workspace</div>
-<div class="title-row">
-<div>
-<h2 id="articleFormTitle">Add New Article</h2>
-<div class="section-note">
-            Create and publish articles or research materials.
-          </div>
-</div>
-</div>
-<form action="javascript:void(0);" id="articleForm" novalidate="">
-<input id="articleId" type="hidden"/>
-<div class="form-grid">
-<div>
-<label for="articleTitle">Article Title *</label>
-<input id="articleTitle" placeholder="Enter article title" required="" type="text"/>
-</div>
-<div>
-<label for="articleAuthor">Author *</label>
-<input id="articleAuthor" placeholder="Enter author name" required="" type="text"/>
-</div>
-<div>
-<label for="articleCategory">Category</label>
-<input id="articleCategory" placeholder="e.g. History, Research" type="text"/>
-</div>
-<div>
-<label for="articleCoverPath">Cover Path</label>
-<input id="articleCoverPath" placeholder="Optional storage path" type="text"/>
-</div>
-<div class="full">
-<label for="articleExcerpt">Excerpt</label>
-<textarea id="articleExcerpt" placeholder="Short summary of the article..."></textarea>
-</div>
-<div class="full">
-<label for="articleContent">Article Content *</label>
-<textarea class="article-content" id="articleContent" placeholder="Write the full article or research text here..." required=""></textarea>
-</div>
-<div class="full">
-<div class="check-row">
-<input checked="" id="articlePublished" type="checkbox"/>
-<label for="articlePublished" style="margin:0;">
-                Published
-              </label>
-</div>
-</div>
-</div>
-<div class="form-actions">
-<button class="green" id="saveArticleBtn" type="submit">
-            Save Article
-          </button>
-<button class="dark" onclick="resetArticleForm()" type="button">
-            Cancel
-          </button>
-</div>
-</form>
-</div>
-<!-- =========================
-         ARTICLES
-         ========================= -->
-<div class="panel">
-<div class="title-row">
-<h2 id="articlesPanelTitle">
-          Articles &amp; Research
-        </h2>
-<div class="actions">
-<button class="green" onclick="showAddArticleForm()">
-            ➕ Add New Article
-          </button>
-<button class="dark" onclick="loadArticles()">
-            🔄 Refresh
-          </button>
-</div>
-</div>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Title</th>
-<th>Author</th>
-<th>Category</th>
-<th>Status</th>
-<th>Published</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="articlesTableBody">
-<tr>
-<td colspan="6">
-                Loading articles...
-              </td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- =========================
-         RESEARCH NETWORK MANAGER
-         ========================= -->
-<div class="panel network-manager" id="researchNetworkPanel"><div class="panel-section-label">Research Infrastructure</div>
-<div class="title-row">
-<div>
-<h2>Research Network Manager</h2>
-<div class="section-note">Manage Knowledge Nodes, Sources, Researchers, and article relationships from the HSKRC Admin Panel.</div>
-</div>
-<button class="dark" onclick="loadResearchNetwork()">Refresh Network</button>
-</div>
-<div class="network-tabs">
-<button class="dark active" data-network-tab="nodes" onclick="showNetworkTab('nodes',this)">Knowledge Nodes</button>
-<button class="dark" data-network-tab="sources" onclick="showNetworkTab('sources',this)">Sources</button>
-<button class="dark" data-network-tab="researchers" onclick="showNetworkTab('researchers',this)">Researchers</button>
-<button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Connection Manager</button>
-<button class="dark" data-network-tab="bookrelations" onclick="showNetworkTab('bookrelations',this)">Book Connections</button>
-</div>
-<div class="network-pane active" id="network-pane-nodes">
-<form id="nodeForm"><input id="networkNodeId" type="hidden"/>
-<div class="form-grid">
-<div><label>Slug *</label><input id="networkNodeSlug" placeholder="e.g. alamut" required=""/></div>
-<div><label>Node Type</label><select id="networkNodeType"><option value="topic">Topic</option><option value="person">Person</option><option value="place">Place</option><option value="fortification">Fortification</option></select></div>
-<div><label>English Title *</label><input id="networkNodeTitle" required=""/></div>
-<div><label>Persian Title</label><input id="networkNodeTitleFa"/></div>
-<div class="full"><label>Description</label><textarea id="networkNodeDescription"></textarea></div>
-</div>
-<div class="form-actions"><button class="gold" type="submit">Save Knowledge Node</button><button class="dark" onclick="resetNodeForm()" type="button">Clear</button></div>
-</form>
-<div class="mini-list" id="networkNodesList"></div>
-</div>
-<div class="network-pane" id="network-pane-sources">
-<form id="sourceForm"><input id="networkSourceId" type="hidden"/>
-<div class="form-grid">
-<div><label>Source Code *</label><input id="networkSourceCode" placeholder="HSKRC-SRC-0013" required=""/></div>
-<div><label>Source Type</label><input id="networkSourceType" placeholder="Scholarly Book"/></div>
-<div class="full"><label>Title *</label><input id="networkSourceTitle" required=""/></div>
-<div><label>Author</label><input id="networkSourceAuthor"/></div>
-<div><label>Institution</label><input id="networkSourceInstitution"/></div>
-<div><label>Publication Year</label><input id="networkSourceYear" type="number"/></div>
-<div><label>Language</label><input id="networkSourceLanguage"/></div>
-<div><label>Reliability</label><input id="networkSourceReliability"/></div>
-<div class="full"><label>URL</label><input id="networkSourceUrl" type="url"/></div>
-<div class="full"><label>Notes</label><textarea id="networkSourceNotes"></textarea></div>
-</div>
-<div class="form-actions"><button class="gold" type="submit">Save Source</button><button class="dark" onclick="resetSourceForm()" type="button">Clear</button></div>
-</form>
-<div class="mini-list" id="networkSourcesList"></div>
-</div>
-<div class="network-pane" id="network-pane-researchers">
-<form id="researcherForm"><input id="networkResearcherId" type="hidden"/>
-<div class="form-grid">
-<div><label>Slug *</label><input id="networkResearcherSlug" placeholder="farhad-daftary" required=""/></div>
-<div><label>Field</label><input id="networkResearcherField" placeholder="Ismaili Studies"/></div>
-<div><label>Name *</label><input id="networkResearcherName" required=""/></div>
-<div><label>Persian Name</label><input id="networkResearcherNameFa"/></div>
-<div class="full"><label>Notes</label><textarea id="networkResearcherNotes"></textarea></div>
-</div>
-<div class="form-actions"><button class="gold" type="submit">Save Researcher</button><button class="dark" onclick="resetResearcherForm()" type="button">Clear</button></div>
-</form>
-<div class="mini-list" id="networkResearchersList"></div>
-</div>
-<div class="network-pane" id="network-pane-relations">
-<div class="section-note" style="margin-bottom:18px"><b>Connection Manager v6</b> · Create and remove relationships across the HSKRC research database without writing SQL.</div>
-<div class="connection-jumpbar" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-<button class="gold" onclick="document.getElementById('articleConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})" type="button">Article Connections</button>
-<button class="dark" onclick="document.getElementById('sourceNodeConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})" type="button">Source ↔ Knowledge Node</button>
-<button class="dark" onclick="document.getElementById('researcherSourceConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})" type="button">Researcher ↔ Source</button>
-</div>
-<div class="panel" id="articleConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-<h3 style="margin-top:0;color:#fff">Article Connections</h3>
-<div class="relation-grid">
-<div><label>Article</label><select id="relationArticle"></select></div>
-<div><label>Knowledge Node</label><select id="relationNode"></select></div>
-<div><label>Source</label><select id="relationSource"></select></div>
-<div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
-<button class="gold" onclick="linkArticleNode()" type="button">Link Article → Node</button>
-<button class="gold" onclick="linkArticleSource()" type="button">Link Article → Source</button>
-</div>
-</div>
-<div class="mini-list" id="articleRelationsList"></div>
-</div>
-<div class="panel" id="sourceNodeConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-<div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
-<h3 style="margin-top:0;color:#fff">Source ↔ Knowledge Node</h3>
-<p style="color:#9f9a90;margin-top:-4px">Connect a documented source directly to Alamut, Hassan Sabbah, a fortification, or another knowledge node.</p>
-<div class="relation-grid">
-<div><label>Source</label><select id="sourceNodeSource"></select></div>
-<div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
-<div style="display:flex;align-items:end"><button class="gold" id="linkSourceNodeBtn" onclick="linkSourceNode()" type="button">Link Source → Node</button></div>
-</div>
-<div id="sourceNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="sourceNodeRelationsList"></div>
-</div>
-<div class="panel" id="researcherSourceConnectionPanel" style="margin:0;padding:24px;border-color:#c9a45c66">
-<div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
-<h3 style="margin-top:0;color:#fff">Researcher ↔ Source</h3>
-<p style="color:#9f9a90;margin-top:-4px">Associate a researcher with the scholarly sources represented in the HSKRC registry.</p>
-<div class="relation-grid">
-<div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
-<div><label>Source</label><select id="researcherSourceSource"></select></div>
-<div style="display:flex;align-items:end"><button class="gold" id="linkResearcherSourceBtn" onclick="linkResearcherSource()" type="button">Link Researcher → Source</button></div>
-</div>
-<div id="researcherSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="researcherSourceRelationsList"></div>
-</div>
-</div>
-</div>
-<div class="network-pane" id="network-pane-bookrelations">
-<div class="section-note" style="margin-bottom:18px"><b>Book Research Integration</b> · Connect real library records to the HSKRC Research Network. No relationship is created automatically.</div>
-<div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-<h3 style="margin-top:0;color:#fff">Book ↔ Knowledge Node</h3>
-<div class="relation-grid"><div><label>Book</label><select id="bookNodeBook"></select></div><div><label>Knowledge Node</label><select id="bookNodeNode"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookNodeBtn" onclick="linkBookNode()" type="button">Link Book → Node</button></div></div>
-<div id="bookNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookNodeRelationsList"></div>
-</div>
-<div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-<h3 style="margin-top:0;color:#fff">Book ↔ Research Source</h3>
-<div class="relation-grid"><div><label>Book</label><select id="bookSourceBook"></select></div><div><label>Source</label><select id="bookSourceSource"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookSourceBtn" onclick="linkBookSource()" type="button">Link Book → Source</button></div></div>
-<div id="bookSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookSourceRelationsList"></div>
-</div>
-<div class="panel" style="margin:0;padding:24px;border-color:#c9a45c66">
-<h3 style="margin-top:0;color:#fff">Book ↔ Researcher</h3>
-<div class="relation-grid"><div><label>Book</label><select id="bookResearcherBook"></select></div><div><label>Researcher</label><select id="bookResearcherResearcher"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookResearcherBtn" onclick="linkBookResearcher()" type="button">Link Book → Researcher</button></div></div>
-<div id="bookResearcherStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookResearcherRelationsList"></div>
-</div>
-</div>
-<!-- =========================
-         USERS
-         ========================= -->
-<div class="panel" id="usersPanel">
-<div class="title-row">
-<h2 id="usersTitle">Users</h2>
-<button class="dark" onclick="loadUsers()">
-          🔄 Refresh
+
+      </div>
+
+      <div
+        class="table-wrap"
+        id="feedbackContainer"
+      >
+        <div class="loading">
+          Loading feedback...
+        </div>
+      </div>
+
+    </section>
+
+
+    <section
+      class="panel"
+      id="donationsPanel"
+    >
+
+      <div class="panel-header">
+
+        <div class="panel-title">
+          Support / Donations
+        </div>
+
+        <button
+          class="refresh"
+          onclick="loadDonations()"
+        >
+          Refresh
         </button>
-</div>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Phone</th>
-<th>Email Consent</th>
-<th>Role</th>
-<th>Joined</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="usersTableBody">
-<tr>
-<td colspan="6">
-                Loading users...
-              </td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+
+      </div>
+
+      <div
+        class="table-wrap"
+        id="donationsContainer"
+      >
+        <div class="loading">
+          Loading support records...
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
 </main>
+
+
 <script>
 
-  /* =========================================
-     SUPABASE
-     ========================================= */
+const SUPABASE_URL =
+  "https://uwuklryzxexpofcxrbnm.supabase.co";
 
-  const SUPABASE_URL =
-    "https://uwuklryzxexpofcxrbnm.supabase.co";
+const SUPABASE_KEY =
+  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
-  const SUPABASE_ANON_KEY =
-    "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function formatDate(value){
+
+  if(!value) return "-";
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+    return "-";
+  }
+
+  return date.toLocaleString();
+
+}
+
+
+async function checkAdmin(){
+
+  const checking =
+    document.getElementById("checking");
+
+  const denied =
+    document.getElementById("denied");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+
+  try{
+
+    const {
+      data:{
+        session
+      }
+    } =
+      await db.auth.getSession();
+
+
+    if(!session){
+
+      window.location.href =
+        "auth.html";
+
+      return;
+
+    }
+
+
+    document.getElementById(
+      "adminEmail"
+    ).textContent =
+      session.user.email ||
+      "Administrator";
+
+
+    /*
+      Verify the logged-in user against
+      the protected admin_users table
+      through the is_admin() function.
+    */
+
+    const {
+      data:isAdmin,
+      error
+    } =
+      await db.rpc("is_admin");
+
+
+    if(
+      error ||
+      isAdmin !== true
+    ){
+
+      if(error){
+        console.error(
+          "Admin verification:",
+          error
+        );
+      }
+
+      checking.classList.add(
+        "hidden"
+      );
+
+      denied.classList.remove(
+        "hidden"
+      );
+
+      return;
+
+    }
+
+
+    checking.classList.add(
+      "hidden"
+    );
+
+    dashboard.classList.remove(
+      "hidden"
     );
 
 
-  let currentLanguage = "en";
-
-  let books = [];
-  let articles = [];
-  let users = [];
-
-  let currentUserId = null;
+    await Promise.all([
+      loadFeedback(),
+      loadDonations()
+    ]);
 
 
-  /* =========================================
-     LANGUAGE
-     ========================================= */
+  }catch(error){
 
-  function toggleLanguage() {
+    console.error(error);
 
-    currentLanguage =
-      currentLanguage === "en"
-        ? "fa"
-        : "en";
+    checking.classList.add(
+      "hidden"
+    );
 
-    document.documentElement.lang =
-      currentLanguage === "fa"
-        ? "fa"
-        : "en";
-
-    document.documentElement.dir =
-      currentLanguage === "fa"
-        ? "rtl"
-        : "ltr";
-
-    document.getElementById("languageBtn")
-      .textContent =
-        currentLanguage === "en"
-          ? "🌐 Persian"
-          : "🌐 English";
-
-    updateLanguage();
-
-    renderBooks();
-    renderArticles();
-    renderUsers();
+    denied.classList.remove(
+      "hidden"
+    );
 
   }
 
-
-  function updateLanguage() {
-
-    const fa =
-      currentLanguage === "fa";
-
-    document.getElementById("logoText")
-      .textContent =
-        fa
-          ? "پنل مدیریت HSKRC"
-          : "HSKRC Admin";
-
-    document.getElementById("pageTitle")
-      .textContent =
-        fa
-          ? "داشبورد مدیریت"
-          : "Admin Dashboard";
-
-    document.getElementById("usersTitle")
-      .textContent =
-        fa
-          ? "کاربران"
-          : "Users";
-
-    document.getElementById("articlesPanelTitle")
-      .textContent =
-        fa
-          ? "مقالات و پژوهش‌ها"
-          : "Articles & Research";
-
-  }
+}
 
 
-  /* =========================================
-     MESSAGE
-     ========================================= */
+async function loadFeedback(){
 
-  function showMessage(
-    text,
-    type = "success"
-  ) {
-
-    const message =
-      document.getElementById("message");
-
-    message.textContent = text;
-
-    message.className =
-      "message " + type;
-
-    message.style.display = "block";
-
-    setTimeout(() => {
-      message.style.display = "none";
-    }, 5000);
-
-  }
+  const container =
+    document.getElementById(
+      "feedbackContainer"
+    );
 
 
-  /* =========================================
-     ADMIN CHECK
-     ========================================= */
-
-  async function checkAdmin() {
-
-    const loading =
-      document.getElementById("loading");
-
-    const accessDenied =
-      document.getElementById("accessDenied");
-
-    const dashboard =
-      document.getElementById("dashboard");
-
-    try {
-
-      const {
-        data: {
-          session
-        },
-        error: sessionError
-      } =
-        await supabaseClient.auth.getSession();
-
-      if (sessionError) {
-        throw sessionError;
-      }
-
-      if (!session) {
-
-        loading.style.display = "none";
-
-        accessDenied.classList.remove("hidden");
-
-        accessDenied.querySelector("h2")
-          .textContent =
-            "Please log in first.";
-
-        accessDenied.querySelector("p")
-          .textContent =
-            "You must be logged in to access the admin panel.";
-
-        return;
-      }
-
-      currentUserId =
-        session.user.id;
+  container.innerHTML =
+    '<div class="loading">Loading feedback...</div>';
 
 
-      const {
-        data: profile,
-        error: profileError
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select("role")
-          .eq("id", session.user.id)
-          .single();
-
-      if (profileError) {
-        throw profileError;
-      }
-
-
-      if (
-        !profile ||
-        profile.role !== "admin"
-      ) {
-
-        loading.style.display = "none";
-
-        accessDenied.classList.remove("hidden");
-
-        accessDenied.querySelector("h2")
-          .textContent =
-            "Access Denied";
-
-        accessDenied.querySelector("p")
-          .textContent =
-            "This account does not have administrator access.";
-
-        return;
-      }
-
-
-      loading.style.display = "none";
-
-      dashboard.style.display = "block";
-
-
-      await loadBooks();
-
-      await loadArticles();
-
-      await loadUsers();
-      await loadResearchNetwork();
-
-
-    } catch (error) {
-
-      console.error(
-        "Admin check error:",
-        error
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("feedback")
+      .select(
+        "id,name,email,subject,message,status,created_at"
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
       );
 
-      loading.style.display = "none";
 
-      accessDenied.classList.remove("hidden");
+  if(error){
 
-      accessDenied.querySelector("h2")
-        .textContent =
-          "Error";
-
-      accessDenied.querySelector("p")
-        .textContent =
-          error.message ||
-          "Unable to verify administrator access.";
-
-    }
-
-  }
-
-
-  /* =========================================
-     BOOKS
-     ========================================= */
-
-  async function loadBooks() {
-
-    const tbody =
-      document.getElementById(
-        "booksTableBody"
-      );
-
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6">
-          Loading books...
-        </td>
-      </tr>
-    `;
-
-    const {
-      data,
+    console.error(
+      "Feedback:",
       error
-    } =
-      await supabaseClient
-        .from("books")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
+    );
 
-    if (error) {
+    container.innerHTML =
+      '<div class="error">Unable to load feedback.</div>';
 
-      console.error(error);
-
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6">
-            Error loading books:
-            ${escapeHtml(error.message)}
-          </td>
-        </tr>
-      `;
-
-      return;
-    }
-
-    books = data || [];
-
-    renderBooks();
-
-    updateStats();
+    return;
 
   }
 
 
-  function renderBooks() {
-
-    const tbody =
-      document.getElementById(
-        "booksTableBody"
-      );
-
-    if (!books.length) {
-
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6">
-            ${
-              currentLanguage === "fa"
-                ? "کتابی پیدا نشد."
-                : "No books found."
-            }
-          </td>
-        </tr>
-      `;
-
-      return;
-    }
-
-
-    tbody.innerHTML =
-      books.map(book => {
-
-        const status =
-          book.published
-            ? `<span class="status published">${
-                currentLanguage === "fa"
-                  ? "منتشر شده"
-                  : "Published"
-              }</span>`
-            : `<span class="status unpublished">${
-                currentLanguage === "fa"
-                  ? "منتشر نشده"
-                  : "Unpublished"
-              }</span>`;
-
-        return `
-          <tr>
-
-            <td>
-              ${escapeHtml(book.title || "")}
-            </td>
-
-            <td>
-              ${escapeHtml(book.author || "")}
-            </td>
-
-            <td>
-              ${escapeHtml(book.category || "-")}
-            </td>
-
-            <td>
-              ${escapeHtml(book.language || "-")}
-            </td>
-
-            <td>
-              ${status}
-            </td>
-
-            <td>
-
-              <div class="actions">
-
-                <button
-                  class="dark small-btn"
-                  onclick="editBook('${book.id}')">
-                  ${
-                    currentLanguage === "fa"
-                      ? "ویرایش"
-                      : "Edit"
-                  }
-                </button>
-
-                <button
-                  class="danger small-btn"
-                  onclick="deleteBook('${book.id}')">
-                  ${
-                    currentLanguage === "fa"
-                      ? "حذف"
-                      : "Delete"
-                  }
-                </button>
-
-              </div>
-
-            </td>
-
-          </tr>
-        `;
-
-      }).join("");
-
-  }
-
-
-  function showAddBookForm() {
-
-    resetBookForm();
-
-    document.getElementById(
-      "bookFormPanel"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-
-  function resetBookForm() {
-
-    document.getElementById(
-      "bookForm"
-    ).reset();
-
-    document.getElementById(
-      "bookId"
-    ).value = "";
-
-    document.getElementById(
-      "published"
-    ).checked = true;
-
-    document.getElementById(
-      "formTitle"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "افزودن کتاب جدید"
-        : "Add New Book";
-
-    document.getElementById(
-      "saveBookBtn"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "ذخیره کتاب"
-        : "Save Book";
-
-    document.getElementById(
-      "coverFileName"
-    ).textContent = "";
-
-    document.getElementById(
-      "pdfFileName"
-    ).textContent = "";
-
-  }
-
-
-  async function editBook(id) {
-
-    const book =
-      books.find(
-        item => item.id === id
-      );
-
-    if (!book) {
-
-      showMessage(
-        "Book not found.",
-        "error"
-      );
-
-      return;
-    }
-
-    document.getElementById(
-      "bookId"
-    ).value =
-      book.id || "";
-
-    document.getElementById(
-      "title"
-    ).value =
-      book.title || "";
-
-    document.getElementById(
-      "author"
-    ).value =
-      book.author || "";
-
-    document.getElementById(
-      "category"
-    ).value =
-      book.category || "";
-
-    document.getElementById(
-      "publicationYear"
-    ).value =
-      book.publication_year || "";
-
-    document.getElementById(
-      "language"
-    ).value =
-      book.language || "English";
-
-    document.getElementById(
-      "isbn"
-    ).value =
-      book.isbn || "";
-
-    document.getElementById(
-      "translator"
-    ).value =
-      book.translator || "";
-
-    document.getElementById(
-      "description"
-    ).value =
-      book.description || "";
-
-    document.getElementById(
-      "published"
-    ).checked =
-      !!book.published;
-
-    document.getElementById(
-      "formTitle"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "ویرایش کتاب"
-        : "Edit Book";
-
-    document.getElementById(
-      "saveBookBtn"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "به‌روزرسانی کتاب"
-        : "Update Book";
-
-    document.getElementById(
-      "coverFileName"
-    ).textContent =
-      book.cover_path
-        ? `Current cover: ${book.cover_path}`
-        : "";
-
-    document.getElementById(
-      "pdfFileName"
-    ).textContent =
-      book.pdf_path
-        ? `Current PDF: ${book.pdf_path}`
-        : "";
-
-    document.getElementById(
-      "bookFormPanel"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
+  const rows =
+    data || [];
 
 
   document.getElementById(
-    "bookForm"
-  ).addEventListener(
-    "submit",
-    async function(event) {
-
-      // Prevent the browser's normal form submission/page refresh.
-      // Saving is handled entirely by Supabase below.
-      event.preventDefault();
-      event.stopPropagation();
-
-      const saveButton =
-        document.getElementById(
-          "saveBookBtn"
-        );
-
-      saveButton.disabled = true;
-
-      saveButton.textContent =
-        currentLanguage === "fa"
-          ? "در حال ذخیره..."
-          : "Saving...";
-
-      try {
-
-        const bookId =
-          document.getElementById(
-            "bookId"
-          ).value.trim();
-
-        const title =
-          document.getElementById(
-            "title"
-          ).value.trim();
-
-        const author =
-          document.getElementById(
-            "author"
-          ).value.trim();
-
-        const category =
-          document.getElementById(
-            "category"
-          ).value.trim();
-
-        const publicationYearValue =
-          document.getElementById(
-            "publicationYear"
-          ).value.trim();
-
-        const publicationYear =
-          publicationYearValue
-            ? parseInt(
-                publicationYearValue,
-                10
-              )
-            : null;
-
-        const language =
-          document.getElementById(
-            "language"
-          ).value;
-
-        const isbn =
-          document.getElementById(
-            "isbn"
-          ).value.trim();
-
-        const translator =
-          document.getElementById(
-            "translator"
-          ).value.trim();
-
-        const description =
-          document.getElementById(
-            "description"
-          ).value.trim();
-
-        const published =
-          document.getElementById(
-            "published"
-          ).checked;
-
-        const coverFile =
-          document.getElementById(
-            "coverFile"
-          ).files[0];
-
-        const pdfFile =
-          document.getElementById(
-            "pdfFile"
-          ).files[0];
-
-
-        if (!title || !author) {
-
-          showMessage(
-            currentLanguage === "fa"
-              ? "عنوان و نویسنده الزامی است."
-              : "Title and author are required.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        let coverPath = null;
-
-        if (coverFile) {
-
-          const extension =
-            coverFile.name
-              .split(".")
-              .pop()
-              .toLowerCase();
-
-          const safeName =
-            title
-              .toLowerCase()
-              .replace(
-                /[^a-z0-9]+/g,
-                "-"
-              )
-              .replace(
-                /^-+|-+$/g,
-                ""
-              );
-
-          const fileName =
-            `${Date.now()}-${safeName}.${extension}`;
-
-          coverPath =
-            `covers/${fileName}`;
-
-          const {
-            error: uploadError
-          } =
-            await supabaseClient
-              .storage
-              .from("Books")
-              .upload(
-                coverPath,
-                coverFile,
-                {
-                  upsert: false
-                }
-              );
-
-          if (uploadError) {
-            throw uploadError;
-          }
-
-        }
-
-
-        let pdfPath = null;
-
-        if (pdfFile) {
-
-          const extension =
-            pdfFile.name
-              .split(".")
-              .pop()
-              .toLowerCase();
-
-          if (extension !== "pdf") {
-
-            throw new Error(
-              "Please select a PDF file."
-            );
-
-          }
-
-          const safeName =
-            title
-              .toLowerCase()
-              .replace(
-                /[^a-z0-9]+/g,
-                "-"
-              )
-              .replace(
-                /^-+|-+$/g,
-                ""
-              );
-
-          const fileName =
-            `${Date.now()}-${safeName}.pdf`;
-
-          pdfPath =
-            `pdfs/${fileName}`;
-
-          const {
-            error: uploadError
-          } =
-            await supabaseClient
-              .storage
-              .from("Books")
-              .upload(
-                pdfPath,
-                pdfFile,
-                {
-                  upsert: false,
-                  contentType:
-                    "application/pdf"
-                }
-              );
-
-          if (uploadError) {
-            throw uploadError;
-          }
-
-        }
-
-
-        const bookData = {
-
-          title: title,
-
-          author: author,
-
-          category:
-            category || null,
-
-          publication_year:
-            publicationYear,
-
-          language:
-            language || null,
-
-          isbn:
-            isbn || null,
-
-          translator:
-            translator || null,
-
-          description:
-            description || null,
-
-          published:
-            published
-
-        };
-
-
-        if (coverPath) {
-          bookData.cover_path =
-            coverPath;
-        }
-
-        if (pdfPath) {
-          bookData.pdf_path =
-            pdfPath;
-        }
-
-
-        if (bookId) {
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("books")
-              .update(bookData)
-              .eq(
-                "id",
-                bookId
-              );
-
-          if (error) {
-            throw error;
-          }
-
-          showMessage(
-            currentLanguage === "fa"
-              ? "کتاب با موفقیت به‌روزرسانی شد."
-              : "Book updated successfully."
-          );
-
-        } else {
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("books")
-              .insert(bookData);
-
-          if (error) {
-            throw error;
-          }
-
-          showMessage(
-            currentLanguage === "fa"
-              ? "کتاب با موفقیت اضافه شد."
-              : "Book added successfully."
-          );
-
-        }
-
-
-        resetBookForm();
-
-        await loadBooks();
-
-      } catch (error) {
-
-        console.error(
-          "Save book error:",
-          error
-        );
-
-        showMessage(
-          error.message ||
-          (
-            currentLanguage === "fa"
-              ? "خطایی هنگام ذخیره کتاب رخ داد."
-              : "An error occurred while saving the book."
-          ),
-          "error"
-        );
-
-      } finally {
-
-        saveButton.disabled = false;
-
-        saveButton.textContent =
-          currentLanguage === "fa"
-            ? "ذخیره کتاب"
-            : "Save Book";
-
-      }
-
-    }
-  );
-
-
-  async function deleteBook(id) {
-
-    const book =
-      books.find(
-        item => item.id === id
-      );
-
-    if (!book) {
-      return;
-    }
-
-    const confirmed =
-      confirm(
-        currentLanguage === "fa"
-          ? `آیا مطمئن هستید که می‌خواهید کتاب «${book.title}» را حذف کنید؟`
-          : `Are you sure you want to delete "${book.title}"?`
-      );
-
-    if (!confirmed) {
-      return;
-    }
-
-    try {
-
-      if (book.pdf_path) {
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .storage
-            .from("Books")
-            .remove([
-              book.pdf_path
-            ]);
-
-        if (error) {
-          console.warn(error);
-        }
-
-      }
-
-      if (book.cover_path) {
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .storage
-            .from("Books")
-            .remove([
-              book.cover_path
-            ]);
-
-        if (error) {
-          console.warn(error);
-        }
-
-      }
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("books")
-          .delete()
-          .eq("id", id);
-
-      if (error) {
-        throw error;
-      }
-
-      showMessage(
-        currentLanguage === "fa"
-          ? "کتاب با موفقیت حذف شد."
-          : "Book deleted successfully."
-      );
-
-      await loadBooks();
-
-    } catch (error) {
-
-      console.error(
-        "Delete book error:",
-        error
-      );
-
-      showMessage(
-        error.message ||
-        "Unable to delete book.",
-        "error"
-      );
-
-    }
-
-  }
-
-
-  /* =========================================
-     ARTICLES
-     ========================================= */
-
-  async function loadArticles() {
-
-    const tbody =
-      document.getElementById(
-        "articlesTableBody"
-      );
-
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6">
-          Loading articles...
-        </td>
-      </tr>
-    `;
-
-    try {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("articles")
-          .select("*")
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-      if (error) {
-        throw error;
-      }
-
-      articles = data || [];
-
-      renderArticles();
-
-      updateStats();
-
-    } catch (error) {
-
-      console.error(
-        "Load articles error:",
-        error
-      );
-
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6">
-            Error loading articles:
-            ${escapeHtml(error.message)}
-          </td>
-        </tr>
-      `;
-
-    }
-
-  }
-
-
-  function renderArticles() {
-
-    const tbody =
-      document.getElementById(
-        "articlesTableBody"
-      );
-
-    if (!articles.length) {
-
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6">
-            ${
-              currentLanguage === "fa"
-                ? "مقاله‌ای پیدا نشد."
-                : "No articles found."
-            }
-          </td>
-        </tr>
-      `;
-
-      return;
-    }
-
-
-    tbody.innerHTML =
-      articles.map(article => {
-
-        const status =
-          article.published
-            ? `<span class="status published">${
-                currentLanguage === "fa"
-                  ? "منتشر شده"
-                  : "Published"
-              }</span>`
-            : `<span class="status unpublished">${
-                currentLanguage === "fa"
-                  ? "منتشر نشده"
-                  : "Unpublished"
-              }</span>`;
-
-        const publishedDate =
-          article.published_at
-            ? new Date(
-                article.published_at
-              ).toLocaleDateString(
-                currentLanguage === "fa"
-                  ? "fa-IR"
-                  : "en-AU"
-              )
-            : "-";
-
-        return `
-          <tr>
-
-            <td>
-              <div class="article-preview">
-                ${escapeHtml(article.title || "")}
-              </div>
-            </td>
-
-            <td>
-              ${escapeHtml(article.author || "-")}
-            </td>
-
-            <td>
-              ${escapeHtml(article.category || "-")}
-            </td>
-
-            <td>
-              ${status}
-            </td>
-
-            <td>
-              ${escapeHtml(publishedDate)}
-            </td>
-
-            <td>
-
-              <div class="actions">
-
-                <button
-                  class="dark small-btn"
-                  onclick="editArticle('${article.id}')">
-                  ${
-                    currentLanguage === "fa"
-                      ? "ویرایش"
-                      : "Edit"
-                  }
-                </button>
-
-                <button
-                  class="danger small-btn"
-                  onclick="deleteArticle('${article.id}')">
-                  ${
-                    currentLanguage === "fa"
-                      ? "حذف"
-                      : "Delete"
-                  }
-                </button>
-
-              </div>
-
-            </td>
-
-          </tr>
-        `;
-
-      }).join("");
-
-  }
-
-
-  function showAddArticleForm() {
-
-    resetArticleForm();
-
-    document.getElementById(
-      "articleFormPanel"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-
-  function resetArticleForm() {
-
-    document.getElementById(
-      "articleForm"
-    ).reset();
-
-    document.getElementById(
-      "articleId"
-    ).value = "";
-
-    document.getElementById(
-      "articlePublished"
-    ).checked = true;
-
-    document.getElementById(
-      "articleFormTitle"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "افزودن مقاله جدید"
-        : "Add New Article";
-
-    document.getElementById(
-      "saveArticleBtn"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "ذخیره مقاله"
-        : "Save Article";
-
-  }
-
-
-  async function editArticle(id) {
-
-    const article =
-      articles.find(
-        item => item.id === id
-      );
-
-    if (!article) {
-
-      showMessage(
-        currentLanguage === "fa"
-          ? "مقاله پیدا نشد."
-          : "Article not found.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    document.getElementById(
-      "articleId"
-    ).value =
-      article.id || "";
-
-    document.getElementById(
-      "articleTitle"
-    ).value =
-      article.title || "";
-
-    document.getElementById(
-      "articleAuthor"
-    ).value =
-      article.author || "";
-
-    document.getElementById(
-      "articleCategory"
-    ).value =
-      article.category || "";
-
-    document.getElementById(
-      "articleCoverPath"
-    ).value =
-      article.cover_path || "";
-
-    document.getElementById(
-      "articleExcerpt"
-    ).value =
-      article.excerpt || "";
-
-    document.getElementById(
-      "articleContent"
-    ).value =
-      article.content || "";
-
-    document.getElementById(
-      "articlePublished"
-    ).checked =
-      !!article.published;
-
-    document.getElementById(
-      "articleFormTitle"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "ویرایش مقاله"
-        : "Edit Article";
-
-    document.getElementById(
-      "saveArticleBtn"
-    ).textContent =
-      currentLanguage === "fa"
-        ? "به‌روزرسانی مقاله"
-        : "Update Article";
-
-    document.getElementById(
-      "articleFormPanel"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
+    "feedbackCount"
+  ).textContent =
+    rows.length;
 
 
   document.getElementById(
-    "articleForm"
-  ).addEventListener(
-    "submit",
-    async function(event) {
+    "newFeedbackCount"
+  ).textContent =
+    rows.filter(
+      row =>
+        (row.status || "new")
+        === "new"
+    ).length;
 
-      event.preventDefault();
-      event.stopPropagation();
 
-      const saveButton =
-        document.getElementById(
-          "saveArticleBtn"
-        );
+  if(!rows.length){
 
-      saveButton.disabled = true;
+    container.innerHTML =
+      '<div class="empty">No feedback has been submitted yet.</div>';
 
-      saveButton.textContent =
-        currentLanguage === "fa"
-          ? "در حال ذخیره..."
-          : "Saving...";
-
-      try {
-
-        const articleId =
-          document.getElementById(
-            "articleId"
-          ).value.trim();
-
-        const title =
-          document.getElementById(
-            "articleTitle"
-          ).value.trim();
-
-        const author =
-          document.getElementById(
-            "articleAuthor"
-          ).value.trim();
-
-        const category =
-          document.getElementById(
-            "articleCategory"
-          ).value.trim();
-
-        const coverPath =
-          document.getElementById(
-            "articleCoverPath"
-          ).value.trim();
-
-        const excerpt =
-          document.getElementById(
-            "articleExcerpt"
-          ).value.trim();
-
-        const content =
-          document.getElementById(
-            "articleContent"
-          ).value.trim();
-
-        const published =
-          document.getElementById(
-            "articlePublished"
-          ).checked;
-
-
-        if (!title || !author || !content) {
-
-          showMessage(
-            currentLanguage === "fa"
-              ? "عنوان، نویسنده و محتوای مقاله الزامی است."
-              : "Title, author and article content are required.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        const articleData = {
-
-          title: title,
-
-          author: author,
-
-          category:
-            category || null,
-
-          cover_path:
-            coverPath || null,
-
-          excerpt:
-            excerpt || null,
-
-          content: content,
-
-          published:
-            published
-
-        };
-
-
-        if (published) {
-
-          articleData.published_at =
-            new Date().toISOString();
-
-        } else {
-
-          articleData.published_at = null;
-
-        }
-
-
-        if (articleId) {
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("articles")
-              .update(articleData)
-              .eq(
-                "id",
-                articleId
-              );
-
-          if (error) {
-            throw error;
-          }
-
-          showMessage(
-            currentLanguage === "fa"
-              ? "مقاله با موفقیت به‌روزرسانی شد."
-              : "Article updated successfully."
-          );
-
-        } else {
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("articles")
-              .insert(articleData);
-
-          if (error) {
-            throw error;
-          }
-
-          showMessage(
-            currentLanguage === "fa"
-              ? "مقاله با موفقیت اضافه شد."
-              : "Article added successfully."
-          );
-
-        }
-
-
-        resetArticleForm();
-
-        await loadArticles();
-
-      } catch (error) {
-
-        console.error(
-          "Save article error:",
-          error
-        );
-
-        showMessage(
-          error.message ||
-          (
-            currentLanguage === "fa"
-              ? "خطایی هنگام ذخیره مقاله رخ داد."
-              : "An error occurred while saving the article."
-          ),
-          "error"
-        );
-
-      } finally {
-
-        saveButton.disabled = false;
-
-        saveButton.textContent =
-          currentLanguage === "fa"
-            ? "ذخیره مقاله"
-            : "Save Article";
-
-      }
-
-    }
-  );
-
-
-  async function deleteArticle(id) {
-
-    const article =
-      articles.find(
-        item => item.id === id
-      );
-
-    if (!article) {
-      return;
-    }
-
-
-    const confirmed =
-      confirm(
-        currentLanguage === "fa"
-          ? `آیا مطمئن هستید که می‌خواهید مقاله «${article.title}» را حذف کنید؟`
-          : `Are you sure you want to delete "${article.title}"?`
-      );
-
-    if (!confirmed) {
-      return;
-    }
-
-
-    try {
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("articles")
-          .delete()
-          .eq(
-            "id",
-            id
-          );
-
-      if (error) {
-        throw error;
-      }
-
-
-      showMessage(
-        currentLanguage === "fa"
-          ? "مقاله با موفقیت حذف شد."
-          : "Article deleted successfully."
-      );
-
-      await loadArticles();
-
-    } catch (error) {
-
-      console.error(
-        "Delete article error:",
-        error
-      );
-
-      showMessage(
-        error.message ||
-        (
-          currentLanguage === "fa"
-            ? "خطایی هنگام حذف مقاله رخ داد."
-            : "An error occurred while deleting the article."
-        ),
-        "error"
-      );
-
-    }
+    return;
 
   }
 
 
-  /* =========================================
-     USERS
-     ========================================= */
+  container.innerHTML = `
 
-  async function loadUsers() {
+    <table>
 
-    const tbody =
-      document.getElementById(
-        "usersTableBody"
-      );
-
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6">
-          Loading users...
-        </td>
-      </tr>
-    `;
-
-
-    try {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select(
-            "id, first_name, last_name, phone, email_consent, role, created_at"
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (error) {
-        throw error;
-      }
-
-      users = data || [];
-
-      renderUsers();
-
-      updateStats();
-
-    } catch (error) {
-
-      console.error(
-        "Load users error:",
-        error
-      );
-
-      tbody.innerHTML = `
+      <thead>
         <tr>
-          <td colspan="6">
-            Error loading users:
-            ${escapeHtml(error.message)}
-          </td>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Message</th>
+          <th>Status</th>
         </tr>
-      `;
+      </thead>
 
-    }
+      <tbody>
 
-  }
+        ${rows.map(row=>`
 
-
-  function renderUsers() {
-
-    const tbody =
-      document.getElementById(
-        "usersTableBody"
-      );
-
-
-    if (!users.length) {
-
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6">
-            ${
-              currentLanguage === "fa"
-                ? "کاربری پیدا نشد."
-                : "No users found."
-            }
-          </td>
-        </tr>
-      `;
-
-      return;
-    }
-
-
-    tbody.innerHTML =
-      users.map(user => {
-
-        const fullName =
-          [
-            user.first_name,
-            user.last_name
-          ]
-            .filter(Boolean)
-            .join(" ") ||
-          "-";
-
-
-        const phone =
-          user.phone || "-";
-
-
-        const emailConsent =
-          user.email_consent
-            ? (
-                currentLanguage === "fa"
-                  ? "بله"
-                  : "Yes"
-              )
-            : (
-                currentLanguage === "fa"
-                  ? "خیر"
-                  : "No"
-              );
-
-
-        const role =
-          user.role || "member";
-
-
-        const joined =
-          user.created_at
-            ? new Date(
-                user.created_at
-              ).toLocaleDateString(
-                currentLanguage === "fa"
-                  ? "fa-IR"
-                  : "en-AU"
-              )
-            : "-";
-
-
-        const isCurrentUser =
-          user.id === currentUserId;
-
-
-        return `
           <tr>
 
             <td>
-              ${escapeHtml(fullName)}
+              ${escapeHtml(
+                formatDate(
+                  row.created_at
+                )
+              )}
             </td>
 
             <td>
-              ${escapeHtml(phone)}
+              ${escapeHtml(
+                row.name || "-"
+              )}
             </td>
 
             <td>
-              ${emailConsent}
+              ${escapeHtml(
+                row.email || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.subject || "-"
+              )}
+            </td>
+
+            <td class="message-cell">
+              ${escapeHtml(
+                row.message || "-"
+              )}
             </td>
 
             <td>
 
               <select
-                id="role-${user.id}"
-                ${isCurrentUser ? "disabled" : ""}
-                style="min-width:120px;">
+                class="status-select"
+                onchange="updateFeedbackStatus(
+                  '${escapeHtml(row.id)}',
+                  this.value,
+                  this
+                )"
+              >
 
                 <option
-                  value="member"
-                  ${role === "member" ? "selected" : ""}>
-                  Member
+                  value="new"
+                  ${
+                    (row.status || "new")
+                    === "new"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  New
                 </option>
 
                 <option
-                  value="admin"
-                  ${role === "admin" ? "selected" : ""}>
-                  Admin
+                  value="reviewed"
+                  ${
+                    row.status
+                    === "reviewed"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  Reviewed
+                </option>
+
+                <option
+                  value="archived"
+                  ${
+                    row.status
+                    === "archived"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  Archived
                 </option>
 
               </select>
 
             </td>
 
+          </tr>
+
+        `).join("")}
+
+      </tbody>
+
+    </table>
+
+  `;
+
+}
+
+
+async function loadDonations(){
+
+  const container =
+    document.getElementById(
+      "donationsContainer"
+    );
+
+
+  container.innerHTML =
+    '<div class="loading">Loading support records...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("donations")
+      .select(
+        "id,donor_name,amount,currency,method,message,status,is_public,public_display,created_at"
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      "Donations:",
+      error
+    );
+
+    container.innerHTML =
+      '<div class="error">Unable to load support records.</div>';
+
+    return;
+
+  }
+
+
+  const rows =
+    data || [];
+
+
+  document.getElementById(
+    "donationCount"
+  ).textContent =
+    rows.length;
+
+
+  document.getElementById(
+    "newDonationCount"
+  ).textContent =
+    rows.filter(
+      row =>
+        (row.status || "new")
+        === "new"
+    ).length;
+
+
+  if(!rows.length){
+
+    container.innerHTML =
+      '<div class="empty">No support records have been submitted yet.</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML = `
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Method</th>
+          <th>Message</th>
+          <th>Public</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        ${rows.map(row=>`
+
+          <tr>
+
             <td>
-              ${escapeHtml(joined)}
+              ${escapeHtml(
+                formatDate(
+                  row.created_at
+                )
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.donor_name || "-"
+              )}
+            </td>
+
+            <td>
+              ${
+                row.amount !== null
+                && row.amount !== undefined
+                  ?
+                    escapeHtml(
+                      row.amount
+                    )
+                    +
+                    " "
+                    +
+                    escapeHtml(
+                      row.currency || ""
+                    )
+                  :
+                    "-"
+              }
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.method || "-"
+              )}
+            </td>
+
+            <td class="message-cell">
+              ${escapeHtml(
+                row.message || "-"
+              )}
             </td>
 
             <td>
 
-              <div class="actions">
+              <span class="badge ${
+                row.is_public
+                  ? "yes"
+                  : "no"
+              }">
 
-                <button
-                  class="green small-btn"
-                  onclick="updateUserRole('${user.id}')"
-                  ${isCurrentUser ? "disabled" : ""}>
+                ${
+                  row.is_public
+                    ? "Yes"
+                    : "No"
+                }
+
+              </span>
+
+            </td>
+
+            <td>
+
+              <select
+                class="status-select"
+                onchange="updateDonationStatus(
+                  '${escapeHtml(row.id)}',
+                  this.value,
+                  this
+                )"
+              >
+
+                <option
+                  value="new"
                   ${
-                    currentLanguage === "fa"
-                      ? "ذخیره"
-                      : "Save"
+                    (row.status || "new")
+                    === "new"
+                      ? "selected"
+                      : ""
                   }
-                </button>
+                >
+                  New
+                </option>
 
-              </div>
+                <option
+                  value="reviewed"
+                  ${
+                    row.status
+                    === "reviewed"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  Reviewed
+                </option>
+
+                <option
+                  value="archived"
+                  ${
+                    row.status
+                    === "archived"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  Archived
+                </option>
+
+              </select>
 
             </td>
 
           </tr>
-        `;
 
-      }).join("");
+        `).join("")}
+
+      </tbody>
+
+    </table>
+
+  `;
+
+}
+
+
+async function updateFeedbackStatus(
+  id,
+  value,
+  select
+){
+
+  select.disabled =
+    true;
+
+
+  const {
+    error
+  } =
+    await db
+      .from("feedback")
+      .update({
+        status:value
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
+  select.disabled =
+    false;
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      "Unable to update feedback status."
+    );
+
+    await loadFeedback();
+
+    return;
 
   }
 
 
-  async function updateUserRole(userId) {
+  await loadFeedback();
 
-    if (userId === currentUserId) {
+}
 
-      showMessage(
-        currentLanguage === "fa"
-          ? "نمی‌توانید نقش حساب خودتان را تغییر دهید."
-          : "You cannot change your own administrator role.",
-        "error"
+
+async function updateDonationStatus(
+  id,
+  value,
+  select
+){
+
+  select.disabled =
+    true;
+
+
+  const {
+    error
+  } =
+    await db
+      .from("donations")
+      .update({
+        status:value
+      })
+      .eq(
+        "id",
+        id
       );
 
-      return;
-    }
+
+  select.disabled =
+    false;
 
 
-    const select =
-      document.getElementById(
-        `role-${userId}`
-      );
+  if(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      "Unable to update support status."
+    );
+
+    await loadDonations();
+
+    return;
+
+  }
 
 
-    if (!select) {
-      return;
-    }
+  await loadDonations();
+
+}
 
 
-    const newRole =
-      select.value;
+document
+  .querySelectorAll(".tab")
+  .forEach(button=>{
 
+    button.addEventListener(
+      "click",
+      ()=>{
 
-    if (
-      newRole !== "member" &&
-      newRole !== "admin"
-    ) {
-      return;
-    }
-
-
-    try {
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("profiles")
-          .update({
-            role: newRole
-          })
-          .eq(
-            "id",
-            userId
+        document
+          .querySelectorAll(".tab")
+          .forEach(
+            tab =>
+              tab.classList.remove(
+                "active"
+              )
           );
 
 
-      if (error) {
-        throw error;
+        document
+          .querySelectorAll(".panel")
+          .forEach(
+            panel =>
+              panel.classList.remove(
+                "active"
+              )
+          );
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        document
+          .getElementById(
+            button.dataset.panel
+          )
+          .classList.add(
+            "active"
+          );
+
       }
+    );
+
+  });
 
 
-      showMessage(
-        currentLanguage === "fa"
-          ? "نقش کاربر با موفقیت تغییر کرد."
-          : "User role updated successfully."
-      );
+document
+  .getElementById(
+    "logoutLink"
+  )
+  .addEventListener(
+    "click",
+    async event=>{
 
-      await loadUsers();
+      event.preventDefault();
 
-    } catch (error) {
-
-      console.error(
-        "Update user role error:",
-        error
-      );
-
-      showMessage(
-        error.message ||
-        (
-          currentLanguage === "fa"
-            ? "خطایی هنگام تغییر نقش کاربر رخ داد."
-            : "An error occurred while updating the user role."
-        ),
-        "error"
-      );
-
-    }
-
-  }
-
-
-
-  /* =========================================
-     RESEARCH NETWORK MANAGER
-     ========================================= */
-
-  let networkNodes = [], networkSources = [], networkResearchers = [];
-  let networkArticleNodeLinks = [], networkArticleSourceLinks = [];
-  let networkSourceNodeLinks = [], networkResearcherSourceLinks = [];
-  let networkBookNodeLinks = [], networkBookSourceLinks = [], networkBookResearcherLinks = [];
-
-  function showNetworkTab(name, btn){
-    document.querySelectorAll(".network-pane").forEach(x=>x.classList.remove("active"));
-    document.querySelectorAll("[data-network-tab]").forEach(x=>x.classList.remove("active"));
-    document.getElementById("network-pane-"+name)?.classList.add("active");
-    btn?.classList.add("active");
-  }
-
-  async function loadResearchNetwork(){
-    try{
-      const [n,sr,r,an,as,sn,rs,bn,bs,br] = await Promise.all([
-        supabaseClient.from("knowledge_nodes").select("*").order("title"),
-        supabaseClient.from("research_sources").select("*").order("source_code"),
-        supabaseClient.from("researchers").select("*").order("name"),
-        supabaseClient.from("article_node_links").select("article_id,node_id"),
-        supabaseClient.from("article_source_links").select("article_id,source_id"),
-        supabaseClient.from("source_node_links").select("source_id,node_id"),
-        supabaseClient.from("researcher_source_links").select("researcher_id,source_id"),
-        supabaseClient.from("book_node_links").select("book_id,node_id"),
-        supabaseClient.from("book_source_links").select("book_id,source_id"),
-        supabaseClient.from("book_researcher_links").select("book_id,researcher_id")
-      ]);
-      for(const [label,res] of [["knowledge_nodes",n],["research_sources",sr],["researchers",r],["article_node_links",an],["article_source_links",as],["source_node_links",sn],["researcher_source_links",rs],["book_node_links",bn],["book_source_links",bs],["book_researcher_links",br]]){
-        if(res.error) throw new Error(label+": "+res.error.message);
-      }
-      networkNodes=n.data||[]; networkSources=sr.data||[]; networkResearchers=r.data||[];
-      networkArticleNodeLinks=an.data||[]; networkArticleSourceLinks=as.data||[];
-      networkSourceNodeLinks=sn.data||[]; networkResearcherSourceLinks=rs.data||[];
-      networkBookNodeLinks=bn.data||[]; networkBookSourceLinks=bs.data||[]; networkBookResearcherLinks=br.data||[];
-      renderNetworkManager();
-      updateStats();
-    }catch(error){ console.error("Research Network Manager:",error); showMessage(error.message||"Unable to load Research Network.","error"); }
-  }
-
-  function optionHtml(items, valueKey, labelFn){return items.map(x=>`<option value="${x[valueKey]}">${escapeHtml(labelFn(x))}</option>`).join("");}
-  function removeButton(fn,args){return `<button class="danger small-btn" type="button" onclick="${fn}(${args.map(x=>`'${x}'`).join(',')})">Remove</button>`;}
-
-  function renderNetworkManager(){
-    const nodesList=document.getElementById("networkNodesList"), sourcesList=document.getElementById("networkSourcesList"), researchersList=document.getElementById("networkResearchersList");
-    if(!nodesList) return;
-    nodesList.innerHTML=networkNodes.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.title)}</b> · ${escapeHtml(x.node_type||"topic")} · ${escapeHtml(x.slug)}</span><button class="dark small-btn" onclick="editNetworkNode('${x.id}')">Edit</button></div>`).join("");
-    sourcesList.innerHTML=networkSources.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.source_code)}</b> · ${escapeHtml(x.title)}</span><button class="dark small-btn" onclick="editNetworkSource('${x.id}')">Edit</button></div>`).join("");
-    researchersList.innerHTML=networkResearchers.map(x=>`<div class="mini-row"><span><b>${escapeHtml(x.name)}</b> · ${escapeHtml(x.field||"-")}</span><button class="dark small-btn" onclick="editNetworkResearcher('${x.id}')">Edit</button></div>`).join("");
-
-    relationArticle.innerHTML=optionHtml(articles,"id",x=>x.title);
-    relationNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
-    relationSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
-    sourceNodeSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
-    sourceNodeNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
-    researcherSourceResearcher.innerHTML=optionHtml(networkResearchers,"id",x=>x.name);
-    researcherSourceSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
-    const bookLabel=x=>(x.title||"Untitled")+" — "+(x.author||"Unknown author");
-    const bookNodeBook=document.getElementById("bookNodeBook"),bookNodeNode=document.getElementById("bookNodeNode"),bookSourceBook=document.getElementById("bookSourceBook"),bookSourceSource=document.getElementById("bookSourceSource"),bookResearcherBook=document.getElementById("bookResearcherBook"),bookResearcherResearcher=document.getElementById("bookResearcherResearcher");
-    if(bookNodeBook)bookNodeBook.innerHTML=optionHtml(books,"id",bookLabel);
-    if(bookNodeNode)bookNodeNode.innerHTML=optionHtml(networkNodes,"id",x=>x.title);
-    if(bookSourceBook)bookSourceBook.innerHTML=optionHtml(books,"id",bookLabel);
-    if(bookSourceSource)bookSourceSource.innerHTML=optionHtml(networkSources,"id",x=>x.source_code+" — "+x.title);
-    if(bookResearcherBook)bookResearcherBook.innerHTML=optionHtml(books,"id",bookLabel);
-    if(bookResearcherResearcher)bookResearcherResearcher.innerHTML=optionHtml(networkResearchers,"id",x=>x.name);
-    relationArticle.onchange=renderArticleRelations;
-    sourceNodeSource.onchange=renderSourceNodeRelations;
-    researcherSourceResearcher.onchange=renderResearcherSourceRelations;
-    renderArticleRelations(); renderSourceNodeRelations(); renderResearcherSourceRelations();
-    if(bookNodeBook)bookNodeBook.onchange=renderBookNodeRelations;
-    if(bookSourceBook)bookSourceBook.onchange=renderBookSourceRelations;
-    if(bookResearcherBook)bookResearcherBook.onchange=renderBookResearcherRelations;
-    renderBookNodeRelations();renderBookSourceRelations();renderBookResearcherRelations();
-  }
-
-  function renderArticleRelations(){
-    const articleId=relationArticle?.value, host=document.getElementById("articleRelationsList"); if(!host||!articleId)return;
-    const nodeLinks=networkArticleNodeLinks.filter(x=>x.article_id===articleId), sourceLinks=networkArticleSourceLinks.filter(x=>x.article_id===articleId);
-    const rows=[];
-    nodeLinks.forEach(l=>{const x=networkNodes.find(n=>n.id===l.node_id);if(x)rows.push(`<div class="mini-row"><span><b>Knowledge Node</b> · ${escapeHtml(x.title)}</span>${removeButton('unlinkArticleNode',[articleId,x.id])}</div>`)});
-    sourceLinks.forEach(l=>{const x=networkSources.find(n=>n.id===l.source_id);if(x)rows.push(`<div class="mini-row"><span><b>Source</b> · ${escapeHtml(x.source_code)} · ${escapeHtml(x.title)}</span>${removeButton('unlinkArticleSource',[articleId,x.id])}</div>`)});
-    host.innerHTML=rows.join("")||`<div class="mini-row"><span>No connections yet.</span></div>`;
-  }
-  function renderSourceNodeRelations(){
-    const sourceId=sourceNodeSource?.value,host=document.getElementById("sourceNodeRelationsList");if(!host||!sourceId)return;
-    const rows=networkSourceNodeLinks.filter(x=>x.source_id===sourceId).map(l=>{const n=networkNodes.find(x=>x.id===l.node_id);return n?`<div class="mini-row"><span><b>${escapeHtml(n.title)}</b> · ${escapeHtml(n.node_type||'topic')}</span>${removeButton('unlinkSourceNode',[sourceId,n.id])}</div>`:""}).filter(Boolean);
-    host.innerHTML=rows.join("")||`<div class="mini-row"><span>No Knowledge Node connections yet.</span></div>`;
-  }
-  function renderResearcherSourceRelations(){
-    const researcherId=researcherSourceResearcher?.value,host=document.getElementById("researcherSourceRelationsList");if(!host||!researcherId)return;
-    const rows=networkResearcherSourceLinks.filter(x=>x.researcher_id===researcherId).map(l=>{const src=networkSources.find(x=>x.id===l.source_id);return src?`<div class="mini-row"><span><b>${escapeHtml(src.source_code)}</b> · ${escapeHtml(src.title)}</span>${removeButton('unlinkResearcherSource',[researcherId,src.id])}</div>`:""}).filter(Boolean);
-    host.innerHTML=rows.join("")||`<div class="mini-row"><span>No Source connections yet.</span></div>`;
-  }
-
-
-  function renderBookNodeRelations(){const e=document.getElementById("bookNodeBook"),host=document.getElementById("bookNodeRelationsList"),id=e?.value;if(!host)return;if(!books.length){host.innerHTML='<div class="mini-row"><span>No books are in the library yet.</span></div>';return;}const rows=networkBookNodeLinks.filter(x=>x.book_id===id).map(l=>{const n=networkNodes.find(x=>x.id===l.node_id);return n?`<div class="mini-row"><span><b>${escapeHtml(n.title)}</b> · ${escapeHtml(n.node_type||"topic")}</span>${removeButton("unlinkBookNode",[id,n.id])}</div>`:""}).filter(Boolean);host.innerHTML=rows.join("")||'<div class="mini-row"><span>No Knowledge Node connections yet.</span></div>';}
-  function renderBookSourceRelations(){const e=document.getElementById("bookSourceBook"),host=document.getElementById("bookSourceRelationsList"),id=e?.value;if(!host)return;if(!books.length){host.innerHTML='<div class="mini-row"><span>No books are in the library yet.</span></div>';return;}const rows=networkBookSourceLinks.filter(x=>x.book_id===id).map(l=>{const s=networkSources.find(x=>x.id===l.source_id);return s?`<div class="mini-row"><span><b>${escapeHtml(s.source_code)}</b> · ${escapeHtml(s.title)}</span>${removeButton("unlinkBookSource",[id,s.id])}</div>`:""}).filter(Boolean);host.innerHTML=rows.join("")||'<div class="mini-row"><span>No Source connections yet.</span></div>';}
-  function renderBookResearcherRelations(){const e=document.getElementById("bookResearcherBook"),host=document.getElementById("bookResearcherRelationsList"),id=e?.value;if(!host)return;if(!books.length){host.innerHTML='<div class="mini-row"><span>No books are in the library yet.</span></div>';return;}const rows=networkBookResearcherLinks.filter(x=>x.book_id===id).map(l=>{const r=networkResearchers.find(x=>x.id===l.researcher_id);return r?`<div class="mini-row"><span><b>${escapeHtml(r.name)}</b> · ${escapeHtml(r.field||"-")}</span>${removeButton("unlinkBookResearcher",[id,r.id])}</div>`:""}).filter(Boolean);host.innerHTML=rows.join("")||'<div class="mini-row"><span>No Researcher connections yet.</span></div>';}
-
-  function resetNodeForm(){nodeForm.reset();networkNodeId.value="";} function resetSourceForm(){sourceForm.reset();networkSourceId.value="";} function resetResearcherForm(){researcherForm.reset();networkResearcherId.value="";}
-  function editNetworkNode(id){const x=networkNodes.find(v=>v.id===id);if(!x)return;networkNodeId.value=x.id;networkNodeSlug.value=x.slug||"";networkNodeType.value=x.node_type||"topic";networkNodeTitle.value=x.title||"";networkNodeTitleFa.value=x.title_fa||"";networkNodeDescription.value=x.description||"";document.getElementById("network-pane-nodes").scrollIntoView({behavior:"smooth"});}
-  function editNetworkSource(id){const x=networkSources.find(v=>v.id===id);if(!x)return;networkSourceId.value=x.id;networkSourceCode.value=x.source_code||"";networkSourceType.value=x.source_type||"";networkSourceTitle.value=x.title||"";networkSourceAuthor.value=x.author||"";networkSourceInstitution.value=x.institution||"";networkSourceYear.value=x.publication_year||"";networkSourceLanguage.value=x.language||"";networkSourceReliability.value=x.reliability||"";networkSourceUrl.value=x.url||"";networkSourceNotes.value=x.notes||"";document.getElementById("network-pane-sources").scrollIntoView({behavior:"smooth"});}
-  function editNetworkResearcher(id){const x=networkResearchers.find(v=>v.id===id);if(!x)return;networkResearcherId.value=x.id;networkResearcherSlug.value=x.slug||"";networkResearcherField.value=x.field||"";networkResearcherName.value=x.name||"";networkResearcherNameFa.value=x.name_fa||"";networkResearcherNotes.value=x.notes||"";document.getElementById("network-pane-researchers").scrollIntoView({behavior:"smooth"});}
-
-  nodeForm.addEventListener("submit",async e=>{e.preventDefault();try{const id=networkNodeId.value,data={slug:networkNodeSlug.value.trim(),title:networkNodeTitle.value.trim(),title_fa:networkNodeTitleFa.value.trim()||null,node_type:networkNodeType.value,description:networkNodeDescription.value.trim()||null,updated_at:new Date().toISOString()};const res=id?await supabaseClient.from("knowledge_nodes").update(data).eq("id",id):await supabaseClient.from("knowledge_nodes").insert(data);if(res.error)throw res.error;resetNodeForm();await loadResearchNetwork();showMessage("Knowledge Node saved.");}catch(error){showMessage(error.message,"error");}});
-  sourceForm.addEventListener("submit",async e=>{e.preventDefault();try{const id=networkSourceId.value,y=networkSourceYear.value.trim(),data={source_code:networkSourceCode.value.trim(),title:networkSourceTitle.value.trim(),author:networkSourceAuthor.value.trim()||null,institution:networkSourceInstitution.value.trim()||null,source_type:networkSourceType.value.trim()||null,publication_year:y?parseInt(y,10):null,url:networkSourceUrl.value.trim()||null,language:networkSourceLanguage.value.trim()||null,reliability:networkSourceReliability.value.trim()||null,notes:networkSourceNotes.value.trim()||null,updated_at:new Date().toISOString()};const res=id?await supabaseClient.from("research_sources").update(data).eq("id",id):await supabaseClient.from("research_sources").insert(data);if(res.error)throw res.error;resetSourceForm();await loadResearchNetwork();showMessage("Source saved.");}catch(error){showMessage(error.message,"error");}});
-  researcherForm.addEventListener("submit",async e=>{e.preventDefault();try{const id=networkResearcherId.value,data={slug:networkResearcherSlug.value.trim(),name:networkResearcherName.value.trim(),name_fa:networkResearcherNameFa.value.trim()||null,field:networkResearcherField.value.trim()||null,notes:networkResearcherNotes.value.trim()||null,updated_at:new Date().toISOString()};const res=id?await supabaseClient.from("researchers").update(data).eq("id",id):await supabaseClient.from("researchers").insert(data);if(res.error)throw res.error;resetResearcherForm();await loadResearchNetwork();showMessage("Researcher saved.");}catch(error){showMessage(error.message,"error");}});
-
-  async function addLink(table,payload,conflict,msg,keep){try{const res=await supabaseClient.from(table).upsert(payload,{onConflict:conflict});if(res.error)throw res.error;await loadResearchNetwork();if(keep)keep();showMessage(msg);}catch(error){console.error(error);showMessage(error.message,"error");}}
-  async function removeLink(table,match,msg,keep){try{let q=supabaseClient.from(table).delete();Object.entries(match).forEach(([k,v])=>q=q.eq(k,v));const res=await q;if(res.error)throw res.error;await loadResearchNetwork();if(keep)keep();showMessage(msg);}catch(error){console.error(error);showMessage(error.message,"error");}}
-  function linkArticleNode(){const article_id=relationArticle.value,node_id=relationNode.value;if(!article_id||!node_id)return;addLink("article_node_links",{article_id,node_id},"article_id,node_id","Article linked to Knowledge Node.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
-  function linkArticleSource(){const article_id=relationArticle.value,source_id=relationSource.value;if(!article_id||!source_id)return;addLink("article_source_links",{article_id,source_id},"article_id,source_id","Article linked to Source.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
-  function connectionStatus(id,text,type="success") {
-    const el=document.getElementById(id); if(!el)return;
-    el.textContent=text; el.style.display="block";
-    el.style.background=type==="error"?"rgba(61,23,23,.9)":type==="info"?"rgba(91,70,24,.45)":"rgba(18,60,42,.9)";
-    el.style.color=type==="error"?"#ff9999":type==="info"?"#f0d79a":"#7ff0b8";
-    el.style.border="1px solid "+(type==="error"?"rgba(239,107,115,.25)":type==="info"?"rgba(201,164,92,.35)":"rgba(66,211,146,.25)");
-  }
-
-  async function linkSourceNode(){
-    const sourceEl=document.getElementById("sourceNodeSource"), nodeEl=document.getElementById("sourceNodeNode"), btn=document.getElementById("linkSourceNodeBtn");
-    const source_id=sourceEl?.value, node_id=nodeEl?.value;
-    if(!source_id||!node_id){connectionStatus("sourceNodeStatus","Please select both a Source and a Knowledge Node.","error");showMessage("Please select both a Source and a Knowledge Node.","error");return;}
-    const exists=networkSourceNodeLinks.some(x=>x.source_id===source_id&&x.node_id===node_id);
-    if(exists){connectionStatus("sourceNodeStatus","✓ This connection already exists.","info");showMessage("This Source ↔ Knowledge Node connection already exists.");return;}
-    const old=btn.textContent; btn.disabled=true; btn.textContent="Saving…";
-    try{
-      const {error}=await supabaseClient.from("source_node_links").insert({source_id,node_id});
-      if(error)throw error;
-      await loadResearchNetwork(); sourceEl.value=source_id; renderSourceNodeRelations();
-      connectionStatus("sourceNodeStatus","✓ Connection saved successfully."); showMessage("Source linked to Knowledge Node successfully.");
-    }catch(error){console.error("Source ↔ Node:",error);connectionStatus("sourceNodeStatus","✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
-    finally{btn.disabled=false;btn.textContent=old;}
-  }
-
-  async function linkResearcherSource(){
-    const researcherEl=document.getElementById("researcherSourceResearcher"), sourceEl=document.getElementById("researcherSourceSource"), btn=document.getElementById("linkResearcherSourceBtn");
-    const researcher_id=researcherEl?.value, source_id=sourceEl?.value;
-    if(!researcher_id||!source_id){connectionStatus("researcherSourceStatus","Please select both a Researcher and a Source.","error");showMessage("Please select both a Researcher and a Source.","error");return;}
-    const exists=networkResearcherSourceLinks.some(x=>x.researcher_id===researcher_id&&x.source_id===source_id);
-    if(exists){connectionStatus("researcherSourceStatus","✓ This connection already exists.","info");showMessage("This Researcher ↔ Source connection already exists.");return;}
-    const old=btn.textContent; btn.disabled=true; btn.textContent="Saving…";
-    try{
-      const {error}=await supabaseClient.from("researcher_source_links").insert({researcher_id,source_id});
-      if(error)throw error;
-      await loadResearchNetwork(); researcherEl.value=researcher_id; renderResearcherSourceRelations();
-      connectionStatus("researcherSourceStatus","✓ Connection saved successfully."); showMessage("Researcher linked to Source successfully.");
-    }catch(error){console.error("Researcher ↔ Source:",error);connectionStatus("researcherSourceStatus","✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
-    finally{btn.disabled=false;btn.textContent=old;}
-  }
-
-  async function linkBookRelation(kind){
-    const cfg={
-      node:["bookNodeBook","bookNodeNode","linkBookNodeBtn","bookNodeStatus","book_node_links","node_id",networkBookNodeLinks,renderBookNodeRelations,"Knowledge Node"],
-      source:["bookSourceBook","bookSourceSource","linkBookSourceBtn","bookSourceStatus","book_source_links","source_id",networkBookSourceLinks,renderBookSourceRelations,"Source"],
-      researcher:["bookResearcherBook","bookResearcherResearcher","linkBookResearcherBtn","bookResearcherStatus","book_researcher_links","researcher_id",networkBookResearcherLinks,renderBookResearcherRelations,"Researcher"]
-    }[kind];
-    const [bookId,targetId,btnId,statusId,table,targetKey,arr,renderer,label]=cfg;
-    const b=document.getElementById(bookId),t=document.getElementById(targetId),btn=document.getElementById(btnId),book_id=b?.value,target=t?.value;
-    if(!book_id||!target){connectionStatus(statusId,`Please select both a Book and a ${label}.`,"error");return;}
-    if(arr.some(x=>x.book_id===book_id&&x[targetKey]===target)){connectionStatus(statusId,"✓ This connection already exists.","info");return;}
-    const old=btn.textContent;btn.disabled=true;btn.textContent="Saving…";
-    try{const payload={book_id};payload[targetKey]=target;const {error}=await supabaseClient.from(table).insert(payload);if(error)throw error;await loadResearchNetwork();document.getElementById(bookId).value=book_id;renderer();connectionStatus(statusId,"✓ Connection saved successfully.");showMessage(`Book linked to ${label} successfully.`);}
-    catch(error){connectionStatus(statusId,"✕ "+(error.message||"Connection failed."),"error");showMessage(error.message||"Connection failed.","error");}
-    finally{btn.disabled=false;btn.textContent=old;}
-  }
-  function linkBookNode(){linkBookRelation("node");}
-  function linkBookSource(){linkBookRelation("source");}
-  function linkBookResearcher(){linkBookRelation("researcher");}
-  function unlinkBookNode(book_id,node_id){removeLink("book_node_links",{book_id,node_id},"Book ↔ Node connection removed.",()=>{const e=document.getElementById("bookNodeBook");if(e)e.value=book_id;renderBookNodeRelations();});}
-  function unlinkBookSource(book_id,source_id){removeLink("book_source_links",{book_id,source_id},"Book ↔ Source connection removed.",()=>{const e=document.getElementById("bookSourceBook");if(e)e.value=book_id;renderBookSourceRelations();});}
-  function unlinkBookResearcher(book_id,researcher_id){removeLink("book_researcher_links",{book_id,researcher_id},"Book ↔ Researcher connection removed.",()=>{const e=document.getElementById("bookResearcherBook");if(e)e.value=book_id;renderBookResearcherRelations();});}
-
-  function unlinkArticleNode(article_id,node_id){removeLink("article_node_links",{article_id,node_id},"Article ↔ Node connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
-  function unlinkArticleSource(article_id,source_id){removeLink("article_source_links",{article_id,source_id},"Article ↔ Source connection removed.",()=>{relationArticle.value=article_id;renderArticleRelations();});}
-  function unlinkSourceNode(source_id,node_id){removeLink("source_node_links",{source_id,node_id},"Source ↔ Node connection removed.",()=>{sourceNodeSource.value=source_id;renderSourceNodeRelations();});}
-  function unlinkResearcherSource(researcher_id,source_id){removeLink("researcher_source_links",{researcher_id,source_id},"Researcher ↔ Source connection removed.",()=>{researcherSourceResearcher.value=researcher_id;renderResearcherSourceRelations();});}
-
-
-  /* =========================================
-     STATS
-     ========================================= */
-
-  function updateStats() {
-
-    const total =
-      books.length;
-
-    const published =
-      books.filter(
-        book => book.published
-      ).length;
-
-    document.getElementById(
-      "totalBooks"
-    ).textContent =
-      total;
-
-    document.getElementById(
-      "publishedBooks"
-    ).textContent =
-      published;
-
-    document.getElementById(
-      "totalArticles"
-    ).textContent =
-      articles.length;
-
-    document.getElementById(
-      "totalUsers"
-    ).textContent =
-      users.length;
-
-    const nodeEl = document.getElementById("totalKnowledgeNodes");
-    const sourceEl = document.getElementById("totalResearchSources");
-    const researcherEl = document.getElementById("totalResearchers");
-    const connectionEl = document.getElementById("totalResearchConnections");
-
-    if (nodeEl) nodeEl.textContent = networkNodes.length;
-    if (sourceEl) sourceEl.textContent = networkSources.length;
-    if (researcherEl) researcherEl.textContent = networkResearchers.length;
-
-    const connectionTotal =
-      networkArticleNodeLinks.length +
-      networkArticleSourceLinks.length +
-      networkSourceNodeLinks.length +
-      networkResearcherSourceLinks.length +
-      networkBookNodeLinks.length +
-      networkBookSourceLinks.length +
-      networkBookResearcherLinks.length;
-
-    if (connectionEl) connectionEl.textContent = connectionTotal;
-
-  }
-
-
-  /* =========================================
-     ESCAPE HTML
-     ========================================= */
-
-  function escapeHtml(value) {
-
-    return String(
-      value ?? ""
-    )
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
-      );
-
-  }
-
-
-  /* =========================================
-     FILE NAME DISPLAY
-     ========================================= */
-
-  document.getElementById(
-    "coverFile"
-  ).addEventListener(
-    "change",
-    function() {
-
-      const file =
-        this.files[0];
-
-      document.getElementById(
-        "coverFileName"
-      ).textContent =
-        file
-          ? `Selected: ${file.name}`
-          : "";
-
-    }
-  );
-
-
-  document.getElementById(
-    "pdfFile"
-  ).addEventListener(
-    "change",
-    function() {
-
-      const file =
-        this.files[0];
-
-      document.getElementById(
-        "pdfFileName"
-      ).textContent =
-        file
-          ? `Selected: ${file.name}`
-          : "";
-
-    }
-  );
-
-
-  /* =========================================
-     LOGOUT
-     ========================================= */
-
-  async function logout() {
-
-    try {
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .auth
-          .signOut();
-
-      if (error) {
-        throw error;
-      }
+      await db.auth.signOut();
 
       window.location.href =
         "auth.html";
 
-    } catch (error) {
-
-      console.error(
-        "Logout error:",
-        error
-      );
-
-      showMessage(
-        error.message ||
-        "Unable to log out.",
-        "error"
-      );
-
-    }
-
-  }
-
-
-  /* =========================================
-     AUTH STATE
-     ========================================= */
-
-  supabaseClient.auth.onAuthStateChange(
-    (event, session) => {
-
-      if (
-        event === "SIGNED_OUT" ||
-        !session
-      ) {
-
-        const dashboard =
-          document.getElementById(
-            "dashboard"
-          );
-
-        if (dashboard) {
-          dashboard.style.display =
-            "none";
-        }
-
-        const loading =
-          document.getElementById(
-            "loading"
-          );
-
-        if (loading) {
-          loading.style.display =
-            "none";
-        }
-
-        const accessDenied =
-          document.getElementById(
-            "accessDenied"
-          );
-
-        if (accessDenied) {
-          accessDenied.classList.remove(
-            "hidden"
-          );
-        }
-
-      }
-
     }
   );
 
 
-  /* =========================================
-     START
-     ========================================= */
+db.auth.onAuthStateChange(
+  (event,session)=>{
+
+    if(!session){
+
+      window.location.href =
+        "auth.html";
+
+    }
+
+  }
+);
 
 
-  // Executive console navigation state
-  document.querySelectorAll('.side-nav a').forEach(link=>{
-    link.addEventListener('click',()=>{document.querySelectorAll('.side-nav a').forEach(x=>x.classList.remove('active'));link.classList.add('active');});
-  });
-
-  checkAdmin();
+checkAdmin();
 
 </script>
+
 </body>
 </html>
