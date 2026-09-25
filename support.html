@@ -1,28 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <link rel="stylesheet" href="hskrc-global.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <title>Support HSKRC | HSKRC</title>
-
-<meta
-  name="description"
-  content="Support HSKRC and record your contribution interest securely."
->
-
-<link
-  rel="canonical"
-  href="https://hskrc.org/support.html"
->
+<meta name="description" content="Support HSKRC and record your contribution interest securely.">
+<link rel="canonical" href="https://hskrc.org/support.html">
 
 <style>
-
 :root{
   --bg:#0b0b0c;
   --panel:#151413;
@@ -87,17 +76,11 @@ h1{
   margin-bottom:16px;
 }
 
-.field.full{
-  grid-column:1/-1;
-}
+.field.full{grid-column:1/-1}
 
-label{
-  font-weight:700;
-}
+label{font-weight:700}
 
-input,
-select,
-textarea{
+input,select,textarea{
   width:100%;
   background:#0e0e0f;
   color:var(--text);
@@ -170,295 +153,192 @@ textarea{
   gap:10px;
 }
 
-.amount-row input{
-  flex:1;
-}
-
-.amount-row select{
-  width:110px;
-}
+.amount-row input{flex:1}
+.amount-row select{width:110px}
 
 @media(max-width:680px){
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .page{
-    padding-top:46px;
-  }
-
-  .card{
-    padding:20px;
-  }
+  .grid{grid-template-columns:1fr}
+  .page{padding-top:46px}
+  .card{padding:20px}
 }
-
 </style>
-
 </head>
 
 <body>
 
 <main class="page">
 
-<div class="eyebrow">
-Support HSKRC
-</div>
+  <div class="eyebrow">Support HSKRC</div>
 
-<h1>
-Support independent research and preservation
-</h1>
+  <h1>Support independent research and preservation</h1>
 
-<p class="lead">
-Use this form to record your support or contribution interest.
-This page does not process a card or bank payment; HSKRC can
-follow up separately when needed.
-</p>
+  <p class="lead">
+    Use this form to record your support or contribution interest.
+    This page does not process a card or bank payment; HSKRC can
+    follow up separately when needed.
+  </p>
 
-<section class="card">
+  <section class="card">
 
-<form id="donationForm">
+    <form id="donationForm">
 
-<div class="grid">
+      <div class="grid">
 
-<div class="field">
+        <div class="field">
+          <label for="donor">Name (optional)</label>
+          <input
+            id="donor"
+            maxlength="120"
+            autocomplete="name"
+          >
+        </div>
 
-<label for="donor">
-Name (optional)
-</label>
+        <div class="field">
+          <label for="method">Method (optional)</label>
 
-<input
-  id="donor"
-  maxlength="120"
-  autocomplete="name"
->
+          <select id="method">
+            <option value="">Not specified</option>
+            <option value="Bank transfer">Bank transfer</option>
+            <option value="Cash">Cash</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
 
-</div>
+        <div class="field full">
+          <label for="amount">Contribution amount (optional)</label>
 
-<div class="field">
+          <div class="amount-row">
+            <input
+              id="amount"
+              type="number"
+              min="0.01"
+              step="0.01"
+              placeholder="0.00"
+            >
 
-<label for="method">
-Method (optional)
-</label>
+            <select id="currency">
+              <option value="AUD">AUD</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+        </div>
 
-<select id="method">
+        <div class="field full">
+          <label for="message">Message (optional)</label>
 
-<option value="">
-Not specified
-</option>
+          <textarea
+            id="message"
+            maxlength="2000"
+            placeholder="Tell us how you would like to support HSKRC."
+          ></textarea>
+        </div>
 
-<option value="Bank transfer">
-Bank transfer
-</option>
+      </div>
 
-<option value="Cash">
-Cash
-</option>
+      <label class="check">
+        <input id="display" type="checkbox">
 
-<option value="Other">
-Other
-</option>
+        <span>
+          I would be happy for HSKRC to consider displaying my
+          support publicly after administrator approval.
+        </span>
+      </label>
 
-</select>
+      <button
+        class="btn"
+        id="submitBtn"
+        type="submit"
+      >
+        Submit support record
+      </button>
 
-</div>
+      <div
+        id="status"
+        class="status"
+        role="status"
+        aria-live="polite"
+      ></div>
 
-<div class="field full">
+      <p class="note">
+        Your submission is private by default. Selecting the
+        public-display option only sends a request. An HSKRC
+        administrator must approve it before anything is displayed publicly.
+      </p>
 
-<label for="amount">
-Contribution amount (optional)
-</label>
+    </form>
 
-<div class="amount-row">
-
-<input
-  id="amount"
-  type="number"
-  min="0.01"
-  step="0.01"
-  placeholder="0.00"
->
-
-<select id="currency">
-<option value="AUD">AUD</option>
-<option value="USD">USD</option>
-<option value="EUR">EUR</option>
-<option value="GBP">GBP</option>
-</select>
-
-</div>
-
-</div>
-
-<div class="field full">
-
-<label for="message">
-Message (optional)
-</label>
-
-<textarea
-  id="message"
-  maxlength="2000"
-  placeholder="Tell us how you would like to support HSKRC."
-></textarea>
-
-</div>
-
-</div>
-
-<label class="check">
-
-<input
-  id="display"
-  type="checkbox"
->
-
-<span>
-I would be happy for HSKRC to consider displaying my support publicly after administrator approval.
-</span>
-
-</label>
-
-<button
-  class="btn"
-  id="submitBtn"
-  type="submit"
->
-Submit support record
-</button>
-
-<div
-  id="status"
-  class="status"
-  role="status"
-  aria-live="polite"
-></div>
-
-<p class="note">
-Your submission is private by default.
-Selecting the public-display option only sends a request.
-An HSKRC administrator must approve it before anything is displayed publicly.
-</p>
-
-</form>
-
-</section>
+  </section>
 
 </main>
 
 <script>
-
 const SUPABASE_URL =
-"https://uwuklryzxexpofcxrbnm.supabase.co";
+  "https://uwuklryzxexpofcxrbnm.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
-const db =
-window.supabase.createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
 async function uid(){
-
-  const {data} =
-    await db.auth.getSession();
-
+  const { data } = await db.auth.getSession();
   return data.session?.user?.id || null;
 }
 
-function showStatus(
-  element,
-  message,
-  ok=true
-){
-
-  element.textContent =
-    message;
-
-  element.className =
-    "status " +
-    (ok ? "ok" : "err");
+function showStatus(element,message,ok=true){
+  element.textContent = message;
+  element.className = "status " + (ok ? "ok" : "err");
 }
 
-const form =
-document.getElementById(
-  "donationForm"
-);
+const form = document.getElementById("donationForm");
+const out = document.getElementById("status");
+const btn = document.getElementById("submitBtn");
 
-const out =
-document.getElementById(
-  "status"
-);
-
-const btn =
-document.getElementById(
-  "submitBtn"
-);
-
-form.addEventListener(
-"submit",
-async event=>{
+form.addEventListener("submit", async event => {
 
   event.preventDefault();
 
   const donorName =
-    document
-      .getElementById("donor")
-      .value
-      .trim();
+    document.getElementById("donor").value.trim();
 
   const rawAmount =
-    document
-      .getElementById("amount")
-      .value;
+    document.getElementById("amount").value;
 
   const message =
-    document
-      .getElementById("message")
-      .value
-      .trim();
+    document.getElementById("message").value.trim();
 
+  /* IMPORTANT:
+     Save checkbox value BEFORE form.reset()
+  */
   const publicRequest =
-    document
-      .getElementById("display")
-      .checked;
+    document.getElementById("display").checked;
 
-  if(
-    !donorName &&
-    !rawAmount &&
-    !message
-  ){
-
+  if(!donorName && !rawAmount && !message){
     showStatus(
       out,
       "Please provide at least your name, contribution amount, or a message.",
       false
     );
-
     return;
   }
 
   const amount =
-    rawAmount === ""
-      ? null
-      : Number(rawAmount);
+    rawAmount === "" ? null : Number(rawAmount);
 
   if(
     amount !== null &&
-    (
-      !Number.isFinite(amount) ||
-      amount <= 0
-    )
+    (!Number.isFinite(amount) || amount <= 0)
   ){
-
     showStatus(
       out,
       "Please enter a valid contribution amount greater than 0.",
       false
     );
-
     return;
   }
 
@@ -466,63 +346,49 @@ async event=>{
 
   try{
 
-    const user_id =
-      await uid();
+    const user_id = await uid();
 
     const payload = {
+      user_id: user_id,
+      donor_name: donorName || null,
+      amount: amount,
+      currency: document.getElementById("currency").value,
+      method: document.getElementById("method").value || null,
+      message: message || null,
 
-      user_id:user_id,
+      /* User's request for public display */
+      public_display: publicRequest,
 
-      donor_name:
-        donorName || null,
-
-      amount:amount,
-
-      currency:
-        document
-          .getElementById("currency")
-          .value,
-
-      method:
-        document
-          .getElementById("method")
-          .value || null,
-
-      message:
-        message || null,
-
-      public_display:
-        publicRequest,
-
-      is_public:false
-
+      /* Must stay private until admin approval */
+      is_public: false
     };
 
-    const {error} =
+    console.log("Submitting support record:", payload);
+
+    const { data, error } =
       await db
         .from("donations")
-        .insert(payload);
+        .insert(payload)
+        .select();
 
     if(error){
       throw error;
     }
 
+    console.log("Support record saved:", data);
+
     form.reset();
 
     if(publicRequest){
-
       showStatus(
         out,
         "Thank you. Your support record was submitted privately and your public-display request is awaiting administrator approval."
       );
-
     }else{
-
       showStatus(
         out,
         "Thank you. Your support record was submitted privately."
       );
-
     }
 
   }catch(error){
@@ -539,13 +405,10 @@ async event=>{
     );
 
   }finally{
-
     btn.disabled = false;
-
   }
 
 });
-
 </script>
 
 <script src="hskrc-global.js"></script>
