@@ -4,12 +4,12 @@
   const LABELS = {
     en:{
       home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
-      researchers:"Researchers", sources:"Sources", about:"About", founder:"Founder",
+      researchers:"Researchers", sources:"Sources", explorer:"Explorer", about:"About", founder:"Founder",
       account:"Account", myAccount:"My Account", lang:"فارسی"
     },
     fa:{
       home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
-      researchers:"پژوهشگران", sources:"منابع", about:"درباره", founder:"بنیان‌گذار",
+      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", about:"درباره", founder:"بنیان‌گذار",
       account:"حساب کاربری", myAccount:"حساب من", lang:"English"
     }
   };
@@ -57,7 +57,8 @@
     if(f==="library.html" || f==="book.html") return "library";
     if(f==="articles.html" || f==="article.html") return "articles";
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
-    if(f==="sources.html") return "sources";
+    if(f==="sources.html" || f==="source.html") return "sources";
+    if(f==="research-explorer.html") return "explorer";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
     if(f==="account.html" || f==="auth.html") return "account";
@@ -99,6 +100,7 @@
           ${navLink("articles","articles.html",L.articles)}
           ${navLink("researchers","researchers.html",L.researchers)}
           ${navLink("sources","sources.html",L.sources)}
+          ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("about","about.html",L.about)}
           ${navLink("founder","founder.html",L.founder)}
         </nav>
@@ -145,7 +147,7 @@
     const L=LABELS[lang()];
     const map={
       home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
-      researchers:L.researchers,sources:L.sources,about:L.about,founder:L.founder
+      researchers:L.researchers,sources:L.sources,explorer:L.explorer,about:L.about,founder:L.founder
     };
     Object.entries(map).forEach(([k,v])=>{
       const el=document.querySelector(`.hskrc-global-nav [data-hskrc-key="${k}"]`);
