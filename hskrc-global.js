@@ -5,12 +5,12 @@
     en:{
       home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", about:"About", founder:"Founder",
-      account:"Account", myAccount:"My Account", lang:"فارسی"
+      support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", lang:"فارسی"
     },
     fa:{
       home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", about:"درباره", founder:"بنیان‌گذار",
-      account:"حساب کاربری", myAccount:"حساب من", lang:"English"
+      support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", lang:"English"
     }
   };
 
@@ -61,6 +61,8 @@
     if(f==="research-explorer.html") return "explorer";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
+    if(f==="support.html") return "support";
+    if(f==="contact.html") return "contact";
     if(f==="account.html" || f==="auth.html") return "account";
 
     const knowledgePages=[
@@ -103,6 +105,8 @@
           ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("about","about.html",L.about)}
           ${navLink("founder","founder.html",L.founder)}
+          ${navLink("support","support.html",L.support)}
+          ${navLink("contact","contact.html",L.contact)}
         </nav>
 
         <div class="hskrc-global-actions">
@@ -119,7 +123,7 @@
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
         <a class="hskrc-global-founder" href="founder.html">Founded by <strong>Kamaluddin Barlas</strong></a>
-        <div class="hskrc-global-copy">© 2026 HSKRC - All rights reserved.</div>
+        <div class="hskrc-global-copy"><a href="support.html">Support</a> · <a href="contact.html">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
   }
@@ -147,7 +151,7 @@
     const L=LABELS[lang()];
     const map={
       home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
-      researchers:L.researchers,sources:L.sources,explorer:L.explorer,about:L.about,founder:L.founder
+      researchers:L.researchers,sources:L.sources,explorer:L.explorer,about:L.about,founder:L.founder,support:L.support,contact:L.contact
     };
     Object.entries(map).forEach(([k,v])=>{
       const el=document.querySelector(`.hskrc-global-nav [data-hskrc-key="${k}"]`);
