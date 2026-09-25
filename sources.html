@@ -59,7 +59,8 @@ function render(){
        ${r.source_type?`<span class="tag">${esc(r.source_type)}</span>`:""}
        ${r.reliability?`<span class="tag">${esc(r.reliability)}</span>`:""}
      </div>
-     ${r.url?`<a class="link" href="${esc(r.url)}" target="_blank" rel="noopener">${L==="fa"?"مشاهده منبع ↗":"Open source ↗"}</a>`:""}
+     <a class="link" href="source.html?id=${encodeURIComponent(r.id)}">${L==="fa"?"نمایش ارتباطات پژوهشی →":"View research connections →"}</a>
+     ${r.url?`<a class="link" style="margin-left:14px" href="${esc(r.url)}" target="_blank" rel="noopener">${L==="fa"?"منبع اصلی ↗":"Original source ↗"}</a>`:""}
    </article>`;
  }).join("");
  count.textContent=L==="fa"?`${rows.length} منبع ثبت‌شده · مجموعه پژوهشی HSKRC`:`${rows.length} registered record${rows.length===1?"":"s"} · HSKRC research collection`;
