@@ -1,580 +1,487 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>HSKRC | Admin Dashboard</title>
 
-  <title>HSKRC | Admin Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="hskrc-global.css">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="hskrc-global.css">
+<style>
+:root{
+  --bg:#0d1117;
+  --panel:#151a22;
+  --border:#29313c;
+  --gold:#c9a45c;
+  --text:#f4f7f6;
+  --muted:#8f98a5;
+  --danger:#ff7777;
+  --success:#78d49a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top right,rgba(201,164,92,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+a{color:inherit;text-decoration:none}
 
-  <style>
-    :root{
-      --bg:#0d1117;
-      --panel:#151a22;
-      --panel2:#10161e;
-      --border:#29313c;
-      --gold:#c9a45c;
-      --gold2:#a98545;
-      --text:#f4f7f6;
-      --muted:#8f98a5;
-      --danger:#ff7777;
-      --success:#78d49a;
-    }
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(13,17,23,.94);
+  border-bottom:1px solid rgba(201,164,92,.12);
+  backdrop-filter:blur(16px);
+}
+.header-inner{
+  max-width:1250px;
+  min-height:70px;
+  margin:auto;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:800;
+}
+.brand-mark{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  color:var(--gold);
+  background:rgba(201,164,92,.10);
+  border:1px solid rgba(201,164,92,.25);
+}
+.brand small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:500;
+}
+.header-actions{
+  display:flex;
+  gap:8px;
+}
+.header-link{
+  padding:9px 12px;
+  border-radius:9px;
+  color:#c4ccd5;
+  font-size:12px;
+  font-weight:700;
+}
+.header-link:hover{
+  background:rgba(201,164,92,.08);
+  color:var(--gold);
+}
 
-    *{box-sizing:border-box}
+.page{
+  max-width:1250px;
+  margin:auto;
+  padding:45px 22px 70px;
+}
+.eyebrow{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+}
+h1{
+  margin:8px 0;
+  font-size:clamp(32px,5vw,48px);
+  line-height:1.1;
+}
+.lead{
+  margin:0;
+  color:var(--muted);
+  max-width:720px;
+  line-height:1.65;
+}
+.admin-info{
+  margin-top:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--muted);
+  font-size:12px;
+}
+.admin-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--success);
+}
 
-    body{
-      margin:0;
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top right,rgba(201,164,92,.08),transparent 30%),
-        var(--bg);
-      color:var(--text);
-      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    }
+.stats{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.stat{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--panel);
+}
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+.stat-value{
+  margin-top:7px;
+  color:var(--gold);
+  font-size:30px;
+  font-weight:850;
+}
 
-    a{color:inherit;text-decoration:none}
+.tabs{
+  display:flex;
+  gap:8px;
+  margin:30px 0 18px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:10px;
+}
+.tab{
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  padding:10px 15px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:750;
+}
+.tab:hover,.tab.active{
+  color:var(--gold);
+  background:rgba(201,164,92,.08);
+  border-color:rgba(201,164,92,.16);
+}
+.panel{display:none}
+.panel.active{display:block}
 
-    .header{
-      position:sticky;
-      top:0;
-      z-index:20;
-      background:rgba(13,17,23,.94);
-      border-bottom:1px solid rgba(201,164,92,.12);
-      backdrop-filter:blur(16px);
-    }
+.panel-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:14px;
+}
+.panel-title{
+  font-size:20px;
+  font-weight:800;
+}
 
-    .header-inner{
-      max-width:1250px;
-      min-height:70px;
-      margin:auto;
-      padding:0 22px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
+.btn{
+  border:1px solid rgba(201,164,92,.30);
+  background:transparent;
+  color:var(--gold);
+  border-radius:9px;
+  padding:8px 11px;
+  cursor:pointer;
+  font-weight:750;
+}
+.btn:hover{
+  background:rgba(201,164,92,.08);
+}
+.btn:disabled{
+  opacity:.5;
+  cursor:wait;
+}
+.btn-danger{
+  color:var(--danger);
+  border-color:rgba(255,119,119,.35);
+}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:11px;
-      font-weight:800;
-    }
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--panel);
+}
+table{
+  width:100%;
+  min-width:1100px;
+  border-collapse:collapse;
+}
+th,td{
+  padding:13px 14px;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid rgba(255,255,255,.055);
+  font-size:12px;
+}
+th{
+  color:var(--gold);
+  background:#11171f;
+  font-size:10px;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+td{color:#d8dee7}
+tr:last-child td{border-bottom:none}
 
-    .brand-mark{
-      width:40px;
-      height:40px;
-      display:grid;
-      place-items:center;
-      border-radius:11px;
-      color:var(--gold);
-      background:rgba(201,164,92,.10);
-      border:1px solid rgba(201,164,92,.25);
-    }
+.message-cell{
+  max-width:330px;
+  white-space:normal;
+  line-height:1.55;
+}
 
-    .brand small{
-      display:block;
-      margin-top:2px;
-      color:var(--muted);
-      font-size:10px;
-      font-weight:500;
-    }
+.status-select{
+  background:#0d131a;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:7px 8px;
+  font-size:11px;
+}
 
-    .header-actions{
-      display:flex;
-      gap:8px;
-    }
+.badge{
+  display:inline-flex;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+}
+.yes{
+  color:#86d9a4;
+  background:rgba(70,180,110,.10);
+}
+.no{
+  color:#aeb6c1;
+  background:rgba(255,255,255,.05);
+}
+.request{
+  color:#e8c87c;
+  background:rgba(201,164,92,.10);
+}
 
-    .header-link{
-      padding:9px 12px;
-      border-radius:9px;
-      color:#c4ccd5;
-      font-size:12px;
-      font-weight:700;
-    }
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
 
-    .header-link:hover{
-      background:rgba(201,164,92,.08);
-      color:var(--gold);
-    }
+.loading,.empty,.error{
+  padding:45px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+.error{color:var(--danger)}
 
-    .page{
-      max-width:1250px;
-      margin:auto;
-      padding:45px 22px 70px;
-    }
+.gate{
+  min-height:70vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+}
+.gate-box{
+  width:min(500px,100%);
+  padding:35px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--panel);
+}
+.gate-title{
+  margin:0 0 8px;
+  font-size:22px;
+}
+.gate-text{
+  color:var(--muted);
+  line-height:1.6;
+}
+.hidden{display:none!important}
 
-    .eyebrow{
-      color:var(--gold);
-      font-size:11px;
-      font-weight:850;
-      letter-spacing:1.4px;
-      text-transform:uppercase;
-    }
-
-    h1{
-      margin:8px 0 8px;
-      font-size:clamp(32px,5vw,48px);
-      line-height:1.1;
-    }
-
-    .lead{
-      margin:0;
-      color:var(--muted);
-      max-width:720px;
-      line-height:1.65;
-    }
-
-    .admin-info{
-      margin-top:20px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .admin-dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:var(--success);
-    }
-
-    .stats{
-      margin-top:28px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-    }
-
-    .stat{
-      padding:20px;
-      border:1px solid var(--border);
-      border-radius:15px;
-      background:var(--panel);
-    }
-
-    .stat-label{
-      color:var(--muted);
-      font-size:11px;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.5px;
-    }
-
-    .stat-value{
-      margin-top:7px;
-      color:var(--gold);
-      font-size:30px;
-      font-weight:850;
-    }
-
-    .tabs{
-      display:flex;
-      gap:8px;
-      margin:30px 0 18px;
-      border-bottom:1px solid var(--border);
-      padding-bottom:10px;
-    }
-
-    .tab{
-      border:1px solid transparent;
-      background:transparent;
-      color:var(--muted);
-      padding:10px 15px;
-      border-radius:9px;
-      cursor:pointer;
-      font-weight:750;
-    }
-
-    .tab:hover,
-    .tab.active{
-      color:var(--gold);
-      background:rgba(201,164,92,.08);
-      border-color:rgba(201,164,92,.16);
-    }
-
-    .panel{
-      display:none;
-    }
-
-    .panel.active{
-      display:block;
-    }
-
-    .panel-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:15px;
-      margin-bottom:14px;
-    }
-
-    .panel-title{
-      font-size:20px;
-      font-weight:800;
-    }
-
-    .refresh{
-      border:1px solid rgba(201,164,92,.30);
-      background:transparent;
-      color:var(--gold);
-      border-radius:9px;
-      padding:9px 13px;
-      cursor:pointer;
-      font-weight:750;
-    }
-
-    .table-wrap{
-      overflow:auto;
-      border:1px solid var(--border);
-      border-radius:15px;
-      background:var(--panel);
-    }
-
-    table{
-      width:100%;
-      min-width:900px;
-      border-collapse:collapse;
-    }
-
-    th,
-    td{
-      padding:13px 14px;
-      text-align:left;
-      vertical-align:top;
-      border-bottom:1px solid rgba(255,255,255,.055);
-      font-size:12px;
-    }
-
-    th{
-      color:var(--gold);
-      background:#11171f;
-      font-size:10px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-    }
-
-    td{
-      color:#d8dee7;
-    }
-
-    tr:last-child td{
-      border-bottom:none;
-    }
-
-    .message-cell{
-      max-width:330px;
-      white-space:normal;
-      line-height:1.55;
-    }
-
-    .status-select{
-      background:#0d131a;
-      color:var(--text);
-      border:1px solid var(--border);
-      border-radius:8px;
-      padding:7px 8px;
-      font-size:11px;
-    }
-
-    .badge{
-      display:inline-flex;
-      padding:5px 8px;
-      border-radius:999px;
-      font-size:10px;
-      font-weight:800;
-    }
-
-    .yes{
-      color:#86d9a4;
-      background:rgba(70,180,110,.10);
-    }
-
-    .no{
-      color:#aeb6c1;
-      background:rgba(255,255,255,.05);
-    }
-
-    .loading,
-    .empty,
-    .error{
-      padding:45px 20px;
-      text-align:center;
-      color:var(--muted);
-    }
-
-    .error{
-      color:var(--danger);
-    }
-
-    .gate{
-      min-height:70vh;
-      display:grid;
-      place-items:center;
-      text-align:center;
-    }
-
-    .gate-box{
-      width:min(500px,100%);
-      padding:35px;
-      border:1px solid var(--border);
-      border-radius:18px;
-      background:var(--panel);
-    }
-
-    .gate-title{
-      margin:0 0 8px;
-      font-size:22px;
-    }
-
-    .gate-text{
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .hidden{display:none!important}
-
-    @media(max-width:850px){
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .header-actions{display:none}
-    }
-
-    @media(max-width:520px){
-      .stats{grid-template-columns:1fr}
-      .page{padding:30px 13px 50px}
-      .tabs{overflow:auto}
-      .panel-header{align-items:flex-start;flex-direction:column}
-    }
-  </style>
+@media(max-width:850px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .header-actions{display:none}
+}
+@media(max-width:520px){
+  .stats{grid-template-columns:1fr}
+  .page{padding:30px 13px 50px}
+  .tabs{overflow:auto}
+  .panel-header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header class="header">
-  <div class="header-inner">
+<div class="header-inner">
 
-    <a class="brand" href="index.html">
-      <div class="brand-mark">H</div>
-      <div>
-        HSKRC Admin
-        <small>Hassan Sabbah Knowledge & Research Centre</small>
-      </div>
-    </a>
-
-    <div class="header-actions">
-      <a class="header-link" href="index.html">Home</a>
-      <a class="header-link" href="library.html">Library</a>
-      <a class="header-link" href="account.html">My Account</a>
-      <a class="header-link" href="#" id="logoutLink">Logout</a>
-    </div>
-
+<a class="brand" href="index.html">
+  <div class="brand-mark">H</div>
+  <div>
+    HSKRC Admin
+    <small>Hassan Sabbah Knowledge & Research Centre</small>
   </div>
-</header>
+</a>
 
+<div class="header-actions">
+  <a class="header-link" href="index.html">Home</a>
+  <a class="header-link" href="library.html">Library</a>
+  <a class="header-link" href="account.html">My Account</a>
+  <a class="header-link" href="#" id="logoutLink">Logout</a>
+</div>
+
+</div>
+</header>
 
 <main class="page">
 
-  <div id="checking" class="gate">
-    <div class="gate-box">
-      <h2 class="gate-title">Checking administrator access</h2>
-      <div class="gate-text">
-        Please wait while HSKRC verifies your account.
-      </div>
+<div id="checking" class="gate">
+  <div class="gate-box">
+    <h2 class="gate-title">Checking administrator access</h2>
+    <div class="gate-text">
+      Please wait while HSKRC verifies your account.
     </div>
   </div>
+</div>
 
-
-  <div id="denied" class="gate hidden">
-    <div class="gate-box">
-      <h2 class="gate-title">Access denied</h2>
-      <div class="gate-text">
-        This area is available only to authorised HSKRC administrators.
-      </div>
+<div id="denied" class="gate hidden">
+  <div class="gate-box">
+    <h2 class="gate-title">Access denied</h2>
+    <div class="gate-text">
+      This area is available only to authorised HSKRC administrators.
     </div>
   </div>
+</div>
 
+<div id="dashboard" class="hidden">
 
-  <div id="dashboard" class="hidden">
+<div class="eyebrow">Administration</div>
 
-    <div class="eyebrow">Administration</div>
+<h1>HSKRC Admin Dashboard</h1>
 
-    <h1>HSKRC Admin Dashboard</h1>
+<p class="lead">
+Review feedback, private support records and public-display requests submitted through HSKRC.
+</p>
 
-    <p class="lead">
-      Review feedback and private support records submitted through HSKRC.
-    </p>
+<div class="admin-info">
+  <span class="admin-dot"></span>
+  <span id="adminEmail">Administrator</span>
+</div>
 
-    <div class="admin-info">
-      <span class="admin-dot"></span>
-      <span id="adminEmail">Administrator</span>
-    </div>
+<section class="stats">
 
+<div class="stat">
+  <div class="stat-label">Feedback</div>
+  <div class="stat-value" id="feedbackCount">0</div>
+</div>
 
-    <section class="stats">
+<div class="stat">
+  <div class="stat-label">New Feedback</div>
+  <div class="stat-value" id="newFeedbackCount">0</div>
+</div>
 
-      <div class="stat">
-        <div class="stat-label">Feedback</div>
-        <div class="stat-value" id="feedbackCount">0</div>
-      </div>
+<div class="stat">
+  <div class="stat-label">Support Records</div>
+  <div class="stat-value" id="donationCount">0</div>
+</div>
 
-      <div class="stat">
-        <div class="stat-label">New Feedback</div>
-        <div class="stat-value" id="newFeedbackCount">0</div>
-      </div>
+<div class="stat">
+  <div class="stat-label">Public Requests</div>
+  <div class="stat-value" id="publicRequestCount">0</div>
+</div>
 
-      <div class="stat">
-        <div class="stat-label">Support Records</div>
-        <div class="stat-value" id="donationCount">0</div>
-      </div>
+</section>
 
-      <div class="stat">
-        <div class="stat-label">New Support</div>
-        <div class="stat-value" id="newDonationCount">0</div>
-      </div>
+<div class="tabs">
 
-    </section>
+<button class="tab active" data-panel="feedbackPanel">
+Feedback
+</button>
 
+<button class="tab" data-panel="donationsPanel">
+Support / Donations
+</button>
 
-    <div class="tabs">
+</div>
 
-      <button
-        class="tab active"
-        data-panel="feedbackPanel"
-      >
-        Feedback
-      </button>
+<section class="panel active" id="feedbackPanel">
 
-      <button
-        class="tab"
-        data-panel="donationsPanel"
-      >
-        Support / Donations
-      </button>
+<div class="panel-header">
+  <div class="panel-title">Feedback</div>
+  <button class="btn" onclick="loadFeedback()">Refresh</button>
+</div>
 
-    </div>
+<div class="table-wrap" id="feedbackContainer">
+  <div class="loading">Loading feedback...</div>
+</div>
 
+</section>
 
-    <section
-      class="panel active"
-      id="feedbackPanel"
-    >
+<section class="panel" id="donationsPanel">
 
-      <div class="panel-header">
+<div class="panel-header">
+  <div class="panel-title">Support / Donations</div>
+  <button class="btn" onclick="loadDonations()">Refresh</button>
+</div>
 
-        <div class="panel-title">
-          Feedback
-        </div>
+<div class="table-wrap" id="donationsContainer">
+  <div class="loading">Loading support records...</div>
+</div>
 
-        <button
-          class="refresh"
-          onclick="loadFeedback()"
-        >
-          Refresh
-        </button>
+</section>
 
-      </div>
-
-      <div
-        class="table-wrap"
-        id="feedbackContainer"
-      >
-        <div class="loading">
-          Loading feedback...
-        </div>
-      </div>
-
-    </section>
-
-
-    <section
-      class="panel"
-      id="donationsPanel"
-    >
-
-      <div class="panel-header">
-
-        <div class="panel-title">
-          Support / Donations
-        </div>
-
-        <button
-          class="refresh"
-          onclick="loadDonations()"
-        >
-          Refresh
-        </button>
-
-      </div>
-
-      <div
-        class="table-wrap"
-        id="donationsContainer"
-      >
-        <div class="loading">
-          Loading support records...
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
+</div>
 </main>
-
 
 <script>
 
 const SUPABASE_URL =
-  "https://uwuklryzxexpofcxrbnm.supabase.co";
+"https://uwuklryzxexpofcxrbnm.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
-
+"sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
 const db =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 function escapeHtml(value){
-
   return String(value ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
-
 }
-
 
 function formatDate(value){
 
   if(!value) return "-";
 
-  const date =
-    new Date(value);
+  const date = new Date(value);
 
-  if(
-    Number.isNaN(
-      date.getTime()
-    )
-  ){
+  if(Number.isNaN(date.getTime())){
     return "-";
   }
 
   return date.toLocaleString();
-
 }
-
 
 async function checkAdmin(){
 
@@ -587,51 +494,28 @@ async function checkAdmin(){
   const dashboard =
     document.getElementById("dashboard");
 
-
   try{
 
     const {
-      data:{
-        session
-      }
-    } =
-      await db.auth.getSession();
-
+      data:{session}
+    } = await db.auth.getSession();
 
     if(!session){
-
-      window.location.href =
-        "auth.html";
-
+      window.location.href = "auth.html";
       return;
-
     }
-
 
     document.getElementById(
       "adminEmail"
     ).textContent =
-      session.user.email ||
-      "Administrator";
-
-
-    /*
-      Verify the logged-in user against
-      the protected admin_users table
-      through the is_admin() function.
-    */
+      session.user.email || "Administrator";
 
     const {
       data:isAdmin,
       error
-    } =
-      await db.rpc("is_admin");
+    } = await db.rpc("is_admin");
 
-
-    if(
-      error ||
-      isAdmin !== true
-    ){
+    if(error || isAdmin !== true){
 
       if(error){
         console.error(
@@ -640,50 +524,28 @@ async function checkAdmin(){
         );
       }
 
-      checking.classList.add(
-        "hidden"
-      );
-
-      denied.classList.remove(
-        "hidden"
-      );
+      checking.classList.add("hidden");
+      denied.classList.remove("hidden");
 
       return;
-
     }
 
-
-    checking.classList.add(
-      "hidden"
-    );
-
-    dashboard.classList.remove(
-      "hidden"
-    );
-
+    checking.classList.add("hidden");
+    dashboard.classList.remove("hidden");
 
     await Promise.all([
       loadFeedback(),
       loadDonations()
     ]);
 
-
   }catch(error){
 
     console.error(error);
 
-    checking.classList.add(
-      "hidden"
-    );
-
-    denied.classList.remove(
-      "hidden"
-    );
-
+    checking.classList.add("hidden");
+    denied.classList.remove("hidden");
   }
-
 }
-
 
 async function loadFeedback(){
 
@@ -692,10 +554,8 @@ async function loadFeedback(){
       "feedbackContainer"
     );
 
-
   container.innerHTML =
     '<div class="loading">Loading feedback...</div>';
-
 
   const {
     data,
@@ -708,11 +568,8 @@ async function loadFeedback(){
       )
       .order(
         "created_at",
-        {
-          ascending:false
-        }
+        {ascending:false}
       );
-
 
   if(error){
 
@@ -725,29 +582,22 @@ async function loadFeedback(){
       '<div class="error">Unable to load feedback.</div>';
 
     return;
-
   }
 
-
-  const rows =
-    data || [];
-
+  const rows = data || [];
 
   document.getElementById(
     "feedbackCount"
   ).textContent =
     rows.length;
 
-
   document.getElementById(
     "newFeedbackCount"
   ).textContent =
     rows.filter(
       row =>
-        (row.status || "new")
-        === "new"
+        (row.status || "new") === "new"
     ).length;
-
 
   if(!rows.length){
 
@@ -755,126 +605,102 @@ async function loadFeedback(){
       '<div class="empty">No feedback has been submitted yet.</div>';
 
     return;
-
   }
-
 
   container.innerHTML = `
 
-    <table>
+  <table>
 
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Subject</th>
-          <th>Message</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Subject</th>
+    <th>Message</th>
+    <th>Status</th>
+  </tr>
+  </thead>
 
-      <tbody>
+  <tbody>
 
-        ${rows.map(row=>`
+  ${rows.map(row=>`
 
-          <tr>
+  <tr>
 
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  row.created_at
-                )
-              )}
-            </td>
+  <td>
+    ${escapeHtml(
+      formatDate(row.created_at)
+    )}
+  </td>
 
-            <td>
-              ${escapeHtml(
-                row.name || "-"
-              )}
-            </td>
+  <td>
+    ${escapeHtml(row.name || "-")}
+  </td>
 
-            <td>
-              ${escapeHtml(
-                row.email || "-"
-              )}
-            </td>
+  <td>
+    ${escapeHtml(row.email || "-")}
+  </td>
 
-            <td>
-              ${escapeHtml(
-                row.subject || "-"
-              )}
-            </td>
+  <td>
+    ${escapeHtml(row.subject || "-")}
+  </td>
 
-            <td class="message-cell">
-              ${escapeHtml(
-                row.message || "-"
-              )}
-            </td>
+  <td class="message-cell">
+    ${escapeHtml(row.message || "-")}
+  </td>
 
-            <td>
+  <td>
 
-              <select
-                class="status-select"
-                onchange="updateFeedbackStatus(
-                  '${escapeHtml(row.id)}',
-                  this.value,
-                  this
-                )"
-              >
+  <select
+    class="status-select"
+    onchange="updateFeedbackStatus(
+      '${escapeHtml(row.id)}',
+      this.value,
+      this
+    )"
+  >
 
-                <option
-                  value="new"
-                  ${
-                    (row.status || "new")
-                    === "new"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  New
-                </option>
+  <option
+    value="new"
+    ${(row.status || "new") === "new"
+      ? "selected"
+      : ""}
+  >
+    New
+  </option>
 
-                <option
-                  value="reviewed"
-                  ${
-                    row.status
-                    === "reviewed"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  Reviewed
-                </option>
+  <option
+    value="reviewed"
+    ${row.status === "reviewed"
+      ? "selected"
+      : ""}
+  >
+    Reviewed
+  </option>
 
-                <option
-                  value="archived"
-                  ${
-                    row.status
-                    === "archived"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  Archived
-                </option>
+  <option
+    value="archived"
+    ${row.status === "archived"
+      ? "selected"
+      : ""}
+  >
+    Archived
+  </option>
 
-              </select>
+  </select>
 
-            </td>
+  </td>
 
-          </tr>
+  </tr>
 
-        `).join("")}
+  `).join("")}
 
-      </tbody>
-
-    </table>
+  </tbody>
+  </table>
 
   `;
-
 }
-
 
 async function loadDonations(){
 
@@ -883,10 +709,8 @@ async function loadDonations(){
       "donationsContainer"
     );
 
-
   container.innerHTML =
     '<div class="loading">Loading support records...</div>';
-
 
   const {
     data,
@@ -899,11 +723,8 @@ async function loadDonations(){
       )
       .order(
         "created_at",
-        {
-          ascending:false
-        }
+        {ascending:false}
       );
-
 
   if(error){
 
@@ -916,29 +737,23 @@ async function loadDonations(){
       '<div class="error">Unable to load support records.</div>';
 
     return;
-
   }
 
-
-  const rows =
-    data || [];
-
+  const rows = data || [];
 
   document.getElementById(
     "donationCount"
   ).textContent =
     rows.length;
 
-
   document.getElementById(
-    "newDonationCount"
+    "publicRequestCount"
   ).textContent =
     rows.filter(
       row =>
-        (row.status || "new")
-        === "new"
+        row.public_display === true &&
+        row.is_public !== true
     ).length;
-
 
   if(!rows.length){
 
@@ -946,158 +761,191 @@ async function loadDonations(){
       '<div class="empty">No support records have been submitted yet.</div>';
 
     return;
-
   }
-
 
   container.innerHTML = `
 
-    <table>
+  <table>
 
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Method</th>
-          <th>Message</th>
-          <th>Public</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Method</th>
+    <th>Message</th>
+    <th>Public Request</th>
+    <th>Published</th>
+    <th>Action</th>
+    <th>Status</th>
+  </tr>
+  </thead>
 
-      <tbody>
+  <tbody>
 
-        ${rows.map(row=>`
+  ${rows.map(row=>`
 
-          <tr>
+  <tr>
 
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  row.created_at
-                )
-              )}
-            </td>
+  <td>
+    ${escapeHtml(
+      formatDate(row.created_at)
+    )}
+  </td>
 
-            <td>
-              ${escapeHtml(
-                row.donor_name || "-"
-              )}
-            </td>
+  <td>
+    ${escapeHtml(
+      row.donor_name || "-"
+    )}
+  </td>
 
-            <td>
-              ${
-                row.amount !== null
-                && row.amount !== undefined
-                  ?
-                    escapeHtml(
-                      row.amount
-                    )
-                    +
-                    " "
-                    +
-                    escapeHtml(
-                      row.currency || ""
-                    )
-                  :
-                    "-"
-              }
-            </td>
+  <td>
+    ${
+      row.amount !== null &&
+      row.amount !== undefined
+      ?
+      escapeHtml(row.amount)
+      + " "
+      + escapeHtml(row.currency || "")
+      :
+      "-"
+    }
+  </td>
 
-            <td>
-              ${escapeHtml(
-                row.method || "-"
-              )}
-            </td>
+  <td>
+    ${escapeHtml(row.method || "-")}
+  </td>
 
-            <td class="message-cell">
-              ${escapeHtml(
-                row.message || "-"
-              )}
-            </td>
+  <td class="message-cell">
+    ${escapeHtml(row.message || "-")}
+  </td>
 
-            <td>
+  <td>
 
-              <span class="badge ${
-                row.is_public
-                  ? "yes"
-                  : "no"
-              }">
+    ${
+      row.public_display
+      ?
+      '<span class="badge request">Requested</span>'
+      :
+      '<span class="badge no">No request</span>'
+    }
 
-                ${
-                  row.is_public
-                    ? "Yes"
-                    : "No"
-                }
+  </td>
 
-              </span>
+  <td>
 
-            </td>
+    ${
+      row.is_public
+      ?
+      '<span class="badge yes">Published</span>'
+      :
+      '<span class="badge no">Private</span>'
+    }
 
-            <td>
+  </td>
 
-              <select
-                class="status-select"
-                onchange="updateDonationStatus(
-                  '${escapeHtml(row.id)}',
-                  this.value,
-                  this
-                )"
-              >
+  <td>
 
-                <option
-                  value="new"
-                  ${
-                    (row.status || "new")
-                    === "new"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  New
-                </option>
+    <div class="actions">
 
-                <option
-                  value="reviewed"
-                  ${
-                    row.status
-                    === "reviewed"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  Reviewed
-                </option>
+    ${
+      row.public_display &&
+      !row.is_public
+      ?
+      `
+      <button
+        class="btn"
+        onclick="approvePublic(
+          '${escapeHtml(row.id)}',
+          this
+        )"
+      >
+        Approve
+      </button>
 
-                <option
-                  value="archived"
-                  ${
-                    row.status
-                    === "archived"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  Archived
-                </option>
+      <button
+        class="btn btn-danger"
+        onclick="rejectPublic(
+          '${escapeHtml(row.id)}',
+          this
+        )"
+      >
+        Reject
+      </button>
+      `
+      :
+      row.is_public
+      ?
+      `
+      <button
+        class="btn btn-danger"
+        onclick="makePrivate(
+          '${escapeHtml(row.id)}',
+          this
+        )"
+      >
+        Make Private
+      </button>
+      `
+      :
+      '<span class="badge no">No action</span>'
+    }
 
-              </select>
+    </div>
 
-            </td>
+  </td>
 
-          </tr>
+  <td>
 
-        `).join("")}
+  <select
+    class="status-select"
+    onchange="updateDonationStatus(
+      '${escapeHtml(row.id)}',
+      this.value,
+      this
+    )"
+  >
 
-      </tbody>
+  <option
+    value="new"
+    ${(row.status || "new") === "new"
+      ? "selected"
+      : ""}
+  >
+    New
+  </option>
 
-    </table>
+  <option
+    value="reviewed"
+    ${row.status === "reviewed"
+      ? "selected"
+      : ""}
+  >
+    Reviewed
+  </option>
+
+  <option
+    value="archived"
+    ${row.status === "archived"
+      ? "selected"
+      : ""}
+  >
+    Archived
+  </option>
+
+  </select>
+
+  </td>
+
+  </tr>
+
+  `).join("")}
+
+  </tbody>
+  </table>
 
   `;
-
 }
-
 
 async function updateFeedbackStatus(
   id,
@@ -1105,33 +953,21 @@ async function updateFeedbackStatus(
   select
 ){
 
-  select.disabled =
-    true;
+  select.disabled = true;
 
-
-  const {
-    error
-  } =
+  const {error} =
     await db
       .from("feedback")
       .update({
         status:value
       })
-      .eq(
-        "id",
-        id
-      );
+      .eq("id",id);
 
-
-  select.disabled =
-    false;
-
+  select.disabled = false;
 
   if(error){
 
-    console.error(
-      error
-    );
+    console.error(error);
 
     alert(
       "Unable to update feedback status."
@@ -1140,14 +976,10 @@ async function updateFeedbackStatus(
     await loadFeedback();
 
     return;
-
   }
 
-
   await loadFeedback();
-
 }
-
 
 async function updateDonationStatus(
   id,
@@ -1155,33 +987,21 @@ async function updateDonationStatus(
   select
 ){
 
-  select.disabled =
-    true;
+  select.disabled = true;
 
-
-  const {
-    error
-  } =
+  const {error} =
     await db
       .from("donations")
       .update({
         status:value
       })
-      .eq(
-        "id",
-        id
-      );
+      .eq("id",id);
 
-
-  select.disabled =
-    false;
-
+  select.disabled = false;
 
   if(error){
 
-    console.error(
-      error
-    );
+    console.error(error);
 
     alert(
       "Unable to update support status."
@@ -1190,94 +1010,185 @@ async function updateDonationStatus(
     await loadDonations();
 
     return;
-
   }
 
-
   await loadDonations();
-
 }
 
+async function approvePublic(
+  id,
+  button
+){
 
-document
-  .querySelectorAll(".tab")
-  .forEach(button=>{
+  button.disabled = true;
 
-    button.addEventListener(
-      "click",
-      ()=>{
+  const {error} =
+    await db
+      .from("donations")
+      .update({
+        is_public:true,
+        public_display:true,
+        status:"reviewed"
+      })
+      .eq("id",id);
 
-        document
-          .querySelectorAll(".tab")
-          .forEach(
-            tab =>
-              tab.classList.remove(
-                "active"
-              )
-          );
+  button.disabled = false;
 
+  if(error){
 
-        document
-          .querySelectorAll(".panel")
-          .forEach(
-            panel =>
-              panel.classList.remove(
-                "active"
-              )
-          );
-
-
-        button.classList.add(
-          "active"
-        );
-
-
-        document
-          .getElementById(
-            button.dataset.panel
-          )
-          .classList.add(
-            "active"
-          );
-
-      }
+    console.error(
+      "Public approval error:",
+      error
     );
 
-  });
+    alert(
+      "Unable to approve public display."
+    );
 
+    return;
+  }
+
+  await loadDonations();
+}
+
+async function rejectPublic(
+  id,
+  button
+){
+
+  button.disabled = true;
+
+  const {error} =
+    await db
+      .from("donations")
+      .update({
+        is_public:false,
+        public_display:false,
+        status:"reviewed"
+      })
+      .eq("id",id);
+
+  button.disabled = false;
+
+  if(error){
+
+    console.error(
+      "Public rejection error:",
+      error
+    );
+
+    alert(
+      "Unable to reject public display."
+    );
+
+    return;
+  }
+
+  await loadDonations();
+}
+
+async function makePrivate(
+  id,
+  button
+){
+
+  if(
+    !confirm(
+      "Remove this support record from public display?"
+    )
+  ){
+    return;
+  }
+
+  button.disabled = true;
+
+  const {error} =
+    await db
+      .from("donations")
+      .update({
+        is_public:false,
+        public_display:false
+      })
+      .eq("id",id);
+
+  button.disabled = false;
+
+  if(error){
+
+    console.error(
+      "Make private error:",
+      error
+    );
+
+    alert(
+      "Unable to make this record private."
+    );
+
+    return;
+  }
+
+  await loadDonations();
+}
 
 document
-  .getElementById(
-    "logoutLink"
-  )
-  .addEventListener(
+.querySelectorAll(".tab")
+.forEach(button=>{
+
+  button.addEventListener(
     "click",
-    async event=>{
+    ()=>{
 
-      event.preventDefault();
+      document
+      .querySelectorAll(".tab")
+      .forEach(
+        tab =>
+          tab.classList.remove("active")
+      );
 
-      await db.auth.signOut();
+      document
+      .querySelectorAll(".panel")
+      .forEach(
+        panel =>
+          panel.classList.remove("active")
+      );
 
-      window.location.href =
-        "auth.html";
+      button.classList.add("active");
 
+      document
+      .getElementById(
+        button.dataset.panel
+      )
+      .classList.add("active");
     }
   );
 
+});
+
+document
+.getElementById("logoutLink")
+.addEventListener(
+  "click",
+  async event=>{
+
+    event.preventDefault();
+
+    await db.auth.signOut();
+
+    window.location.href =
+      "auth.html";
+  }
+);
 
 db.auth.onAuthStateChange(
   (event,session)=>{
 
     if(!session){
-
       window.location.href =
         "auth.html";
-
     }
 
   }
 );
-
 
 checkAdmin();
 
