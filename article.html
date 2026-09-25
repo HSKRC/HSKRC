@@ -1175,7 +1175,7 @@
     .dynamic-network-column{padding:16px;border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.015)}
     .dynamic-network-column .dynamic-section-title{margin-top:0}
     .evidence-paths{margin-top:12px;padding:16px;border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.015)}
-    .citation-box{margin-top:16px;padding:18px;border:1px solid var(--border);border-radius:13px;background:rgba(199,161,90,.045)}.citation-row{margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.02)}.citation-label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.citation-text{margin-top:5px;color:var(--text);overflow-wrap:anywhere}.citation-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.citation-copy{cursor:pointer;border:1px solid var(--green-border);background:var(--green-soft);color:var(--green);padding:8px 11px;border-radius:8px;font-weight:800}.citation-link{display:inline-block;border:1px solid var(--border);padding:8px 11px;border-radius:8px;color:var(--text-soft)}
+    .citation-box{margin-top:16px;padding:18px;border:1px solid var(--border);border-radius:13px;background:rgba(199,161,90,.045)}.citation-row{margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.02)}.citation-label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.citation-text{margin-top:5px;color:var(--text);overflow-wrap:anywhere}.citation-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.citation-copy{cursor:pointer;border:1px solid var(--green-border);background:var(--green-soft);color:var(--green);padding:8px 11px;border-radius:8px;font-weight:800}.citation-link{display:inline-block;border:1px solid var(--border);padding:8px 11px;border-radius:8px;color:var(--text-soft)}.citation-export{cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text);padding:8px 11px;border-radius:8px;font-weight:800}.record-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;word-break:break-all}
     .evidence-path{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
     .evidence-path:last-child{border-bottom:0}
     .evidence-path a{color:#fff!important;font-weight:750}.evidence-path a:hover{color:var(--green)!important}
@@ -2318,9 +2318,35 @@
 
     function citationUrl() { return location.href.split("#")[0]; }
 
+    function hskrcRecordId(article) {
+      const raw=(article && (article.slug || article.id || article.article_code)) || "article";
+      const safe=String(raw).toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"");
+      return `HSKRC-ART-${safe || "article"}`;
+    }
+
+    function escapeBib(value){ return String(value||"").replace(/[{}]/g,"").replace(/\n/g," "); }
+    function escapeRis(value){ return String(value||"").replace(/\r?\n/g," "); }
+    function citationFileName(article, ext){
+      const raw=(article && (article.slug || article.title || article.id)) || "hskrc-article";
+      return String(raw).toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80)+`.${ext}`;
+    }
+    function downloadCitationFile(name, content, mime){
+      const blob=new Blob([content],{type:mime||"text/plain;charset=utf-8"});
+      const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},0);
+    }
+    function bibtexFor(article){
+      const author=citationAuthor(article), year=citationYear(article), title=article.title||"Untitled article", url=citationUrl(), id=hskrcRecordId(article).replace(/[^A-Za-z0-9_-]/g,"");
+      return `@article{${id},\n  author = {${escapeBib(author)}},\n  title = {${escapeBib(title)}},\n  year = {${year}},\n  journal = {HSKRC},\n  url = {${url}},\n  note = {HSKRC permanent record: ${hskrcRecordId(article)}}\n}\n`;
+    }
+    function risFor(article){
+      const author=citationAuthor(article), year=citationYear(article), title=article.title||"Untitled article", url=citationUrl();
+      return [`TY  - JOUR`,`AU  - ${escapeRis(author)}`,`TI  - ${escapeRis(title)}`,`PY  - ${year}`,`T2  - HSKRC`,`UR  - ${url}`,`ID  - ${hskrcRecordId(article)}`,`ER  - `,``].join("\r\n");
+    }
+
     function renderCitationSystem(article, sources, fa) {
       if (!article) return "";
-      const author = citationAuthor(article), year = citationYear(article), title = article.title || "Untitled article", url = citationUrl();
+      const author = citationAuthor(article), year = citationYear(article), title = article.title || "Untitled article", url = citationUrl(), recordId=hskrcRecordId(article);
       const apa = `${author}. (${year}). ${title}. HSKRC. ${url}`;
       const chicago = `${author}. “${title}.” HSKRC, ${year}. ${url}.`;
       const mla = `${author}. “${title}.” HSKRC, ${year}, ${url}.`;
@@ -2330,7 +2356,7 @@
       }).join("") || `<p class="dynamic-empty">${fa ? "هنوز منبع کتاب‌شناختی متصل نشده است." : "No bibliography source is linked yet."}</p>`;
       const row=(label,text)=>`<div class="citation-row"><div class="citation-label">${label}</div><div class="citation-text">${escapeHtml(text)}</div><div class="citation-actions"><button type="button" class="citation-copy" data-citation="${escapeHtml(text)}">${fa ? "کپی ارجاع" : "Copy citation"}</button></div></div>`;
       setTimeout(bindCitationButtons,0);
-      return `<div class="citation-box"><div class="dynamic-section-title">${fa ? "ارجاع و کتاب‌شناسی" : "Citation & Bibliography"}</div><p class="dynamic-empty">${fa ? "ارجاع آماده برای استفاده پژوهشی. پیش از نشر دانشگاهی، جزئیات را با منبع اصلی تطبیق دهید." : "Ready-to-copy citations. Verify bibliographic details against the original source before academic publication."}</p>${row("APA",apa)}${row("Chicago",chicago)}${row("MLA",mla)}<div class="dynamic-section-title" style="margin-top:16px">${fa ? "منابع این مقاله" : "Article Bibliography"}</div>${refs}</div>`;
+      return `<div class="citation-box"><div class="dynamic-section-title">${fa ? "ارجاع و کتاب‌شناسی" : "Citation & Bibliography"}</div><p class="dynamic-empty">${fa ? "ارجاع آماده برای استفاده پژوهشی. پیش از نشر دانشگاهی، جزئیات را با منبع اصلی تطبیق دهید." : "Ready-to-copy citations. Verify bibliographic details against the original source before academic publication."}</p>${row("APA",apa)}${row("Chicago",chicago)}${row("MLA",mla)}<div class="citation-row"><div class="citation-label">${fa ? "شناسه دائمی HSKRC" : "HSKRC Permanent Record ID"}</div><div class="citation-text record-id">${escapeHtml(recordId)}</div><div class="citation-actions"><button type="button" class="citation-copy" data-citation="${escapeHtml(recordId)}">${fa ? "کپی شناسه" : "Copy ID"}</button><button type="button" class="citation-export" data-format="bibtex">${fa ? "دانلود BibTeX" : "Download BibTeX"}</button><button type="button" class="citation-export" data-format="ris">${fa ? "دانلود RIS" : "Download RIS"}</button></div></div><p class="dynamic-empty">${fa ? "این شناسه، شناسه داخلی و پایدار HSKRC است و DOI ثبت‌شده نزد یک آژانس DOI نیست." : "This is an internal persistent HSKRC record identifier; it is not a DOI registered with a DOI registration agency."}</p><div class="dynamic-section-title" style="margin-top:16px">${fa ? "منابع این مقاله" : "Article Bibliography"}</div>${refs}</div>`;
     }
 
     function bindCitationButtons(){
@@ -2340,6 +2366,14 @@
           const text=btn.dataset.citation || "";
           try { await navigator.clipboard.writeText(text); } catch(e) { const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove(); }
           const old=btn.textContent; btn.textContent=currentLanguage==="fa"?"کپی شد ✓":"Copied ✓"; setTimeout(()=>btn.textContent=old,1400);
+        });
+      });
+      document.querySelectorAll(".citation-export").forEach(btn=>{
+        if(btn.dataset.bound) return; btn.dataset.bound="1";
+        btn.addEventListener("click",()=>{
+          if(!currentArticle) return;
+          if(btn.dataset.format==="bibtex") downloadCitationFile(citationFileName(currentArticle,"bib"),bibtexFor(currentArticle),"application/x-bibtex;charset=utf-8");
+          if(btn.dataset.format==="ris") downloadCitationFile(citationFileName(currentArticle,"ris"),risFor(currentArticle),"application/x-research-info-systems;charset=utf-8");
         });
       });
     }
