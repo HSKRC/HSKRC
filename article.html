@@ -1,23 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="HSKRC Research Article"
-  >
-
-  <title>HSKRC | Article</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="HSKRC Research Article" name="description"/>
+<title>HSKRC | Article</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 
     /* =========================================
        ROOT
@@ -1183,229 +1173,114 @@
     @media(max-width:860px){.dynamic-network-grid{grid-template-columns:1fr}}
 
   </style>
-
-<link rel="stylesheet" href="hskrc-global.css">
-<script defer src="hskrc-global.js"></script>
-</head>
-
-
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<link href="https://hskrc.org/article.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Article" property="og:title"/><meta content="HSKRC Research Article" property="og:description"/><meta content="https://hskrc.org/article.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Article" name="twitter:title"/><meta content="HSKRC Research Article" name="twitter:description"/></head>
 <body>
-
-
-  <!-- =========================================
+<!-- =========================================
        HEADER
   ========================================= -->
-
-  <header>
-
-    <div class="header-inner">
-
-
-      <a
-        class="brand"
-        href="index.html"
-      >
-
-        <span class="brand-mark">
+<header>
+<div class="header-inner">
+<a class="brand" href="index.html">
+<span class="brand-mark">
           HSKRC
         </span>
-
-        <span
-          class="brand-text"
-        >
+<span class="brand-text">
           HSKRC
         </span>
-
-      </a>
-
-
-      <nav>
-        <a href="index.html" data-en="Home" data-fa="خانه">Home</a>
-        <a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a>
-        <a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a>
-        <a href="articles.html" class="active" data-en="Articles" data-fa="مقالات">Articles</a>
-        <a href="researchers.html" data-en="Researchers" data-fa="پژوهشگران">Researchers</a>
-        <a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a>
-        <a href="about.html" data-en="About" data-fa="درباره ما">About</a>
-        <a href="account.html" id="accountLink" data-en="Account" data-fa="حساب کاربری">Account</a>
-      </nav>
-
-
-      <button
-        class="language-button"
-        id="languageButton"
-        type="button"
-      >
+</a>
+<nav>
+<a data-en="Home" data-fa="خانه" href="index.html">Home</a>
+<a data-en="Knowledge Base" data-fa="پایگاه دانش" href="alamut-knowledge-base.html">Knowledge Base</a>
+<a data-en="Library" data-fa="کتابخانه" href="library.html">Library</a>
+<a class="active" data-en="Articles" data-fa="مقالات" href="articles.html">Articles</a>
+<a data-en="Researchers" data-fa="پژوهشگران" href="researchers.html">Researchers</a>
+<a data-en="Sources" data-fa="منابع" href="sources.html">Sources</a>
+<a data-en="About" data-fa="درباره ما" href="about.html">About</a>
+<a data-en="Account" data-fa="حساب کاربری" href="account.html" id="accountLink">Account</a>
+</nav>
+<button class="language-button" id="languageButton" type="button">
         فارسی
       </button>
-
-
-    </div>
-
-  </header>
-
-
-
-  <!-- =========================================
+</div>
+</header>
+<!-- =========================================
        MAIN
   ========================================= -->
-
-  <main>
-
-    <!-- =======================================
+<main>
+<!-- =======================================
          TOP ACTIONS
     ======================================= -->
-
-    <div class="top-actions">
-
-      <a
-        href="articles.html"
-        class="back-link"
-        data-en="← Back to Articles"
-        data-fa="→ بازگشت به مقالات"
-      >
+<div class="top-actions">
+<a class="back-link" data-en="← Back to Articles" data-fa="→ بازگشت به مقالات" href="articles.html">
         ← Back to Articles
       </a>
-
-
-      <div class="article-actions">
-
-        <button
-          class="action-button"
-          id="printButton"
-          type="button"
-          data-en="Print"
-          data-fa="چاپ"
-        >
+<div class="article-actions">
+<button class="action-button" data-en="Print" data-fa="چاپ" id="printButton" type="button">
           Print
         </button>
-
-
-        <button
-          class="action-button"
-          id="pdfButton"
-          type="button"
-          data-en="Save as PDF"
-          data-fa="ذخیره PDF"
-        >
+<button class="action-button" data-en="Save as PDF" data-fa="ذخیره PDF" id="pdfButton" type="button">
           Save as PDF
         </button>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- =======================================
+</div>
+</div>
+<!-- =======================================
          ARTICLE CONTAINER
     ======================================= -->
-
-    <article
-      class="article-container"
-      id="articleContainer"
-    >
-
-      <!-- LOADING -->
-
-      <div
-        class="state-box"
-        id="loadingState"
-      >
-
-        <div class="state-icon">
+<article class="article-container" id="articleContainer">
+<!-- LOADING -->
+<div class="state-box" id="loadingState">
+<div class="state-icon">
           …
         </div>
-
-
-        <h2
-          data-en="Loading article"
-          data-fa="در حال بارگذاری مقاله"
-        >
+<h2 data-en="Loading article" data-fa="در حال بارگذاری مقاله">
           Loading article
         </h2>
-
-
-        <p
-          data-en="Please wait while the article is being loaded."
-          data-fa="لطفاً منتظر بمانید تا مقاله بارگذاری شود."
-        >
+<p data-en="Please wait while the article is being loaded." data-fa="لطفاً منتظر بمانید تا مقاله بارگذاری شود.">
           Please wait while the article is being loaded.
         </p>
-
-      </div>
-
-
-    </article>
-
-
-
-    <section class="research-panel" id="researchConnections" data-network-version="3">
-      <div class="research-kicker" data-en="Research Connections" data-fa="پیوندهای پژوهشی">Research Connections</div>
-      <h2 data-en="Research Evidence Network" data-fa="شبکه شواهد پژوهشی">Research Evidence Network</h2>
-      <p class="research-intro"
-         data-en="HSKRC separates published interpretation from the source registry and knowledge nodes that support further research."
-         data-fa="HSKRC تفسیر منتشرشده را از دفتر منابع و گره‌های دانشی که پژوهش بیشتر را پشتیبانی می‌کنند جدا نگه می‌دارد.">
+</div>
+</article>
+<section class="research-panel" data-network-version="3" id="researchConnections">
+<div class="research-kicker" data-en="Research Connections" data-fa="پیوندهای پژوهشی">Research Connections</div>
+<h2 data-en="Research Evidence Network" data-fa="شبکه شواهد پژوهشی">Research Evidence Network</h2>
+<p class="research-intro" data-en="HSKRC separates published interpretation from the source registry and knowledge nodes that support further research." data-fa="HSKRC تفسیر منتشرشده را از دفتر منابع و گره‌های دانشی که پژوهش بیشتر را پشتیبانی می‌کنند جدا نگه می‌دارد.">
         HSKRC separates published interpretation from the source registry and knowledge nodes that support further research.
       </p>
-      <div id="dynamicResearch" class="dynamic-research">
-        <div class="network-status" id="networkStatus">
-          <strong data-en="Live Research Network" data-fa="شبکه پژوهشی زنده">Live Research Network</strong>
-          <span data-en="Loading Knowledge Nodes, Sources and Researchers from Supabase…" data-fa="در حال دریافت گره‌های دانش، منابع و پژوهشگران از Supabase…">Loading Knowledge Nodes, Sources and Researchers from Supabase…</span>
-        </div>
-      </div>
-      <div class="research-grid" style="margin-top:18px">
-        <a class="research-link" href="alamut-knowledge-base.html"><strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong><span data-en="Explore the complete HSKRC knowledge map." data-fa="نقشه کامل دانش HSKRC را بررسی کنید.">Explore the complete HSKRC knowledge map.</span></a>
-        <a class="research-link" href="sources.html"><strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong><span data-en="Open the complete source registry." data-fa="دفتر کامل منابع را باز کنید.">Open the complete source registry.</span></a>
-        <a class="research-link" href="articles.html"><strong data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</strong><span data-en="Continue through HSKRC's published research collection." data-fa="در مجموعه پژوهش‌های منتشرشده HSKRC ادامه دهید.">Continue through HSKRC's published research collection.</span></a>
-      </div>
-      <div class="research-note"
-           data-en="Research standard: important historical and heritage claims should remain traceable to identifiable sources."
-           data-fa="استاندارد پژوهشی: ادعاهای مهم تاریخی و میراثی باید به منابع قابل شناسایی قابل ردیابی باقی بمانند.">
+<div class="dynamic-research" id="dynamicResearch">
+<div class="network-status" id="networkStatus">
+<strong data-en="Live Research Network" data-fa="شبکه پژوهشی زنده">Live Research Network</strong>
+<span data-en="Loading Knowledge Nodes, Sources and Researchers from Supabase…" data-fa="در حال دریافت گره‌های دانش، منابع و پژوهشگران از Supabase…">Loading Knowledge Nodes, Sources and Researchers from Supabase…</span>
+</div>
+</div>
+<div class="research-grid" style="margin-top:18px">
+<a class="research-link" href="alamut-knowledge-base.html"><strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong><span data-en="Explore the complete HSKRC knowledge map." data-fa="نقشه کامل دانش HSKRC را بررسی کنید.">Explore the complete HSKRC knowledge map.</span></a>
+<a class="research-link" href="sources.html"><strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong><span data-en="Open the complete source registry." data-fa="دفتر کامل منابع را باز کنید.">Open the complete source registry.</span></a>
+<a class="research-link" href="articles.html"><strong data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</strong><span data-en="Continue through HSKRC's published research collection." data-fa="در مجموعه پژوهش‌های منتشرشده HSKRC ادامه دهید.">Continue through HSKRC's published research collection.</span></a>
+</div>
+<div class="research-note" data-en="Research standard: important historical and heritage claims should remain traceable to identifiable sources." data-fa="استاندارد پژوهشی: ادعاهای مهم تاریخی و میراثی باید به منابع قابل شناسایی قابل ردیابی باقی بمانند.">
         Research standard: important historical and heritage claims should remain traceable to identifiable sources.
       </div>
-    </section>
-
-  </main>
-
-
-
-  <!-- =========================================
+</section>
+</main>
+<!-- =========================================
        FOOTER
   ========================================= -->
-
-  <footer>
-
-    <div class="footer-inner">
-
-      <div
-        class="footer-founder"
-        data-en="Founded by <strong>Kamal Barlas</strong>"
-        data-fa="بنیان‌گذاری شده توسط <strong>کمال بارلاس</strong>"
-      >
+<footer>
+<div class="footer-inner">
+<div class="footer-founder" data-en="Founded by &lt;strong&gt;Kamal Barlas&lt;/strong&gt;" data-fa="بنیان‌گذاری شده توسط &lt;strong&gt;کمال بارلاس&lt;/strong&gt;">
         Founded by <strong>Kamal Barlas</strong>
-      </div>
-
-
-      <div
-        class="footer-copy"
-        data-en="© 2026 HSKRC - All rights reserved."
-        data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است."
-      >
+</div>
+<div class="footer-copy" data-en="© 2026 HSKRC - All rights reserved." data-fa="© 2026 HSKRC - تمامی حقوق محفوظ است.">
         © 2026 HSKRC - All rights reserved.
       </div>
-
-    </div>
-
-  </footer>
-
-
-
-  <!-- =========================================
+</div>
+</footer>
+<!-- =========================================
        JAVASCRIPT
   ========================================= -->
-
-  <script>
+<script>
 
     /* =========================================
        SUPABASE
@@ -2831,13 +2706,10 @@
     startArticlePage();
 
   </script>
-
-
-  <!-- =========================================
+<!-- =========================================
        PRINT STYLES
   ========================================= -->
-
-  <style>
+<style>
 
     @media print {
 
@@ -2987,6 +2859,5 @@
     }
 
   </style>
-
 </body>
 </html>

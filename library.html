@@ -1,26 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
 
+<html dir="ltr" lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>HSKRC | Digital Library</title>
-
-  <meta
-    name="description"
-    content="HSKRC Digital Library — Books, research materials and historical resources."
-  >
-
-  <meta name="theme-color" content="#0d1117">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HSKRC | Digital Library</title>
+<meta content="HSKRC Digital Library — Books, research materials and historical resources." name="description"/>
+<meta content="#0d1117" name="theme-color"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
     :root {
       --bg: #0d1117;
       --bg-soft: #10161f;
@@ -1366,8 +1354,6 @@
     .book-cover,.cover{position:relative}
 
   </style>
-
-
 <style>
 :root{
  --bg:#080808!important;--bg-soft:#0c0c0d!important;--panel:#111!important;--panel-2:#151515!important;
@@ -1436,274 +1422,122 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 <style>
 header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!important;border-color:rgba(199,161,90,.22)!important}
 </style>
-
-<link rel="stylesheet" href="hskrc-global.css">
-<script defer src="hskrc-global.js"></script>
-</head>
-
-
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<link href="https://hskrc.org/library.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Digital Library" property="og:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." property="og:description"/><meta content="https://hskrc.org/library.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Digital Library" name="twitter:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." name="twitter:description"/></head>
 <body>
-
 <header>
-
-  <div class="container header-inner">
-
-    <a
-      href="index.html"
-      class="logo-area"
-    >
-
-      <div class="logo-mark">
+<div class="container header-inner">
+<a class="logo-area" href="index.html">
+<div class="logo-mark">
         H
       </div>
-
-      <div class="logo-text">
-
-        <div class="logo-name">
+<div class="logo-text">
+<div class="logo-name">
           HSKRC
         </div>
-
-        <div class="logo-subtitle">
-          Knowledge & Research Centre
+<div class="logo-subtitle">
+          Knowledge &amp; Research Centre
         </div>
-
-      </div>
-
-    </a>
-
-
-    <nav>
-      <a href="index.html" id="homeLink">Home</a>
-      <a href="alamut-knowledge-base.html" id="knowledgeLink">Knowledge Base</a>
-      <a href="library.html" id="libraryLink" class="nav-active">Library</a>
-      <a href="articles.html" id="articlesLink">Articles</a>
-      <a href="researchers.html" id="researchersLink">Researchers</a>
-      <a href="sources.html" id="sourcesLink">Sources</a>
-      <a href="about.html" id="aboutLink">About</a>
-      <a href="auth.html" id="accountLink">Login / Register</a>
-      <button class="language" id="languageButton" type="button" onclick="changeLanguage()">فارسی</button>
-    </nav>
-
-  </div>
-
+</div>
+</a>
+<nav>
+<a href="index.html" id="homeLink">Home</a>
+<a href="alamut-knowledge-base.html" id="knowledgeLink">Knowledge Base</a>
+<a class="nav-active" href="library.html" id="libraryLink">Library</a>
+<a href="articles.html" id="articlesLink">Articles</a>
+<a href="researchers.html" id="researchersLink">Researchers</a>
+<a href="sources.html" id="sourcesLink">Sources</a>
+<a href="about.html" id="aboutLink">About</a>
+<a href="auth.html" id="accountLink">Login / Register</a>
+<button class="language" id="languageButton" onclick="changeLanguage()" type="button">فارسی</button>
+</nav>
+</div>
 </header>
-
-
 <main>
-
-  <section class="hero">
-
-    <div class="eyebrow">
-
-      <span class="eyebrow-dot"></span>
-
-      <span id="eyebrowText">
+<section class="hero">
+<div class="eyebrow">
+<span class="eyebrow-dot"></span>
+<span id="eyebrowText">
         HSKRC Digital Collection
       </span>
-
-    </div>
-
-
-    <h1
-      class="title"
-      id="pageTitle"
-    >
+</div>
+<h1 class="title" id="pageTitle">
       Digital Library
     </h1>
-
-
-    <p
-      class="description"
-      id="pageDescription"
-    >
+<p class="description" id="pageDescription">
       Explore books and research materials from the HSKRC digital collection.
     </p>
-
-  </section>
-
-
-  <div
-    class="login-message"
-    id="loginMessage"
-  >
+</section>
+<div class="login-message" id="loginMessage">
     Please login to read or access books.
   </div>
-
-
-  <div class="library-tools">
-
-    <div class="search-box">
-
-      <input
-        type="search"
-        id="searchInput"
-        placeholder="Search by title, author or description..."
-        autocomplete="off"
-        oninput="filterBooks()"
-      >
-
-
-      <select
-        id="categoryFilter"
-        onchange="filterBooks()"
-      >
-
-        <option value="">
+<div class="library-tools">
+<div class="search-box">
+<input autocomplete="off" id="searchInput" oninput="filterBooks()" placeholder="Search by title, author or description..." type="search"/>
+<select id="categoryFilter" onchange="filterBooks()">
+<option value="">
           All Categories
         </option>
-
-      </select>
-
-    </div>
-
-  </div>
-
-
-  <div
-    class="library-summary"
-    id="librarySummary"
-  >
-
-    <span id="summaryText">
+</select>
+</div>
+</div>
+<div class="library-summary" id="librarySummary">
+<span id="summaryText">
       Showing all books
     </span>
-
-    <span>
-
-      <span
-        id="summaryCount"
-        class="summary-count"
-      >
+<span>
+<span class="summary-count" id="summaryCount">
         0
       </span>
-
-      <span id="summaryBooks">
+<span id="summaryBooks">
         books
       </span>
-
-    </span>
-
-  </div>
-
-
-  <div
-    id="booksContainer"
-    class="books"
-  >
-
-    <div class="loading">
+</span>
+</div>
+<div class="books" id="booksContainer">
+<div class="loading">
       Loading books...
     </div>
-
-  </div>
-
+</div>
 </main>
-
-
 <!-- =========================================
      PDF MODAL
 ========================================= -->
-
-<div
-  id="pdfModal"
-  class="pdf-modal"
-  aria-hidden="true"
->
-
-  <div
-    class="pdf-box"
-    id="pdfBox"
-  >
-
-    <div class="pdf-header">
-
-      <div
-        id="pdfTitle"
-        class="pdf-title"
-      >
+<div aria-hidden="true" class="pdf-modal" id="pdfModal">
+<div class="pdf-box" id="pdfBox">
+<div class="pdf-header">
+<div class="pdf-title" id="pdfTitle">
         PDF
       </div>
-
-
-      <div class="pdf-actions">
-
-        <button
-          id="newTabButton"
-          class="pdf-action"
-          type="button"
-          onclick="openPdfNewTab()"
-        >
+<div class="pdf-actions">
+<button class="pdf-action" id="newTabButton" onclick="openPdfNewTab()" type="button">
           ↗ Open in new tab
         </button>
-
-
-        <button
-          id="fullscreenButton"
-          class="pdf-action"
-          type="button"
-          onclick="togglePdfFullscreen()"
-        >
+<button class="pdf-action" id="fullscreenButton" onclick="togglePdfFullscreen()" type="button">
           ⛶ Fullscreen
         </button>
-
-
-        <button
-          class="pdf-close"
-          type="button"
-          onclick="closePdf()"
-          aria-label="Close PDF"
-        >
+<button aria-label="Close PDF" class="pdf-close" onclick="closePdf()" type="button">
           ×
         </button>
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="pdfFrameWrap"
-      class="pdf-frame-wrap"
-    >
-
-      <div
-        id="pdfLoading"
-        class="pdf-loading"
-      >
+</div>
+</div>
+<div class="pdf-frame-wrap" id="pdfFrameWrap">
+<div class="pdf-loading" id="pdfLoading">
         Preparing PDF...
       </div>
-
-
-      <iframe
-        id="pdfFrame"
-        src=""
-        title="PDF Viewer"
-        loading="lazy"
-      ></iframe>
-
-    </div>
-
-  </div>
-
+<iframe id="pdfFrame" loading="lazy" src="" title="PDF Viewer"></iframe>
 </div>
-
-
+</div>
+</div>
 <footer>
-
-  <p
-    class="founder"
-    id="founderText"
-  >
+<p class="founder" id="founderText">
     Founded by Kamaluddin Barlas
   </p>
-
-  <p class="copyright">
+<p class="copyright">
     © 2026 HSKRC - All rights reserved.
   </p>
-
 </footer>
-
-
 <script>
 
   /* =========================================

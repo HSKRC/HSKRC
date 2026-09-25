@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+
+<html dir="ltr" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>HSKRC | Login & Register</title>
-  <meta name="description" content="Secure account access for the Hassan Sabbah Knowledge & Research Centre.">
-  <meta name="theme-color" content="#0a0d11">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Shared HSKRC institutional design -->
-  <link rel="stylesheet" href="hskrc-global.css">
-  <script defer src="hskrc-global.js"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HSKRC | Login &amp; Register</title>
+<meta content="Secure account access for the Hassan Sabbah Knowledge &amp; Research Centre." name="description"/>
+<meta content="#0a0d11" name="theme-color"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Shared HSKRC institutional design -->
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<style>
     :root{
       --bg:#0a0d11;
       --surface:#10151b;
@@ -454,166 +451,138 @@
       .auth-title-wrap h2{font-size:25px}
     }
   </style>
-</head>
-
+<meta content="noindex,nofollow" name="robots"/></head>
 <body>
-  <main class="auth-main">
-    <div class="auth-shell">
-
-      <section class="auth-intro">
-        <div class="intro-kicker" id="introKicker">HSKRC Member Access</div>
-
-        <h1 id="introTitle">
+<main class="auth-main">
+<div class="auth-shell">
+<section class="auth-intro">
+<div class="intro-kicker" id="introKicker">HSKRC Member Access</div>
+<h1 id="introTitle">
           Access the <span>research archive.</span>
-        </h1>
-
-        <p class="intro-lead" id="introLead">
+</h1>
+<p class="intro-lead" id="introLead">
           Create an account or sign in to manage your profile, save favourite books, and access member features across the HSKRC digital archive.
         </p>
-
-        <div class="trust-grid">
-          <div class="trust-card">
-            <small id="trust1Small">Research Archive</small>
-            <strong id="trust1Title">Connected knowledge</strong>
-            <p id="trust1Text">Move between books, articles, sources, researchers and historical knowledge nodes.</p>
-          </div>
-
-          <div class="trust-card">
-            <small id="trust2Small">Member Area</small>
-            <strong id="trust2Title">Personal library tools</strong>
-            <p id="trust2Text">Save favourites and manage your account from one secure member area.</p>
-          </div>
-
-          <div class="trust-card">
-            <small id="trust3Small">Bilingual</small>
-            <strong id="trust3Title">English & Persian</strong>
-            <p id="trust3Text">The account experience follows your preferred HSKRC language.</p>
-          </div>
-
-          <div class="trust-card">
-            <small id="trust4Small">Independent</small>
-            <strong id="trust4Title">HSKRC digital project</strong>
-            <p id="trust4Text">An independent research and knowledge archive with traceable source standards.</p>
-          </div>
-        </div>
-
-        <div class="intro-note" id="introNote">
+<div class="trust-grid">
+<div class="trust-card">
+<small id="trust1Small">Research Archive</small>
+<strong id="trust1Title">Connected knowledge</strong>
+<p id="trust1Text">Move between books, articles, sources, researchers and historical knowledge nodes.</p>
+</div>
+<div class="trust-card">
+<small id="trust2Small">Member Area</small>
+<strong id="trust2Title">Personal library tools</strong>
+<p id="trust2Text">Save favourites and manage your account from one secure member area.</p>
+</div>
+<div class="trust-card">
+<small id="trust3Small">Bilingual</small>
+<strong id="trust3Title">English &amp; Persian</strong>
+<p id="trust3Text">The account experience follows your preferred HSKRC language.</p>
+</div>
+<div class="trust-card">
+<small id="trust4Small">Independent</small>
+<strong id="trust4Title">HSKRC digital project</strong>
+<p id="trust4Text">An independent research and knowledge archive with traceable source standards.</p>
+</div>
+</div>
+<div class="intro-note" id="introNote">
           Account access is provided through Supabase authentication. Use a strong password and keep your login details private.
         </div>
-      </section>
-
-      <section class="auth-card">
-        <div class="auth-card-head">
-          <div class="auth-title-wrap">
-            <small id="cardKicker">Secure Account Access</small>
-            <h2 id="cardTitle">HSKRC Account</h2>
-            <p id="subtitle">Hassan Sabbah Knowledge & Research Centre</p>
-          </div>
-
-          <button class="auth-lang" id="languageButton" type="button" onclick="changeLanguage()">
+</section>
+<section class="auth-card">
+<div class="auth-card-head">
+<div class="auth-title-wrap">
+<small id="cardKicker">Secure Account Access</small>
+<h2 id="cardTitle">HSKRC Account</h2>
+<p id="subtitle">Hassan Sabbah Knowledge &amp; Research Centre</p>
+</div>
+<button class="auth-lang" id="languageButton" onclick="changeLanguage()" type="button">
             فارسی
           </button>
-        </div>
-
-        <div id="authPanel">
-          <div class="tabs">
-            <button type="button" class="tab active" id="registerTab" onclick="showRegister()">Register</button>
-            <button type="button" class="tab" id="loginTab" onclick="showLogin()">Login</button>
-          </div>
-
-          <form id="authForm" novalidate>
-            <div id="registerFields">
-              <div class="form-row">
-                <div class="form-group">
-                  <label id="firstNameLabel" for="firstName">First Name</label>
-                  <input type="text" id="firstName" autocomplete="given-name">
-                </div>
-
-                <div class="form-group">
-                  <label id="lastNameLabel" for="lastName">Last Name</label>
-                  <input type="text" id="lastName" autocomplete="family-name">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="phone">
-                  <span id="phoneLabel">Phone</span>
-                  <span class="optional" id="optionalText">Optional</span>
-                </label>
-                <input type="tel" id="phone" autocomplete="tel">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label id="emailLabel" for="email">Email</label>
-              <input type="email" id="email" autocomplete="email" required>
-            </div>
-
-            <div class="form-group">
-              <label id="passwordLabel" for="password">Password</label>
-              <div class="input-wrap">
-                <input class="password-input" type="password" id="password" autocomplete="current-password" required minlength="6">
-                <button class="password-toggle" type="button" id="passwordToggle" onclick="togglePassword('password','passwordToggle')">Show</button>
-              </div>
-            </div>
-
-            <div class="checkbox" id="consentBox">
-              <input type="checkbox" id="emailConsent">
-              <span id="consentText">I would like to receive HSKRC email updates.</span>
-            </div>
-
-            <button type="submit" class="submit" id="submitButton">Create Account</button>
-          </form>
-
-          <div class="auth-tools">
-            <button class="forgot" id="forgotButton" type="button" onclick="forgotPassword()">Forgot Password</button>
-            <a href="index.html" class="back" id="backButton">Back to Home →</a>
-          </div>
-
-          <div class="message" id="message"></div>
-        </div>
-
-        <div id="resetPanel">
-          <div class="auth-title-wrap" style="margin-bottom:22px">
-            <small id="resetKicker">Password Recovery</small>
-            <h2 id="resetTitle">Set a new password</h2>
-            <p id="resetText">Enter and confirm your new password below.</p>
-          </div>
-
-          <form id="resetForm" novalidate>
-            <div class="form-group">
-              <label id="newPasswordLabel" for="newPassword">New Password</label>
-              <div class="input-wrap">
-                <input class="password-input" type="password" id="newPassword" minlength="6" autocomplete="new-password">
-                <button class="password-toggle" type="button" id="newPasswordToggle" onclick="togglePassword('newPassword','newPasswordToggle')">Show</button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label id="confirmPasswordLabel" for="confirmPassword">Confirm New Password</label>
-              <div class="input-wrap">
-                <input class="password-input" type="password" id="confirmPassword" minlength="6" autocomplete="new-password">
-                <button class="password-toggle" type="button" id="confirmPasswordToggle" onclick="togglePassword('confirmPassword','confirmPasswordToggle')">Show</button>
-              </div>
-            </div>
-
-            <button type="submit" class="submit" id="resetButton">Update Password</button>
-          </form>
-
-          <div class="message" id="resetMessage"></div>
-        </div>
-
-        <div class="security-note">
-          <div class="security-icon">⌾</div>
-          <div id="securityText">
+</div>
+<div id="authPanel">
+<div class="tabs">
+<button class="tab active" id="registerTab" onclick="showRegister()" type="button">Register</button>
+<button class="tab" id="loginTab" onclick="showLogin()" type="button">Login</button>
+</div>
+<form id="authForm" novalidate="">
+<div id="registerFields">
+<div class="form-row">
+<div class="form-group">
+<label for="firstName" id="firstNameLabel">First Name</label>
+<input autocomplete="given-name" id="firstName" type="text"/>
+</div>
+<div class="form-group">
+<label for="lastName" id="lastNameLabel">Last Name</label>
+<input autocomplete="family-name" id="lastName" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label for="phone">
+<span id="phoneLabel">Phone</span>
+<span class="optional" id="optionalText">Optional</span>
+</label>
+<input autocomplete="tel" id="phone" type="tel"/>
+</div>
+</div>
+<div class="form-group">
+<label for="email" id="emailLabel">Email</label>
+<input autocomplete="email" id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="password" id="passwordLabel">Password</label>
+<div class="input-wrap">
+<input autocomplete="current-password" class="password-input" id="password" minlength="6" required="" type="password"/>
+<button class="password-toggle" id="passwordToggle" onclick="togglePassword('password','passwordToggle')" type="button">Show</button>
+</div>
+</div>
+<div class="checkbox" id="consentBox">
+<input id="emailConsent" type="checkbox"/>
+<span id="consentText">I would like to receive HSKRC email updates.</span>
+</div>
+<button class="submit" id="submitButton" type="submit">Create Account</button>
+</form>
+<div class="auth-tools">
+<button class="forgot" id="forgotButton" onclick="forgotPassword()" type="button">Forgot Password</button>
+<a class="back" href="index.html" id="backButton">Back to Home →</a>
+</div>
+<div class="message" id="message"></div>
+</div>
+<div id="resetPanel">
+<div class="auth-title-wrap" style="margin-bottom:22px">
+<small id="resetKicker">Password Recovery</small>
+<h2 id="resetTitle">Set a new password</h2>
+<p id="resetText">Enter and confirm your new password below.</p>
+</div>
+<form id="resetForm" novalidate="">
+<div class="form-group">
+<label for="newPassword" id="newPasswordLabel">New Password</label>
+<div class="input-wrap">
+<input autocomplete="new-password" class="password-input" id="newPassword" minlength="6" type="password"/>
+<button class="password-toggle" id="newPasswordToggle" onclick="togglePassword('newPassword','newPasswordToggle')" type="button">Show</button>
+</div>
+</div>
+<div class="form-group">
+<label for="confirmPassword" id="confirmPasswordLabel">Confirm New Password</label>
+<div class="input-wrap">
+<input autocomplete="new-password" class="password-input" id="confirmPassword" minlength="6" type="password"/>
+<button class="password-toggle" id="confirmPasswordToggle" onclick="togglePassword('confirmPassword','confirmPasswordToggle')" type="button">Show</button>
+</div>
+</div>
+<button class="submit" id="resetButton" type="submit">Update Password</button>
+</form>
+<div class="message" id="resetMessage"></div>
+</div>
+<div class="security-note">
+<div class="security-icon">⌾</div>
+<div id="securityText">
             HSKRC will never ask you to send your password by email.
           </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <script>
+</div>
+</section>
+</div>
+</main>
+<script>
     const SUPABASE_URL = "https://uwuklryzxexpofcxrbnm.supabase.co";
     const SUPABASE_KEY = "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);

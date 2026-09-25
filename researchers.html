@@ -1,9 +1,10 @@
-<!doctype html>
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="HSKRC Researchers & Scholars Directory — scholars represented in the HSKRC source and research archive.">
-<title>Researchers & Scholars | HSKRC</title>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="HSKRC Researchers &amp; Scholars Directory — scholars represented in the HSKRC source and research archive." name="description"/>
+<title>Researchers &amp; Scholars | HSKRC</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#0b0b0c;--panel:#151413;--panel2:#1b1916;--text:#f5f7fa;--muted:#9ba5b1;--gold:#c9a45c;--line:rgba(255,255,255,.09);--goldline:rgba(201,164,92,.27);--max:1180px}
@@ -20,33 +21,27 @@ footer{border-top:1px solid var(--line);background:#08090a;padding:27px 0}.foot{
 html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{letter-spacing:0}html[dir=rtl] .notice{border-left:0;border-right:2px solid var(--gold)}
 @media(max-width:900px){.nav{flex-wrap:wrap;padding:11px 0}.links{order:3;width:100%;overflow:auto}.links a{flex-shrink:0}.grid{grid-template-columns:repeat(2,1fr)}.network{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.grid,.network,.gateway,.toolbar{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.foot{flex-direction:column;text-align:center}}
 </style>
-
-<link rel="stylesheet" href="hskrc-global.css">
-<script defer src="hskrc-global.js"></script>
-</head>
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<link href="https://hskrc.org/researchers.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="Researchers &amp; Scholars | HSKRC" property="og:title"/><meta content="HSKRC Researchers &amp; Scholars Directory — scholars represented in the HSKRC source and research archive." property="og:description"/><meta content="https://hskrc.org/researchers.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="Researchers &amp; Scholars | HSKRC" name="twitter:title"/><meta content="HSKRC Researchers &amp; Scholars Directory — scholars represented in the HSKRC source and research archive." name="twitter:description"/></head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">H</span><span>HSKRC</span></a><nav class="links">
-<a href="index.html" data-en="Home" data-fa="خانه">Home</a><a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a><a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a><a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a><a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a><a class="active" href="researchers.html" data-en="Researchers" data-fa="پژوهشگران">Researchers</a><a href="about.html" data-en="About" data-fa="درباره">About</a>
+<a data-en="Home" data-fa="خانه" href="index.html">Home</a><a data-en="Knowledge Base" data-fa="پایگاه دانش" href="alamut-knowledge-base.html">Knowledge Base</a><a data-en="Library" data-fa="کتابخانه" href="library.html">Library</a><a data-en="Articles" data-fa="مقالات" href="articles.html">Articles</a><a data-en="Sources" data-fa="منابع" href="sources.html">Sources</a><a class="active" data-en="Researchers" data-fa="پژوهشگران" href="researchers.html">Researchers</a><a data-en="About" data-fa="درباره" href="about.html">About</a>
 </nav><button class="lang" id="lang">فارسی</button></div></header>
-
 <div class="hero"><div class="wrap"><div class="eyebrow" data-en="HSKRC Research Network" data-fa="شبکه پژوهشی HSKRC">HSKRC Research Network</div>
-<h1 data-en="Researchers & <span>Scholars</span>" data-fa="پژوهشگران و <span>محققان</span>">Researchers & <span>Scholars</span></h1>
+<h1 data-en="Researchers &amp; &lt;span&gt;Scholars&lt;/span&gt;" data-fa="پژوهشگران و &lt;span&gt;محققان&lt;/span&gt;">Researchers &amp; <span>Scholars</span></h1>
 <p class="lead" data-en="A directory of scholars whose published work is represented in, or directly relevant to, the HSKRC research archive." data-fa="فهرستی از پژوهشگرانی که آثار منتشرشده آنان در آرشیو پژوهشی HSKRC ثبت شده یا مستقیماً با حوزه پژوهشی آن مرتبط است.">A directory of scholars whose published work is represented in, or directly relevant to, the HSKRC research archive.</p>
 <div class="notice" data-en="Directory rule: inclusion documents research relevance; it does not imply affiliation with, participation in, or endorsement of HSKRC." data-fa="اصل فهرست: حضور در این صفحه فقط ارتباط پژوهشی را ثبت می‌کند و به معنی وابستگی، مشارکت یا تأیید HSKRC از سوی پژوهشگر نیست.">Directory rule: inclusion documents research relevance; it does not imply affiliation with, participation in, or endorsement of HSKRC.</div></div></div>
-
 <main><section><div class="wrap">
 <div class="section-head"><div><div class="eyebrow" data-en="Directory" data-fa="فهرست">Directory</div><h2 data-en="Scholars represented in the archive" data-fa="پژوهشگران حاضر در آرشیو">Scholars represented in the archive</h2></div><p data-en="This first directory is intentionally limited to researchers already represented by identifiable HSKRC source records." data-fa="نسخه نخست این فهرست عمداً به پژوهشگرانی محدود شده که منابع قابل شناسایی آنان از قبل در دفتر منابع HSKRC ثبت شده است.">This first directory is intentionally limited to researchers already represented by identifiable HSKRC source records.</p></div>
-<div class="toolbar"><input id="q" type="search" placeholder="Search researcher or field..." data-en-placeholder="Search researcher or field..." data-fa-placeholder="جستجوی پژوهشگر یا حوزه..."><select id="field"><option value="" data-en="All fields" data-fa="همه حوزه‌ها">All fields</option><option value="ismaili">Ismaili Studies</option><option value="castles">Castles & Fortifications</option><option value="medieval">Medieval Islamic History</option></select></div>
-
+<div class="toolbar"><input data-en-placeholder="Search researcher or field..." data-fa-placeholder="جستجوی پژوهشگر یا حوزه..." id="q" placeholder="Search researcher or field..." type="search"/><select id="field"><option data-en="All fields" data-fa="همه حوزه‌ها" value="">All fields</option><option value="ismaili">Ismaili Studies</option><option value="castles">Castles &amp; Fortifications</option><option value="medieval">Medieval Islamic History</option></select></div>
 <div class="grid" id="grid">
 <article class="card"><div class="initial">…</div><h3 data-en="Loading researchers…" data-fa="در حال بارگذاری پژوهشگران…">Loading researchers…</h3><p data-en="Reading the HSKRC Research Network from Supabase." data-fa="در حال دریافت شبکه پژوهشی HSKRC از Supabase.">Reading the HSKRC Research Network from Supabase.</p></article>
-</div><div class="empty" id="empty" data-en="No matching researcher found." data-fa="پژوهشگر مطابق جستجو پیدا نشد.">No matching researcher found.</div>
+</div><div class="empty" data-en="No matching researcher found." data-fa="پژوهشگر مطابق جستجو پیدا نشد." id="empty">No matching researcher found.</div>
 </div></section>
-
 <section><div class="wrap"><div class="section-head"><div><div class="eyebrow" data-en="Research Architecture" data-fa="معماری پژوهش">Research Architecture</div><h2 data-en="A connected evidence network" data-fa="شبکه متصل شواهد">A connected evidence network</h2></div></div>
 <div class="network"><div class="node"><small>01</small><strong data-en="Researcher" data-fa="پژوهشگر">Researcher</strong><span data-en="Who produced the scholarship?" data-fa="چه کسی پژوهش را تولید کرده است؟">Who produced the scholarship?</span></div><div class="node"><small>02</small><strong data-en="Source" data-fa="منبع">Source</strong><span data-en="Which identifiable work supports the record?" data-fa="کدام اثر قابل شناسایی از سابقه پشتیبانی می‌کند؟">Which identifiable work supports the record?</span></div><div class="node"><small>03</small><strong data-en="Article" data-fa="مقاله">Article</strong><span data-en="Where is the evidence interpreted?" data-fa="شواهد کجا تفسیر می‌شوند؟">Where is the evidence interpreted?</span></div><div class="node"><small>04</small><strong data-en="Knowledge Node" data-fa="گره دانش">Knowledge Node</strong><span data-en="Which person, place or theme does it document?" data-fa="کدام شخص، مکان یا موضوع را مستند می‌کند؟">Which person, place or theme does it document?</span></div></div>
 </div></section>
-
 <section><div class="wrap"><div class="gateway"><a href="sources.html"><strong data-en="Source Registry" data-fa="دفتر منابع">Source Registry</strong><span data-en="Inspect HSKRC source records." data-fa="سوابق منابع HSKRC را بررسی کنید.">Inspect HSKRC source records.</span></a><a href="articles.html"><strong data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</strong><span data-en="Read published research." data-fa="پژوهش‌های منتشرشده را بخوانید.">Read published research.</span></a><a href="alamut-knowledge-base.html"><strong data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</strong><span data-en="Explore connected knowledge nodes." data-fa="گره‌های دانش مرتبط را بررسی کنید.">Explore connected knowledge nodes.</span></a></div></div></section>
 </main>
 <footer><div class="wrap foot"><span>Founded by Kamaluddin Barlas</span><span>© 2026 HSKRC - All rights reserved.</span></div></footer>

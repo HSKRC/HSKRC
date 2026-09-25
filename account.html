@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+
+<html dir="ltr" lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta
-    name="description"
-    content="HSKRC My Account - Hassan Sabbah Knowledge and Research Centre"
-  >
-
-  <title>HSKRC | My Account</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="HSKRC My Account - Hassan Sabbah Knowledge and Research Centre" name="description"/>
+<title>HSKRC | My Account</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 
     :root {
       --bg: #0d1117;
@@ -901,416 +894,224 @@
     }
 
 </style>
-
-<link rel="stylesheet" href="hskrc-global.css">
-<script defer src="hskrc-global.js"></script>
-</head>
-
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<meta content="noindex,nofollow" name="robots"/></head>
 <body>
-
-  <header class="site-header">
-    <div class="header-inner">
-
-      <a href="index.html" class="brand">
-        <div class="brand-mark">H</div>
-        <div class="brand-text">
-          <span class="brand-name">
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="index.html">
+<div class="brand-mark">H</div>
+<div class="brand-text">
+<span class="brand-name">
             Hassan Sabbah Knowledge &amp; Research Centre
           </span>
-          <span class="brand-subtitle">
+<span class="brand-subtitle">
             Digital Library &amp; Research Centre
           </span>
-        </div>
-      </a>
-
-      <div class="header-actions">
-
-        <nav class="header-nav">
-          <a href="index.html" class="nav-link" id="homeNav">Home</a>
-          <a href="library.html" class="nav-link" id="libraryNav">Library</a>
-          <a href="articles.html" class="nav-link" id="articlesNav">Articles</a>
-          <a href="account.html" class="nav-link active" id="accountNav">Account</a>
-        </nav>
-
-        <button
-          class="language"
-          id="languageButton"
-          onclick="changeLanguage()"
-        >
+</div>
+</a>
+<div class="header-actions">
+<nav class="header-nav">
+<a class="nav-link" href="index.html" id="homeNav">Home</a>
+<a class="nav-link" href="library.html" id="libraryNav">Library</a>
+<a class="nav-link" href="articles.html" id="articlesNav">Articles</a>
+<a class="nav-link active" href="account.html" id="accountNav">Account</a>
+</nav>
+<button class="language" id="languageButton" onclick="changeLanguage()">
           🌐 Persian
         </button>
-
-      </div>
-    </div>
-  </header>
-
-
-  <main class="page">
-
-    <div class="page-heading">
-      <div class="eyebrow" id="eyebrow">Member Area</div>
-
-      <h1 class="page-title" id="pageTitle">
+</div>
+</div>
+</header>
+<main class="page">
+<div class="page-heading">
+<div class="eyebrow" id="eyebrow">Member Area</div>
+<h1 class="page-title" id="pageTitle">
         My Account
       </h1>
-
-      <p class="page-description" id="pageDescription">
+<p class="page-description" id="pageDescription">
         Manage your profile, security settings and access to the HSKRC library.
       </p>
-    </div>
-
-
-    <div id="message" class="message"></div>
-
-
-    <div id="loading" class="loading">
+</div>
+<div class="message" id="message"></div>
+<div class="loading" id="loading">
       Loading account information...
     </div>
-
-
-    <div id="accountContent" class="hidden">
-
-      <section class="account-hero">
-
-        <div class="avatar" id="avatar">
+<div class="hidden" id="accountContent">
+<section class="account-hero">
+<div class="avatar" id="avatar">
           H
         </div>
-
-        <div class="hero-info">
-
-          <div class="hero-name" id="heroName">
+<div class="hero-info">
+<div class="hero-name" id="heroName">
             -
           </div>
-
-          <div class="hero-email" id="heroEmail">
+<div class="hero-email" id="heroEmail">
             -
           </div>
-
-        </div>
-
-        <div class="account-badge" id="accountBadge">
+</div>
+<div class="account-badge" id="accountBadge">
           Active Account
         </div>
-
-      </section>
-
-
-      <div class="content-grid">
-
-        <section class="section">
-
-          <div class="section-header">
-
-            <div class="section-heading-wrap">
-              <div class="section-title" id="profileTitle">
+</section>
+<div class="content-grid">
+<section class="section">
+<div class="section-header">
+<div class="section-heading-wrap">
+<div class="section-title" id="profileTitle">
                 Account Information
               </div>
-
-              <div class="section-description" id="profileDescription">
+<div class="section-description" id="profileDescription">
                 Your current account details
               </div>
-            </div>
-
-            <div class="section-icon">
+</div>
+<div class="section-icon">
               👤
             </div>
-
-          </div>
-
-
-          <div class="profile-list">
-
-            <div class="profile-row">
-              <div class="profile-label" id="firstNameLabel">
+</div>
+<div class="profile-list">
+<div class="profile-row">
+<div class="profile-label" id="firstNameLabel">
                 First Name
               </div>
-
-              <div class="profile-value" id="firstName">
+<div class="profile-value" id="firstName">
                 -
               </div>
-            </div>
-
-
-            <div class="profile-row">
-              <div class="profile-label" id="lastNameLabel">
+</div>
+<div class="profile-row">
+<div class="profile-label" id="lastNameLabel">
                 Last Name
               </div>
-
-              <div class="profile-value" id="lastName">
+<div class="profile-value" id="lastName">
                 -
               </div>
-            </div>
-
-
-            <div class="profile-row">
-              <div class="profile-label" id="emailLabel">
+</div>
+<div class="profile-row">
+<div class="profile-label" id="emailLabel">
                 Email
               </div>
-
-              <div class="profile-value" id="email">
+<div class="profile-value" id="email">
                 -
               </div>
-            </div>
-
-
-            <div class="profile-row">
-              <div class="profile-label" id="phoneLabel">
+</div>
+<div class="profile-row">
+<div class="profile-label" id="phoneLabel">
                 Phone
               </div>
-
-              <div class="profile-value" id="phone">
+<div class="profile-value" id="phone">
                 -
               </div>
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <section class="section">
-
-          <div class="section-header">
-
-            <div class="section-heading-wrap">
-
-              <div class="section-title" id="editTitle">
+</div>
+</div>
+</section>
+<section class="section">
+<div class="section-header">
+<div class="section-heading-wrap">
+<div class="section-title" id="editTitle">
                 Edit Profile
               </div>
-
-              <div class="section-description" id="editDescription">
+<div class="section-description" id="editDescription">
                 Update your personal information
               </div>
-
-            </div>
-
-            <div class="section-icon">
+</div>
+<div class="section-icon">
               ✏️
             </div>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label
-              class="form-label"
-              id="editFirstNameLabel"
-              for="editFirstName"
-            >
+</div>
+<div class="form-group">
+<label class="form-label" for="editFirstName" id="editFirstNameLabel">
               First Name
             </label>
-
-            <input
-              type="text"
-              id="editFirstName"
-              autocomplete="given-name"
-              placeholder="Enter your first name"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label
-              class="form-label"
-              id="editLastNameLabel"
-              for="editLastName"
-            >
+<input autocomplete="given-name" id="editFirstName" placeholder="Enter your first name" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="editLastName" id="editLastNameLabel">
               Last Name
             </label>
-
-            <input
-              type="text"
-              id="editLastName"
-              autocomplete="family-name"
-              placeholder="Enter your last name"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label
-              class="form-label"
-              id="editPhoneLabel"
-              for="editPhone"
-            >
+<input autocomplete="family-name" id="editLastName" placeholder="Enter your last name" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="editPhone" id="editPhoneLabel">
               Phone
             </label>
-
-            <input
-              type="tel"
-              id="editPhone"
-              autocomplete="tel"
-              placeholder="Enter your phone number"
-            >
-
-          </div>
-
-
-          <button
-            class="button primary"
-            id="saveProfileButton"
-            onclick="saveProfile()"
-          >
+<input autocomplete="tel" id="editPhone" placeholder="Enter your phone number" type="tel"/>
+</div>
+<button class="button primary" id="saveProfileButton" onclick="saveProfile()">
             💾 Save Changes
           </button>
-
-        </section>
-
-
-        <section class="section full-width">
-
-          <div class="section-header">
-
-            <div class="section-heading-wrap">
-
-              <div class="section-title" id="passwordTitle">
+</section>
+<section class="section full-width">
+<div class="section-header">
+<div class="section-heading-wrap">
+<div class="section-title" id="passwordTitle">
                 Change Password
               </div>
-
-              <div class="section-description" id="passwordDescription">
+<div class="section-description" id="passwordDescription">
                 Keep your account secure with a strong password
               </div>
-
-            </div>
-
-            <div class="section-icon">
+</div>
+<div class="section-icon">
               🔐
             </div>
-
-          </div>
-
-
-          <p class="password-note" id="passwordNote">
+</div>
+<p class="password-note" id="passwordNote">
             Enter a new password and confirm it below.
             Your password should be at least 6 characters long.
           </p>
-
-
-          <div class="password-fields">
-
-            <div class="form-group">
-
-              <label
-                class="form-label"
-                id="newPasswordLabel"
-                for="newPassword"
-              >
+<div class="password-fields">
+<div class="form-group">
+<label class="form-label" for="newPassword" id="newPasswordLabel">
                 New Password
               </label>
-
-              <input
-                type="password"
-                id="newPassword"
-                autocomplete="new-password"
-                placeholder="Enter new password"
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label
-                class="form-label"
-                id="confirmPasswordLabel"
-                for="confirmPassword"
-              >
+<input autocomplete="new-password" id="newPassword" placeholder="Enter new password" type="password"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="confirmPassword" id="confirmPasswordLabel">
                 Confirm New Password
               </label>
-
-              <input
-                type="password"
-                id="confirmPassword"
-                autocomplete="new-password"
-                placeholder="Confirm new password"
-              >
-
-            </div>
-
-          </div>
-
-
-          <button
-            class="button secondary"
-            id="changePasswordButton"
-            onclick="changePassword()"
-          >
+<input autocomplete="new-password" id="confirmPassword" placeholder="Confirm new password" type="password"/>
+</div>
+</div>
+<button class="button secondary" id="changePasswordButton" onclick="changePassword()">
             🔑 Change Password
           </button>
-
-        </section>
-
-
-        <div class="navigation">
-
-          <a
-            href="library.html"
-            class="button library"
-            id="libraryButton"
-          >
+</section>
+<div class="navigation">
+<a class="button library" href="library.html" id="libraryButton">
             📚 Go to Library
           </a>
-
-
-          <a
-            href="index.html"
-            class="button home"
-            id="homeButton"
-          >
+<a class="button home" href="index.html" id="homeButton">
             ← Back to Home
           </a>
-
-
-          <button
-            class="button logout"
-            id="logoutButton"
-            onclick="logout()"
-          >
+<button class="button logout" id="logoutButton" onclick="logout()">
             🚪 Logout
           </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  
-    <section class="favorites-section" id="favoritesSection">
-      <div class="favorites-heading">
-        <div>
-          <div class="favorites-kicker" id="favoritesKicker">Reading List</div>
-          <h2 id="favoritesTitle">My Favorites</h2>
-        </div>
-        <div class="favorites-count" id="favoritesCount"></div>
-      </div>
-      <div class="favorites-grid" id="favoritesGrid">
-        <div class="favorites-loading" id="favoritesLoading">Loading your favorites...</div>
-      </div>
-    </section>
-
+</div>
+</div>
+</div>
+<section class="favorites-section" id="favoritesSection">
+<div class="favorites-heading">
+<div>
+<div class="favorites-kicker" id="favoritesKicker">Reading List</div>
+<h2 id="favoritesTitle">My Favorites</h2>
+</div>
+<div class="favorites-count" id="favoritesCount"></div>
+</div>
+<div class="favorites-grid" id="favoritesGrid">
+<div class="favorites-loading" id="favoritesLoading">Loading your favorites...</div>
+</div>
+</section>
 </main>
-
-
-  <footer class="site-footer">
-
-    <div class="footer-title" id="footerTitle">
+<footer class="site-footer">
+<div class="footer-title" id="footerTitle">
       Founded by Kamaluddin Barlas
     </div>
-
-    <div class="footer-copy" id="footerCopy">
+<div class="footer-copy" id="footerCopy">
       © 2026 HSKRC - All rights reserved.
     </div>
-
-  </footer>
-
-
-  <script>
+</footer>
+<script>
 
 
 
@@ -2322,6 +2123,5 @@
     }
 
 </script>
-
 </body>
 </html>

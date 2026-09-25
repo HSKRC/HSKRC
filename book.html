@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+
+<html dir="ltr" lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HSKRC | Book Details</title><meta name="description" content="HSKRC Digital Library book details.">
-<meta name="theme-color" content="#0d1117"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>HSKRC | Book Details</title><meta content="HSKRC Digital Library book details." name="description"/>
+<meta content="#0d1117" name="theme-color"/><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#080808;--panel:#111;--panel2:#151515;--gold:#c7a15a;--gold2:#e2c47f;--text:#fff;--muted:#aaa39a;--line:rgba(199,161,90,.18);--soft:rgba(255,255,255,.065);--red:#ff4b50;--max:1220px;--shadow:0 35px 100px rgba(0,0,0,.55)}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 12% -5%,rgba(199,161,90,.08),transparent 30%),linear-gradient(180deg,#0c0c0c,#070707 65%);min-height:100vh;line-height:1.7}a{color:inherit;text-decoration:none}button{font:inherit}.container{width:min(var(--max),calc(100% - 48px));margin:auto}
@@ -36,48 +37,45 @@ footer{border-top:1px solid var(--soft);background:#050505;padding:34px;text-ali
 .research-count{color:var(--gold2);font-size:10px;font-weight:850}
 @media(max-width:900px){.research-groups{grid-template-columns:1fr}}
 </style>
-<link rel="stylesheet" href="hskrc-global.css">
-<script defer src="hskrc-global.js"></script>
-</head><body>
-<header><div class="container header-inner"><a href="index.html" class="logo-area"><div class="logo-mark">H</div><div><div class="logo-name">HSKRC</div><div class="logo-subtitle">Knowledge & Research Centre</div></div></a><nav><a href="index.html" id="home">Home</a><a href="alamut-knowledge-base.html" id="kb">Knowledge Base</a><a href="library.html" id="library" class="nav-active">Library</a><a href="articles.html" id="articles">Articles</a><a href="researchers.html" id="researchers">Researchers</a><a href="sources.html" id="sources">Sources</a><a href="about.html" id="about">About</a><a href="auth.html" id="account">Login / Register</a><button class="language" id="lang" onclick="toggleLang()">فارسی</button></nav></div></header>
-<main class="container"><a class="back" id="back" href="library.html">← Back to Library</a><div id="state" class="state"><div class="box"><div class="state-icon">📚</div><div class="state-title" id="stateTitle">Loading book...</div><p id="stateText">Please wait while the book details are loaded.</p></div></div><article id="details" class="details" hidden><div class="cover" id="cover"><div class="no-cover">📚</div></div><div><div class="eyebrow"><span class="dot"></span><span id="eyebrow">Book Details</span></div><h1 id="title" dir="auto"></h1><div class="author" id="author" dir="auto"></div><div class="meta-grid"><div class="meta"><div class="label" id="catL">Category</div><div class="value" id="category" dir="auto">—</div></div><div class="meta"><div class="label" id="langL">Language</div><div class="value" id="bookLang" dir="auto">—</div></div><div class="meta"><div class="label" id="yearL">Publication Year</div><div class="value" id="year" dir="auto">—</div></div><div class="meta"><div class="label" id="accessL">Access</div><div class="value" id="access">Member access</div></div></div><div class="desc-title" id="descL">About this book</div><p class="desc" id="description" dir="auto"></p><div class="actions"><button class="primary" id="read" disabled>📖 Read PDF</button><button class="secondary favorite-btn" id="favoriteBtn" type="button" onclick="toggleFavorite()">♡ Add to Favorites</button><a class="secondary" id="libraryBtn" href="library.html">← Back to Library</a></div></div></article>
-
-  <section class="research-network" id="researchNetwork" hidden>
-    <div class="section-heading">
-      <div>
-        <div class="section-kicker" id="researchKicker">Research Network</div>
-        <h2 id="researchTitle">Research Connections</h2>
-        <p class="research-intro" id="researchIntro">Documented relationships connecting this book to the HSKRC research archive.</p>
-      </div>
-      <div class="research-count" id="researchCount"></div>
-    </div>
-    <div class="research-groups">
-      <div class="research-group">
-        <div class="research-group-label" id="nodesLabel">Knowledge Nodes</div>
-        <div class="research-items" id="bookNodes"></div>
-      </div>
-      <div class="research-group">
-        <div class="research-group-label" id="sourcesLabel">Research Sources</div>
-        <div class="research-items" id="bookSources"></div>
-      </div>
-      <div class="research-group">
-        <div class="research-group-label" id="researchersLabel">Researchers</div>
-        <div class="research-items" id="bookResearchers"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="related-section" id="relatedSection" hidden>
-    <div class="section-heading">
-      <div>
-        <div class="section-kicker" id="relatedKicker">Library</div>
-        <h2 id="relatedTitle">More from the Library</h2>
-      </div>
-      <a href="library.html" class="section-link" id="relatedLink">View all books →</a>
-    </div>
-    <div class="related-grid" id="relatedGrid"></div>
-  </section>
-
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<link href="https://hskrc.org/book.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Book Details" property="og:title"/><meta content="HSKRC Digital Library book details." property="og:description"/><meta content="https://hskrc.org/book.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Book Details" name="twitter:title"/><meta content="HSKRC Digital Library book details." name="twitter:description"/></head><body>
+<header><div class="container header-inner"><a class="logo-area" href="index.html"><div class="logo-mark">H</div><div><div class="logo-name">HSKRC</div><div class="logo-subtitle">Knowledge &amp; Research Centre</div></div></a><nav><a href="index.html" id="home">Home</a><a href="alamut-knowledge-base.html" id="kb">Knowledge Base</a><a class="nav-active" href="library.html" id="library">Library</a><a href="articles.html" id="articles">Articles</a><a href="researchers.html" id="researchers">Researchers</a><a href="sources.html" id="sources">Sources</a><a href="about.html" id="about">About</a><a href="auth.html" id="account">Login / Register</a><button class="language" id="lang" onclick="toggleLang()">فارسی</button></nav></div></header>
+<main class="container"><a class="back" href="library.html" id="back">← Back to Library</a><div class="state" id="state"><div class="box"><div class="state-icon">📚</div><div class="state-title" id="stateTitle">Loading book...</div><p id="stateText">Please wait while the book details are loaded.</p></div></div><article class="details" hidden="" id="details"><div class="cover" id="cover"><div class="no-cover">📚</div></div><div><div class="eyebrow"><span class="dot"></span><span id="eyebrow">Book Details</span></div><h1 dir="auto" id="title"></h1><div class="author" dir="auto" id="author"></div><div class="meta-grid"><div class="meta"><div class="label" id="catL">Category</div><div class="value" dir="auto" id="category">—</div></div><div class="meta"><div class="label" id="langL">Language</div><div class="value" dir="auto" id="bookLang">—</div></div><div class="meta"><div class="label" id="yearL">Publication Year</div><div class="value" dir="auto" id="year">—</div></div><div class="meta"><div class="label" id="accessL">Access</div><div class="value" id="access">Member access</div></div></div><div class="desc-title" id="descL">About this book</div><p class="desc" dir="auto" id="description"></p><div class="actions"><button class="primary" disabled="" id="read">📖 Read PDF</button><button class="secondary favorite-btn" id="favoriteBtn" onclick="toggleFavorite()" type="button">♡ Add to Favorites</button><a class="secondary" href="library.html" id="libraryBtn">← Back to Library</a></div></div></article>
+<section class="research-network" hidden="" id="researchNetwork">
+<div class="section-heading">
+<div>
+<div class="section-kicker" id="researchKicker">Research Network</div>
+<h2 id="researchTitle">Research Connections</h2>
+<p class="research-intro" id="researchIntro">Documented relationships connecting this book to the HSKRC research archive.</p>
+</div>
+<div class="research-count" id="researchCount"></div>
+</div>
+<div class="research-groups">
+<div class="research-group">
+<div class="research-group-label" id="nodesLabel">Knowledge Nodes</div>
+<div class="research-items" id="bookNodes"></div>
+</div>
+<div class="research-group">
+<div class="research-group-label" id="sourcesLabel">Research Sources</div>
+<div class="research-items" id="bookSources"></div>
+</div>
+<div class="research-group">
+<div class="research-group-label" id="researchersLabel">Researchers</div>
+<div class="research-items" id="bookResearchers"></div>
+</div>
+</div>
+</section>
+<section class="related-section" hidden="" id="relatedSection">
+<div class="section-heading">
+<div>
+<div class="section-kicker" id="relatedKicker">Library</div>
+<h2 id="relatedTitle">More from the Library</h2>
+</div>
+<a class="section-link" href="library.html" id="relatedLink">View all books →</a>
+</div>
+<div class="related-grid" id="relatedGrid"></div>
+</section>
 </main>
 <footer><p class="founder" id="founder">Founded by Kamaluddin Barlas</p><p class="copyright">© 2026 HSKRC - All rights reserved.</p></footer>
 <script>

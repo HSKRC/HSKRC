@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
 
+<html dir="ltr" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HSKRC | Admin Panel</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HSKRC | Admin Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 :root{
   --bg:#0a0f0d;
   --bg-soft:#0f1512;
@@ -666,634 +664,459 @@ html{scroll-padding-top:105px}
 @media(max-width:900px){.stats.research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:430px){.stats.research-stats{grid-template-columns:1fr}}
 </style>
-</head>
-
+<meta content="noindex,nofollow" name="robots"/></head>
 <body>
-<aside class="admin-sidebar" aria-label="Administration navigation">
-  <div class="sidebar-brand"><strong>HSKRC</strong><span>Research Administration</span></div>
-  <div class="sidebar-label">Workspace</div>
-  <nav class="side-nav">
-    <a href="#dashboardTop" class="active"><span class="side-icon">◈</span><span class="side-text">Overview</span></a>
-    <a href="#bookFormPanel"><span class="side-icon">▤</span><span class="side-text">Library</span></a>
-    <a href="#articleFormPanel"><span class="side-icon">✦</span><span class="side-text">Articles</span></a>
-    <a href="#researchNetworkPanel"><span class="side-icon">⌘</span><span class="side-text">Research Database</span></a>
-    <a href="#network-pane-sources" onclick="showNetworkTab('sources',document.querySelector('[data-network-tab=\'sources\']'))"><span class="side-icon">◇</span><span class="side-text">Sources</span></a>
-    <a href="#network-pane-researchers" onclick="showNetworkTab('researchers',document.querySelector('[data-network-tab=\'researchers\']'))"><span class="side-icon">◉</span><span class="side-text">Researchers</span></a>
-    <a href="#usersPanel"><span class="side-icon">◎</span><span class="side-text">Users</span></a>
-  </nav>
-  <div class="sidebar-foot"><b>HSKRC Digital Archive</b><br>Editorial & research console<br>© 2026</div>
+<aside aria-label="Administration navigation" class="admin-sidebar">
+<div class="sidebar-brand"><strong>HSKRC</strong><span>Research Administration</span></div>
+<div class="sidebar-label">Workspace</div>
+<nav class="side-nav">
+<a class="active" href="#dashboardTop"><span class="side-icon">◈</span><span class="side-text">Overview</span></a>
+<a href="#bookFormPanel"><span class="side-icon">▤</span><span class="side-text">Library</span></a>
+<a href="#articleFormPanel"><span class="side-icon">✦</span><span class="side-text">Articles</span></a>
+<a href="#researchNetworkPanel"><span class="side-icon">⌘</span><span class="side-text">Research Database</span></a>
+<a href="#network-pane-sources" onclick="showNetworkTab('sources',document.querySelector('[data-network-tab=\'sources\']'))"><span class="side-icon">◇</span><span class="side-text">Sources</span></a>
+<a href="#network-pane-researchers" onclick="showNetworkTab('researchers',document.querySelector('[data-network-tab=\'researchers\']'))"><span class="side-icon">◉</span><span class="side-text">Researchers</span></a>
+<a href="#usersPanel"><span class="side-icon">◎</span><span class="side-text">Users</span></a>
+</nav>
+<div class="sidebar-foot"><b>HSKRC Digital Archive</b><br/>Editorial &amp; research console<br/>© 2026</div>
 </aside>
-
-
 <header>
-  <div><div class="logo" id="logoText">HSKRC · Administration</div><div class="console-badge">Secure research console</div></div>
-
-  <div class="header-actions">
-    <a href="index.html" class="button-link dark">Home</a>
-    <a href="library.html" class="button-link dark">Library</a>
-    <button id="languageBtn" class="dark" onclick="toggleLanguage()">🌐 Persian</button>
-    <button class="danger" onclick="logout()">Logout</button>
-  </div>
+<div><div class="logo" id="logoText">HSKRC · Administration</div><div class="console-badge">Secure research console</div></div>
+<div class="header-actions">
+<a class="button-link dark" href="index.html">Home</a>
+<a class="button-link dark" href="library.html">Library</a>
+<button class="dark" id="languageBtn" onclick="toggleLanguage()">🌐 Persian</button>
+<button class="danger" onclick="logout()">Logout</button>
+</div>
 </header>
-
 <main>
-
-  <div id="loading" class="loading">
+<div class="loading" id="loading">
     Checking administrator access...
   </div>
-
-  <div id="accessDenied" class="access-denied hidden">
-    <h2>Access Denied</h2>
-    <p>You do not have administrator access.</p>
-    <br>
-    <a href="index.html" class="button-link dark">Return to Home</a>
-  </div>
-
-  <div id="dashboard" class="dashboard"><div id="dashboardTop"></div>
-    <div class="admin-kicker">HSKRC · Research Administration System</div>
-    <div class="admin-subtitle">A unified editorial and research console for the HSKRC knowledge archive.</div>
-    <nav class="admin-nav" aria-label="Admin sections">
-      <a href="#bookFormPanel">Books</a>
-      <a href="#articleFormPanel">Articles</a>
-      <a href="#researchNetworkPanel">Research Network</a>
-      <a href="#usersPanel">Users</a>
-    </nav>
-
-    <div class="title-row">
-      <h1 id="pageTitle">Admin Dashboard</h1>
-
-      <button class="green" onclick="showAddBookForm()">
+<div class="access-denied hidden" id="accessDenied">
+<h2>Access Denied</h2>
+<p>You do not have administrator access.</p>
+<br/>
+<a class="button-link dark" href="index.html">Return to Home</a>
+</div>
+<div class="dashboard" id="dashboard"><div id="dashboardTop"></div>
+<div class="admin-kicker">HSKRC · Research Administration System</div>
+<div class="admin-subtitle">A unified editorial and research console for the HSKRC knowledge archive.</div>
+<nav aria-label="Admin sections" class="admin-nav">
+<a href="#bookFormPanel">Books</a>
+<a href="#articleFormPanel">Articles</a>
+<a href="#researchNetworkPanel">Research Network</a>
+<a href="#usersPanel">Users</a>
+</nav>
+<div class="title-row">
+<h1 id="pageTitle">Admin Dashboard</h1>
+<button class="green" onclick="showAddBookForm()">
         ＋ Add Book
       </button>
-    </div>
-
-    <div id="message" class="message"></div>
-
-    <!-- =========================
+</div>
+<div class="message" id="message"></div>
+<!-- =========================
          STATISTICS
          ========================= -->
-
-    <div class="stats research-stats">
-
-      <div class="stat">
-        <div>Total Books</div>
-        <div id="totalBooks" class="stat-number">0</div>
-        <div class="stat-detail">Digital library records</div>
-      </div>
-
-      <div class="stat">
-        <div>Published Books</div>
-        <div id="publishedBooks" class="stat-number">0</div>
-        <div class="stat-detail">Public library records</div>
-      </div>
-
-      <div class="stat">
-        <div>Articles</div>
-        <div id="totalArticles" class="stat-number">0</div>
-        <div class="stat-detail">Editorial & research content</div>
-      </div>
-
-      <div class="stat">
-        <div>Users</div>
-        <div id="totalUsers" class="stat-number">0</div>
-        <div class="stat-detail">Registered profiles</div>
-      </div>
-
-      <div class="stat">
-        <div>Knowledge Nodes</div>
-        <div id="totalKnowledgeNodes" class="stat-number">0</div>
-        <div class="stat-detail">People, places & fortifications</div>
-      </div>
-
-      <div class="stat">
-        <div>Research Sources</div>
-        <div id="totalResearchSources" class="stat-number">0</div>
-        <div class="stat-detail">Documented source registry</div>
-      </div>
-
-      <div class="stat">
-        <div>Researchers</div>
-        <div id="totalResearchers" class="stat-number">0</div>
-        <div class="stat-detail">Research directory records</div>
-      </div>
-
-      <div class="stat">
-        <div>Connections</div>
-        <div id="totalResearchConnections" class="stat-number">0</div>
-        <div class="stat-detail">Research network relationships</div>
-      </div>
-
-    </div>
-
-
-    <!-- =========================
+<div class="stats research-stats">
+<div class="stat">
+<div>Total Books</div>
+<div class="stat-number" id="totalBooks">0</div>
+<div class="stat-detail">Digital library records</div>
+</div>
+<div class="stat">
+<div>Published Books</div>
+<div class="stat-number" id="publishedBooks">0</div>
+<div class="stat-detail">Public library records</div>
+</div>
+<div class="stat">
+<div>Articles</div>
+<div class="stat-number" id="totalArticles">0</div>
+<div class="stat-detail">Editorial &amp; research content</div>
+</div>
+<div class="stat">
+<div>Users</div>
+<div class="stat-number" id="totalUsers">0</div>
+<div class="stat-detail">Registered profiles</div>
+</div>
+<div class="stat">
+<div>Knowledge Nodes</div>
+<div class="stat-number" id="totalKnowledgeNodes">0</div>
+<div class="stat-detail">People, places &amp; fortifications</div>
+</div>
+<div class="stat">
+<div>Research Sources</div>
+<div class="stat-number" id="totalResearchSources">0</div>
+<div class="stat-detail">Documented source registry</div>
+</div>
+<div class="stat">
+<div>Researchers</div>
+<div class="stat-number" id="totalResearchers">0</div>
+<div class="stat-detail">Research directory records</div>
+</div>
+<div class="stat">
+<div>Connections</div>
+<div class="stat-number" id="totalResearchConnections">0</div>
+<div class="stat-detail">Research network relationships</div>
+</div>
+</div>
+<!-- =========================
          BOOK FORM
          ========================= -->
-
-    <div id="bookFormPanel" class="panel"><div class="panel-section-label">Library Management</div>
-
-      <h2 id="formTitle">Add New Book</h2>
-
-      <form id="bookForm" action="javascript:void(0);" novalidate>
-
-        <input type="hidden" id="bookId">
-
-        <div class="form-grid">
-
-          <div>
-            <label for="title">Book Title *</label>
-            <input type="text" id="title" required placeholder="Enter book title">
-          </div>
-
-          <div>
-            <label for="author">Author *</label>
-            <input type="text" id="author" required placeholder="Enter author name">
-          </div>
-
-          <div>
-            <label for="category">Category</label>
-            <input type="text" id="category" placeholder="e.g. History, Philosophy">
-          </div>
-
-          <div>
-            <label for="publicationYear">Publication Year</label>
-            <input type="number" id="publicationYear" placeholder="e.g. 2024">
-          </div>
-
-          <div>
-            <label for="language">Language</label>
-            <select id="language">
-              <option value="English">English</option>
-              <option value="Persian">Persian</option>
-              <option value="Arabic">Arabic</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="isbn">ISBN</label>
-            <input type="text" id="isbn" placeholder="ISBN">
-          </div>
-
-          <div class="full">
-            <label for="translator">Translator</label>
-            <input type="text" id="translator" placeholder="Translator name (optional)">
-          </div>
-
-          <div class="full">
-            <label for="description">Description</label>
-            <textarea id="description" placeholder="Write a short description of the book..."></textarea>
-          </div>
-
-          <div>
-            <label for="coverFile">Book Cover</label>
-            <input type="file" id="coverFile" accept="image/*">
-            <div id="coverFileName" class="file-name"></div>
-          </div>
-
-          <div>
-            <label for="pdfFile">PDF File *</label>
-            <input type="file" id="pdfFile" accept="application/pdf,.pdf">
-            <div id="pdfFileName" class="file-name"></div>
-          </div>
-
-          <div class="full">
-            <div class="check-row">
-              <input type="checkbox" id="published" checked>
-              <label for="published" style="margin:0;">Published</label>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="form-actions">
-
-          <button type="submit" class="green" id="saveBookBtn">
+<div class="panel" id="bookFormPanel"><div class="panel-section-label">Library Management</div>
+<h2 id="formTitle">Add New Book</h2>
+<form action="javascript:void(0);" id="bookForm" novalidate="">
+<input id="bookId" type="hidden"/>
+<div class="form-grid">
+<div>
+<label for="title">Book Title *</label>
+<input id="title" placeholder="Enter book title" required="" type="text"/>
+</div>
+<div>
+<label for="author">Author *</label>
+<input id="author" placeholder="Enter author name" required="" type="text"/>
+</div>
+<div>
+<label for="category">Category</label>
+<input id="category" placeholder="e.g. History, Philosophy" type="text"/>
+</div>
+<div>
+<label for="publicationYear">Publication Year</label>
+<input id="publicationYear" placeholder="e.g. 2024" type="number"/>
+</div>
+<div>
+<label for="language">Language</label>
+<select id="language">
+<option value="English">English</option>
+<option value="Persian">Persian</option>
+<option value="Arabic">Arabic</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div>
+<label for="isbn">ISBN</label>
+<input id="isbn" placeholder="ISBN" type="text"/>
+</div>
+<div class="full">
+<label for="translator">Translator</label>
+<input id="translator" placeholder="Translator name (optional)" type="text"/>
+</div>
+<div class="full">
+<label for="description">Description</label>
+<textarea id="description" placeholder="Write a short description of the book..."></textarea>
+</div>
+<div>
+<label for="coverFile">Book Cover</label>
+<input accept="image/*" id="coverFile" type="file"/>
+<div class="file-name" id="coverFileName"></div>
+</div>
+<div>
+<label for="pdfFile">PDF File *</label>
+<input accept="application/pdf,.pdf" id="pdfFile" type="file"/>
+<div class="file-name" id="pdfFileName"></div>
+</div>
+<div class="full">
+<div class="check-row">
+<input checked="" id="published" type="checkbox"/>
+<label for="published" style="margin:0;">Published</label>
+</div>
+</div>
+</div>
+<div class="form-actions">
+<button class="green" id="saveBookBtn" type="submit">
             Save Book
           </button>
-
-          <button type="button" class="dark" onclick="resetBookForm()">
+<button class="dark" onclick="resetBookForm()" type="button">
             Cancel
           </button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-
-    <!-- =========================
+</div>
+</form>
+</div>
+<!-- =========================
          BOOKS
          ========================= -->
-
-    <div class="panel">
-
-      <div class="title-row">
-        <h2>Books</h2>
-
-        <button class="dark" onclick="loadBooks()">
+<div class="panel">
+<div class="title-row">
+<h2>Books</h2>
+<button class="dark" onclick="loadBooks()">
           🔄 Refresh
         </button>
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Category</th>
-              <th>Language</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody id="booksTableBody">
-            <tr>
-              <td colspan="6">Loading books...</td>
-            </tr>
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-
-    <!-- =========================
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Author</th>
+<th>Category</th>
+<th>Language</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="booksTableBody">
+<tr>
+<td colspan="6">Loading books...</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- =========================
          ARTICLE FORM
          ========================= -->
-
-    <div id="articleFormPanel" class="panel"><div class="panel-section-label">Editorial Workspace</div>
-
-      <div class="title-row">
-
-        <div>
-          <h2 id="articleFormTitle">Add New Article</h2>
-          <div class="section-note">
+<div class="panel" id="articleFormPanel"><div class="panel-section-label">Editorial Workspace</div>
+<div class="title-row">
+<div>
+<h2 id="articleFormTitle">Add New Article</h2>
+<div class="section-note">
             Create and publish articles or research materials.
           </div>
-        </div>
-
-      </div>
-
-      <form id="articleForm" action="javascript:void(0);" novalidate>
-
-        <input type="hidden" id="articleId">
-
-        <div class="form-grid">
-
-          <div>
-            <label for="articleTitle">Article Title *</label>
-            <input
-              type="text"
-              id="articleTitle"
-              required
-              placeholder="Enter article title">
-          </div>
-
-          <div>
-            <label for="articleAuthor">Author *</label>
-            <input
-              type="text"
-              id="articleAuthor"
-              required
-              placeholder="Enter author name">
-          </div>
-
-          <div>
-            <label for="articleCategory">Category</label>
-            <input
-              type="text"
-              id="articleCategory"
-              placeholder="e.g. History, Research">
-          </div>
-
-          <div>
-            <label for="articleCoverPath">Cover Path</label>
-            <input
-              type="text"
-              id="articleCoverPath"
-              placeholder="Optional storage path">
-          </div>
-
-          <div class="full">
-            <label for="articleExcerpt">Excerpt</label>
-            <textarea
-              id="articleExcerpt"
-              placeholder="Short summary of the article..."></textarea>
-          </div>
-
-          <div class="full">
-            <label for="articleContent">Article Content *</label>
-            <textarea
-              id="articleContent"
-              class="article-content"
-              required
-              placeholder="Write the full article or research text here..."></textarea>
-          </div>
-
-          <div class="full">
-
-            <div class="check-row">
-
-              <input
-                type="checkbox"
-                id="articlePublished"
-                checked>
-
-              <label
-                for="articlePublished"
-                style="margin:0;">
+</div>
+</div>
+<form action="javascript:void(0);" id="articleForm" novalidate="">
+<input id="articleId" type="hidden"/>
+<div class="form-grid">
+<div>
+<label for="articleTitle">Article Title *</label>
+<input id="articleTitle" placeholder="Enter article title" required="" type="text"/>
+</div>
+<div>
+<label for="articleAuthor">Author *</label>
+<input id="articleAuthor" placeholder="Enter author name" required="" type="text"/>
+</div>
+<div>
+<label for="articleCategory">Category</label>
+<input id="articleCategory" placeholder="e.g. History, Research" type="text"/>
+</div>
+<div>
+<label for="articleCoverPath">Cover Path</label>
+<input id="articleCoverPath" placeholder="Optional storage path" type="text"/>
+</div>
+<div class="full">
+<label for="articleExcerpt">Excerpt</label>
+<textarea id="articleExcerpt" placeholder="Short summary of the article..."></textarea>
+</div>
+<div class="full">
+<label for="articleContent">Article Content *</label>
+<textarea class="article-content" id="articleContent" placeholder="Write the full article or research text here..." required=""></textarea>
+</div>
+<div class="full">
+<div class="check-row">
+<input checked="" id="articlePublished" type="checkbox"/>
+<label for="articlePublished" style="margin:0;">
                 Published
               </label>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="form-actions">
-
-          <button
-            type="submit"
-            class="green"
-            id="saveArticleBtn">
+</div>
+</div>
+</div>
+<div class="form-actions">
+<button class="green" id="saveArticleBtn" type="submit">
             Save Article
           </button>
-
-          <button
-            type="button"
-            class="dark"
-            onclick="resetArticleForm()">
+<button class="dark" onclick="resetArticleForm()" type="button">
             Cancel
           </button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-
-    <!-- =========================
+</div>
+</form>
+</div>
+<!-- =========================
          ARTICLES
          ========================= -->
-
-    <div class="panel">
-
-      <div class="title-row">
-
-        <h2 id="articlesPanelTitle">
-          Articles & Research
+<div class="panel">
+<div class="title-row">
+<h2 id="articlesPanelTitle">
+          Articles &amp; Research
         </h2>
-
-        <div class="actions">
-
-          <button
-            class="green"
-            onclick="showAddArticleForm()">
+<div class="actions">
+<button class="green" onclick="showAddArticleForm()">
             ➕ Add New Article
           </button>
-
-          <button
-            class="dark"
-            onclick="loadArticles()">
+<button class="dark" onclick="loadArticles()">
             🔄 Refresh
           </button>
-
-        </div>
-
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Category</th>
-              <th>Status</th>
-              <th>Published</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody id="articlesTableBody">
-
-            <tr>
-              <td colspan="6">
+</div>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Author</th>
+<th>Category</th>
+<th>Status</th>
+<th>Published</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="articlesTableBody">
+<tr>
+<td colspan="6">
                 Loading articles...
               </td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- =========================
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- =========================
          RESEARCH NETWORK MANAGER
          ========================= -->
-    <div class="panel network-manager" id="researchNetworkPanel"><div class="panel-section-label">Research Infrastructure</div>
-      <div class="title-row">
-        <div>
-          <h2>Research Network Manager</h2>
-          <div class="section-note">Manage Knowledge Nodes, Sources, Researchers, and article relationships from the HSKRC Admin Panel.</div>
-        </div>
-        <button class="dark" onclick="loadResearchNetwork()">Refresh Network</button>
-      </div>
-
-      <div class="network-tabs">
-        <button class="dark active" data-network-tab="nodes" onclick="showNetworkTab('nodes',this)">Knowledge Nodes</button>
-        <button class="dark" data-network-tab="sources" onclick="showNetworkTab('sources',this)">Sources</button>
-        <button class="dark" data-network-tab="researchers" onclick="showNetworkTab('researchers',this)">Researchers</button>
-        <button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Connection Manager</button>
-        <button class="dark" data-network-tab="bookrelations" onclick="showNetworkTab('bookrelations',this)">Book Connections</button>
-      </div>
-
-      <div class="network-pane active" id="network-pane-nodes">
-        <form id="nodeForm"><input type="hidden" id="networkNodeId">
-          <div class="form-grid">
-            <div><label>Slug *</label><input id="networkNodeSlug" required placeholder="e.g. alamut"></div>
-            <div><label>Node Type</label><select id="networkNodeType"><option value="topic">Topic</option><option value="person">Person</option><option value="place">Place</option><option value="fortification">Fortification</option></select></div>
-            <div><label>English Title *</label><input id="networkNodeTitle" required></div>
-            <div><label>Persian Title</label><input id="networkNodeTitleFa"></div>
-            <div class="full"><label>Description</label><textarea id="networkNodeDescription"></textarea></div>
-          </div>
-          <div class="form-actions"><button class="gold" type="submit">Save Knowledge Node</button><button class="dark" type="button" onclick="resetNodeForm()">Clear</button></div>
-        </form>
-        <div class="mini-list" id="networkNodesList"></div>
-      </div>
-
-      <div class="network-pane" id="network-pane-sources">
-        <form id="sourceForm"><input type="hidden" id="networkSourceId">
-          <div class="form-grid">
-            <div><label>Source Code *</label><input id="networkSourceCode" required placeholder="HSKRC-SRC-0013"></div>
-            <div><label>Source Type</label><input id="networkSourceType" placeholder="Scholarly Book"></div>
-            <div class="full"><label>Title *</label><input id="networkSourceTitle" required></div>
-            <div><label>Author</label><input id="networkSourceAuthor"></div>
-            <div><label>Institution</label><input id="networkSourceInstitution"></div>
-            <div><label>Publication Year</label><input id="networkSourceYear" type="number"></div>
-            <div><label>Language</label><input id="networkSourceLanguage"></div>
-            <div><label>Reliability</label><input id="networkSourceReliability"></div>
-            <div class="full"><label>URL</label><input id="networkSourceUrl" type="url"></div>
-            <div class="full"><label>Notes</label><textarea id="networkSourceNotes"></textarea></div>
-          </div>
-          <div class="form-actions"><button class="gold" type="submit">Save Source</button><button class="dark" type="button" onclick="resetSourceForm()">Clear</button></div>
-        </form>
-        <div class="mini-list" id="networkSourcesList"></div>
-      </div>
-
-      <div class="network-pane" id="network-pane-researchers">
-        <form id="researcherForm"><input type="hidden" id="networkResearcherId">
-          <div class="form-grid">
-            <div><label>Slug *</label><input id="networkResearcherSlug" required placeholder="farhad-daftary"></div>
-            <div><label>Field</label><input id="networkResearcherField" placeholder="Ismaili Studies"></div>
-            <div><label>Name *</label><input id="networkResearcherName" required></div>
-            <div><label>Persian Name</label><input id="networkResearcherNameFa"></div>
-            <div class="full"><label>Notes</label><textarea id="networkResearcherNotes"></textarea></div>
-          </div>
-          <div class="form-actions"><button class="gold" type="submit">Save Researcher</button><button class="dark" type="button" onclick="resetResearcherForm()">Clear</button></div>
-        </form>
-        <div class="mini-list" id="networkResearchersList"></div>
-      </div>
-
-      <div class="network-pane" id="network-pane-relations">
-        <div class="section-note" style="margin-bottom:18px"><b>Connection Manager v6</b> · Create and remove relationships across the HSKRC research database without writing SQL.</div>
-        <div class="connection-jumpbar" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-          <button class="gold" type="button" onclick="document.getElementById('articleConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Article Connections</button>
-          <button class="dark" type="button" onclick="document.getElementById('sourceNodeConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Source ↔ Knowledge Node</button>
-          <button class="dark" type="button" onclick="document.getElementById('researcherSourceConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})">Researcher ↔ Source</button>
-        </div>
-
-        <div class="panel" id="articleConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-          <h3 style="margin-top:0;color:#fff">Article Connections</h3>
-          <div class="relation-grid">
-            <div><label>Article</label><select id="relationArticle"></select></div>
-            <div><label>Knowledge Node</label><select id="relationNode"></select></div>
-            <div><label>Source</label><select id="relationSource"></select></div>
-            <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
-              <button class="gold" type="button" onclick="linkArticleNode()">Link Article → Node</button>
-              <button class="gold" type="button" onclick="linkArticleSource()">Link Article → Source</button>
-            </div>
-          </div>
-          <div class="mini-list" id="articleRelationsList"></div>
-        </div>
-
-        <div class="panel" id="sourceNodeConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-          <div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
-          <h3 style="margin-top:0;color:#fff">Source ↔ Knowledge Node</h3>
-          <p style="color:#9f9a90;margin-top:-4px">Connect a documented source directly to Alamut, Hassan Sabbah, a fortification, or another knowledge node.</p>
-          <div class="relation-grid">
-            <div><label>Source</label><select id="sourceNodeSource"></select></div>
-            <div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
-            <div style="display:flex;align-items:end"><button class="gold" type="button" id="linkSourceNodeBtn" onclick="linkSourceNode()">Link Source → Node</button></div>
-          </div>
-          <div id="sourceNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="sourceNodeRelationsList"></div>
-        </div>
-
-        <div class="panel" id="researcherSourceConnectionPanel" style="margin:0;padding:24px;border-color:#c9a45c66">
-          <div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
-          <h3 style="margin-top:0;color:#fff">Researcher ↔ Source</h3>
-          <p style="color:#9f9a90;margin-top:-4px">Associate a researcher with the scholarly sources represented in the HSKRC registry.</p>
-          <div class="relation-grid">
-            <div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
-            <div><label>Source</label><select id="researcherSourceSource"></select></div>
-            <div style="display:flex;align-items:end"><button class="gold" type="button" id="linkResearcherSourceBtn" onclick="linkResearcherSource()">Link Researcher → Source</button></div>
-          </div>
-          <div id="researcherSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="researcherSourceRelationsList"></div>
-        </div>
-      </div>
-    </div>
-
-
-      <div class="network-pane" id="network-pane-bookrelations">
-        <div class="section-note" style="margin-bottom:18px"><b>Book Research Integration</b> · Connect real library records to the HSKRC Research Network. No relationship is created automatically.</div>
-        <div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-          <h3 style="margin-top:0;color:#fff">Book ↔ Knowledge Node</h3>
-          <div class="relation-grid"><div><label>Book</label><select id="bookNodeBook"></select></div><div><label>Knowledge Node</label><select id="bookNodeNode"></select></div><div style="display:flex;align-items:end"><button class="gold" type="button" id="linkBookNodeBtn" onclick="linkBookNode()">Link Book → Node</button></div></div>
-          <div id="bookNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookNodeRelationsList"></div>
-        </div>
-        <div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
-          <h3 style="margin-top:0;color:#fff">Book ↔ Research Source</h3>
-          <div class="relation-grid"><div><label>Book</label><select id="bookSourceBook"></select></div><div><label>Source</label><select id="bookSourceSource"></select></div><div style="display:flex;align-items:end"><button class="gold" type="button" id="linkBookSourceBtn" onclick="linkBookSource()">Link Book → Source</button></div></div>
-          <div id="bookSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookSourceRelationsList"></div>
-        </div>
-        <div class="panel" style="margin:0;padding:24px;border-color:#c9a45c66">
-          <h3 style="margin-top:0;color:#fff">Book ↔ Researcher</h3>
-          <div class="relation-grid"><div><label>Book</label><select id="bookResearcherBook"></select></div><div><label>Researcher</label><select id="bookResearcherResearcher"></select></div><div style="display:flex;align-items:end"><button class="gold" type="button" id="linkBookResearcherBtn" onclick="linkBookResearcher()">Link Book → Researcher</button></div></div>
-          <div id="bookResearcherStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookResearcherRelationsList"></div>
-        </div>
-      </div>
-
-    <!-- =========================
+<div class="panel network-manager" id="researchNetworkPanel"><div class="panel-section-label">Research Infrastructure</div>
+<div class="title-row">
+<div>
+<h2>Research Network Manager</h2>
+<div class="section-note">Manage Knowledge Nodes, Sources, Researchers, and article relationships from the HSKRC Admin Panel.</div>
+</div>
+<button class="dark" onclick="loadResearchNetwork()">Refresh Network</button>
+</div>
+<div class="network-tabs">
+<button class="dark active" data-network-tab="nodes" onclick="showNetworkTab('nodes',this)">Knowledge Nodes</button>
+<button class="dark" data-network-tab="sources" onclick="showNetworkTab('sources',this)">Sources</button>
+<button class="dark" data-network-tab="researchers" onclick="showNetworkTab('researchers',this)">Researchers</button>
+<button class="dark" data-network-tab="relations" onclick="showNetworkTab('relations',this)">Connection Manager</button>
+<button class="dark" data-network-tab="bookrelations" onclick="showNetworkTab('bookrelations',this)">Book Connections</button>
+</div>
+<div class="network-pane active" id="network-pane-nodes">
+<form id="nodeForm"><input id="networkNodeId" type="hidden"/>
+<div class="form-grid">
+<div><label>Slug *</label><input id="networkNodeSlug" placeholder="e.g. alamut" required=""/></div>
+<div><label>Node Type</label><select id="networkNodeType"><option value="topic">Topic</option><option value="person">Person</option><option value="place">Place</option><option value="fortification">Fortification</option></select></div>
+<div><label>English Title *</label><input id="networkNodeTitle" required=""/></div>
+<div><label>Persian Title</label><input id="networkNodeTitleFa"/></div>
+<div class="full"><label>Description</label><textarea id="networkNodeDescription"></textarea></div>
+</div>
+<div class="form-actions"><button class="gold" type="submit">Save Knowledge Node</button><button class="dark" onclick="resetNodeForm()" type="button">Clear</button></div>
+</form>
+<div class="mini-list" id="networkNodesList"></div>
+</div>
+<div class="network-pane" id="network-pane-sources">
+<form id="sourceForm"><input id="networkSourceId" type="hidden"/>
+<div class="form-grid">
+<div><label>Source Code *</label><input id="networkSourceCode" placeholder="HSKRC-SRC-0013" required=""/></div>
+<div><label>Source Type</label><input id="networkSourceType" placeholder="Scholarly Book"/></div>
+<div class="full"><label>Title *</label><input id="networkSourceTitle" required=""/></div>
+<div><label>Author</label><input id="networkSourceAuthor"/></div>
+<div><label>Institution</label><input id="networkSourceInstitution"/></div>
+<div><label>Publication Year</label><input id="networkSourceYear" type="number"/></div>
+<div><label>Language</label><input id="networkSourceLanguage"/></div>
+<div><label>Reliability</label><input id="networkSourceReliability"/></div>
+<div class="full"><label>URL</label><input id="networkSourceUrl" type="url"/></div>
+<div class="full"><label>Notes</label><textarea id="networkSourceNotes"></textarea></div>
+</div>
+<div class="form-actions"><button class="gold" type="submit">Save Source</button><button class="dark" onclick="resetSourceForm()" type="button">Clear</button></div>
+</form>
+<div class="mini-list" id="networkSourcesList"></div>
+</div>
+<div class="network-pane" id="network-pane-researchers">
+<form id="researcherForm"><input id="networkResearcherId" type="hidden"/>
+<div class="form-grid">
+<div><label>Slug *</label><input id="networkResearcherSlug" placeholder="farhad-daftary" required=""/></div>
+<div><label>Field</label><input id="networkResearcherField" placeholder="Ismaili Studies"/></div>
+<div><label>Name *</label><input id="networkResearcherName" required=""/></div>
+<div><label>Persian Name</label><input id="networkResearcherNameFa"/></div>
+<div class="full"><label>Notes</label><textarea id="networkResearcherNotes"></textarea></div>
+</div>
+<div class="form-actions"><button class="gold" type="submit">Save Researcher</button><button class="dark" onclick="resetResearcherForm()" type="button">Clear</button></div>
+</form>
+<div class="mini-list" id="networkResearchersList"></div>
+</div>
+<div class="network-pane" id="network-pane-relations">
+<div class="section-note" style="margin-bottom:18px"><b>Connection Manager v6</b> · Create and remove relationships across the HSKRC research database without writing SQL.</div>
+<div class="connection-jumpbar" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+<button class="gold" onclick="document.getElementById('articleConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})" type="button">Article Connections</button>
+<button class="dark" onclick="document.getElementById('sourceNodeConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})" type="button">Source ↔ Knowledge Node</button>
+<button class="dark" onclick="document.getElementById('researcherSourceConnectionPanel').scrollIntoView({behavior:'smooth',block:'center'})" type="button">Researcher ↔ Source</button>
+</div>
+<div class="panel" id="articleConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+<h3 style="margin-top:0;color:#fff">Article Connections</h3>
+<div class="relation-grid">
+<div><label>Article</label><select id="relationArticle"></select></div>
+<div><label>Knowledge Node</label><select id="relationNode"></select></div>
+<div><label>Source</label><select id="relationSource"></select></div>
+<div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
+<button class="gold" onclick="linkArticleNode()" type="button">Link Article → Node</button>
+<button class="gold" onclick="linkArticleSource()" type="button">Link Article → Source</button>
+</div>
+</div>
+<div class="mini-list" id="articleRelationsList"></div>
+</div>
+<div class="panel" id="sourceNodeConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+<div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
+<h3 style="margin-top:0;color:#fff">Source ↔ Knowledge Node</h3>
+<p style="color:#9f9a90;margin-top:-4px">Connect a documented source directly to Alamut, Hassan Sabbah, a fortification, or another knowledge node.</p>
+<div class="relation-grid">
+<div><label>Source</label><select id="sourceNodeSource"></select></div>
+<div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
+<div style="display:flex;align-items:end"><button class="gold" id="linkSourceNodeBtn" onclick="linkSourceNode()" type="button">Link Source → Node</button></div>
+</div>
+<div id="sourceNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="sourceNodeRelationsList"></div>
+</div>
+<div class="panel" id="researcherSourceConnectionPanel" style="margin:0;padding:24px;border-color:#c9a45c66">
+<div style="font-size:11px;color:#c9a45c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px">Research Relationship</div>
+<h3 style="margin-top:0;color:#fff">Researcher ↔ Source</h3>
+<p style="color:#9f9a90;margin-top:-4px">Associate a researcher with the scholarly sources represented in the HSKRC registry.</p>
+<div class="relation-grid">
+<div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
+<div><label>Source</label><select id="researcherSourceSource"></select></div>
+<div style="display:flex;align-items:end"><button class="gold" id="linkResearcherSourceBtn" onclick="linkResearcherSource()" type="button">Link Researcher → Source</button></div>
+</div>
+<div id="researcherSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="researcherSourceRelationsList"></div>
+</div>
+</div>
+</div>
+<div class="network-pane" id="network-pane-bookrelations">
+<div class="section-note" style="margin-bottom:18px"><b>Book Research Integration</b> · Connect real library records to the HSKRC Research Network. No relationship is created automatically.</div>
+<div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+<h3 style="margin-top:0;color:#fff">Book ↔ Knowledge Node</h3>
+<div class="relation-grid"><div><label>Book</label><select id="bookNodeBook"></select></div><div><label>Knowledge Node</label><select id="bookNodeNode"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookNodeBtn" onclick="linkBookNode()" type="button">Link Book → Node</button></div></div>
+<div id="bookNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookNodeRelationsList"></div>
+</div>
+<div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
+<h3 style="margin-top:0;color:#fff">Book ↔ Research Source</h3>
+<div class="relation-grid"><div><label>Book</label><select id="bookSourceBook"></select></div><div><label>Source</label><select id="bookSourceSource"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookSourceBtn" onclick="linkBookSource()" type="button">Link Book → Source</button></div></div>
+<div id="bookSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookSourceRelationsList"></div>
+</div>
+<div class="panel" style="margin:0;padding:24px;border-color:#c9a45c66">
+<h3 style="margin-top:0;color:#fff">Book ↔ Researcher</h3>
+<div class="relation-grid"><div><label>Book</label><select id="bookResearcherBook"></select></div><div><label>Researcher</label><select id="bookResearcherResearcher"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookResearcherBtn" onclick="linkBookResearcher()" type="button">Link Book → Researcher</button></div></div>
+<div id="bookResearcherStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookResearcherRelationsList"></div>
+</div>
+</div>
+<!-- =========================
          USERS
          ========================= -->
-
-    <div class="panel" id="usersPanel">
-
-      <div class="title-row">
-
-        <h2 id="usersTitle">Users</h2>
-
-        <button
-          class="dark"
-          onclick="loadUsers()">
+<div class="panel" id="usersPanel">
+<div class="title-row">
+<h2 id="usersTitle">Users</h2>
+<button class="dark" onclick="loadUsers()">
           🔄 Refresh
         </button>
-
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email Consent</th>
-              <th>Role</th>
-              <th>Joined</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody id="usersTableBody">
-
-            <tr>
-              <td colspan="6">
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Email Consent</th>
+<th>Role</th>
+<th>Joined</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="usersTableBody">
+<tr>
+<td colspan="6">
                 Loading users...
               </td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-  </div>
-
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </main>
-
-
 <script>
 
   /* =========================================
@@ -3584,6 +3407,5 @@ html{scroll-padding-top:105px}
   checkAdmin();
 
 </script>
-
 </body>
 </html>

@@ -1,4 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>HSKRC | Researcher Profile</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--b:#090b0e;--s:#12161b;--g:#c7a15a;--g2:#e2c47f;--t:#fff;--m:#9ca3ad;--bd:rgba(255,255,255,.1)}
@@ -10,13 +11,13 @@ main{max-width:1180px;margin:auto;padding:45px 24px 80px}.back{color:#bbb;font-s
 footer{border-top:1px solid var(--bd)}.foot{max-width:1180px;margin:auto;padding:30px 24px;display:flex;justify-content:space-between;color:var(--m);font-size:12px}.foot strong{color:var(--g)}
 @media(max-width:760px){.bar{flex-wrap:wrap;padding:13px 16px}nav{order:3;width:100%;overflow:auto;flex-wrap:nowrap}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.hero{padding:28px 22px}main{padding:30px 16px 60px}.foot{flex-direction:column;gap:7px}}
 </style>
-<link rel="stylesheet" href="hskrc-global.css">
-<script defer src="hskrc-global.js"></script>
-</head><body>
+<link href="hskrc-global.css" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js"></script>
+<link href="https://hskrc.org/researcher.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Researcher Profile" property="og:title"/><meta content="Hassan Sabbah Knowledge &amp; Research Centre" property="og:description"/><meta content="https://hskrc.org/researcher.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Researcher Profile" name="twitter:title"/><meta content="Hassan Sabbah Knowledge &amp; Research Centre" name="twitter:description"/></head><body>
 <header><div class="bar"><a class="brand" href="index.html">HSKRC <b>Research Archive</b></a><nav>
-<a href="index.html" data-en="Home" data-fa="خانه">Home</a><a href="alamut-knowledge-base.html" data-en="Knowledge Base" data-fa="پایگاه دانش">Knowledge Base</a><a href="library.html" data-en="Library" data-fa="کتابخانه">Library</a><a href="articles.html" data-en="Articles" data-fa="مقالات">Articles</a><a class="active" href="researchers.html" data-en="Researchers" data-fa="پژوهشگران">Researchers</a><a href="sources.html" data-en="Sources" data-fa="منابع">Sources</a></nav><button id="lang">فارسی</button></div></header>
-<main><a class="back" href="researchers.html" data-en="← Researchers Directory" data-fa="→ فهرست پژوهشگران">← Researchers Directory</a><div id="app"><div class="state">Loading researcher profile…</div></div></main>
-<footer><div class="foot"><div data-en="Founded by <strong>Kamal Barlas</strong>" data-fa="بنیان‌گذاری شده توسط <strong>کمال بارلاس</strong>">Founded by <strong>Kamal Barlas</strong></div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
+<a data-en="Home" data-fa="خانه" href="index.html">Home</a><a data-en="Knowledge Base" data-fa="پایگاه دانش" href="alamut-knowledge-base.html">Knowledge Base</a><a data-en="Library" data-fa="کتابخانه" href="library.html">Library</a><a data-en="Articles" data-fa="مقالات" href="articles.html">Articles</a><a class="active" data-en="Researchers" data-fa="پژوهشگران" href="researchers.html">Researchers</a><a data-en="Sources" data-fa="منابع" href="sources.html">Sources</a></nav><button id="lang">فارسی</button></div></header>
+<main><a class="back" data-en="← Researchers Directory" data-fa="→ فهرست پژوهشگران" href="researchers.html">← Researchers Directory</a><div id="app"><div class="state">Loading researcher profile…</div></div></main>
+<footer><div class="foot"><div data-en="Founded by &lt;strong&gt;Kamal Barlas&lt;/strong&gt;" data-fa="بنیان‌گذاری شده توسط &lt;strong&gt;کمال بارلاس&lt;/strong&gt;">Founded by <strong>Kamal Barlas</strong></div><div>© 2026 HSKRC - All rights reserved.</div></div></footer>
 <script>
 const db=supabase.createClient("https://uwuklryzxexpofcxrbnm.supabase.co","sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2"),app=document.getElementById("app"),btn=document.getElementById("lang");
 let L=localStorage.getItem("hskrc_language")==="fa"?"fa":"en";
