@@ -35,7 +35,7 @@ const icons={person:"👤",place:"🏰",fortification:"🏰",topic:"◆"};
 
 function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function title(n){return L==="fa"&&n.title_fa?n.title_fa:n.title;}
-function href(n){return pages[n.slug]||"alamut-knowledge-base.html";}
+function href(n){return "knowledge-node.html?slug="+encodeURIComponent(n.slug);}
 
 function renderNodes(){
  const main=document.getElementById("knowledge-grid");
