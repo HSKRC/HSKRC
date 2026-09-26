@@ -20,7 +20,67 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 </style>
 <link href="hskrc-global.css" rel="stylesheet"/>
 <script defer="" src="hskrc-global.js"></script>
-<link href="https://hskrc.org/about.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="About &amp; Research Standards | HSKRC" property="og:title"/><meta content="About HSKRC and its research standards, source policy, editorial principles and heritage documentation methodology." property="og:description"/><meta content="https://hskrc.org/about.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="About &amp; Research Standards | HSKRC" name="twitter:title"/><meta content="About HSKRC and its research standards, source policy, editorial principles and heritage documentation methodology." name="twitter:description"/></head>
+<link href="https://hskrc.org/about.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="About &amp; Research Standards | HSKRC" property="og:title"/><meta content="About HSKRC and its research standards, source policy, editorial principles and heritage documentation methodology." property="og:description"/><meta content="https://hskrc.org/about.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="About &amp; Research Standards | HSKRC" name="twitter:title"/><meta content="About HSKRC and its research standards, source policy, editorial principles and heritage documentation methodology." name="twitter:description"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": "https://hskrc.org/about.html#webpage",
+      "url": "https://hskrc.org/about.html",
+      "name": "About & Research Standards | HSKRC",
+      "description": "About HSKRC and its research standards, source policy, editorial principles and heritage documentation methodology.",
+      "isPartOf": {
+        "@id": "https://hskrc.org/#website"
+      },
+      "about": {
+        "@id": "https://hskrc.org/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://hskrc.org/#organization",
+      "name": "HSKRC",
+      "alternateName": "Hassan Sabbah Knowledge & Research Centre",
+      "url": "https://hskrc.org/",
+      "description": "An independent digital research and knowledge archive dedicated to the documented study of Hassan Sabbah, Alamut, Nizari Ismaili history and related cultural heritage.",
+      "founder": {
+        "@id": "https://hskrc.org/founder.html#kamal-barlas"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://hskrc.org/founder.html#kamal-barlas",
+      "name": "Kamal Barlas",
+      "alternateName": [
+        "Kamaluddin Barlas",
+        "کمال برلاس",
+        "کمال‌الدین برلاس"
+      ],
+      "jobTitle": [
+        "Founder",
+        "Chief Executive Officer"
+      ],
+      "url": "https://hskrc.org/founder.html",
+      "worksFor": {
+        "@id": "https://hskrc.org/#organization"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hskrc.org/#website",
+      "url": "https://hskrc.org/",
+      "name": "HSKRC",
+      "publisher": {
+        "@id": "https://hskrc.org/#organization"
+      }
+    }
+  ]
+}
+</script>
+
+</head>
 <body>
 <header><div class="wrap nav">
 <a class="brand" href="index.html"><span class="mark">HSKRC</span><span>HSKRC</span></a>
@@ -31,6 +91,7 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 <a data-en="Articles" data-fa="مقالات" href="articles.html">Articles</a>
 <a data-en="Sources" data-fa="منابع" href="sources.html">Sources</a>
 <a class="active" data-en="About" data-fa="درباره" href="about.html">About</a>
+<a data-en="Founder &amp; CEO" data-fa="بنیان‌گذار و مدیرعامل" href="founder.html">Founder &amp; CEO</a>
 </nav>
 <button class="lang" id="lang">فارسی</button>
 </div></header>
@@ -70,7 +131,7 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 <a class="research-link" href="articles.html"><strong data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</strong><span data-en="Read published historical and heritage research." data-fa="پژوهش‌های تاریخی و میراثی منتشرشده را بخوانید.">Read published historical and heritage research.</span></a>
 </div></div></section>
 </main>
-<footer><div class="wrap foot"><span>Founded by Kamaluddin Barlas</span><span>© 2026 HSKRC - All rights reserved.</span></div></footer>
+<footer><div class="wrap foot"><a href="founder.html">Founded by Kamal Barlas (Kamaluddin Barlas) — Founder &amp; CEO</a><span>© 2026 HSKRC - All rights reserved.</span></div></footer>
 <script>
 const KEY="hskrc_language";let lang=localStorage.getItem(KEY)==="fa"?"fa":"en";
 function apply(l){lang=l;localStorage.setItem(KEY,l);document.documentElement.lang=l;document.documentElement.dir=l==="fa"?"rtl":"ltr";document.querySelectorAll("[data-en][data-fa]").forEach(e=>e.innerHTML=l==="fa"?e.dataset.fa:e.dataset.en);document.getElementById("lang").textContent=l==="fa"?"English":"فارسی";document.title=l==="fa"?"درباره و استانداردهای پژوهش | HSKRC":"About & Research Standards | HSKRC"}
