@@ -6,6 +6,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>HSKRC | Digital Library</title>
 <meta content="HSKRC Digital Library — Books, research materials and historical resources." name="description"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+<meta name="author" content="HSKRC"/>
 <meta content="#0d1117" name="theme-color"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -1424,7 +1426,75 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 </style>
 <link href="hskrc-global.css" rel="stylesheet"/>
 <script defer="" src="hskrc-global.js"></script>
-<link href="https://hskrc.org/library.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Digital Library" property="og:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." property="og:description"/><meta content="https://hskrc.org/library.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Digital Library" name="twitter:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." name="twitter:description"/></head>
+<link href="https://hskrc.org/library.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Digital Library" property="og:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." property="og:description"/><meta content="https://hskrc.org/library.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Digital Library" name="twitter:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." name="twitter:description"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://hskrc.org/library.html#webpage",
+      "url": "https://hskrc.org/library.html",
+      "name": "HSKRC | Digital Library",
+      "description": "HSKRC Digital Library — Books, research materials and historical resources.",
+      "isPartOf": {
+        "@id": "https://hskrc.org/#website"
+      },
+      "publisher": {
+        "@id": "https://hskrc.org/#organization"
+      },
+      "about": [
+        {
+          "@id": "https://hskrc.org/hassan-sabbah.html#person"
+        },
+        {
+          "@id": "https://hskrc.org/alamut.html#place"
+        }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://hskrc.org/#organization",
+      "name": "HSKRC",
+      "alternateName": "Hassan Sabbah Knowledge & Research Centre",
+      "url": "https://hskrc.org/",
+      "founder": {
+        "@id": "https://hskrc.org/founder.html#kamal-barlas"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://hskrc.org/founder.html#kamal-barlas",
+      "name": "Kamal Barlas",
+      "alternateName": [
+        "Kamaluddin Barlas",
+        "کمال برلاس",
+        "کمال‌الدین برلاس"
+      ],
+      "jobTitle": [
+        "Founder",
+        "Chief Executive Officer"
+      ],
+      "url": "https://hskrc.org/founder.html",
+      "worksFor": {
+        "@id": "https://hskrc.org/#organization"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hskrc.org/#website",
+      "url": "https://hskrc.org/",
+      "name": "HSKRC",
+      "alternateName": "Hassan Sabbah Knowledge & Research Centre",
+      "publisher": {
+        "@id": "https://hskrc.org/#organization"
+      }
+    }
+  ]
+}
+</script>
+
+</head>
 <body>
 <header>
 <div class="container header-inner">
@@ -1449,6 +1519,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 <a href="researchers.html" id="researchersLink">Researchers</a>
 <a href="sources.html" id="sourcesLink">Sources</a>
 <a href="about.html" id="aboutLink">About</a>
+<a href="founder.html" id="founderLink">Founder &amp; CEO</a>
 <a href="auth.html" id="accountLink">Login / Register</a>
 <button class="language" id="languageButton" onclick="changeLanguage()" type="button">فارسی</button>
 </nav>
@@ -1532,7 +1603,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 </div>
 <footer>
 <p class="founder" id="founderText">
-    Founded by Kamaluddin Barlas
+    Founded by <a href="founder.html"><strong>Kamal Barlas (Kamaluddin Barlas)</strong></a> — Founder &amp; CEO
   </p>
 <p class="copyright">
     © 2026 HSKRC - All rights reserved.
@@ -1771,10 +1842,10 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 
     document.getElementById(
       "founderText"
-    ).textContent =
+    ).innerHTML =
       fa
-        ? "بنیان‌گذاری شده توسط کمال‌الدین برلاس"
-        : "Founded by Kamaluddin Barlas";
+        ? 'بنیان‌گذاری و مدیریت توسط <a href="founder.html"><strong>کمال برلاس (کمال‌الدین برلاس)</strong></a>'
+        : 'Founded & led by <a href="founder.html"><strong>Kamal Barlas (Kamaluddin Barlas)</strong></a> — Founder & CEO';
 
 
     updateAccountLink();
