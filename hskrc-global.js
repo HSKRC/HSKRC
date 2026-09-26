@@ -128,7 +128,7 @@
     footer.className="hskrc-global-footer";
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
-        <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas (Kamaluddin Barlas)</strong> · Founder & CEO</a>
+        <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas</strong> · Founder & CEO</a>
         <div class="hskrc-global-copy"><a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
