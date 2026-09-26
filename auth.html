@@ -866,7 +866,7 @@
 
       try{
         const {error} = await supabaseClient.auth.resetPasswordForEmail(email,{
-          redirectTo: "https://hskrc.org/auth.html"
+          redirectTo: "https://hskrc.org/auth.html?mode=recovery"
         });
         if(error) throw error;
 
@@ -943,16 +943,29 @@
       }
     });
 
-    // Some recovery links expose the type in the URL before the auth event fires.
-    if(
+    // Keep recovery mode explicit in the redirect URL. This works with both
+    // implicit-token and PKCE/code recovery links from Supabase.
+    const recoveryFromUrl =
+      new URLSearchParams(location.search).get("mode") === "recovery" ||
       location.hash.includes("type=recovery") ||
-      location.search.includes("type=recovery")
-    ){
-      activateRecovery();
-    }
+      location.search.includes("type=recovery");
 
     applyLanguage();
-    showRegister();
+    if(recoveryFromUrl){
+      activateRecovery();
+    }else{
+      showRegister();
+    }
+
+    // If Supabase finishes establishing the recovery session just after page load,
+    // keep the reset form visible instead of falling back to the normal auth panel.
+    (async function initialiseRecovery(){
+      if(!recoveryFromUrl) return;
+      const {data} = await supabaseClient.auth.getSession();
+      if(data?.session){
+        activateRecovery();
+      }
+    })();
   </script>
 </body>
 </html>
