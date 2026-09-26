@@ -866,7 +866,7 @@
 
       try{
         const {error} = await supabaseClient.auth.resetPasswordForEmail(email,{
-          redirectTo: "https://hskrc.org/auth.html?mode=recovery"
+          redirectTo: "https://hskrc.org/reset-password.html"
         });
         if(error) throw error;
 
@@ -926,7 +926,6 @@
         );
 
         setTimeout(async()=>{
-          sessionStorage.removeItem("hskrc_password_recovery");
           await supabaseClient.auth.signOut();
           location.href = "auth.html";
         },1400);
@@ -944,46 +943,27 @@
       }
     });
 
-    // Detect password-recovery links in all Supabase redirect formats.
-    const query = new URLSearchParams(location.search);
-    const hash = new URLSearchParams(location.hash.replace(/^#/, ""));
+    // Keep recovery mode explicit in the redirect URL. This works with both
+    // implicit-token and PKCE/code recovery links from Supabase.
     const recoveryFromUrl =
-      query.get("mode") === "recovery" ||
-      query.get("type") === "recovery" ||
-      hash.get("type") === "recovery";
+      new URLSearchParams(location.search).get("mode") === "recovery" ||
+      location.hash.includes("type=recovery") ||
+      location.search.includes("type=recovery");
 
     applyLanguage();
-
-    // IMPORTANT: Supabase may consume/remove auth parameters while it establishes
-    // the session. Remember recovery intent before that happens.
     if(recoveryFromUrl){
-      sessionStorage.setItem("hskrc_password_recovery", "1");
-      activateRecovery();
-    }else if(sessionStorage.getItem("hskrc_password_recovery") === "1"){
       activateRecovery();
     }else{
       showRegister();
     }
 
-    // Establish the recovery session. For PKCE links Supabase can return a `code`;
-    // exchange it explicitly if necessary, then keep the reset form on screen.
+    // If Supabase finishes establishing the recovery session just after page load,
+    // keep the reset form visible instead of falling back to the normal auth panel.
     (async function initialiseRecovery(){
-      try{
-        if(query.get("code")){
-          const {error} = await supabaseClient.auth.exchangeCodeForSession(query.get("code"));
-          if(error && !String(error.message || "").toLowerCase().includes("code verifier")){
-            console.warn("Recovery code exchange:", error.message);
-          }
-        }
-
-        const {data} = await supabaseClient.auth.getSession();
-        if(recoveryFromUrl || sessionStorage.getItem("hskrc_password_recovery") === "1" || data?.session){
-          if(recoveryFromUrl || sessionStorage.getItem("hskrc_password_recovery") === "1"){
-            activateRecovery();
-          }
-        }
-      }catch(error){
-        console.error("Recovery initialisation failed:", error);
+      if(!recoveryFromUrl) return;
+      const {data} = await supabaseClient.auth.getSession();
+      if(data?.session){
+        activateRecovery();
       }
     })();
   </script>
