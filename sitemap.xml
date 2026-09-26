@@ -114,4 +114,23 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://hskrc.org/generated-articles/alamut-beyond-the-legend-a-historical-and-research-guide-to-the-nizari-ismaili-centre-1e190925.html</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hskrc.org/generated-articles/ثبت-جهانی-الموت-در-یونسکو-از-میراث-حسن-صباح-تا-ارزش-جهانی-فرهنگ-نزاری-اسماعیلی-64250aa0.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hskrc.org/generated-articles/حسن-صباح-الموت-و-فرهنگ-ن-زاری-اسماعیلی-مطالعه-ای-تاریخی-و-فرهنگی-23a5fc79.html</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
