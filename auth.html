@@ -799,7 +799,7 @@
             email,
             password,
             options:{
-              emailRedirectTo: window.location.origin + "/HSKRC/auth.html",
+              emailRedirectTo: "https://hskrc.org/auth.html",
               data:{
                 first_name:firstName,
                 last_name:lastName,
@@ -842,7 +842,7 @@
 
       try{
         const {error} = await supabaseClient.auth.resetPasswordForEmail(email,{
-          redirectTo: window.location.origin + "/HSKRC/auth.html"
+          redirectTo: "https://hskrc.org/auth.html"
         });
         if(error) throw error;
 
