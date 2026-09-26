@@ -86,10 +86,6 @@ function coverUrl(article) {
   const cleanPath = String(article.cover_path)
     .replace(/^\/+/, "");
 
-  /*
-    Current HSKRC article.html uses the "article-covers"
-    Supabase public storage bucket.
-  */
   return (
     `${SUPABASE_URL}/storage/v1/object/public/` +
     `article-covers/${cleanPath}`
@@ -97,11 +93,6 @@ function coverUrl(article) {
 }
 
 function articleBody(content = "") {
-  /*
-    The existing database content is already used by
-    HSKRC as article HTML/text. We keep that content
-    instead of rewriting the research material.
-  */
   return String(content || "");
 }
 
@@ -137,6 +128,26 @@ function buildHtml(article, slug) {
   const image =
     coverUrl(article);
 
+  /*
+    Detect Persian/Arabic-script articles.
+
+    If the title or description contains characters
+    from the Arabic/Persian Unicode range, the
+    generated page uses Persian language metadata
+    and right-to-left direction.
+  */
+  const lang =
+    /[\u0600-\u06FF]/.test(
+      `${title} ${description}`
+    )
+      ? "fa"
+      : "en";
+
+  const dir =
+    lang === "fa"
+      ? "rtl"
+      : "ltr";
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -146,6 +157,7 @@ function buildHtml(article, slug) {
         "url": canonical,
         "name": `${title} | HSKRC`,
         "description": description,
+        "inLanguage": lang,
         "isPartOf": {
           "@id": `${SITE_URL}/#website`
         },
@@ -162,6 +174,7 @@ function buildHtml(article, slug) {
         "url": canonical,
         "headline": title,
         "description": description,
+        "inLanguage": lang,
         "articleSection": category,
         "mainEntityOfPage": {
           "@id": `${canonical}#webpage`
@@ -174,13 +187,19 @@ function buildHtml(article, slug) {
           "@id": `${SITE_URL}/#organization`
         },
         ...(published
-          ? { "datePublished": published }
+          ? {
+              "datePublished": published
+            }
           : {}),
         ...(modified
-          ? { "dateModified": modified }
+          ? {
+              "dateModified": modified
+            }
           : {}),
         ...(image
-          ? { "image": [image] }
+          ? {
+              "image": [image]
+            }
           : {})
       },
       {
@@ -212,18 +231,23 @@ function buildHtml(article, slug) {
         "url":
           `${SITE_URL}/founder.html`,
         "worksFor": {
-          "@id": `${SITE_URL}/#organization`
+          "@id":
+            `${SITE_URL}/#organization`
         }
       },
       {
         "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        "url": `${SITE_URL}/`,
-        "name": "HSKRC",
+        "@id":
+          `${SITE_URL}/#website`,
+        "url":
+          `${SITE_URL}/`,
+        "name":
+          "HSKRC",
         "alternateName":
           "Hassan Sabbah Knowledge & Research Centre",
         "publisher": {
-          "@id": `${SITE_URL}/#organization`
+          "@id":
+            `${SITE_URL}/#organization`
         }
       }
     ]
@@ -233,151 +257,304 @@ function buildHtml(article, slug) {
     JSON.stringify(schema)
       .replace(/</g, "\\u003c");
 
-  const publishedText = published
-    ? new Date(published).toLocaleDateString(
-        "en-AU",
-        {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        }
-      )
-    : "";
+  const publishedText =
+    published
+      ? new Date(
+          published
+        ).toLocaleDateString(
+          lang === "fa"
+            ? "fa-IR"
+            : "en-AU",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          }
+        )
+      : "";
 
   return `<!doctype html>
 <html lang="${lang}" dir="${dir}">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 
 <title>${escapeHtml(title)} | HSKRC</title>
 
-<meta name="description" content="${escapeHtml(description)}">
+<meta
+  name="description"
+  content="${escapeHtml(description)}"
+>
 
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta
+  name="robots"
+  content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+>
 
-<link rel="canonical" href="${escapeHtml(canonical)}">
+<meta
+  name="author"
+  content="HSKRC"
+>
 
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="HSKRC">
-<meta property="og:title" content="${escapeHtml(title)} | HSKRC">
-<meta property="og:description" content="${escapeHtml(description)}">
-<meta property="og:url" content="${escapeHtml(canonical)}">
+<link
+  rel="canonical"
+  href="${escapeHtml(canonical)}"
+>
+
+<meta
+  property="og:type"
+  content="article"
+>
+
+<meta
+  property="og:site_name"
+  content="HSKRC"
+>
+
+<meta
+  property="og:title"
+  content="${escapeHtml(title)} | HSKRC"
+>
+
+<meta
+  property="og:description"
+  content="${escapeHtml(description)}"
+>
+
+<meta
+  property="og:url"
+  content="${escapeHtml(canonical)}"
+>
 
 ${image
-  ? `<meta property="og:image" content="${escapeHtml(image)}">`
+  ? `<meta
+  property="og:image"
+  content="${escapeHtml(image)}"
+>`
   : ""}
 
 ${published
-  ? `<meta property="article:published_time" content="${escapeHtml(published)}">`
+  ? `<meta
+  property="article:published_time"
+  content="${escapeHtml(published)}"
+>`
   : ""}
 
 ${modified
-  ? `<meta property="article:modified_time" content="${escapeHtml(modified)}">`
+  ? `<meta
+  property="article:modified_time"
+  content="${escapeHtml(modified)}"
+>`
   : ""}
 
-<meta property="article:section" content="${escapeHtml(category)}">
+<meta
+  property="article:section"
+  content="${escapeHtml(category)}"
+>
 
-<meta name="twitter:card" content="${image ? "summary_large_image" : "summary"}">
-<meta name="twitter:title" content="${escapeHtml(title)} | HSKRC">
-<meta name="twitter:description" content="${escapeHtml(description)}">
+<meta
+  name="twitter:card"
+  content="${image
+    ? "summary_large_image"
+    : "summary"}"
+>
+
+<meta
+  name="twitter:title"
+  content="${escapeHtml(title)} | HSKRC"
+>
+
+<meta
+  name="twitter:description"
+  content="${escapeHtml(description)}"
+>
 
 ${image
-  ? `<meta name="twitter:image" content="${escapeHtml(image)}">`
+  ? `<meta
+  name="twitter:image"
+  content="${escapeHtml(image)}"
+>`
   : ""}
 
-<link rel="stylesheet" href="../hskrc-global.css">
+<link
+  rel="stylesheet"
+  href="../hskrc-global.css"
+>
 
 <script type="application/ld+json">
 ${schemaJson}
 </script>
 
 <style>
-body{
-  margin:0;
-  background:#0d1117;
-  color:#f1f5f9;
-  font-family:Inter,system-ui,-apple-system,
-  BlinkMacSystemFont,"Segoe UI",sans-serif;
-  line-height:1.75;
+
+body {
+  margin: 0;
+  background: #0d1117;
+  color: #f1f5f9;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  line-height: 1.75;
 }
-.wrap{
-  max-width:1000px;
-  margin:auto;
-  padding:24px;
+
+html[dir="rtl"] body {
+  font-family:
+    Tahoma,
+    Arial,
+    sans-serif;
 }
-header{
-  border-bottom:1px solid rgba(255,255,255,.10);
+
+.wrap {
+  max-width: 1000px;
+  margin: auto;
+  padding: 24px;
 }
-nav{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-  align-items:center;
+
+header {
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.10);
 }
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 nav a,
-footer a{
-  color:#f1f5f9;
-  text-decoration:none;
+footer a {
+  color: #f1f5f9;
+  text-decoration: none;
 }
+
 nav a:hover,
-footer a:hover{
-  text-decoration:underline;
+footer a:hover {
+  text-decoration: underline;
 }
-.brand{
-  font-weight:800;
-  margin-right:auto;
+
+.brand {
+  font-weight: 800;
+  margin-right: auto;
 }
-article{
-  max-width:850px;
-  margin:50px auto;
+
+html[dir="rtl"] .brand {
+  margin-right: 0;
+  margin-left: auto;
 }
-h1{
-  line-height:1.18;
-  font-size:clamp(32px,5vw,54px);
-  margin-bottom:16px;
+
+article {
+  max-width: 850px;
+  margin: 50px auto;
 }
-.meta{
-  color:#9ca3af;
-  margin-bottom:30px;
+
+h1 {
+  line-height: 1.18;
+  font-size:
+    clamp(
+      32px,
+      5vw,
+      54px
+    );
+  margin-bottom: 16px;
 }
-.cover{
-  width:100%;
-  max-height:560px;
-  object-fit:cover;
-  border-radius:18px;
-  margin:12px 0 30px;
+
+.meta {
+  color: #9ca3af;
+  margin-bottom: 30px;
 }
-.content{
-  font-size:18px;
+
+.cover {
+  width: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin: 12px 0 30px;
 }
-.content img{
-  max-width:100%;
-  height:auto;
+
+.content {
+  font-size: 18px;
 }
-.content a{
-  color:#c9a45c;
+
+.content img {
+  max-width: 100%;
+  height: auto;
 }
-footer{
-  border-top:1px solid rgba(255,255,255,.10);
-  margin-top:60px;
-  color:#9ca3af;
+
+.content a {
+  color: #c9a45c;
 }
+
+.content p {
+  margin:
+    0 0 1.25em;
+}
+
+.content h2,
+.content h3 {
+  line-height: 1.35;
+  margin-top: 1.6em;
+}
+
+footer {
+  border-top:
+    1px solid
+    rgba(255,255,255,.10);
+  margin-top: 60px;
+  color: #9ca3af;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
   <div class="wrap">
+
     <nav>
-      <a class="brand" href="../index.html">HSKRC</a>
-      <a href="../articles.html">Articles</a>
-      <a href="../research-explorer.html">Research</a>
-      <a href="../library.html">Library</a>
-      <a href="../about.html">About</a>
-      <a href="../founder.html">Founder &amp; CEO</a>
+
+      <a
+        class="brand"
+        href="../index.html"
+      >
+        HSKRC
+      </a>
+
+      <a href="../articles.html">
+        Articles
+      </a>
+
+      <a href="../research-explorer.html">
+        Research
+      </a>
+
+      <a href="../library.html">
+        Library
+      </a>
+
+      <a href="../about.html">
+        About
+      </a>
+
+      <a href="../founder.html">
+        Founder &amp; CEO
+      </a>
+
     </nav>
+
   </div>
 </header>
 
@@ -385,20 +562,30 @@ footer{
 
 <article>
 
-<h1>${escapeHtml(title)}</h1>
+<h1>
+${escapeHtml(title)}
+</h1>
 
 <div class="meta">
-  ${escapeHtml(author)}
-  ${publishedText
-    ? ` · ${escapeHtml(publishedText)}`
-    : ""}
-  ${category
-    ? ` · ${escapeHtml(category)}`
-    : ""}
+
+${escapeHtml(author)}
+
+${publishedText
+  ? ` · ${escapeHtml(publishedText)}`
+  : ""}
+
+${category
+  ? ` · ${escapeHtml(category)}`
+  : ""}
+
 </div>
 
 ${image
-  ? `<img class="cover" src="${escapeHtml(image)}" alt="${escapeHtml(title)}">`
+  ? `<img
+  class="cover"
+  src="${escapeHtml(image)}"
+  alt="${escapeHtml(title)}"
+>`
   : ""}
 
 <div class="content">
@@ -410,40 +597,59 @@ ${articleBody(article.content)}
 </main>
 
 <footer>
+
   <div class="wrap">
+
     Founded by
+
     <a href="../founder.html">
-      <strong>Kamal Barlas</strong>
+      <strong>
+        Kamal Barlas
+      </strong>
     </a>
+
+    (Kamaluddin Barlas)
+    — Founder &amp; CEO
     · © 2026 HSKRC
+
   </div>
+
 </footer>
 
 </body>
+
 </html>`;
 }
 
 async function fetchArticles() {
+
   const endpoint =
     `${SUPABASE_URL}/rest/v1/articles` +
     `?select=id,title,author,category,excerpt,content,cover_path,published,published_at,created_at,updated_at` +
     `&published=eq.true` +
     `&order=published_at.desc`;
 
-  const response = await fetch(
-    endpoint,
-    {
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization:
-          `Bearer ${SUPABASE_ANON_KEY}`,
-        Accept: "application/json"
+  const response =
+    await fetch(
+      endpoint,
+      {
+        headers: {
+          apikey:
+            SUPABASE_ANON_KEY,
+
+          Authorization:
+            `Bearer ${SUPABASE_ANON_KEY}`,
+
+          Accept:
+            "application/json"
+        }
       }
-    }
-  );
+    );
 
   if (!response.ok) {
-    const body = await response.text();
+
+    const body =
+      await response.text();
 
     throw new Error(
       `Supabase request failed: ` +
@@ -455,6 +661,7 @@ async function fetchArticles() {
 }
 
 function xmlEscape(value = "") {
+
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -463,46 +670,62 @@ function xmlEscape(value = "") {
     .replaceAll("'", "&apos;");
 }
 
-async function updateSitemap(generated) {
-  const sitemapPath = "sitemap.xml";
+async function updateSitemap(
+  generated
+) {
+
+  const sitemapPath =
+    "sitemap.xml";
 
   let sitemap = "";
 
   try {
+
     sitemap =
       await fs.readFile(
         sitemapPath,
         "utf8"
       );
+
   } catch {
+
     sitemap =
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </urlset>`;
+
   }
 
   /*
-    Remove article entries previously generated
-    by this script so repeated runs do not create
-    duplicates.
+    Remove generated article entries from
+    previous runs so duplicates are not
+    created.
   */
-  sitemap = sitemap.replace(
-    /\s*<url>\s*<loc>https:\/\/hskrc\.org\/generated-articles\/[\s\S]*?<\/url>/g,
-    ""
-  );
+  sitemap =
+    sitemap.replace(
+      /\s*<url>\s*<loc>https:\/\/hskrc\.org\/generated-articles\/[\s\S]*?<\/url>/g,
+      ""
+    );
 
   const entries =
-    generated.map(
-      ({ url, lastmod }) => `
+    generated
+      .map(
+        ({
+          url,
+          lastmod
+        }) => `
   <url>
     <loc>${xmlEscape(url)}</loc>
     ${lastmod
-      ? `<lastmod>${xmlEscape(lastmod.slice(0,10))}</lastmod>`
+      ? `<lastmod>${xmlEscape(
+          lastmod.slice(0, 10)
+        )}</lastmod>`
       : ""}
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>`
-    ).join("");
+      )
+      .join("");
 
   sitemap =
     sitemap.replace(
@@ -518,6 +741,7 @@ async function updateSitemap(generated) {
 }
 
 async function main() {
+
   console.log(
     "Fetching published HSKRC articles..."
   );
@@ -546,7 +770,10 @@ async function main() {
 
   const generated = [];
 
-  for (const article of articles) {
+  for (
+    const article of articles
+  ) {
+
     const slug =
       makeSlug(article);
 
@@ -576,6 +803,7 @@ async function main() {
 
     generated.push({
       url,
+
       lastmod:
         isoDate(
           article.updated_at ||
@@ -602,8 +830,12 @@ async function main() {
   );
 }
 
-main().catch(error => {
-  console.error(error);
-  process.exit(1);
-});
- 
+main().catch(
+  error => {
+
+    console.error(error);
+
+    process.exit(1);
+
+  }
+);
