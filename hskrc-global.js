@@ -4,12 +4,12 @@
   const LABELS = {
     en:{
       home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
-      researchers:"Researchers", sources:"Sources", explorer:"Explorer", about:"About", founder:"Founder",
+      researchers:"Researchers", sources:"Sources", explorer:"Explorer", about:"About", founder:"Founder & CEO",
       support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", lang:"فارسی"
     },
     fa:{
       home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
-      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", about:"درباره", founder:"بنیان‌گذار",
+      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
       support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", lang:"English"
     }
   };
@@ -51,6 +51,12 @@
     return p.toLowerCase();
   }
 
+  function sitePath(path){
+    return location.pathname.includes("/generated-articles/")
+      ? "../" + path
+      : path;
+  }
+
   function activeSection(){
     const f=fileName();
     if(f==="index.html" || f==="hskrc") return "home";
@@ -75,19 +81,19 @@
 
   function navLink(key, href, label){
     const active=activeSection()===key ? " is-active" : "";
-    return `<a class="hskrc-global-navlink${active}" data-hskrc-key="${key}" href="${href}">${label}</a>`;
+    return `<a class="hskrc-global-navlink${active}" data-hskrc-key="${key}" href="${sitePath(href)}">${label}</a>`;
   }
 
   function renderHeader(){
     const L=LABELS[lang()];
     const loggedIn=storedSessionActive();
     const accountText=loggedIn ? L.myAccount : L.account;
-    const accountHref=loggedIn ? "account.html" : "auth.html";
+    const accountHref=loggedIn ? sitePath("account.html") : sitePath("auth.html");
     const header=document.createElement("header");
     header.className="hskrc-global-header";
     header.innerHTML=`
       <div class="hskrc-global-shell">
-        <a class="hskrc-global-brand" href="index.html" aria-label="HSKRC Home">
+        <a class="hskrc-global-brand" href="${sitePath("index.html")}" aria-label="HSKRC Home">
           <span class="hskrc-global-mark">H</span>
           <span class="hskrc-global-brandcopy">
             <strong>HSKRC</strong>
@@ -122,8 +128,8 @@
     footer.className="hskrc-global-footer";
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
-        <a class="hskrc-global-founder" href="founder.html">Founded by <strong>Kamaluddin Barlas</strong></a>
-        <div class="hskrc-global-copy"><a href="support.html">Support</a> · <a href="contact.html">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
+        <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas (Kamaluddin Barlas)</strong> · Founder & CEO</a>
+        <div class="hskrc-global-copy"><a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
   }
@@ -139,8 +145,10 @@
 
   function fallbackApplyLanguage(next){
     localStorage.setItem("hskrc_language",next);
-    document.documentElement.lang=next;
-    document.documentElement.dir=next==="fa" ? "rtl" : "ltr";
+    const fixed=document.body?.dataset?.fixedContentLanguage;
+    const pageLang=fixed || next;
+    document.documentElement.lang=pageLang;
+    document.documentElement.dir=pageLang==="fa" ? "rtl" : "ltr";
     document.querySelectorAll("[data-en][data-fa]").forEach(el=>{
       const val=next==="fa" ? el.getAttribute("data-fa") : el.getAttribute("data-en");
       if(val!==null) el.textContent=val;
@@ -185,12 +193,12 @@
     // Fast path: Supabase persists the login session in localStorage.
     // This works even on static pages that do not load the Supabase SDK.
     if(storedSessionActive()){
-      a.href="account.html";
+      a.href=sitePath("account.html");
       a.textContent=L.myAccount;
       return;
     }
 
-    a.href="auth.html";
+    a.href=sitePath("auth.html");
     a.textContent=L.account;
 
     // Fallback for pages that already load Supabase.
@@ -199,7 +207,7 @@
         const c=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
         const res=await c.auth.getSession();
         if(res?.data?.session){
-          a.href="account.html";
+          a.href=sitePath("account.html");
           a.textContent=L.myAccount;
         }
       }
@@ -275,3 +283,130 @@ document.addEventListener("click", function(event) {
     window.location.assign(url.href);
   }
 }, true);
+
+
+/* =========================================================
+   HSKRC SEO HELPERS
+   Shared canonical/metadata utilities for dynamic pages.
+   ========================================================= */
+(function(){
+  "use strict";
+
+  const SITE_URL = "https://hskrc.org";
+
+  window.HSKRCArticleUrl = function(article){
+    if(!article || !article.id) return "articles.html";
+    const slug = String(article.title || "")
+      .normalize("NFKD")
+      .toLowerCase()
+      .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 90);
+    const stem = slug ? `${slug}-${String(article.id).slice(0,8)}` : String(article.id);
+    return `generated-articles/${stem}.html`;
+  };
+
+  function upsertMeta(selector, attr, value, content){
+    let el = document.head.querySelector(selector);
+    if(!el){
+      el = document.createElement("meta");
+      el.setAttribute(attr, value);
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", content || "");
+    return el;
+  }
+
+  function setCanonical(url){
+    let el = document.head.querySelector('link[rel="canonical"]');
+    if(!el){
+      el = document.createElement("link");
+      el.rel = "canonical";
+      document.head.appendChild(el);
+    }
+    el.href = url;
+  }
+
+  window.HSKRCSEO = {
+    setDynamic(options){
+      if(!options) return;
+
+      const title = options.title || "HSKRC";
+      const description = String(options.description || "Hassan Sabbah Knowledge & Research Centre")
+        .replace(/\s+/g," ")
+        .trim()
+        .slice(0, 180);
+      const canonical = options.canonical || window.location.href.split("#")[0];
+      const lang = document.documentElement.lang || "en";
+
+      document.title = title;
+      setCanonical(canonical);
+
+      upsertMeta('meta[name="description"]',"name","description",description);
+      upsertMeta('meta[property="og:type"]',"property","og:type",options.ogType || "website");
+      upsertMeta('meta[property="og:site_name"]',"property","og:site_name","HSKRC");
+      upsertMeta('meta[property="og:title"]',"property","og:title",title);
+      upsertMeta('meta[property="og:description"]',"property","og:description",description);
+      upsertMeta('meta[property="og:url"]',"property","og:url",canonical);
+      upsertMeta('meta[name="twitter:card"]',"name","twitter:card","summary");
+      upsertMeta('meta[name="twitter:title"]',"name","twitter:title",title);
+      upsertMeta('meta[name="twitter:description"]',"name","twitter:description",description);
+
+      const pageId = canonical + "#webpage";
+      const entity = options.entity ? {...options.entity} : null;
+      if(entity && !entity["@id"]) entity["@id"] = canonical + "#entity";
+      if(entity && !entity.url) entity.url = canonical;
+
+      const page = {
+        "@type": options.pageType || "WebPage",
+        "@id": pageId,
+        "url": canonical,
+        "name": title,
+        "description": description,
+        "inLanguage": lang,
+        "isPartOf": {"@id": SITE_URL + "/#website"},
+        "publisher": {"@id": SITE_URL + "/#organization"}
+      };
+      if(entity) page.mainEntity = {"@id": entity["@id"]};
+
+      const graph = [
+        page,
+        ...(entity ? [entity] : []),
+        {
+          "@type":"Organization",
+          "@id":SITE_URL + "/#organization",
+          "name":"HSKRC",
+          "alternateName":"Hassan Sabbah Knowledge & Research Centre",
+          "url":SITE_URL + "/",
+          "founder":{"@id":SITE_URL + "/founder.html#kamal-barlas"}
+        },
+        {
+          "@type":"Person",
+          "@id":SITE_URL + "/founder.html#kamal-barlas",
+          "name":"Kamal Barlas",
+          "alternateName":["Kamaluddin Barlas","کمال برلاس","کمال‌الدین برلاس"],
+          "jobTitle":["Founder","Chief Executive Officer"],
+          "url":SITE_URL + "/founder.html",
+          "worksFor":{"@id":SITE_URL + "/#organization"}
+        },
+        {
+          "@type":"WebSite",
+          "@id":SITE_URL + "/#website",
+          "url":SITE_URL + "/",
+          "name":"HSKRC",
+          "alternateName":"Hassan Sabbah Knowledge & Research Centre",
+          "publisher":{"@id":SITE_URL + "/#organization"}
+        }
+      ];
+
+      let holder = document.getElementById("hskrcDynamicStructuredData");
+      if(!holder){
+        holder = document.createElement("script");
+        holder.id = "hskrcDynamicStructuredData";
+        holder.type = "application/ld+json";
+        document.head.appendChild(holder);
+      }
+      holder.textContent = JSON.stringify({"@context":"https://schema.org","@graph":graph});
+    }
+  };
+})();

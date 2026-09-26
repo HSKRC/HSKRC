@@ -1226,7 +1226,7 @@
 <link href="hskrc-global.css" rel="stylesheet"/>
 <script defer="" src="hskrc-global.js"></script>
 <link href="https://hskrc.org/articles.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Articles" property="og:title"/><meta content="HSKRC Articles - Historical, cultural and research articles from the Hassan Sabbah Knowledge and Research Centre." property="og:description"/><meta content="https://hskrc.org/articles.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Articles" name="twitter:title"/><meta content="HSKRC Articles - Historical, cultural and research articles from the Hassan Sabbah Knowledge and Research Centre." name="twitter:description"/>
-<script type="application/ld+json">
+<script id="hskrc-articles-schema" type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -2375,11 +2375,7 @@
         "read-button";
 
 
-      readButton.href =
-        "article.html?id=" +
-        encodeURIComponent(
-          article.id
-        );
+      readButton.href = window.HSKRCArticleUrl ? window.HSKRCArticleUrl(article) : ("article.html?id=" + encodeURIComponent(article.id));
 
 
       readButton.textContent =

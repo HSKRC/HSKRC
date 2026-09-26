@@ -1569,12 +1569,21 @@
     }
 
     function updateArticleSeo(article, coverUrl) {
-      const canonicalUrl = new URL(window.location.href);
-      canonicalUrl.hash = "";
-      canonicalUrl.search = "";
-      canonicalUrl.searchParams.set("id", article.id);
-
-      const url = canonicalUrl.toString();
+      const generatedPath = window.HSKRCArticleUrl
+        ? window.HSKRCArticleUrl(article)
+        : (() => {
+            const slug = String(article.title || "")
+              .normalize("NFKD")
+              .toLowerCase()
+              .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
+              .replace(/^-+|-+$/g, "")
+              .slice(0, 90);
+            const stem = slug
+              ? `${slug}-${String(article.id).slice(0,8)}`
+              : String(article.id);
+            return `generated-articles/${stem}.html`;
+          })();
+      const url = "https://hskrc.org/" + generatedPath;
       const title = article.title
         ? article.title + " | HSKRC"
         : "HSKRC | Article";
@@ -1619,10 +1628,11 @@
         "headline": article.title || "HSKRC Research Article",
         "description": description,
         "mainEntityOfPage": {"@id": url + "#webpage"},
-        "author": authorName === "HSKRC"
-          ? {"@id": "https://hskrc.org/#organization"}
+        "author": /^HSKRC\b/i.test(authorName)
+          ? {"@type":"Organization","name":authorName,"parentOrganization":{"@id":"https://hskrc.org/#organization"}}
           : {"@type": "Person", "name": authorName},
-        "publisher": {"@id": "https://hskrc.org/#organization"}
+        "publisher": {"@id": "https://hskrc.org/#organization"},
+        "inLanguage": document.documentElement.lang || "en"
       };
 
       if (published) articleNode.datePublished = published;
@@ -1639,7 +1649,8 @@
           "description": description,
           "isPartOf": {"@id": "https://hskrc.org/#website"},
           "mainEntity": {"@id": url + "#article"},
-          "publisher": {"@id": "https://hskrc.org/#organization"}
+          "publisher": {"@id": "https://hskrc.org/#organization"},
+          "inLanguage": document.documentElement.lang || "en"
         },
         articleNode,
         {
