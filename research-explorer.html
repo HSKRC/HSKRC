@@ -70,5 +70,46 @@ function tabs(){let a=['all','node','article','source','researcher','book'];docu
 function options(vals){return [...new Set(vals.filter(Boolean).map(v=>String(v).trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b)).map(v=>`<option value="${E(v)}">${E(v)}</option>`).join('')}
 function filters(){let years=[...new Set(all.map(year).filter(Boolean))].sort((a,b)=>b-a);document.getElementById('filters').innerHTML=`<div><label>${labels[L].language}</label><select id="flang"><option value="">${labels[L].any}</option><option value="en">${labels[L].english}</option><option value="fa">${labels[L].persian}</option></select></div><div><label>${labels[L].date}</label><select id="fyear"><option value="">${labels[L].any}</option>${years.map(y=>`<option>${y}</option>`).join('')}</select></div><div><label>${labels[L].topic}</label><select id="ftopic"><option value="">${labels[L].any}</option>${options(all.flatMap(x=>[x.category,x.node_type,x.field]))}</select></div><div><label>${labels[L].author}</label><select id="fauthor"><option value="">${labels[L].any}</option>${options(all.flatMap(x=>[x.author,x.name]))}</select></div><div><label>${labels[L].sort}</label><select id="fsort"><option value="newest">${labels[L].newest}</option><option value="oldest">${labels[L].oldest}</option><option value="az">${labels[L].az}</option><option value="za">${labels[L].za}</option></select></div>`;document.querySelectorAll('#filters select').forEach(el=>el.addEventListener('change',render))}
 function render(){let q=document.getElementById('q').value.trim().toLowerCase(),gl=document.getElementById('flang')?.value||'',gy=document.getElementById('fyear')?.value||'',gt=(document.getElementById('ftopic')?.value||'').toLowerCase(),ga=(document.getElementById('fauthor')?.value||'').toLowerCase(),sort=document.getElementById('fsort')?.value||'newest';let r=all.filter(x=>(filter==='all'||x.kind===filter)&&(!q||text(x).includes(q))&&(!gl||lang(x)===gl)&&(!gy||String(year(x))===gy)&&(!gt||[x.category,x.node_type,x.field].filter(Boolean).join(' ').toLowerCase().includes(gt))&&(!ga||[x.author,x.name].filter(Boolean).join(' ').toLowerCase().includes(ga)));r.sort((a,b)=>sort==='oldest'?year(a)-year(b):sort==='az'?titleRaw(a).localeCompare(titleRaw(b)):sort==='za'?titleRaw(b).localeCompare(titleRaw(a)):year(b)-year(a));document.getElementById('count').textContent=labels[L].found(r.length);document.getElementById('results').innerHTML=r.length?r.map(x=>`<a class="card" href="${href(x)}"><div class="type">${E(labels[L][x.kind])}</div><h2>${title(x)}</h2><div class="small">${E(sub(x))}</div></a>`).join(''):`<div class="empty">${labels[L].none}</div>`}
-async function load(){let qs=[db.from('knowledge_nodes').select('*'),db.from('articles').select('*').eq('published',true),db.from('research_sources').select('*'),db.from('researchers').select('*'),db.from('books').select('*').eq('published',true)];let rs=await Promise.all(qs),k=['node','article','source','researcher','book'];all=rs.flatMap((r,i)=>(r.data||[]).map(x=>({...x,kind:k[i]})));let counts=Object.fromEntries(k.map(z=>[z,all.filter(x=>x.kind===z).length]));document.getElementById('stats').innerHTML=k.map(z=>`<div class="stat"><b>${counts[z]}</b><span>${labels[L][z]}</span></div>`).join('');tabs();filters();render()}document.getElementById('q').placeholder=labels[L].ph;document.getElementById('q').addEventListener('input',render);load();
+async function load(){
+  const sources=[
+    {kind:'node',name:'knowledge_nodes',query:()=>db.from('knowledge_nodes').select('*')},
+    {kind:'article',name:'articles',query:()=>db.from('articles').select('*').eq('published',true)},
+    {kind:'source',name:'research_sources',query:()=>db.from('research_sources').select('*')},
+    {kind:'researcher',name:'researchers',query:()=>db.from('researchers').select('*')},
+    {kind:'book',name:'books',query:()=>db.from('books').select('*').eq('published',true)}
+  ];
+  try{
+    const rs=await Promise.all(sources.map(async s=>{
+      try{
+        const r=await s.query();
+        if(r.error){
+          console.error(`HSKRC Explorer: ${s.name} failed`,r.error);
+          return {kind:s.kind,data:[],error:r.error};
+        }
+        return {kind:s.kind,data:r.data||[],error:null};
+      }catch(err){
+        console.error(`HSKRC Explorer: ${s.name} exception`,err);
+        return {kind:s.kind,data:[],error:err};
+      }
+    }));
+    all=rs.flatMap(r=>r.data.map(x=>({...x,kind:r.kind})));
+    const k=['node','article','source','researcher','book'];
+    const counts=Object.fromEntries(k.map(z=>[z,all.filter(x=>x.kind===z).length]));
+    document.getElementById('stats').innerHTML=k.map(z=>`<div class="stat"><b>${counts[z]}</b><span>${labels[L][z]}</span></div>`).join('');
+    tabs();
+    filters();
+    render();
+    const failed=rs.filter(r=>r.error);
+    if(failed.length){
+      console.warn('HSKRC Explorer loaded with unavailable sources:',failed.map(r=>r.kind));
+    }
+  }catch(err){
+    console.error('HSKRC Explorer failed to load',err);
+    document.getElementById('count').textContent=L==='fa'?'خطا در بارگذاری شبکه پژوهشی':'Unable to load research network';
+    document.getElementById('results').innerHTML=`<div class="empty">${L==='fa'?'بارگذاری اطلاعات ممکن نشد. لطفاً صفحه را دوباره تازه کنید.':'Research data could not be loaded. Please refresh the page.'}</div>`;
+  }
+}
+document.getElementById('q').placeholder=labels[L].ph;
+document.getElementById('q').addEventListener('input',render);
+load();
 </script></body></html>
