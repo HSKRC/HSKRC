@@ -795,7 +795,7 @@
 
           showMessage(currentLanguage === "fa" ? "در حال ایجاد حساب..." : "Creating account...","success");
 
-          const {error} = await supabaseClient.auth.signUp({
+          const {data,error} = await supabaseClient.auth.signUp({
             email,
             password,
             options:{
@@ -810,12 +810,36 @@
             }
           });
 
-          if(error) throw error;
+          if(error){
+            const msg = String(error.message || "").toLowerCase();
+            if(msg.includes("already") || msg.includes("registered") || msg.includes("exists")){
+              showMessage(
+                currentLanguage === "fa"
+                  ? "این حساب از قبل وجود دارد. لطفاً وارد حساب شوید یا از «فراموشی رمز عبور» استفاده کنید."
+                  : "An account with this email already exists. Please sign in or use Forgot Password.",
+                "error"
+              );
+              return;
+            }
+            throw error;
+          }
+
+          // With Supabase email-confirmation enabled, an existing confirmed user may be
+          // returned as an obfuscated user with no identities instead of an explicit error.
+          if(data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0){
+            showMessage(
+              currentLanguage === "fa"
+                ? "این حساب از قبل وجود دارد. لطفاً وارد حساب شوید یا از «فراموشی رمز عبور» استفاده کنید."
+                : "An account with this email already exists. Please sign in or use Forgot Password.",
+              "error"
+            );
+            return;
+          }
 
           showMessage(
             currentLanguage === "fa"
-              ? "حساب ساخته شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
-              : "Account created. Please check your email to confirm your account.",
+              ? "حساب ساخته شد. لطفاً ایمیل خود را برای فعال‌سازی حساب بررسی کنید."
+              : "Account created. Please check your email to activate your account.",
             "success"
           );
         }
