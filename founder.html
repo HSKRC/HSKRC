@@ -320,6 +320,34 @@ section{
   font-size:13px;
 }
 
+
+.research-links{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:22px;
+}
+.research-link{
+  display:block;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:16px;
+  background:#ffffff03;
+}
+.research-link:hover{
+  border-color:rgba(201,164,92,.45);
+  background:rgba(201,164,92,.05);
+}
+.research-link b{
+  display:block;
+  color:#fff;
+  margin-bottom:4px;
+}
+.research-link span{
+  color:var(--muted);
+  font-size:13px;
+}
+
 footer{
   border-top:1px solid var(--border);
   padding:27px 0;
@@ -357,7 +385,8 @@ html[dir="rtl"] .answer{
 
 @media(max-width:700px){
   .grid,
-  .search-box{
+  .search-box,
+  .research-links{
     grid-template-columns:1fr;
   }
 
@@ -670,6 +699,53 @@ HSKRC is an independent project. Inclusion of scholars, institutions, books, or 
 </section>
 
 
+<section id="hskrc-research-links">
+<div class="wrap">
+<div class="head">
+<div class="eyebrow" data-en="HSKRC Research" data-fa="پژوهش HSKRC">HSKRC Research</div>
+<h2 data-en="Research & Knowledge at HSKRC" data-fa="پژوهش و دانش در HSKRC">Research & Knowledge at HSKRC</h2>
+<p class="lead"
+ data-en="Explore the research, articles, sources, library materials, and structured knowledge resources developed and organized through HSKRC."
+ data-fa="پژوهش‌ها، مقالات، منابع، مواد کتابخانه‌ای و منابع ساختاریافته دانش را که از طریق HSKRC توسعه و سازمان‌دهی شده‌اند، بررسی کنید.">
+Explore the research, articles, sources, library materials, and structured knowledge resources developed and organized through HSKRC.
+</p>
+</div>
+
+<div class="research-links">
+<a class="research-link" href="articles.html">
+<b data-en="Research Articles" data-fa="مقالات پژوهشی">Research Articles</b>
+<span data-en="Published research and historical articles from HSKRC." data-fa="مقالات پژوهشی و تاریخی منتشرشده در HSKRC.">Published research and historical articles from HSKRC.</span>
+</a>
+
+<a class="research-link" href="research-explorer.html">
+<b data-en="Research Explorer" data-fa="کاوشگر پژوهش">Research Explorer</b>
+<span data-en="Explore connected historical subjects and research material." data-fa="موضوعات تاریخی مرتبط و مواد پژوهشی را بررسی کنید.">Explore connected historical subjects and research material.</span>
+</a>
+
+<a class="research-link" href="alamut-knowledge-base.html">
+<b data-en="Alamut Knowledge Base" data-fa="پایگاه دانش الموت">Alamut Knowledge Base</b>
+<span data-en="Structured knowledge resources concerning Alamut and related history." data-fa="منابع ساختاریافته دانش درباره الموت و تاریخ مرتبط.">Structured knowledge resources concerning Alamut and related history.</span>
+</a>
+
+<a class="research-link" href="sources.html">
+<b data-en="Sources" data-fa="منابع">Sources</b>
+<span data-en="Identifiable sources supporting HSKRC research and documentation." data-fa="منابع قابل شناسایی پشتیبان پژوهش و مستندسازی HSKRC.">Identifiable sources supporting HSKRC research and documentation.</span>
+</a>
+
+<a class="research-link" href="library.html">
+<b data-en="Digital Library" data-fa="کتابخانه دیجیتال">Digital Library</b>
+<span data-en="Books and library material connected with HSKRC research." data-fa="کتاب‌ها و مواد کتابخانه‌ای مرتبط با پژوهش HSKRC.">Books and library material connected with HSKRC research.</span>
+</a>
+
+<a class="research-link" href="researchers.html">
+<b data-en="Researchers" data-fa="پژوهشگران">Researchers</b>
+<span data-en="Researchers represented within the HSKRC knowledge environment." data-fa="پژوهشگران معرفی‌شده در محیط دانش HSKRC.">Researchers represented within the HSKRC knowledge environment.</span>
+</a>
+</div>
+</div>
+</section>
+
+
 <section>
 <div class="wrap">
 
@@ -717,7 +793,7 @@ Full-name variant used by HSKRC
 
 <footer>
 <div class="wrap">
-Founded & led by Kamal Barlas · © 2026 HSKRC - All rights reserved.
+Founded & led by <a href="founder.html"><strong>Kamal Barlas (Kamaluddin Barlas)</strong></a> · © 2026 HSKRC - All rights reserved.
 </div>
 </footer>
 
