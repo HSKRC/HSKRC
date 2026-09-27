@@ -8,10 +8,26 @@
 <meta name="theme-color" content="#0b0b0c">
 <link rel="canonical" href="https://hskrc.org/community-impact.html">
 <link rel="stylesheet" href="hskrc-global.css"><script defer src="hskrc-global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#0b0d10;--panel:#11151a;--panel2:#151a20;--text:#f3f4f6;--muted:#aab1bb;--line:rgba(255,255,255,.09);--gold:#c9a45c;--gold2:#e2c47f;--soft:rgba(201,164,92,.09)}
 html[data-theme="light"]{--bg:#f4f6f8;--panel:#ffffff;--panel2:#eef2f5;--text:#18212b;--muted:#5f6b78;--line:rgba(24,33,43,.12);--gold:#8a6a2f;--gold2:#6f5425;--soft:rgba(138,106,47,.08)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.page{width:min(1180px,calc(100% - 36px));margin:0 auto;padding:66px 0 86px}.hero{padding:44px 0 34px;border-bottom:1px solid var(--line)}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}h1{font-size:clamp(38px,6vw,68px);line-height:1.02;margin:14px 0 18px;letter-spacing:-.04em}.lead{max-width:850px;font-size:18px;line-height:1.75;color:var(--muted);margin:0}.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.chip{border:1px solid var(--line);background:var(--panel);padding:9px 12px;border-radius:999px;font-size:12px;color:var(--muted)}section.block{padding:48px 0;border-bottom:1px solid var(--line)}.head{display:flex;justify-content:space-between;gap:22px;align-items:end;margin-bottom:22px}.head h2{font-size:30px;margin:0}.head p{max-width:720px;color:var(--muted);line-height:1.7;margin:8px 0 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--panel2));border-radius:16px;padding:22px}.card h3{font-size:18px;margin:0 0 9px}.card p{color:var(--muted);line-height:1.7;margin:0}.number{font-size:27px;font-weight:850;color:var(--gold2);margin-bottom:6px}.timeline{display:grid;gap:11px}.milestone{display:grid;grid-template-columns:90px 1fr;gap:18px;padding:16px 0;border-top:1px solid var(--line)}.milestone:first-child{border-top:0}.year{color:var(--gold2);font-weight:850}.milestone b{display:block;margin-bottom:4px}.milestone span{color:var(--muted);line-height:1.65}.note{border:1px solid rgba(201,164,92,.28);background:var(--soft);border-radius:14px;padding:18px 20px;color:var(--muted);line-height:1.7}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border-radius:10px;text-decoration:none;font-weight:800;font-size:13px;border:1px solid var(--line);color:var(--text);background:var(--panel)}.btn.primary{background:var(--gold);color:#111;border-color:var(--gold)}.btn:hover{transform:translateY(-1px)}.wide{grid-column:1/-1}html[dir="rtl"] .eyebrow{letter-spacing:0}.legacy-lang{display:none!important}@media(max-width:760px){.page{width:min(100% - 24px,1180px);padding-top:42px}.grid{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.milestone{grid-template-columns:70px 1fr}.wide{grid-column:auto}}
+
+.live-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.live-stat{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--panel2));border-radius:16px;padding:20px}
+.live-stat b{display:block;font-size:32px;line-height:1;color:var(--gold2);margin-bottom:8px}
+.live-stat span{display:block;color:var(--text);font-weight:800;font-size:13px}
+.live-stat small{display:block;color:var(--muted);margin-top:6px;line-height:1.5}
+.live-status{margin-top:14px;color:var(--muted);font-size:12px}
+.live-status.ok{color:var(--gold2)}
+.dynamic-milestones{margin-bottom:18px;border:1px solid rgba(201,164,92,.25);background:var(--soft);border-radius:16px;padding:8px 18px}
+.dynamic-milestones .milestone{padding:14px 0}
+.live-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid rgba(201,164,92,.28);border-radius:999px;color:var(--gold2);font-size:11px;font-weight:800;margin-bottom:12px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--gold2);box-shadow:0 0 0 4px rgba(201,164,92,.12)}
+@media(max-width:850px){.live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.live-grid{grid-template-columns:1fr}}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Community Impact | HSKRC","url":"https://hskrc.org/community-impact.html","about":{"@type":"Organization","name":"HSKRC","url":"https://hskrc.org/"}}</script>
 </head>
@@ -33,12 +49,33 @@ html[data-theme="light"]{--bg:#f4f6f8;--panel:#ffffff;--panel2:#eef2f5;--text:#1
 <div class="card"><div class="number">04</div><h3 data-en="Source Transparency" data-fa="شفافیت منابع">Source Transparency</h3><p data-en="HSKRC is being built around traceable sources and separates documented evidence from interpretation where possible." data-fa="HSKRC بر پایه منابع قابل ردیابی ساخته می‌شود و تا حد امکان شواهد مستند را از تفسیر جدا نگه می‌دارد.">HSKRC is being built around traceable sources and separates documented evidence from interpretation where possible.</p></div>
 </div>
 </section>
+
+<section class="block" id="live-achievements">
+<div class="head"><div>
+<h2 data-en="Live Achievements" data-fa="دستاوردهای زنده">Live Achievements</h2>
+<p data-en="These figures are read automatically from the HSKRC research database. When a published book, article, research source, knowledge node or researcher is added, this section updates automatically." data-fa="این آمار به‌صورت خودکار از پایگاه داده پژوهشی HSKRC خوانده می‌شود. هرگاه کتاب منتشرشده، مقاله، منبع پژوهشی، گره دانشی یا پژوهشگر جدید افزوده شود، این بخش خودکار به‌روزرسانی می‌شود.">These figures are read automatically from the HSKRC research database. When a published book, article, research source, knowledge node or researcher is added, this section updates automatically.</p>
+</div></div>
+<div class="live-grid">
+<div class="live-stat"><b id="liveBooks">—</b><span data-en="Published Books" data-fa="کتاب‌های منتشرشده">Published Books</span><small data-en="Public books currently available in the HSKRC collection." data-fa="کتاب‌های عمومی موجود در مجموعه HSKRC.">Public books currently available in the HSKRC collection.</small></div>
+<div class="live-stat"><b id="liveArticles">—</b><span data-en="Published Articles" data-fa="مقالات منتشرشده">Published Articles</span><small data-en="Published research and cultural articles." data-fa="مقالات پژوهشی و فرهنگی منتشرشده.">Published research and cultural articles.</small></div>
+<div class="live-stat"><b id="liveSources">—</b><span data-en="Research Sources" data-fa="منابع پژوهشی">Research Sources</span><small data-en="Traceable source records in the research network." data-fa="رکوردهای منابع قابل ردیابی در شبکه پژوهشی.">Traceable source records in the research network.</small></div>
+<div class="live-stat"><b id="liveNodes">—</b><span data-en="Knowledge Nodes" data-fa="گره‌های دانشی">Knowledge Nodes</span><small data-en="Structured topics and historical knowledge nodes." data-fa="موضوعات ساختاریافته و گره‌های دانش تاریخی.">Structured topics and historical knowledge nodes.</small></div>
+<div class="live-stat"><b id="liveResearchers">—</b><span data-en="Researchers" data-fa="پژوهشگران">Researchers</span><small data-en="Researchers represented in the HSKRC research network." data-fa="پژوهشگران ثبت‌شده در شبکه پژوهشی HSKRC.">Researchers represented in the HSKRC research network.</small></div>
+<div class="live-stat"><b id="liveTotal">—</b><span data-en="Research Records" data-fa="رکوردهای پژوهشی">Research Records</span><small data-en="Combined live total across the five public collection types above." data-fa="مجموع زنده پنج نوع مجموعه عمومی بالا.">Combined live total across the five public collection types above.</small></div>
+</div>
+<div id="liveStatus" class="live-status" data-en="Loading live collection data…" data-fa="در حال بارگذاری آمار زنده مجموعه…">Loading live collection data…</div>
+</section>
+
 <section class="block">
 <div class="head"><div><h2 data-en="Global reach, with a local connection" data-fa="دسترسی جهانی، با پیوند محلی">Global reach, with a local connection</h2><p data-en="HSKRC is designed for readers, researchers, students and communities worldwide. At the same time, the project is being developed in Victoria and can also contribute locally by making cultural and historical knowledge more accessible to diverse communities in and around Greater Dandenong." data-fa="HSKRC برای خوانندگان، پژوهشگران، دانشجویان و جوامع در سراسر جهان طراحی شده است. هم‌زمان، این پروژه در ویکتوریا در حال توسعه است و می‌تواند با آسان‌تر ساختن دسترسی به دانش فرهنگی و تاریخی برای جوامع متنوع Greater Dandenong و اطراف آن نیز ارزش محلی ایجاد کند.">HSKRC is designed for readers, researchers, students and communities worldwide. At the same time, the project is being developed in Victoria and can also contribute locally by making cultural and historical knowledge more accessible to diverse communities in and around Greater Dandenong.</p></div></div>
 <div class="note" data-en="HSKRC does not claim impact that has not yet been measured. As the project grows, worldwide usage, community participation, feedback, collaborations and local engagement will be documented here with verifiable evidence." data-fa="HSKRC تأثیری را که هنوز اندازه‌گیری نشده باشد ادعا نمی‌کند. با رشد پروژه، استفاده جهانی، مشارکت اجتماعی، بازخورد، همکاری‌ها و فعالیت محلی با شواهد قابل بررسی در این صفحه ثبت خواهد شد.">HSKRC does not claim impact that has not yet been measured. As the project grows, worldwide usage, community participation, feedback, collaborations and local engagement will be documented here with verifiable evidence.</div>
 </section>
 <section class="block">
-<div class="head"><div><h2 data-en="2026 milestones" data-fa="دستاوردهای ۲۰۲۶">2026 milestones</h2><p data-en="A concise record of the project’s development." data-fa="ثبت کوتاه روند توسعه پروژه.">A concise record of the project’s development.</p></div></div>
+<div class="head"><div><h2 data-en="Achievements & Milestones" data-fa="دستاوردها و مراحل مهم">Achievements & Milestones</h2><p data-en="Permanent project milestones are listed below, while the live milestone panel updates automatically as the collection grows." data-fa="مراحل مهم ثابت پروژه در پایین ثبت شده و بخش مراحل زنده با رشد مجموعه به‌صورت خودکار تغییر می‌کند.">Permanent project milestones are listed below, while the live milestone panel updates automatically as the collection grows.</p></div></div>
+<div id="dynamicMilestones" class="dynamic-milestones">
+<div class="live-badge"><span class="live-dot"></span><span data-en="Live collection milestones" data-fa="مراحل زنده مجموعه">Live collection milestones</span></div>
+<div class="milestone"><div class="year">LIVE</div><div><b data-en="Loading current collection milestones…" data-fa="در حال بارگذاری مراحل فعلی مجموعه…">Loading current collection milestones…</b><span data-en="This panel is generated from the live HSKRC database." data-fa="این بخش از پایگاه داده زنده HSKRC ساخته می‌شود.">This panel is generated from the live HSKRC database.</span></div></div>
+</div>
 <div class="timeline">
 <div class="milestone"><div class="year">2026</div><div><b data-en="HSKRC established online" data-fa="راه‌اندازی آنلاین HSKRC">HSKRC established online</b><span data-en="The independent digital research and knowledge environment was launched and began expanding its public collection." data-fa="محیط مستقل دیجیتال پژوهش و دانش راه‌اندازی شد و توسعه مجموعه عمومی آن آغاز گردید.">The independent digital research and knowledge environment was launched and began expanding its public collection.</span></div></div>
 <div class="milestone"><div class="year">2026</div><div><b data-en="Digital Library and research collection" data-fa="کتابخانه دیجیتال و مجموعه پژوهشی">Digital Library and research collection</b><span data-en="Books, research material and published articles were organised into dedicated public sections." data-fa="کتاب‌ها، منابع پژوهشی و مقالات منتشرشده در بخش‌های عمومی مشخص سازمان‌دهی شدند.">Books, research material and published articles were organised into dedicated public sections.</span></div></div>
@@ -52,6 +89,145 @@ html[data-theme="light"]{--bg:#f4f6f8;--panel:#ffffff;--panel2:#eef2f5;--text:#1
 <div class="actions"><a class="btn primary" href="get-involved.html" data-en="Get Involved" data-fa="مشارکت کنید">Get Involved</a><a class="btn" href="about.html" data-en="About HSKRC" data-fa="درباره HSKRC">About HSKRC</a></div>
 </section>
 </main>
+
+<script>
+(function(){
+  const SUPABASE_URL="https://uwuklryzxexpofcxrbnm.supabase.co";
+  const SUPABASE_KEY="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+  const labels={
+    en:{
+      book:"Book", article:"Article", source:"Research source", node:"Knowledge node", researcher:"Researcher",
+      updated:"Live collection data updated automatically.",
+      partial:"Some live research data is temporarily unavailable.",
+      latest:"Latest addition",
+      total:"The HSKRC public research collection now contains {n} live records across books, articles, sources, knowledge nodes and researchers."
+    },
+    fa:{
+      book:"کتاب", article:"مقاله", source:"منبع پژوهشی", node:"گره دانشی", researcher:"پژوهشگر",
+      updated:"آمار زنده مجموعه به‌صورت خودکار به‌روزرسانی شد.",
+      partial:"بخشی از آمار زنده پژوهشی موقتاً در دسترس نیست.",
+      latest:"جدیدترین افزوده",
+      total:"مجموعه عمومی پژوهشی HSKRC اکنون {n} رکورد زنده شامل کتاب‌ها، مقالات، منابع، گره‌های دانشی و پژوهشگران دارد."
+    }
+  };
+
+  function currentLang(){
+    return localStorage.getItem("hskrc_language")==="fa" ? "fa" : "en";
+  }
+
+  function titleOf(kind,row){
+    return row?.title || row?.name || row?.source_code || (labels[currentLang()][kind] || kind);
+  }
+
+  function timeOf(row){
+    const raw=row?.created_at || row?.published_at || row?.updated_at || null;
+    if(!raw) return 0;
+    const t=Date.parse(raw);
+    return Number.isFinite(t) ? t : 0;
+  }
+
+  function fmtDate(ms){
+    if(!ms) return "";
+    try{
+      return new Intl.DateTimeFormat(currentLang()==="fa" ? "fa-IR" : "en-AU",{
+        year:"numeric",month:"short",day:"numeric"
+      }).format(new Date(ms));
+    }catch(_){ return ""; }
+  }
+
+  async function loadLiveImpact(){
+    const status=document.getElementById("liveStatus");
+    if(!window.supabase || !status) return;
+
+    const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+    const specs=[
+      {kind:"book",name:"books",run:()=>db.from("books").select("*").eq("published",true)},
+      {kind:"article",name:"articles",run:()=>db.from("articles").select("*").eq("published",true)},
+      {kind:"source",name:"research_sources",run:()=>db.from("research_sources").select("*")},
+      {kind:"node",name:"knowledge_nodes",run:()=>db.from("knowledge_nodes").select("*")},
+      {kind:"researcher",name:"researchers",run:()=>db.from("researchers").select("*")}
+    ];
+
+    const results=await Promise.all(specs.map(async spec=>{
+      try{
+        const r=await spec.run();
+        if(r.error) throw r.error;
+        return {kind:spec.kind,data:r.data||[],error:null};
+      }catch(error){
+        console.warn("HSKRC live impact:",spec.name,error);
+        return {kind:spec.kind,data:[],error};
+      }
+    }));
+
+    const byKind=Object.fromEntries(results.map(r=>[r.kind,r.data]));
+    const counts={
+      book:(byKind.book||[]).length,
+      article:(byKind.article||[]).length,
+      source:(byKind.source||[]).length,
+      node:(byKind.node||[]).length,
+      researcher:(byKind.researcher||[]).length
+    };
+    const total=Object.values(counts).reduce((a,b)=>a+b,0);
+
+    const ids={
+      liveBooks:counts.book,
+      liveArticles:counts.article,
+      liveSources:counts.source,
+      liveNodes:counts.node,
+      liveResearchers:counts.researcher,
+      liveTotal:total
+    };
+    Object.entries(ids).forEach(([id,value])=>{
+      const el=document.getElementById(id);
+      if(el) el.textContent=String(value);
+    });
+
+    const L=labels[currentLang()];
+    const failed=results.filter(r=>r.error);
+    status.textContent=failed.length ? L.partial : L.updated;
+    status.classList.toggle("ok",!failed.length);
+
+    const all=results.flatMap(r=>r.data.map(row=>({
+      kind:r.kind,row,time:timeOf(row),title:titleOf(r.kind,row)
+    })));
+
+    const newest=all.filter(x=>x.time).sort((a,b)=>b.time-a.time).slice(0,3);
+    const host=document.getElementById("dynamicMilestones");
+    if(!host) return;
+
+    const badge=`<div class="live-badge"><span class="live-dot"></span><span>${currentLang()==="fa"?"مراحل زنده مجموعه":"Live collection milestones"}</span></div>`;
+    const totalText=L.total.replace("{n}",String(total));
+    let items=`<div class="milestone"><div class="year">${new Date().getFullYear()}</div><div><b>${totalText}</b><span>${L.updated}</span></div></div>`;
+
+    newest.forEach((x,index)=>{
+      const type=L[x.kind] || x.kind;
+      const date=fmtDate(x.time);
+      items+=`<div class="milestone"><div class="year">${date || "LIVE"}</div><div><b>${index===0?L.latest+": ":""}${type} — ${escapeHtml(x.title)}</b><span>${currentLang()==="fa"?"این رکورد مستقیماً از مجموعه زنده HSKRC خوانده شده است.":"This record is read directly from the live HSKRC collection."}</span></div></div>`;
+    });
+
+    host.innerHTML=badge+items;
+  }
+
+  function escapeHtml(v){
+    return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[ch]));
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    loadLiveImpact();
+    setInterval(loadLiveImpact,60000);
+  });
+
+  document.addEventListener("visibilitychange",()=>{
+    if(!document.hidden) loadLiveImpact();
+  });
+
+  window.addEventListener("storage",e=>{
+    if(e.key==="hskrc_language") setTimeout(loadLiveImpact,50);
+  });
+})();
+</script>
+
 <script>
 (function(){
  const apply=()=>{
