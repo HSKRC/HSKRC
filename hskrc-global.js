@@ -78,10 +78,8 @@
   }
 
   function activeSection(){
-    if(location.pathname.includes("/generated-articles/")) return "articles";
     const f=fileName();
     if(f==="index.html" || f==="hskrc") return "home";
-    if(f==="knowledge-node.html") return "knowledge";
     if(f==="library.html" || f==="book.html") return "library";
     if(f==="articles.html" || f==="article.html") return "articles";
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
