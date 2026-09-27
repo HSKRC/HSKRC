@@ -21,7 +21,7 @@
 
   function currentTheme(){
     const saved=localStorage.getItem(THEME_KEY);
-    return saved==="dark" ? "dark" : "light";
+    return saved==="light" ? "light" : "dark";
   }
 
   function applyTheme(next, persist=true){
@@ -34,7 +34,7 @@
     if(meta) meta.setAttribute("content",theme==="light" ? "#f4f6f8" : "#0b0b0c");
   }
 
-  // Light mode is the default; an explicit user choice is preserved in localStorage.
+  // Dark mode remains the default HSKRC design.
   applyTheme(currentTheme(),false);
 
   function storedSessionActive(){
