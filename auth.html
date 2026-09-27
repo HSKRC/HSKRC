@@ -435,6 +435,88 @@
     html[dir="rtl"] .intro-kicker{letter-spacing:0}
     html[dir="rtl"] .auth-title-wrap small{letter-spacing:0}
 
+    /* Light mode: keep the account panel fully readable and consistent with HSKRC. */
+    html[data-theme="light"] .auth-card{
+      background:#ffffff;
+      border-color:rgba(26,47,68,.13);
+      box-shadow:0 24px 70px rgba(35,55,75,.14);
+    }
+    html[data-theme="light"] .auth-title-wrap h2{color:#172433}
+    html[data-theme="light"] .auth-title-wrap p{color:#667483}
+    html[data-theme="light"] .auth-title-wrap small{color:#2f5f88}
+    html[data-theme="light"] .auth-lang{
+      color:#244a6b;
+      background:#f7f9fb;
+      border-color:rgba(26,47,68,.16);
+    }
+    html[data-theme="light"] .auth-lang:hover{
+      color:#172433;
+      background:#eef3f7;
+      border-color:rgba(47,95,136,.30);
+    }
+    html[data-theme="light"] .tabs{
+      background:#eef2f5;
+      border-color:rgba(26,47,68,.13);
+    }
+    html[data-theme="light"] .tab{color:#667483}
+    html[data-theme="light"] .tab:hover{
+      color:#244a6b;
+      background:#ffffff;
+    }
+    html[data-theme="light"] .tab.active{
+      color:#ffffff;
+      background:#2f5f88;
+      border-color:#2f5f88;
+      box-shadow:none;
+    }
+    html[data-theme="light"] .form-group label{color:#405364}
+    html[data-theme="light"] .optional{color:#75818c}
+    html[data-theme="light"] input{
+      background:#ffffff;
+      color:#172433;
+      border-color:rgba(26,47,68,.18);
+    }
+    html[data-theme="light"] input:focus{
+      background:#ffffff;
+      border-color:rgba(47,95,136,.48);
+      box-shadow:0 0 0 3px rgba(47,95,136,.08);
+    }
+    html[data-theme="light"] input::placeholder{color:#87939e}
+    html[data-theme="light"] .password-toggle{color:#5f6f7e}
+    html[data-theme="light"] .password-toggle:hover{
+      color:#244a6b;
+      background:#eef3f7;
+    }
+    html[data-theme="light"] .checkbox{color:#667483}
+    html[data-theme="light"] .submit{
+      color:#ffffff;
+      background:#2f5f88;
+      border-color:#2f5f88;
+      box-shadow:0 12px 28px rgba(47,95,136,.16);
+    }
+    html[data-theme="light"] .submit:hover:not(:disabled){
+      background:#244a6b;
+      box-shadow:0 16px 34px rgba(47,95,136,.20);
+    }
+    html[data-theme="light"] .forgot,
+    html[data-theme="light"] .back{color:#2f5f88}
+    html[data-theme="light"] .forgot:hover,
+    html[data-theme="light"] .back:hover{color:#244a6b}
+    html[data-theme="light"] .security-note{
+      color:#667483;
+      border-top-color:rgba(26,47,68,.12);
+    }
+    html[data-theme="light"] .security-icon{
+      color:#2f5f88;
+      border-color:rgba(26,47,68,.13);
+      background:#f7f9fb;
+    }
+    html[data-theme="light"] .message.success{
+      color:#244a6b;
+      background:rgba(47,95,136,.08);
+      border-color:rgba(47,95,136,.22);
+    }
+
     @media(max-width:980px){
       .auth-shell{grid-template-columns:1fr;max-width:720px}
       .auth-intro{min-height:auto;padding:38px}
