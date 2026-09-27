@@ -21,7 +21,7 @@
 
   function currentTheme(){
     const saved=localStorage.getItem(THEME_KEY);
-    return saved==="light" ? "light" : "dark";
+    return saved==="dark" ? "dark" : "light";
   }
 
   function applyTheme(next, persist=true){
