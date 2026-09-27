@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="hskrc-global.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <title>Support HSKRC | HSKRC</title>
 <meta name="description" content="Support HSKRC and record your contribution interest securely.">
@@ -177,6 +178,11 @@ textarea{
 
 .amount-row select{
   width:110px;
+}
+
+.turnstile-wrap{
+  margin:8px 0 20px;
+  min-height:65px;
 }
 
 @media(max-width:680px){
@@ -385,6 +391,10 @@ I would be happy for HSKRC to consider displaying my support publicly after admi
 
 </label>
 
+<div class="turnstile-wrap">
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAAFFMcan8Fr_48cc1" data-theme="auto"></div>
+</div>
+
 <button
   class="btn"
   id="submitBtn"
@@ -420,199 +430,98 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
+const PUBLIC_FORM_ENDPOINT =
+"https://uwuklryzxexpofcxrbnm.supabase.co/functions/v1/submit-public-form";
+
 const db =
 window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-async function uid(){
-
-  const {data} =
-    await db.auth.getSession();
-
-  return data.session?.user?.id || null;
-}
-
-function showStatus(
-  element,
-  message,
-  ok=true
-){
-
+function showStatus(element,message,ok=true){
   element.textContent = message;
-
-  element.className =
-    "status " + (ok ? "ok" : "err");
+  element.className = "status " + (ok ? "ok" : "err");
 }
 
-const form =
-document.getElementById("donationForm");
+const form = document.getElementById("donationForm");
+const out = document.getElementById("status");
+const btn = document.getElementById("submitBtn");
 
-const out =
-document.getElementById("status");
-
-const btn =
-document.getElementById("submitBtn");
-
-form.addEventListener(
-"submit",
-async event=>{
-
+form.addEventListener("submit",async event=>{
   event.preventDefault();
 
-  const donorName =
-    document
-      .getElementById("donor")
-      .value
-      .trim();
+  const donorName = document.getElementById("donor").value.trim();
+  const method = document.getElementById("method").value;
+  const rawAmount = document.getElementById("amount").value;
+  const currency = document.getElementById("currency").value;
+  const message = document.getElementById("message").value.trim();
+  const publicRequest = document.getElementById("display").checked;
+  const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value || "";
 
-  const method =
-    document
-      .getElementById("method")
-      .value;
-
-  const rawAmount =
-    document
-      .getElementById("amount")
-      .value;
-
-  const currency =
-    document
-      .getElementById("currency")
-      .value;
-
-  const message =
-    document
-      .getElementById("message")
-      .value
-      .trim();
-
-  const publicRequest =
-    document
-      .getElementById("display")
-      .checked;
-
-  /*
-    Extra validation:
-    submission is blocked if ANY required field is empty.
-  */
-
-  if(
-    !donorName ||
-    !method ||
-    !rawAmount ||
-    !currency ||
-    !message
-  ){
-
-    showStatus(
-      out,
-      "Please complete all required fields before submitting.",
-      false
-    );
-
+  if(!donorName || !method || !rawAmount || !currency || !message){
+    showStatus(out,"Please complete all required fields before submitting.",false);
     return;
   }
 
-  const amount =
-    Number(rawAmount);
+  const amount = Number(rawAmount);
+  if(!Number.isFinite(amount) || amount <= 0){
+    showStatus(out,"Please enter a valid contribution amount greater than 0.",false);
+    return;
+  }
 
-  if(
-    !Number.isFinite(amount) ||
-    amount <= 0
-  ){
-
-    showStatus(
-      out,
-      "Please enter a valid contribution amount greater than 0.",
-      false
-    );
-
+  if(!turnstileToken){
+    showStatus(out,"Please complete the human verification before submitting.",false);
     return;
   }
 
   btn.disabled = true;
 
   try{
-
-    const user_id =
-      await uid();
+    const {data:sessionData} = await db.auth.getSession();
+    const accessToken = sessionData.session?.access_token || null;
 
     const payload = {
-
-      user_id:user_id,
-
+      kind:"support",
+      turnstileToken,
       donor_name:donorName,
-
-      amount:amount,
-
-      currency:currency,
-
-      method:method,
-
-      message:message,
-
-      /*
-        TRUE only when the user
-        ticks the public-display box.
-      */
-      public_display:publicRequest,
-
-      /*
-        Never make it public automatically.
-        Admin must approve it.
-      */
-      is_public:false
-
+      amount,
+      currency,
+      method,
+      message,
+      public_display:publicRequest
     };
 
-    const {error} =
-      await db
-        .from("donations")
-        .insert(payload);
+    const headers = {
+      "Content-Type":"application/json",
+      "apikey":SUPABASE_KEY
+    };
+    if(accessToken) headers.Authorization = "Bearer " + accessToken;
 
-    if(error){
-      throw error;
-    }
+    const response = await fetch(PUBLIC_FORM_ENDPOINT,{
+      method:"POST",
+      headers,
+      body:JSON.stringify(payload)
+    });
+
+    const result = await response.json().catch(()=>({}));
+    if(!response.ok || !result.ok) throw new Error(result.error || "Submission failed");
 
     form.reset();
+    if(window.turnstile) window.turnstile.reset();
 
     if(publicRequest){
-
-      showStatus(
-        out,
-        "Thank you. Your support record was submitted privately and your public-display request is awaiting administrator approval."
-      );
-
+      showStatus(out,"Thank you. Your support record was submitted privately and your public-display request is awaiting administrator approval.");
     }else{
-
-      showStatus(
-        out,
-        "Thank you. Your support record was submitted privately."
-      );
-
+      showStatus(out,"Thank you. Your support record was submitted privately.");
     }
-
   }catch(error){
-
-    console.error(
-      "Support submission error:",
-      error
-    );
-
-    showStatus(
-      out,
-      "Submission failed. Please try again later.",
-      false
-    );
-
+    console.error("Support submission error:",error);
+    if(window.turnstile) window.turnstile.reset();
+    showStatus(out,"Submission failed. Please complete the verification and try again later.",false);
   }finally{
-
     btn.disabled = false;
-
   }
-
 });
 
 </script>
