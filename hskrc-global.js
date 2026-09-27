@@ -5,17 +5,37 @@
     en:{
       home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", about:"About", founder:"Founder & CEO",
-      support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", lang:"فارسی"
+      impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", lang:"فارسی", themeOn:"Dark ON", themeOff:"Dark OFF"
     },
     fa:{
       home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
-      support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", lang:"English"
+      impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", lang:"English", themeOn:"تاریک: روشن", themeOff:"تاریک: خاموش"
     }
   };
 
   const SUPABASE_URL="https://uwuklryzxexpofcxrbnm.supabase.co";
   const SUPABASE_KEY="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+
+  const THEME_KEY="hskrc_theme";
+
+  function currentTheme(){
+    const saved=localStorage.getItem(THEME_KEY);
+    return saved==="light" ? "light" : "dark";
+  }
+
+  function applyTheme(next, persist=true){
+    const theme=next==="light" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme",theme);
+    document.documentElement.style.colorScheme=theme;
+    if(persist) localStorage.setItem(THEME_KEY,theme);
+
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute("content",theme==="light" ? "#f4f6f8" : "#0b0b0c");
+  }
+
+  // Dark mode remains the default HSKRC design.
+  applyTheme(currentTheme(),false);
 
   function storedSessionActive(){
     try{
@@ -67,6 +87,8 @@
     if(f==="research-explorer.html") return "explorer";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
+    if(f==="community-impact.html") return "impact";
+    if(f==="get-involved.html") return "involved";
     if(f==="support.html") return "support";
     if(f==="contact.html") return "contact";
     if(f==="account.html" || f==="auth.html") return "account";
@@ -111,12 +133,18 @@
           ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("about","about.html",L.about)}
           ${navLink("founder","founder.html",L.founder)}
+          ${navLink("impact","community-impact.html",L.impact)}
+          ${navLink("involved","get-involved.html",L.involved)}
           ${navLink("support","support.html",L.support)}
           ${navLink("contact","contact.html",L.contact)}
         </nav>
 
         <div class="hskrc-global-actions">
           <a id="hskrcGlobalAccount" class="hskrc-global-account${activeSection()==="account"?" is-active":""}" href="${accountHref}">${accountText}</a>
+          <button id="hskrcGlobalTheme" class="hskrc-global-theme" type="button" aria-pressed="${currentTheme()==="dark"}">
+            <span class="hskrc-global-theme-icon" aria-hidden="true">${currentTheme()==="dark"?"☾":"☀"}</span>
+            <span id="hskrcGlobalThemeLabel">${currentTheme()==="dark"?L.themeOn:L.themeOff}</span>
+          </button>
           <button id="hskrcGlobalLang" class="hskrc-global-lang" type="button">${L.lang}</button>
         </div>
       </div>`;
@@ -129,7 +157,7 @@
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
         <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas</strong> · Founder & CEO</a>
-        <div class="hskrc-global-copy"><a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
+        <div class="hskrc-global-copy"><a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
   }
@@ -159,7 +187,7 @@
     const L=LABELS[lang()];
     const map={
       home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
-      researchers:L.researchers,sources:L.sources,explorer:L.explorer,about:L.about,founder:L.founder,support:L.support,contact:L.contact
+      researchers:L.researchers,sources:L.sources,explorer:L.explorer,about:L.about,founder:L.founder,impact:L.impact,involved:L.involved,support:L.support,contact:L.contact
     };
     Object.entries(map).forEach(([k,v])=>{
       const el=document.querySelector(`.hskrc-global-nav [data-hskrc-key="${k}"]`);
@@ -167,6 +195,31 @@
     });
     const b=document.getElementById("hskrcGlobalLang");
     if(b) b.textContent=L.lang;
+    syncThemeButton();
+  }
+
+  function syncThemeButton(){
+    const btn=document.getElementById("hskrcGlobalTheme");
+    const label=document.getElementById("hskrcGlobalThemeLabel");
+    if(!btn || !label) return;
+    const dark=currentTheme()==="dark";
+    const L=LABELS[lang()];
+    const icon=btn.querySelector(".hskrc-global-theme-icon");
+    label.textContent=dark ? L.themeOn : L.themeOff;
+    if(icon) icon.textContent=dark ? "☾" : "☀";
+    btn.setAttribute("aria-pressed",String(dark));
+    btn.setAttribute("aria-label",dark ? "Turn dark mode off" : "Turn dark mode on");
+  }
+
+  function bindTheme(){
+    const btn=document.getElementById("hskrcGlobalTheme");
+    if(!btn) return;
+    syncThemeButton();
+    btn.addEventListener("click",()=>{
+      const next=currentTheme()==="dark" ? "light" : "dark";
+      applyTheme(next,true);
+      syncThemeButton();
+    });
   }
 
   function bindLanguage(){
@@ -225,12 +278,17 @@
     renderFooter();
     syncGlobalLabels();
     bindLanguage();
+    bindTheme();
     syncAccount();
 
     window.addEventListener("storage",(e)=>{
       if(e.key==="hskrc_language"){
         syncGlobalLabels();
         syncAccount();
+      }
+      if(e.key===THEME_KEY){
+        applyTheme(currentTheme(),false);
+        syncThemeButton();
       }
     });
   }

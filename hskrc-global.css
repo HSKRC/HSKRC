@@ -169,6 +169,7 @@ body > footer:not(.hskrc-global-footer){
 }
 
 .hskrc-global-account,
+.hskrc-global-theme,
 .hskrc-global-lang{
   min-height:38px !important;
   display:inline-flex !important;
@@ -185,6 +186,7 @@ body > footer:not(.hskrc-global-footer){
   cursor:pointer !important;
 }
 .hskrc-global-account:hover,
+.hskrc-global-theme:hover,
 .hskrc-global-lang:hover{
   color:#fff !important;
   border-color:var(--hskrc-g-line-gold) !important;
@@ -194,6 +196,269 @@ body > footer:not(.hskrc-global-footer){
   color:var(--hskrc-g-gold2) !important;
   border-color:var(--hskrc-g-line-gold) !important;
   background:rgba(201,164,92,.08) !important;
+}
+
+
+.hskrc-global-theme{
+  gap:6px !important;
+  min-width:96px !important;
+}
+.hskrc-global-theme-icon{
+  width:17px !important;
+  height:17px !important;
+  display:inline-grid !important;
+  place-items:center !important;
+  border-radius:50% !important;
+  font-size:12px !important;
+  line-height:1 !important;
+}
+
+/* =========================================================
+   HSKRC LIGHT THEME
+   Dark mode is the original design. Light mode deliberately
+   replaces bronze/gold accents with a restrained research blue.
+   ========================================================= */
+html[data-theme="light"]{
+  --hskrc-g-bg:#f4f6f8;
+  --hskrc-g-bg2:#ffffff;
+  --hskrc-g-panel:#ffffff;
+  --hskrc-g-line:rgba(25,45,65,.13);
+  --hskrc-g-line-gold:rgba(47,95,136,.24);
+  --hskrc-g-gold:#2f5f88;
+  --hskrc-g-gold2:#244a6b;
+  --hskrc-g-text:#172433;
+  --hskrc-g-muted:#667483;
+
+  /* Common page variables used across the HSKRC public pages */
+  --bg:#f4f6f8;
+  --bg-soft:#edf1f4;
+  --panel:#ffffff;
+  --panel2:#f7f9fb;
+  --panel-2:#f7f9fb;
+  --panel-hover:#eef3f7;
+  --panel-soft:#f7f9fb;
+  --surface:#ffffff;
+  --surface-2:#f7f9fb;
+  --surface-3:#edf2f6;
+  --soft:#eef3f7;
+  --border:rgba(26,47,68,.13);
+  --border-strong:rgba(26,47,68,.20);
+  --border-light:rgba(26,47,68,.09);
+  --line:rgba(26,47,68,.13);
+  --line-strong:rgba(26,47,68,.20);
+  --bd:rgba(26,47,68,.13);
+  --text:#172433;
+  --text-soft:#35485a;
+  --tx:#172433;
+  --t:#172433;
+  --muted:#667483;
+  --muted-2:#7a8793;
+  --m:#667483;
+  --b:#f4f6f8;
+  --s:#ffffff;
+  --gold:#2f5f88;
+  --gold2:#365f82;
+  --gold-2:#365f82;
+  --gold-dark:#244a6b;
+  --gold-soft:rgba(47,95,136,.09);
+  --goldline:rgba(47,95,136,.24);
+  --g:#2f5f88;
+  --g2:#365f82;
+  --green:#2f5f88;
+  --green-dark:#244a6b;
+  --green-light:#4c779c;
+  --green-soft:rgba(47,95,136,.09);
+  --green-border:rgba(47,95,136,.24);
+  --border-green:rgba(47,95,136,.24);
+  --white:#172433;
+  --shadow:0 18px 50px rgba(35,55,75,.10);
+  --shadow-soft:0 10px 30px rgba(35,55,75,.08);
+  color-scheme:light;
+}
+
+html[data-theme="light"] body{
+  background:#f4f6f8 !important;
+  color:#172433 !important;
+}
+html[data-theme="light"] body::before{
+  opacity:.32 !important;
+}
+
+html[data-theme="light"] .hskrc-global-header{
+  background:rgba(250,251,252,.96) !important;
+  border-bottom-color:rgba(26,47,68,.12) !important;
+  color:#172433 !important;
+  box-shadow:0 8px 24px rgba(35,55,75,.07) !important;
+}
+html[data-theme="light"] .hskrc-global-mark{
+  border-color:rgba(47,95,136,.24) !important;
+  background:linear-gradient(145deg,rgba(47,95,136,.11),rgba(47,95,136,.025)) !important;
+  color:#2f5f88 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] .hskrc-global-brandcopy strong{color:#172433 !important}
+html[data-theme="light"] .hskrc-global-brandcopy small{color:#6b7885 !important}
+html[data-theme="light"] .hskrc-global-nav a{color:#566573 !important}
+html[data-theme="light"] .hskrc-global-nav a:hover{
+  color:#1d3f5d !important;
+  background:rgba(47,95,136,.055) !important;
+  border-color:rgba(47,95,136,.10) !important;
+}
+html[data-theme="light"] .hskrc-global-nav a.is-active{
+  color:#244a6b !important;
+  background:rgba(47,95,136,.085) !important;
+  border-color:rgba(47,95,136,.18) !important;
+}
+html[data-theme="light"] .hskrc-global-nav a.is-active::after{background:#2f5f88 !important}
+html[data-theme="light"] .hskrc-global-account,
+html[data-theme="light"] .hskrc-global-theme,
+html[data-theme="light"] .hskrc-global-lang{
+  color:#334b5f !important;
+  border-color:rgba(26,47,68,.14) !important;
+  background:#ffffff !important;
+}
+html[data-theme="light"] .hskrc-global-account:hover,
+html[data-theme="light"] .hskrc-global-theme:hover,
+html[data-theme="light"] .hskrc-global-lang:hover{
+  color:#244a6b !important;
+  border-color:rgba(47,95,136,.28) !important;
+  background:rgba(47,95,136,.055) !important;
+}
+html[data-theme="light"] .hskrc-global-account.is-active{
+  color:#244a6b !important;
+  border-color:rgba(47,95,136,.24) !important;
+  background:rgba(47,95,136,.07) !important;
+}
+html[data-theme="light"] .hskrc-global-footer{
+  background:#eef2f5 !important;
+  border-top-color:rgba(26,47,68,.12) !important;
+  color:#667483 !important;
+}
+html[data-theme="light"] .hskrc-global-founder{color:#405364 !important}
+html[data-theme="light"] .hskrc-global-founder strong{color:#244a6b !important}
+html[data-theme="light"] .hskrc-global-copy{color:#75818c !important}
+
+/* HOME — preserve the exact structure, only switch the visual palette. */
+html[data-theme="light"] body.hskrc-page-home{
+  background:
+    radial-gradient(circle at 15% 10%,rgba(47,95,136,.055),transparent 28%),
+    radial-gradient(circle at 85% 25%,rgba(47,95,136,.035),transparent 25%),
+    #f4f6f8 !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero{background:#eef2f5 !important}
+html[data-theme="light"] body.hskrc-page-home .hero::before{
+  background:
+    linear-gradient(90deg,rgba(247,249,251,.95) 0%,rgba(247,249,251,.86) 38%,rgba(247,249,251,.68) 68%,rgba(247,249,251,.80) 100%),
+    linear-gradient(180deg,rgba(247,249,251,.36) 0%,rgba(247,249,251,.12) 42%,rgba(244,246,248,.93) 100%),
+    url("alamut-hero.jpg") center center / cover no-repeat !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero::after{
+  background:radial-gradient(circle at 78% 30%,rgba(47,95,136,.10),transparent 30%),linear-gradient(180deg,transparent 60%,#f4f6f8 100%) !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero h1{color:#172433 !important}
+html[data-theme="light"] body.hskrc-page-home .hero-tagline{color:#2f4355 !important}
+html[data-theme="light"] body.hskrc-page-home .hero-description{color:#5f6f7e !important}
+html[data-theme="light"] body.hskrc-page-home .eyebrow{
+  border-color:rgba(47,95,136,.24) !important;
+  background:rgba(47,95,136,.065) !important;
+  color:#2f5f88 !important;
+}
+html[data-theme="light"] body.hskrc-page-home .eyebrow-dot{background:#2f5f88 !important;box-shadow:0 0 12px rgba(47,95,136,.32) !important}
+html[data-theme="light"] body.hskrc-page-home .btn-primary{
+  color:#fff !important;
+  background:#2f5f88 !important;
+  box-shadow:0 12px 28px rgba(47,95,136,.15) !important;
+}
+html[data-theme="light"] body.hskrc-page-home .btn-primary:hover{background:#244a6b !important;box-shadow:0 15px 32px rgba(47,95,136,.20) !important}
+html[data-theme="light"] body.hskrc-page-home .btn-secondary{color:#244052 !important;background:rgba(255,255,255,.72) !important;border-color:rgba(26,47,68,.14) !important}
+html[data-theme="light"] body.hskrc-page-home .btn-secondary:hover{background:#fff !important;border-color:rgba(47,95,136,.24) !important}
+html[data-theme="light"] body.hskrc-page-home .feature-card,
+html[data-theme="light"] body.hskrc-page-home .article-intro,
+html[data-theme="light"] body.hskrc-page-home .about-panel,
+html[data-theme="light"] body.hskrc-page-home .cta-box{
+  background:#fff !important;
+  border-color:rgba(26,47,68,.12) !important;
+  box-shadow:0 10px 30px rgba(35,55,75,.055) !important;
+}
+html[data-theme="light"] body.hskrc-page-home .feature-card:hover{background:#f8fafb !important;border-color:rgba(47,95,136,.23) !important}
+html[data-theme="light"] body.hskrc-page-home .feature-card::before,
+html[data-theme="light"] body.hskrc-page-home .article-intro::after{background:rgba(47,95,136,.06) !important}
+html[data-theme="light"] body.hskrc-page-home .feature-icon{
+  border-color:rgba(47,95,136,.20) !important;
+  background:rgba(47,95,136,.065) !important;
+  color:#2f5f88 !important;
+}
+html[data-theme="light"] body.hskrc-page-home .article-intro{background:linear-gradient(135deg,rgba(47,95,136,.055),transparent 45%),#fff !important}
+html[data-theme="light"] body.hskrc-page-home .about-panel.primary{background:linear-gradient(145deg,rgba(47,95,136,.06),transparent 65%),#fff !important;border-color:rgba(47,95,136,.17) !important}
+html[data-theme="light"] body.hskrc-page-home .cta-box{background:radial-gradient(circle at 50% 0%,rgba(47,95,136,.07),transparent 52%),#fff !important}
+html[data-theme="light"] body.hskrc-page-home .about-list li{color:#405160 !important}
+html[data-theme="light"] body.hskrc-page-home .hero-image-credit{color:rgba(23,36,51,.48) !important}
+
+/* Home research search */
+.hskrc-home-search{
+  max-width:760px;
+  margin:30px auto 0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:15px;
+  background:rgba(8,10,13,.72);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+  box-shadow:0 16px 44px rgba(0,0,0,.18);
+}
+.hskrc-home-search input{
+  width:100%;
+  min-width:0;
+  min-height:48px;
+  padding:0 15px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:10px;
+  outline:none;
+  background:#0d0f12;
+  color:#f5f7fa;
+}
+.hskrc-home-search input::placeholder{color:#7f8995}
+.hskrc-home-search input:focus{border-color:rgba(201,164,92,.48);box-shadow:0 0 0 3px rgba(201,164,92,.08)}
+.hskrc-home-search .btn{border:0;white-space:nowrap}
+html[data-theme="light"] .hskrc-home-search{
+  background:rgba(255,255,255,.86) !important;
+  border-color:rgba(26,47,68,.13) !important;
+  box-shadow:0 14px 36px rgba(35,55,75,.09) !important;
+}
+html[data-theme="light"] .hskrc-home-search input{
+  background:#fff !important;
+  color:#172433 !important;
+  border-color:rgba(26,47,68,.14) !important;
+}
+html[data-theme="light"] .hskrc-home-search input::placeholder{color:#82909c !important}
+html[data-theme="light"] .hskrc-home-search input:focus{border-color:rgba(47,95,136,.42) !important;box-shadow:0 0 0 3px rgba(47,95,136,.08) !important}
+
+/* Generic light-mode surfaces used by Research Explorer and several list/detail pages. */
+html[data-theme="light"] main .card,
+html[data-theme="light"] main .box,
+html[data-theme="light"] main .details,
+html[data-theme="light"] main .toolbar,
+html[data-theme="light"] main .search-box,
+html[data-theme="light"] main .research-gateway,
+html[data-theme="light"] main .stat{
+  border-color:rgba(26,47,68,.12) !important;
+}
+html[data-theme="light"] main input,
+html[data-theme="light"] main select,
+html[data-theme="light"] main textarea{
+  color:#172433 !important;
+  background:#fff !important;
+  border-color:rgba(26,47,68,.14) !important;
+}
+html[data-theme="light"] main input::placeholder,
+html[data-theme="light"] main textarea::placeholder{color:#87939e !important}
+
+@media(max-width:620px){
+  .hskrc-home-search{grid-template-columns:1fr}
+  .hskrc-home-search .btn{width:100%}
 }
 
 /* Unified footer */
@@ -266,7 +531,7 @@ body.hskrc-page-account{
 
 @media(max-width:480px){
   .hskrc-global-brandcopy strong{font-size:13px !important}
-  .hskrc-global-account,.hskrc-global-lang{padding:0 9px !important;font-size:10.5px !important}
+  .hskrc-global-account,.hskrc-global-theme,.hskrc-global-lang{padding:0 9px !important;font-size:10.5px !important}
   .hskrc-global-nav a{font-size:11px !important}
   .hskrc-global-footer-inner{
     min-height:94px !important;
@@ -340,6 +605,7 @@ html body .section-kicker{
 }
 .hskrc-global-nav a,
 .hskrc-global-account,
+.hskrc-global-theme,
 .hskrc-global-lang{
   font-family:Inter,"Segoe UI",Arial,sans-serif !important;
 }
