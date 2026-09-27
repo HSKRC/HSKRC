@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script id="hskrc-theme-init">(function(){try{var t=localStorage.getItem("hskrc_theme")==="dark"?"dark":"light";document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light";}})();</script>
 
 <link rel="stylesheet" href="hskrc-global.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -191,6 +192,7 @@ textarea{
     padding:20px;
   }
 }
+.privacy-note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.6}.privacy-note a{color:var(--gold);font-weight:750}
 </style>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
 <meta name="author" content="HSKRC"/>
@@ -253,6 +255,10 @@ textarea{
   ]
 }
 </script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:image" content="https://hskrc.org/alamut-hero.jpg">
+<meta name="twitter:image" content="https://hskrc.org/alamut-hero.jpg">
+<meta property="og:image:alt" content="Alamut landscape — HSKRC">
 </head>
 
 <body>
@@ -399,6 +405,7 @@ Your submission is private by default. Public display is optional.
 If you select the public-display option, an HSKRC administrator must approve it before it becomes public.
 </p>
 
+<p class="privacy-note">Information submitted here is handled according to the <a href="privacy.html">HSKRC Privacy Policy</a>.</p>
 </form>
 
 </section>

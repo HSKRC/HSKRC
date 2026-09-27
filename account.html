@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script id="hskrc-theme-init">(function(){try{var t=localStorage.getItem("hskrc_theme")==="dark"?"dark":"light";document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light";}})();</script>
 <meta content="HSKRC My Account - Hassan Sabbah Knowledge and Research Centre" name="description"/>
 <title>HSKRC | My Account</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -901,7 +902,8 @@
 </style>
 <link href="hskrc-global.css" rel="stylesheet"/>
 <script defer="" src="hskrc-global.js"></script>
-<meta content="noindex,nofollow" name="robots"/></head>
+<meta content="noindex,nofollow" name="robots"/><link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
 <body>
 <header class="site-header">
 <div class="header-inner">
@@ -1086,6 +1088,9 @@
 <div class="navigation" id="accountNavigation">
 <a class="button secondary hidden" href="content-admin.html" id="adminDashboardButton">
             🛡️ Admin Dashboard
+          </a>
+<a class="button secondary hidden" href="admin.html" id="adminFeedbackButton">
+            💬 Feedback &amp; Support Admin
           </a>
 <a class="button library" href="library.html" id="libraryButton">
             📚 Go to Library
@@ -1430,6 +1435,9 @@
       const adminDashboardButton =
         document.getElementById("adminDashboardButton");
 
+      const adminFeedbackButton =
+        document.getElementById("adminFeedbackButton");
+
       const accountNavigation =
         document.getElementById("accountNavigation");
 
@@ -1469,6 +1477,7 @@
       if (isAdmin) {
         adminNav.classList.remove("hidden");
         adminDashboardButton.classList.remove("hidden");
+        adminFeedbackButton.classList.remove("hidden");
         accountNavigation.classList.add("admin-enabled");
       }
 

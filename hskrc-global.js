@@ -34,7 +34,7 @@
     if(meta) meta.setAttribute("content",theme==="light" ? "#f4f6f8" : "#0b0b0c");
   }
 
-  // Dark mode remains the default HSKRC design.
+  // Light mode is the default HSKRC design; a saved dark preference is preserved.
   applyTheme(currentTheme(),false);
 
   function storedSessionActive(){
@@ -78,6 +78,7 @@
   }
 
   function activeSection(){
+    if(location.pathname.includes("/generated-articles/")) return "articles";
     const f=fileName();
     if(f==="index.html" || f==="hskrc") return "home";
     if(f==="library.html" || f==="book.html") return "library";
@@ -157,7 +158,7 @@
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
         <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas</strong> · Founder & CEO</a>
-        <div class="hskrc-global-copy"><a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · © 2026 HSKRC - All rights reserved.</div>
+        <div class="hskrc-global-copy"><a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · <a href="${sitePath("privacy.html")}">Privacy</a> · <a href="${sitePath("terms.html")}">Terms</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
   }
