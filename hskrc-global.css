@@ -348,17 +348,13 @@ html[data-theme="light"] body.hskrc-page-home{
 html[data-theme="light"] body.hskrc-page-home .hero{background:#eef2f5 !important}
 html[data-theme="light"] body.hskrc-page-home .hero::before{
   background:
-    linear-gradient(90deg,rgba(247,249,251,.42) 0%,rgba(247,249,251,.30) 38%,rgba(247,249,251,.18) 68%,rgba(247,249,251,.28) 100%),
-    linear-gradient(180deg,rgba(247,249,251,.10) 0%,rgba(247,249,251,.025) 42%,rgba(244,246,248,.58) 100%),
+    linear-gradient(90deg,rgba(247,249,251,.95) 0%,rgba(247,249,251,.86) 38%,rgba(247,249,251,.68) 68%,rgba(247,249,251,.80) 100%),
+    linear-gradient(180deg,rgba(247,249,251,.36) 0%,rgba(247,249,251,.12) 42%,rgba(244,246,248,.93) 100%),
     url("alamut-hero.jpg") center center / cover no-repeat !important;
+  transform:scale(1.045) !important;
 }
 html[data-theme="light"] body.hskrc-page-home .hero::after{
-  background:radial-gradient(circle at 78% 30%,rgba(47,95,136,.045),transparent 30%),linear-gradient(180deg,transparent 72%,rgba(244,246,248,.72) 100%) !important;
-}
-html[data-theme="light"] body.hskrc-page-home .hero h1,
-html[data-theme="light"] body.hskrc-page-home .hero-tagline,
-html[data-theme="light"] body.hskrc-page-home .hero-description{
-  text-shadow:0 1px 1px rgba(255,255,255,.65),0 2px 10px rgba(255,255,255,.34);
+  background:radial-gradient(circle at 78% 30%,rgba(47,95,136,.10),transparent 30%),linear-gradient(180deg,transparent 60%,#f4f6f8 100%) !important;
 }
 html[data-theme="light"] body.hskrc-page-home .hero h1{color:#172433 !important}
 html[data-theme="light"] body.hskrc-page-home .hero-tagline{color:#2f4355 !important}
@@ -654,494 +650,268 @@ html[dir="rtl"] body strong{
   }
 }
 
+
 /* =========================================================
-   HSKRC 2026-09-27 — LIGHT MODE READABILITY + HEADER FIT
-   Keeps the original dark theme, while making public light-mode
-   pages follow the clean Get Involved / Community Impact language.
+   HSKRC LIGHT DETAIL PAGES — MATCH GET INVOLVED / COMMUNITY IMPACT
+   Fixes hard-coded dark surfaces on dynamic book, researcher,
+   source and generated article pages without changing dark mode.
    ========================================================= */
 
-/* Desktop navigation: never centre an overflowing row.  Centring an
-   oversized flex row clips both the first and last tabs (Home / Support).
-   Start at the left, use more of the viewport, and keep horizontal scroll
-   only as a safe fallback on narrower desktop widths. */
-@media (min-width:821px){
-  .hskrc-global-shell{
-    width:min(1560px,calc(100% - 32px)) !important;
-    gap:12px !important;
-  }
-  .hskrc-global-brand{
-    min-width:170px !important;
-  }
-  .hskrc-global-nav{
-    justify-content:flex-start !important;
-    gap:2px !important;
-    overflow-x:auto !important;
-    overscroll-behavior-x:contain !important;
-    scroll-behavior:smooth !important;
-  }
-  .hskrc-global-nav a{
-    padding:0 8px !important;
-    font-size:11.5px !important;
-  }
+html[data-theme="light"] body.hskrc-detail-page,
+html[data-theme="light"] body.hskrc-generated-article{
+  background:#f4f6f8 !important;
+  color:#18212b !important;
 }
 
-@media (max-width:1450px) and (min-width:821px){
-  .hskrc-global-shell{gap:8px !important}
-  .hskrc-global-brand{min-width:110px !important}
-  .hskrc-global-brandcopy small{display:none !important}
-  .hskrc-global-nav a{padding:0 6px !important;font-size:11px !important}
-  .hskrc-global-actions{gap:5px !important}
-  .hskrc-global-account{min-width:88px !important;padding:0 9px !important}
-  .hskrc-global-theme{min-width:86px !important;padding:0 9px !important}
-  .hskrc-global-lang{padding:0 9px !important}
+/* Researcher + source record detail pages */
+html[data-theme="light"] body.hskrc-researcher-detail main,
+html[data-theme="light"] body.hskrc-source-detail main{
+  color:#18212b !important;
 }
-
-@media (max-width:1260px) and (min-width:821px){
-  .hskrc-global-brand{
-    min-width:42px !important;
-    width:42px !important;
-    overflow:hidden !important;
-  }
-  .hskrc-global-brandcopy{display:none !important}
-  .hskrc-global-nav a{padding:0 5px !important;font-size:10.5px !important}
+html[data-theme="light"] body.hskrc-researcher-detail .back,
+html[data-theme="light"] body.hskrc-source-detail .back{
+  color:#7a8793 !important;
 }
-
-/* Shared light palette for the public research / heritage pages.  These
-   variables intentionally live on BODY so they override older page-local
-   :root light variables without altering the dark-mode design. */
-html[data-theme="light"] body:is(
-  .hskrc-page-knowledge,
-  .hskrc-page-library,
-  .hskrc-page-articles,
-  .hskrc-page-researchers,
-  .hskrc-page-sources,
-  .hskrc-page-explorer,
-  .hskrc-page-about,
-  .hskrc-page-founder,
-  .hskrc-page-impact,
-  .hskrc-page-involved,
-  .hskrc-page-support,
-  .hskrc-page-contact
-){
-  --bg:#f4f6f8 !important;
-  --bg-soft:#edf1f4 !important;
-  --panel:#ffffff !important;
-  --panel2:#f7f9fb !important;
-  --panel-2:#f7f9fb !important;
-  --panel-hover:#eef3f7 !important;
-  --surface:#ffffff !important;
-  --surface-2:#f7f9fb !important;
-  --surface-3:#edf2f6 !important;
-  --soft:rgba(47,95,136,.07) !important;
-  --text:#172433 !important;
-  --text-soft:#405364 !important;
-  --tx:#172433 !important;
-  --t:#172433 !important;
-  --muted:#667483 !important;
-  --muted-2:#7a8793 !important;
-  --m:#667483 !important;
-  --border:rgba(26,47,68,.13) !important;
-  --border-strong:rgba(26,47,68,.20) !important;
-  --line:rgba(26,47,68,.13) !important;
-  --ln:rgba(26,47,68,.13) !important;
-  --bd:rgba(26,47,68,.13) !important;
-  --gold:#2f5f88 !important;
-  --gold2:#365f82 !important;
-  --g:#2f5f88 !important;
-  --g2:#365f82 !important;
-  --green:#2f5f88 !important;
-  --green-light:#365f82 !important;
-  --green-soft:rgba(47,95,136,.08) !important;
-  --green-border:rgba(47,95,136,.24) !important;
-  --goldline:rgba(47,95,136,.24) !important;
-  --border-green:rgba(47,95,136,.24) !important;
-  --p:#ffffff !important;
-  background:
-    radial-gradient(circle at 82% 5%,rgba(47,95,136,.045),transparent 28%),
-    #f4f6f8 !important;
-  color:#172433 !important;
+html[data-theme="light"] body.hskrc-researcher-detail .hero,
+html[data-theme="light"] body.hskrc-source-detail .hero{
+  background:linear-gradient(180deg,#ffffff,#eef2f5) !important;
+  border-color:rgba(24,33,43,.12) !important;
+  box-shadow:0 12px 34px rgba(35,55,75,.06) !important;
+  color:#18212b !important;
 }
-
-/* Keep the clean, open section rhythm of Get Involved / Community Impact. */
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources,
-  .hskrc-page-involved,
-  .hskrc-page-impact
-) .hero{
-  background:transparent !important;
-  border-color:rgba(26,47,68,.12) !important;
-  box-shadow:none !important;
+html[data-theme="light"] body.hskrc-researcher-detail .hero h1,
+html[data-theme="light"] body.hskrc-source-detail .hero h1,
+html[data-theme="light"] body.hskrc-researcher-detail .panel h2,
+html[data-theme="light"] body.hskrc-source-detail .panel h2{
+  color:#18212b !important;
 }
-
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources,
-  .hskrc-page-involved,
-  .hskrc-page-impact
-) :is(h1,h2,h3,h4){
-  color:#172433 !important;
+html[data-theme="light"] body.hskrc-researcher-detail .kick,
+html[data-theme="light"] body.hskrc-researcher-detail .field,
+html[data-theme="light"] body.hskrc-researcher-detail .code,
+html[data-theme="light"] body.hskrc-researcher-detail .ext,
+html[data-theme="light"] body.hskrc-researcher-detail .path a,
+html[data-theme="light"] body.hskrc-source-detail .code,
+html[data-theme="light"] body.hskrc-source-detail .by,
+html[data-theme="light"] body.hskrc-source-detail .external,
+html[data-theme="light"] body.hskrc-source-detail .path a{
+  color:#2f5f88 !important;
 }
-
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources,
-  .hskrc-page-involved,
-  .hskrc-page-impact
-) :is(.lead,.hero p,.head p,.section-head p,.card p,.statement p,.milestone span,.live-stat small){
-  color:#5f6f7e !important;
+html[data-theme="light"] body.hskrc-researcher-detail .notes,
+html[data-theme="light"] body.hskrc-researcher-detail .notice,
+html[data-theme="light"] body.hskrc-researcher-detail .intro,
+html[data-theme="light"] body.hskrc-researcher-detail .meta,
+html[data-theme="light"] body.hskrc-researcher-detail .empty,
+html[data-theme="light"] body.hskrc-source-detail .meta,
+html[data-theme="light"] body.hskrc-source-detail .notes,
+html[data-theme="light"] body.hskrc-source-detail .intro,
+html[data-theme="light"] body.hskrc-source-detail .empty,
+html[data-theme="light"] body.hskrc-source-detail .item .small{
+  color:#5f6b78 !important;
   opacity:1 !important;
 }
-
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources,
-  .hskrc-page-involved,
-  .hskrc-page-impact
-) :is(.card,.statement,.step,.research-link,.search-item,.node,.gateway a,.live-stat){
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
+html[data-theme="light"] body.hskrc-researcher-detail .panel,
+html[data-theme="light"] body.hskrc-source-detail .panel{
+  background:linear-gradient(180deg,#ffffff,#eef2f5) !important;
+  border-color:rgba(24,33,43,.12) !important;
   box-shadow:0 10px 28px rgba(35,55,75,.045) !important;
 }
-
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources
-) :is(.card h2,.card h3,.card h3 a,.statement strong,.step b,.research-link strong,.research-link b,.search-item b,.node strong,.gateway strong){
-  color:#172433 !important;
+html[data-theme="light"] body.hskrc-researcher-detail .item,
+html[data-theme="light"] body.hskrc-researcher-detail .path,
+html[data-theme="light"] body.hskrc-source-detail .item,
+html[data-theme="light"] body.hskrc-source-detail .path{
+  background:#ffffff !important;
+  border-color:rgba(24,33,43,.11) !important;
+  color:#18212b !important;
 }
-
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources
-) :is(.card p,.research-link span,.search-item span,.node span,.gateway span,.meta,.desc,.method p,.count){
+html[data-theme="light"] body.hskrc-researcher-detail .item:hover,
+html[data-theme="light"] body.hskrc-source-detail .item:hover{
+  background:#f8fafb !important;
+  border-color:rgba(47,95,136,.25) !important;
+}
+html[data-theme="light"] body.hskrc-researcher-detail .item strong,
+html[data-theme="light"] body.hskrc-source-detail .item strong,
+html[data-theme="light"] body.hskrc-researcher-detail .path strong,
+html[data-theme="light"] body.hskrc-source-detail .path strong{
+  color:#18212b !important;
+}
+html[data-theme="light"] body.hskrc-researcher-detail .stat,
+html[data-theme="light"] body.hskrc-source-detail .stat{
+  background:#ffffff !important;
+  border-color:rgba(24,33,43,.12) !important;
+}
+html[data-theme="light"] body.hskrc-researcher-detail .stat b,
+html[data-theme="light"] body.hskrc-source-detail .stat b{
+  color:#2f5f88 !important;
+}
+html[data-theme="light"] body.hskrc-researcher-detail .stat span,
+html[data-theme="light"] body.hskrc-source-detail .stat span{
   color:#667483 !important;
 }
 
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources
-) :is(.eyebrow,.eye,.role,.num,.id,.author,.link,.type,.node small){
+/* Book detail page */
+html[data-theme="light"] body.hskrc-book-detail main{
+  color:#18212b !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .back{
+  color:#6d7884 !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .details{
+  background:linear-gradient(180deg,#ffffff,#eef2f5) !important;
+  border-color:rgba(24,33,43,.12) !important;
+  box-shadow:0 16px 42px rgba(35,55,75,.09) !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .details::before{
+  background:linear-gradient(90deg,transparent,#8a6a2f,transparent) !important;
+  opacity:.55 !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .details::after{
+  color:rgba(47,95,136,.34) !important;
+}
+html[data-theme="light"] body.hskrc-book-detail h1,
+html[data-theme="light"] body.hskrc-book-detail .section-heading h2,
+html[data-theme="light"] body.hskrc-book-detail .related-book-title{
+  color:#18212b !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .author,
+html[data-theme="light"] body.hskrc-book-detail .value{
+  color:#415466 !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .eyebrow,
+html[data-theme="light"] body.hskrc-book-detail .desc-title,
+html[data-theme="light"] body.hskrc-book-detail .section-kicker,
+html[data-theme="light"] body.hskrc-book-detail .research-group-label,
+html[data-theme="light"] body.hskrc-book-detail .research-count,
+html[data-theme="light"] body.hskrc-book-detail .section-link{
   color:#2f5f88 !important;
 }
-
-/* Founder */
-html[data-theme="light"] body.hskrc-page-founder .role{
-  background:rgba(47,95,136,.07) !important;
-  border-color:rgba(47,95,136,.22) !important;
+html[data-theme="light"] body.hskrc-book-detail .desc,
+html[data-theme="light"] body.hskrc-book-detail .research-intro,
+html[data-theme="light"] body.hskrc-book-detail .related-author,
+html[data-theme="light"] body.hskrc-book-detail .research-item-meta,
+html[data-theme="light"] body.hskrc-book-detail .research-empty,
+html[data-theme="light"] body.hskrc-book-detail .state{
+  color:#5f6b78 !important;
+  opacity:1 !important;
 }
-html[data-theme="light"] body.hskrc-page-founder .answer{
-  background:rgba(47,95,136,.06) !important;
-  border-color:#2f5f88 !important;
-  color:#405364 !important;
+html[data-theme="light"] body.hskrc-book-detail .label{
+  color:#74808b !important;
 }
-html[data-theme="light"] body.hskrc-page-founder .answer strong,
-html[data-theme="light"] body.hskrc-page-founder .rule span{color:#2f5f88 !important}
-html[data-theme="light"] body.hskrc-page-founder .rule{color:#172433 !important}
-
-/* About */
-html[data-theme="light"] body.hskrc-page-about .statement{
-  background:rgba(47,95,136,.055) !important;
-  border-color:rgba(47,95,136,.20) !important;
+html[data-theme="light"] body.hskrc-book-detail .meta-grid,
+html[data-theme="light"] body.hskrc-book-detail .meta,
+html[data-theme="light"] body.hskrc-book-detail .related-section,
+html[data-theme="light"] body.hskrc-book-detail .research-network{
+  border-color:rgba(24,33,43,.11) !important;
 }
-html[data-theme="light"] body.hskrc-page-about .rule{color:#172433 !important}
-html[data-theme="light"] body.hskrc-page-about .rule span{color:#2f5f88 !important}
-html[data-theme="light"] body.hskrc-page-about .step small{color:#2f5f88 !important}
-html[data-theme="light"] body.hskrc-page-about .research-link:hover{
-  background:#f7f9fb !important;
-  border-color:rgba(47,95,136,.22) !important;
-}
-
-/* Researchers */
-html[data-theme="light"] body.hskrc-page-researchers .notice{
-  background:rgba(47,95,136,.055) !important;
-  border-color:#2f5f88 !important;
-  color:#5f6f7e !important;
-}
-html[data-theme="light"] body.hskrc-page-researchers .toolbar :is(input,select){
+html[data-theme="light"] body.hskrc-book-detail .secondary,
+html[data-theme="light"] body.hskrc-book-detail .related-button{
   background:#ffffff !important;
-  border-color:rgba(26,47,68,.14) !important;
-  color:#172433 !important;
-}
-html[data-theme="light"] body.hskrc-page-researchers .initial{
-  background:rgba(47,95,136,.07) !important;
-  border-color:rgba(47,95,136,.20) !important;
   color:#2f5f88 !important;
+  border-color:rgba(24,33,43,.13) !important;
 }
-html[data-theme="light"] body.hskrc-page-researchers .tag{
-  background:#f7f9fb !important;
-  border-color:rgba(26,47,68,.11) !important;
-  color:#667483 !important;
+html[data-theme="light"] body.hskrc-book-detail .secondary:hover,
+html[data-theme="light"] body.hskrc-book-detail .related-button:hover{
+  background:#eef2f5 !important;
+  border-color:rgba(47,95,136,.26) !important;
 }
-html[data-theme="light"] body.hskrc-page-researchers .card-links a{
+html[data-theme="light"] body.hskrc-book-detail .box,
+html[data-theme="light"] body.hskrc-book-detail .research-group,
+html[data-theme="light"] body.hskrc-book-detail .related-card{
+  background:linear-gradient(180deg,#ffffff,#eef2f5) !important;
+  border-color:rgba(24,33,43,.12) !important;
+  box-shadow:0 8px 24px rgba(35,55,75,.045) !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .research-item{
   background:#ffffff !important;
-  border-color:rgba(26,47,68,.14) !important;
-  color:#274761 !important;
+  border-color:rgba(24,33,43,.10) !important;
 }
-html[data-theme="light"] body.hskrc-page-researchers .profile-link{
-  background:rgba(47,95,136,.075) !important;
-  border-color:rgba(47,95,136,.24) !important;
-  color:#244a6b !important;
-}
-html[data-theme="light"] body.hskrc-page-researchers .profile-link:hover{
-  background:rgba(47,95,136,.12) !important;
-  color:#173b59 !important;
-}
-
-/* Sources */
-html[data-theme="light"] body.hskrc-page-sources .hero{
-  background:radial-gradient(circle at 80% 10%,rgba(47,95,136,.05),transparent 34%) !important;
-}
-html[data-theme="light"] body.hskrc-page-sources .rule{
-  background:#ffffff !important;
-  border-color:#2f5f88 !important;
-  color:#405364 !important;
-  box-shadow:0 8px 24px rgba(35,55,75,.04) !important;
-}
-html[data-theme="light"] body.hskrc-page-sources :is(input,select){
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.14) !important;
-  color:#172433 !important;
-}
-html[data-theme="light"] body.hskrc-page-sources .card{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-}
-html[data-theme="light"] body.hskrc-page-sources .tag{
-  background:#f7f9fb !important;
-  border-color:rgba(26,47,68,.11) !important;
-  color:#5f6f7e !important;
-}
-html[data-theme="light"] body.hskrc-page-sources .type{
-  background:#f7f9fb !important;
-  border-color:rgba(47,95,136,.20) !important;
-}
-html[data-theme="light"] body.hskrc-page-sources .card h2{color:#172433 !important}
-
-/* Research Explorer */
-html[data-theme="light"] body.hskrc-page-explorer .hero{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-  box-shadow:0 12px 32px rgba(35,55,75,.055) !important;
-}
-html[data-theme="light"] body.hskrc-page-explorer .hero h1{color:#172433 !important}
-html[data-theme="light"] body.hskrc-page-explorer .hero p,
-html[data-theme="light"] body.hskrc-page-explorer .small,
-html[data-theme="light"] body.hskrc-page-explorer .meta,
-html[data-theme="light"] body.hskrc-page-explorer .filters label,
-html[data-theme="light"] body.hskrc-page-explorer .stat span{color:#667483 !important}
-html[data-theme="light"] body.hskrc-page-explorer .kick,
-html[data-theme="light"] body.hskrc-page-explorer .type,
-html[data-theme="light"] body.hskrc-page-explorer .stat b{color:#2f5f88 !important}
-html[data-theme="light"] body.hskrc-page-explorer .search input,
-html[data-theme="light"] body.hskrc-page-explorer .filters select{
-  background:#ffffff !important;
-  color:#172433 !important;
-  border-color:rgba(26,47,68,.14) !important;
-}
-html[data-theme="light"] body.hskrc-page-explorer .tab{
-  background:#ffffff !important;
-  color:#405364 !important;
-  border-color:rgba(26,47,68,.14) !important;
-}
-html[data-theme="light"] body.hskrc-page-explorer .tab.active{
-  background:rgba(47,95,136,.08) !important;
-  border-color:rgba(47,95,136,.24) !important;
-  color:#244a6b !important;
-}
-html[data-theme="light"] body.hskrc-page-explorer a.card,
-html[data-theme="light"] body.hskrc-page-explorer a.card:link,
-html[data-theme="light"] body.hskrc-page-explorer a.card:visited{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-  color:#172433 !important;
-  box-shadow:0 8px 24px rgba(35,55,75,.04) !important;
-}
-html[data-theme="light"] body.hskrc-page-explorer a.card h2,
-html[data-theme="light"] body.hskrc-page-explorer a.card:link h2,
-html[data-theme="light"] body.hskrc-page-explorer a.card:visited h2{
-  color:#172433 !important;
-}
-html[data-theme="light"] body.hskrc-page-explorer a.card:hover,
-html[data-theme="light"] body.hskrc-page-explorer a.card:focus{
+html[data-theme="light"] body.hskrc-book-detail .research-item:hover{
   background:#f8fafb !important;
   border-color:rgba(47,95,136,.24) !important;
 }
-html[data-theme="light"] body.hskrc-page-explorer a.card:hover h2,
-html[data-theme="light"] body.hskrc-page-explorer a.card:focus h2{color:#244a6b !important}
-html[data-theme="light"] body.hskrc-page-explorer .stat{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
+html[data-theme="light"] body.hskrc-book-detail .research-item-title{
+  color:#18212b !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .related-cover{
+  background:#eef2f5 !important;
+}
+html[data-theme="light"] body.hskrc-book-detail .state-title{
+  color:#2f5f88 !important;
 }
 
-/* Articles */
-html[data-theme="light"] body.hskrc-page-articles .page-hero{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-  box-shadow:0 12px 32px rgba(35,55,75,.055) !important;
+/* Generated static articles */
+html[data-theme="light"] body.hskrc-generated-article .wrap{
+  color:#18212b !important;
 }
-html[data-theme="light"] body.hskrc-page-articles .page-hero::before{background:rgba(47,95,136,.06) !important}
-html[data-theme="light"] body.hskrc-page-articles .page-hero h1,
-html[data-theme="light"] body.hskrc-page-articles .research-gateway h2,
-html[data-theme="light"] body.hskrc-page-articles .research-link strong,
-html[data-theme="light"] body.hskrc-page-articles .article-title{color:#172433 !important}
-html[data-theme="light"] body.hskrc-page-articles :is(.hero-description,.research-gateway p,.research-link span,.article-meta,.article-excerpt,.results-description){
+html[data-theme="light"] body.hskrc-generated-article main.wrap{
+  max-width:1080px !important;
+  padding-top:44px !important;
+  padding-bottom:72px !important;
+}
+html[data-theme="light"] body.hskrc-generated-article article{
+  max-width:900px !important;
+  margin:0 auto !important;
+  padding:42px 46px !important;
+  background:linear-gradient(180deg,#ffffff,#f8fafb) !important;
+  border:1px solid rgba(24,33,43,.12) !important;
+  border-radius:18px !important;
+  box-shadow:0 12px 34px rgba(35,55,75,.06) !important;
+}
+html[data-theme="light"] body.hskrc-generated-article article h1,
+html[data-theme="light"] body.hskrc-generated-article article h2,
+html[data-theme="light"] body.hskrc-generated-article article h3{
+  color:#18212b !important;
+}
+html[data-theme="light"] body.hskrc-generated-article article .meta{
   color:#667483 !important;
 }
-html[data-theme="light"] body.hskrc-page-articles .research-gateway,
-html[data-theme="light"] body.hskrc-page-articles .research-link,
-html[data-theme="light"] body.hskrc-page-articles .article-card,
-html[data-theme="light"] body.hskrc-page-articles .state-box{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-  box-shadow:0 10px 28px rgba(35,55,75,.045) !important;
+html[data-theme="light"] body.hskrc-generated-article article .content{
+  color:#263746 !important;
 }
-html[data-theme="light"] body.hskrc-page-articles .research-link:hover,
-html[data-theme="light"] body.hskrc-page-articles .article-card:hover{
-  background:#f8fafb !important;
-  border-color:rgba(47,95,136,.22) !important;
-}
-html[data-theme="light"] body.hskrc-page-articles :is(.search-box input,.category-box select){
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.14) !important;
-  color:#172433 !important;
-}
-html[data-theme="light"] body.hskrc-page-articles .read-button{
-  background:#2f5f88 !important;
-  color:#ffffff !important;
-}
-html[data-theme="light"] body.hskrc-page-articles .category-badge{
-  color:#dceafb !important;
-}
-
-/* Digital Library */
-html[data-theme="light"] body.hskrc-page-library .hero{
-  background:transparent !important;
-  box-shadow:none !important;
-}
-html[data-theme="light"] body.hskrc-page-library .title{color:#172433 !important}
-html[data-theme="light"] body.hskrc-page-library .description,
-html[data-theme="light"] body.hskrc-page-library .library-summary,
-html[data-theme="light"] body.hskrc-page-library .author,
-html[data-theme="light"] body.hskrc-page-library .meta,
-html[data-theme="light"] body.hskrc-page-library .book-description{color:#667483 !important}
-html[data-theme="light"] body.hskrc-page-library .eyebrow{
-  color:#2f5f88 !important;
-  background:rgba(47,95,136,.065) !important;
-  border-color:rgba(47,95,136,.22) !important;
-}
-html[data-theme="light"] body.hskrc-page-library .eyebrow-dot{background:#2f5f88 !important;box-shadow:0 0 10px rgba(47,95,136,.28) !important}
-html[data-theme="light"] body.hskrc-page-library .search-box{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-  box-shadow:0 12px 32px rgba(35,55,75,.07) !important;
-}
-html[data-theme="light"] body.hskrc-page-library .search-box :is(input,select){
-  background:#f7f9fb !important;
-  border-color:rgba(26,47,68,.13) !important;
-  color:#172433 !important;
-}
-html[data-theme="light"] body.hskrc-page-library .search-box :is(input,select):hover{background:#ffffff !important}
-html[data-theme="light"] body.hskrc-page-library .search-box :is(input,select):focus{
-  border-color:rgba(47,95,136,.35) !important;
-  box-shadow:0 0 0 3px rgba(47,95,136,.07) !important;
-}
-html[data-theme="light"] body.hskrc-page-library .search-box::before,
-html[data-theme="light"] body.hskrc-page-library .summary-count{color:#2f5f88 !important}
-html[data-theme="light"] body.hskrc-page-library .book{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-  box-shadow:0 10px 28px rgba(35,55,75,.055) !important;
-}
-html[data-theme="light"] body.hskrc-page-library .book:hover{
-  background:#ffffff !important;
-  border-color:rgba(47,95,136,.24) !important;
-  box-shadow:0 18px 38px rgba(35,55,75,.10) !important;
-}
-html[data-theme="light"] body.hskrc-page-library .book-title{color:#172433 !important}
-html[data-theme="light"] body.hskrc-page-library .details-button{
-  background:#ffffff !important;
-  border-color:rgba(47,95,136,.24) !important;
-  color:#244a6b !important;
-}
-html[data-theme="light"] body.hskrc-page-library .details-button:hover{background:rgba(47,95,136,.06) !important}
-html[data-theme="light"] body.hskrc-page-library .read-button{
-  background:#2f5f88 !important;
-  color:#ffffff !important;
-}
-html[data-theme="light"] body.hskrc-page-library .empty-box{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
-}
-html[data-theme="light"] body.hskrc-page-library .empty-icon{
-  background:rgba(47,95,136,.07) !important;
+html[data-theme="light"] body.hskrc-generated-article article .content a{
   color:#2f5f88 !important;
 }
-html[data-theme="light"] body.hskrc-page-library .empty-title{color:#244a6b !important}
+html[data-theme="light"] body.hskrc-generated-article article .cover{
+  border:1px solid rgba(24,33,43,.10) !important;
+  box-shadow:0 10px 26px rgba(35,55,75,.08) !important;
+}
+@media(max-width:700px){
+  html[data-theme="light"] body.hskrc-generated-article article{padding:28px 22px !important}
+}
 
-/* Get Involved + Community Impact — use the same visible blue-accent
-   button/note treatment while preserving their existing layout. */
-html[data-theme="light"] body:is(.hskrc-page-involved,.hskrc-page-impact) .note,
-html[data-theme="light"] body.hskrc-page-impact .dynamic-milestones{
-  background:rgba(47,95,136,.055) !important;
-  border-color:rgba(47,95,136,.20) !important;
-  color:#5f6f7e !important;
-}
-html[data-theme="light"] body:is(.hskrc-page-involved,.hskrc-page-impact) .btn.primary{
-  background:#2f5f88 !important;
-  border-color:#2f5f88 !important;
-  color:#ffffff !important;
-}
-html[data-theme="light"] body:is(.hskrc-page-involved,.hskrc-page-impact) .btn:not(.primary){
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.14) !important;
-  color:#274761 !important;
-}
-html[data-theme="light"] body:is(.hskrc-page-involved,.hskrc-page-impact) :is(.number,.year,.live-stat b,.live-badge){color:#2f5f88 !important}
-html[data-theme="light"] body.hskrc-page-impact .live-dot{background:#2f5f88 !important;box-shadow:0 0 0 4px rgba(47,95,136,.10) !important}
 
-/* Support/contact forms follow the same light institutional surface. */
-html[data-theme="light"] body:is(.hskrc-page-support,.hskrc-page-contact) .card{
-  background:#ffffff !important;
-  border-color:rgba(26,47,68,.13) !important;
+/* Knowledge-node detail page uses the same readable light treatment. */
+html[data-theme="light"] body.hskrc-knowledge-detail main{color:#18212b !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .back{color:#7a8793 !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .hero{
+  background:linear-gradient(180deg,#ffffff,#eef2f5) !important;
+  border-color:rgba(24,33,43,.12) !important;
+  box-shadow:0 12px 34px rgba(35,55,75,.06) !important;
+  color:#18212b !important;
+}
+html[data-theme="light"] body.hskrc-knowledge-detail .hero h1,
+html[data-theme="light"] body.hskrc-knowledge-detail .panel h2,
+html[data-theme="light"] body.hskrc-knowledge-detail .item strong,
+html[data-theme="light"] body.hskrc-knowledge-detail .path strong{color:#18212b !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .kick,
+html[data-theme="light"] body.hskrc-knowledge-detail .profile,
+html[data-theme="light"] body.hskrc-knowledge-detail .path a{color:#2f5f88 !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .type,
+html[data-theme="light"] body.hskrc-knowledge-detail .desc,
+html[data-theme="light"] body.hskrc-knowledge-detail .intro,
+html[data-theme="light"] body.hskrc-knowledge-detail .empty,
+html[data-theme="light"] body.hskrc-knowledge-detail .small{color:#5f6b78 !important;opacity:1 !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .panel{
+  background:linear-gradient(180deg,#ffffff,#eef2f5) !important;
+  border-color:rgba(24,33,43,.12) !important;
   box-shadow:0 10px 28px rgba(35,55,75,.045) !important;
 }
-html[data-theme="light"] body:is(.hskrc-page-support,.hskrc-page-contact) :is(input,select,textarea){
-  background:#f7f9fb !important;
-  color:#172433 !important;
-  border-color:rgba(26,47,68,.14) !important;
+html[data-theme="light"] body.hskrc-knowledge-detail .item,
+html[data-theme="light"] body.hskrc-knowledge-detail .path,
+html[data-theme="light"] body.hskrc-knowledge-detail .stat{
+  background:#ffffff !important;
+  border-color:rgba(24,33,43,.11) !important;
+  color:#18212b !important;
 }
-html[data-theme="light"] body:is(.hskrc-page-support,.hskrc-page-contact) :is(.lead,.note,.check){color:#667483 !important}
-html[data-theme="light"] body:is(.hskrc-page-support,.hskrc-page-contact) .btn{
-  background:#2f5f88 !important;
-  color:#ffffff !important;
-}
-
-/* Strong accessibility fallback for the exact low-contrast cases reported:
-   direct white text inside a now-light research card. */
-html[data-theme="light"] body:is(
-  .hskrc-page-founder,
-  .hskrc-page-about,
-  .hskrc-page-researchers,
-  .hskrc-page-sources,
-  .hskrc-page-explorer,
-  .hskrc-page-articles,
-  .hskrc-page-library
-) :is(.card,.statement,.step,.research-link,.search-item,.node,.gateway a,.research-gateway,.article-card,.book) :is(h2,h3,h4,strong,b){
-  color:#172433 !important;
-  opacity:1 !important;
-}
+html[data-theme="light"] body.hskrc-knowledge-detail .item:hover{background:#f8fafb !important;border-color:rgba(47,95,136,.25) !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .stat b{color:#2f5f88 !important}
+html[data-theme="light"] body.hskrc-knowledge-detail .stat span{color:#667483 !important}
