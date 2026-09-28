@@ -706,6 +706,23 @@
     }
 
 
+    .visual-evidence-policy {
+      margin: -14px 0 30px;
+      padding: 12px 15px;
+      border: 1px solid rgba(47,95,136,.22);
+      border-radius: 12px;
+      background: rgba(47,95,136,.06);
+      color: #667483;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    html[data-theme="dark"] .visual-evidence-policy {
+      border-color: rgba(201,164,92,.22);
+      background: rgba(201,164,92,.06);
+      color: #b9c1ca;
+    }
+
     .article-content em {
       color:
         var(--text-soft);
@@ -2193,6 +2210,13 @@
         cover
       );
 
+      const visualPolicy = document.createElement("div");
+      visualPolicy.className = "visual-evidence-policy";
+      visualPolicy.textContent = currentLanguage === "fa"
+        ? "سیاست شواهد تصویری: HSKRC بازسازی‌های تخیلی یا تصاویر تولیدشده با هوش مصنوعی را به‌عنوان سند تاریخی ارائه نمی‌کند. تصاویر پژوهشی باید تا حد امکان دارای منبع و وضعیت حقوقی روشن باشند."
+        : "Visual evidence policy: HSKRC does not present speculative reconstructions or AI-generated imagery as historical evidence. Research visuals should, wherever possible, carry a clear source and rights status.";
+      articleContainer.appendChild(visualPolicy);
+
 
       articleContainer.appendChild(
         header
@@ -2241,7 +2265,7 @@
         }
 
         if (sourceIds.length) {
-          const r = await supabaseClient.from("research_sources").select("id,source_code,title,author,institution,url").in("id", sourceIds).order("source_code");
+          const r = await supabaseClient.from("research_sources").select("id,source_code,title,author,institution,source_type,publication_year,url,language,reliability").in("id", sourceIds).order("source_code");
           if (r.error) throw r.error;
           sources = r.data || [];
 
@@ -2293,7 +2317,7 @@
 
       const sourceHtml = sources.length ? sources.map(source => {
         const label = `${source.source_code || ""}${source.source_code ? " — " : ""}${source.title || "Source"}`;
-        const meta = [source.author, source.institution].filter(Boolean).join(" · ");
+        const meta = [source.author, source.institution, source.publication_year, source.source_type].filter(Boolean).join(" · ");
         return `<div class="dynamic-item">
           <a href="sources.html#${escapeHtml(source.source_code || "")}">${escapeHtml(label)}</a>
           ${meta ? `<div class="dynamic-meta">${escapeHtml(meta)}</div>` : ""}
@@ -2403,12 +2427,16 @@
       const chicago = `${author}. “${title}.” HSKRC, ${year}. ${url}.`;
       const mla = `${author}. “${title}.” HSKRC, ${year}, ${url}.`;
       const refs = (sources || []).map(s => {
-        const lead=[s.author,s.institution].filter(Boolean).join(" / ") || "HSKRC source";
-        return `<div class="citation-row"><div class="citation-text">${escapeHtml(`${lead}. ${s.title || "Source"}${s.source_code ? ` (${s.source_code})` : ""}.`)}</div>${s.url ? `<a class="citation-link" target="_blank" rel="noopener" href="${escapeHtml(s.url)}">${fa ? "منبع اصلی ↗" : "Original source ↗"}</a>` : ""}</div>`;
+        const author = s.author || s.institution || "Institutional source";
+        const institution = s.author && s.institution ? s.institution : "";
+        const year = s.publication_year ? ` (${s.publication_year})` : "";
+        const type = s.source_type ? ` · ${s.source_type}` : "";
+        const citation = `${author}${year}. ${s.title || "Source"}.${institution ? ` ${institution}.` : ""}${s.source_code ? ` ${s.source_code}.` : ""}${type}`;
+        return `<div class="citation-row"><div class="citation-text">${escapeHtml(citation)}</div>${s.url ? `<a class="citation-link" target="_blank" rel="noopener noreferrer" href="${escapeHtml(s.url)}">${fa ? "مشاهده منبع رسمی ↗" : "Official / publisher source ↗"}</a>` : ""}</div>`;
       }).join("") || `<p class="dynamic-empty">${fa ? "هنوز منبع کتاب‌شناختی متصل نشده است." : "No bibliography source is linked yet."}</p>`;
       const row=(label,text)=>`<div class="citation-row"><div class="citation-label">${label}</div><div class="citation-text">${escapeHtml(text)}</div><div class="citation-actions"><button type="button" class="citation-copy" data-citation="${escapeHtml(text)}">${fa ? "کپی ارجاع" : "Copy citation"}</button></div></div>`;
       setTimeout(bindCitationButtons,0);
-      return `<div class="citation-box"><div class="dynamic-section-title">${fa ? "ارجاع و کتاب‌شناسی" : "Citation & Bibliography"}</div><p class="dynamic-empty">${fa ? "ارجاع آماده برای استفاده پژوهشی. پیش از نشر دانشگاهی، جزئیات را با منبع اصلی تطبیق دهید." : "Ready-to-copy citations. Verify bibliographic details against the original source before academic publication."}</p>${row("APA",apa)}${row("Chicago",chicago)}${row("MLA",mla)}<div class="citation-row"><div class="citation-label">${fa ? "شناسه دائمی HSKRC" : "HSKRC Permanent Record ID"}</div><div class="citation-text record-id">${escapeHtml(recordId)}</div><div class="citation-actions"><button type="button" class="citation-copy" data-citation="${escapeHtml(recordId)}">${fa ? "کپی شناسه" : "Copy ID"}</button><button type="button" class="citation-export" data-format="bibtex">${fa ? "دانلود BibTeX" : "Download BibTeX"}</button><button type="button" class="citation-export" data-format="ris">${fa ? "دانلود RIS" : "Download RIS"}</button></div></div><p class="dynamic-empty">${fa ? "این شناسه، شناسه داخلی و پایدار HSKRC است و DOI ثبت‌شده نزد یک آژانس DOI نیست." : "This is an internal persistent HSKRC record identifier; it is not a DOI registered with a DOI registration agency."}</p><div class="dynamic-section-title" style="margin-top:16px">${fa ? "منابع این مقاله" : "Article Bibliography"}</div>${refs}</div>`;
+      return `<div class="citation-box"><div class="dynamic-section-title">${fa ? "ارجاع و کتاب‌شناسی" : "Citation & Bibliography"}</div><p class="dynamic-empty">${fa ? "ارجاع آماده برای استفاده پژوهشی. پیش از نشر دانشگاهی، جزئیات را با منبع اصلی تطبیق دهید." : "Ready-to-copy citations. Verify bibliographic details against the original source before academic publication."}</p>${row("APA",apa)}${row("Chicago",chicago)}${row("MLA",mla)}<div class="citation-row"><div class="citation-label">${fa ? "شناسه دائمی HSKRC" : "HSKRC Permanent Record ID"}</div><div class="citation-text record-id">${escapeHtml(recordId)}</div><div class="citation-actions"><button type="button" class="citation-copy" data-citation="${escapeHtml(recordId)}">${fa ? "کپی شناسه" : "Copy ID"}</button><button type="button" class="citation-export" data-format="bibtex">${fa ? "دانلود BibTeX" : "Download BibTeX"}</button><button type="button" class="citation-export" data-format="ris">${fa ? "دانلود RIS" : "Download RIS"}</button></div></div><p class="dynamic-empty">${fa ? "این شناسه، شناسه داخلی و پایدار HSKRC است و DOI ثبت‌شده نزد یک آژانس DOI نیست." : "This is an internal persistent HSKRC record identifier; it is not a DOI registered with a DOI registration agency."}</p><div class="dynamic-section-title" style="margin-top:16px">${fa ? "منابع این مقاله" : "Article Bibliography"}</div>${refs}<p class="dynamic-empty rights-access-note">${fa ? "حقوق و دسترسی: HSKRC فایل‌های دارای حق نشر را بدون اجازه یا مجوز مناسب بازنشر نمی‌کند؛ برای دسترسی قانونی، پیوند ناشر یا نهاد اصلی ارائه می‌شود." : "Rights & access: HSKRC does not redistribute copyrighted files without permission or an applicable licence; official publisher or institutional links are provided for lawful access."}</p></div>`;
     }
 
     function bindCitationButtons(){
