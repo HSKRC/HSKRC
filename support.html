@@ -262,10 +262,19 @@ textarea{
 }
 </script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:image" content="https://hskrc.org/alamut-hero.jpg">
-<meta name="twitter:image" content="https://hskrc.org/alamut-hero.jpg">
-<meta property="og:image:alt" content="Alamut landscape — HSKRC">
+<meta property="og:image" content="https://hskrc.org/hskrc-social-preview.png">
+<meta name="twitter:image" content="https://hskrc.org/hskrc-social-preview.png">
+<meta property="og:image:alt" content="HSKRC — Hassan Sabbah Knowledge & Research Centre">
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64eb5ce85bc34352b46b995fbba45cf8"}'></script><!-- End Cloudflare Web Analytics -->
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HSKRC">
+<meta property="og:title" content="Support HSKRC | HSKRC">
+<meta property="og:description" content="Support HSKRC and record your contribution interest securely.">
+<meta property="og:url" content="https://hskrc.org/support.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Support HSKRC | HSKRC">
+<meta name="twitter:description" content="Support HSKRC and record your contribution interest securely.">
 </head>
 
 <body>
@@ -351,7 +360,7 @@ Contribution amount <span class="required">*</span>
   required
 >
 
-<select id="currency" required>
+<select id="currency" required aria-label="Currency">
 <option value="AUD">AUD</option>
 <option value="USD">USD</option>
 <option value="EUR">EUR</option>
@@ -384,7 +393,7 @@ Message <span class="required">*</span>
 <input
   id="display"
   type="checkbox"
->
+ aria-label="Display">
 
 <span>
 I would be happy for HSKRC to consider displaying my support publicly after administrator approval.

@@ -1196,8 +1196,11 @@
 <script defer="" src="hskrc-global.js"></script>
 <link href="https://hskrc.org/article.html" rel="canonical"/><meta content="article" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Article" property="og:title"/><meta content="HSKRC Research Article" property="og:description"/><meta content="https://hskrc.org/article.html" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="HSKRC | Article" name="twitter:title"/><meta content="HSKRC Research Article" name="twitter:description"/><script id="articleStructuredData" type="application/ld+json">{}</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:image:alt" content="Alamut landscape — HSKRC">
+<meta property="og:image:alt" content="HSKRC — Hassan Sabbah Knowledge & Research Centre">
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64eb5ce85bc34352b46b995fbba45cf8"}'></script><!-- End Cloudflare Web Analytics -->
+
+<meta property="og:image" content="https://hskrc.org/hskrc-social-preview.png">
+<meta name="twitter:image" content="https://hskrc.org/hskrc-social-preview.png">
 </head>
 <body>
 <!-- =========================================
@@ -1620,14 +1623,14 @@
       upsertMeta('meta[property="og:title"]', "property", "og:title", title);
       upsertMeta('meta[property="og:description"]', "property", "og:description", description);
       upsertMeta('meta[property="og:url"]', "property", "og:url", url);
-      upsertMeta('meta[name="twitter:card"]', "name", "twitter:card", coverUrl ? "summary_large_image" : "summary");
+      upsertMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image");
       upsertMeta('meta[name="twitter:title"]', "name", "twitter:title", title);
       upsertMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
 
-      if (coverUrl) {
-        upsertMeta('meta[property="og:image"]', "property", "og:image", coverUrl);
-        upsertMeta('meta[name="twitter:image"]', "name", "twitter:image", coverUrl);
-      }
+      const socialImage = "https://hskrc.org/hskrc-social-preview.png";
+      upsertMeta('meta[property="og:image"]', "property", "og:image", socialImage);
+      upsertMeta('meta[property="og:image:alt"]', "property", "og:image:alt", "HSKRC — Hassan Sabbah Knowledge & Research Centre");
+      upsertMeta('meta[name="twitter:image"]', "name", "twitter:image", socialImage);
 
       const published = isoDate(article.published_at || article.created_at);
       const modified = isoDate(article.updated_at || article.modified_at || article.published_at || article.created_at);
@@ -1658,7 +1661,7 @@
 
       if (published) articleNode.datePublished = published;
       if (modified) articleNode.dateModified = modified;
-      if (coverUrl) articleNode.image = [coverUrl];
+      articleNode.image = ["https://hskrc.org/hskrc-social-preview.png"];
       if (article.category) articleNode.articleSection = article.category;
 
       const graph = [

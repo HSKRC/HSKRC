@@ -158,7 +158,7 @@
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
         <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas</strong> · Founder & CEO</a>
-        <div class="hskrc-global-copy"><a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · <a href="${sitePath("privacy.html")}">Privacy</a> · <a href="${sitePath("terms.html")}">Terms</a> · © 2026 HSKRC - All rights reserved.</div>
+        <div class="hskrc-global-copy"><a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · <a href="${sitePath("editorial-policy.html")}">Editorial Policy</a> · <a href="${sitePath("privacy.html")}">Privacy</a> · <a href="${sitePath("terms.html")}">Terms</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
   }
@@ -407,9 +407,13 @@ document.addEventListener("click", function(event) {
       upsertMeta('meta[property="og:title"]',"property","og:title",title);
       upsertMeta('meta[property="og:description"]',"property","og:description",description);
       upsertMeta('meta[property="og:url"]',"property","og:url",canonical);
-      upsertMeta('meta[name="twitter:card"]',"name","twitter:card","summary");
+      const socialImage = options.image || (SITE_URL + "/hskrc-social-preview.png");
+      upsertMeta('meta[property="og:image"]',"property","og:image",socialImage);
+      upsertMeta('meta[property="og:image:alt"]',"property","og:image:alt","HSKRC — Hassan Sabbah Knowledge & Research Centre");
+      upsertMeta('meta[name="twitter:card"]',"name","twitter:card","summary_large_image");
       upsertMeta('meta[name="twitter:title"]',"name","twitter:title",title);
       upsertMeta('meta[name="twitter:description"]',"name","twitter:description",description);
+      upsertMeta('meta[name="twitter:image"]',"name","twitter:image",socialImage);
 
       const pageId = canonical + "#webpage";
       const entity = options.entity ? {...options.entity} : null;

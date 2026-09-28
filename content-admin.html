@@ -982,11 +982,11 @@ html{scroll-padding-top:105px}
 <div class="network-pane active" id="network-pane-nodes">
 <form id="nodeForm"><input id="networkNodeId" type="hidden"/>
 <div class="form-grid">
-<div><label>Slug *</label><input id="networkNodeSlug" placeholder="e.g. alamut" required=""/></div>
-<div><label>Node Type</label><select id="networkNodeType"><option value="topic">Topic</option><option value="person">Person</option><option value="place">Place</option><option value="fortification">Fortification</option></select></div>
-<div><label>English Title *</label><input id="networkNodeTitle" required=""/></div>
-<div><label>Persian Title</label><input id="networkNodeTitleFa"/></div>
-<div class="full"><label>Description</label><textarea id="networkNodeDescription"></textarea></div>
+<div><label>Slug *</label><input id="networkNodeSlug" placeholder="e.g. alamut" required=""/ aria-label="Network Node Slug"></div>
+<div><label>Node Type</label><select id="networkNodeType" aria-label="Network Node Type"><option value="topic">Topic</option><option value="person">Person</option><option value="place">Place</option><option value="fortification">Fortification</option></select></div>
+<div><label>English Title *</label><input id="networkNodeTitle" required=""/ aria-label="Network Node Title"></div>
+<div><label>Persian Title</label><input id="networkNodeTitleFa"/ aria-label="Network Node Title Fa"></div>
+<div class="full"><label>Description</label><textarea id="networkNodeDescription" aria-label="Network Node Description"></textarea></div>
 </div>
 <div class="form-actions"><button class="gold" type="submit">Save Knowledge Node</button><button class="dark" onclick="resetNodeForm()" type="button">Clear</button></div>
 </form>
@@ -995,16 +995,16 @@ html{scroll-padding-top:105px}
 <div class="network-pane" id="network-pane-sources">
 <form id="sourceForm"><input id="networkSourceId" type="hidden"/>
 <div class="form-grid">
-<div><label>Source Code *</label><input id="networkSourceCode" placeholder="HSKRC-SRC-0013" required=""/></div>
-<div><label>Source Type</label><input id="networkSourceType" placeholder="Scholarly Book"/></div>
-<div class="full"><label>Title *</label><input id="networkSourceTitle" required=""/></div>
-<div><label>Author</label><input id="networkSourceAuthor"/></div>
-<div><label>Institution</label><input id="networkSourceInstitution"/></div>
-<div><label>Publication Year</label><input id="networkSourceYear" type="number"/></div>
-<div><label>Language</label><input id="networkSourceLanguage"/></div>
-<div><label>Reliability</label><input id="networkSourceReliability"/></div>
-<div class="full"><label>URL</label><input id="networkSourceUrl" type="url"/></div>
-<div class="full"><label>Notes</label><textarea id="networkSourceNotes"></textarea></div>
+<div><label>Source Code *</label><input id="networkSourceCode" placeholder="HSKRC-SRC-0013" required=""/ aria-label="Network Source Code"></div>
+<div><label>Source Type</label><input id="networkSourceType" placeholder="Scholarly Book"/ aria-label="Network Source Type"></div>
+<div class="full"><label>Title *</label><input id="networkSourceTitle" required=""/ aria-label="Network Source Title"></div>
+<div><label>Author</label><input id="networkSourceAuthor"/ aria-label="Network Source Author"></div>
+<div><label>Institution</label><input id="networkSourceInstitution"/ aria-label="Network Source Institution"></div>
+<div><label>Publication Year</label><input id="networkSourceYear" type="number"/ aria-label="Network Source Year"></div>
+<div><label>Language</label><input id="networkSourceLanguage"/ aria-label="Network Source Language"></div>
+<div><label>Reliability</label><input id="networkSourceReliability"/ aria-label="Network Source Reliability"></div>
+<div class="full"><label>URL</label><input id="networkSourceUrl" type="url"/ aria-label="Network Source Url"></div>
+<div class="full"><label>Notes</label><textarea id="networkSourceNotes" aria-label="Network Source Notes"></textarea></div>
 </div>
 <div class="form-actions"><button class="gold" type="submit">Save Source</button><button class="dark" onclick="resetSourceForm()" type="button">Clear</button></div>
 </form>
@@ -1013,11 +1013,11 @@ html{scroll-padding-top:105px}
 <div class="network-pane" id="network-pane-researchers">
 <form id="researcherForm"><input id="networkResearcherId" type="hidden"/>
 <div class="form-grid">
-<div><label>Slug *</label><input id="networkResearcherSlug" placeholder="farhad-daftary" required=""/></div>
-<div><label>Field</label><input id="networkResearcherField" placeholder="Ismaili Studies"/></div>
-<div><label>Name *</label><input id="networkResearcherName" required=""/></div>
-<div><label>Persian Name</label><input id="networkResearcherNameFa"/></div>
-<div class="full"><label>Notes</label><textarea id="networkResearcherNotes"></textarea></div>
+<div><label>Slug *</label><input id="networkResearcherSlug" placeholder="farhad-daftary" required=""/ aria-label="Network Researcher Slug"></div>
+<div><label>Field</label><input id="networkResearcherField" placeholder="Ismaili Studies"/ aria-label="Network Researcher Field"></div>
+<div><label>Name *</label><input id="networkResearcherName" required=""/ aria-label="Network Researcher Name"></div>
+<div><label>Persian Name</label><input id="networkResearcherNameFa"/ aria-label="Network Researcher Name Fa"></div>
+<div class="full"><label>Notes</label><textarea id="networkResearcherNotes" aria-label="Network Researcher Notes"></textarea></div>
 </div>
 <div class="form-actions"><button class="gold" type="submit">Save Researcher</button><button class="dark" onclick="resetResearcherForm()" type="button">Clear</button></div>
 </form>
@@ -1033,9 +1033,9 @@ html{scroll-padding-top:105px}
 <div class="panel" id="articleConnectionPanel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
 <h3 style="margin-top:0;color:#fff">Article Connections</h3>
 <div class="relation-grid">
-<div><label>Article</label><select id="relationArticle"></select></div>
-<div><label>Knowledge Node</label><select id="relationNode"></select></div>
-<div><label>Source</label><select id="relationSource"></select></div>
+<div><label>Article</label><select id="relationArticle" aria-label="Relation Article"></select></div>
+<div><label>Knowledge Node</label><select id="relationNode" aria-label="Relation Node"></select></div>
+<div><label>Source</label><select id="relationSource" aria-label="Relation Source"></select></div>
 <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
 <button class="gold" onclick="linkArticleNode()" type="button">Link Article → Node</button>
 <button class="gold" onclick="linkArticleSource()" type="button">Link Article → Source</button>
@@ -1048,8 +1048,8 @@ html{scroll-padding-top:105px}
 <h3 style="margin-top:0;color:#fff">Source ↔ Knowledge Node</h3>
 <p style="color:#9f9a90;margin-top:-4px">Connect a documented source directly to Alamut, Hassan Sabbah, a fortification, or another knowledge node.</p>
 <div class="relation-grid">
-<div><label>Source</label><select id="sourceNodeSource"></select></div>
-<div><label>Knowledge Node</label><select id="sourceNodeNode"></select></div>
+<div><label>Source</label><select id="sourceNodeSource" aria-label="Source Node Source"></select></div>
+<div><label>Knowledge Node</label><select id="sourceNodeNode" aria-label="Source Node Node"></select></div>
 <div style="display:flex;align-items:end"><button class="gold" id="linkSourceNodeBtn" onclick="linkSourceNode()" type="button">Link Source → Node</button></div>
 </div>
 <div id="sourceNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="sourceNodeRelationsList"></div>
@@ -1059,8 +1059,8 @@ html{scroll-padding-top:105px}
 <h3 style="margin-top:0;color:#fff">Researcher ↔ Source</h3>
 <p style="color:#9f9a90;margin-top:-4px">Associate a researcher with the scholarly sources represented in the HSKRC registry.</p>
 <div class="relation-grid">
-<div><label>Researcher</label><select id="researcherSourceResearcher"></select></div>
-<div><label>Source</label><select id="researcherSourceSource"></select></div>
+<div><label>Researcher</label><select id="researcherSourceResearcher" aria-label="Researcher Source Researcher"></select></div>
+<div><label>Source</label><select id="researcherSourceSource" aria-label="Researcher Source Source"></select></div>
 <div style="display:flex;align-items:end"><button class="gold" id="linkResearcherSourceBtn" onclick="linkResearcherSource()" type="button">Link Researcher → Source</button></div>
 </div>
 <div id="researcherSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="researcherSourceRelationsList"></div>
@@ -1071,17 +1071,17 @@ html{scroll-padding-top:105px}
 <div class="section-note" style="margin-bottom:18px"><b>Book Research Integration</b> · Connect real library records to the HSKRC Research Network. No relationship is created automatically.</div>
 <div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
 <h3 style="margin-top:0;color:#fff">Book ↔ Knowledge Node</h3>
-<div class="relation-grid"><div><label>Book</label><select id="bookNodeBook"></select></div><div><label>Knowledge Node</label><select id="bookNodeNode"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookNodeBtn" onclick="linkBookNode()" type="button">Link Book → Node</button></div></div>
+<div class="relation-grid"><div><label>Book</label><select id="bookNodeBook" aria-label="Book Node Book"></select></div><div><label>Knowledge Node</label><select id="bookNodeNode" aria-label="Book Node Node"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookNodeBtn" onclick="linkBookNode()" type="button">Link Book → Node</button></div></div>
 <div id="bookNodeStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookNodeRelationsList"></div>
 </div>
 <div class="panel" style="margin:0 0 22px;padding:24px;border-color:#c9a45c66">
 <h3 style="margin-top:0;color:#fff">Book ↔ Research Source</h3>
-<div class="relation-grid"><div><label>Book</label><select id="bookSourceBook"></select></div><div><label>Source</label><select id="bookSourceSource"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookSourceBtn" onclick="linkBookSource()" type="button">Link Book → Source</button></div></div>
+<div class="relation-grid"><div><label>Book</label><select id="bookSourceBook" aria-label="Book Source Book"></select></div><div><label>Source</label><select id="bookSourceSource" aria-label="Book Source Source"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookSourceBtn" onclick="linkBookSource()" type="button">Link Book → Source</button></div></div>
 <div id="bookSourceStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookSourceRelationsList"></div>
 </div>
 <div class="panel" style="margin:0;padding:24px;border-color:#c9a45c66">
 <h3 style="margin-top:0;color:#fff">Book ↔ Researcher</h3>
-<div class="relation-grid"><div><label>Book</label><select id="bookResearcherBook"></select></div><div><label>Researcher</label><select id="bookResearcherResearcher"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookResearcherBtn" onclick="linkBookResearcher()" type="button">Link Book → Researcher</button></div></div>
+<div class="relation-grid"><div><label>Book</label><select id="bookResearcherBook" aria-label="Book Researcher Book"></select></div><div><label>Researcher</label><select id="bookResearcherResearcher" aria-label="Book Researcher Researcher"></select></div><div style="display:flex;align-items:end"><button class="gold" id="linkBookResearcherBtn" onclick="linkBookResearcher()" type="button">Link Book → Researcher</button></div></div>
 <div id="bookResearcherStatus" style="display:none;margin:14px 0 0;padding:11px 13px;border-radius:8px;font-size:12px;font-weight:700"></div><div class="mini-list" id="bookResearcherRelationsList"></div>
 </div>
 </div>

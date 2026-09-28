@@ -1496,9 +1496,9 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 </script>
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:image" content="https://hskrc.org/alamut-hero.jpg">
-<meta name="twitter:image" content="https://hskrc.org/alamut-hero.jpg">
-<meta property="og:image:alt" content="Alamut landscape — HSKRC">
+<meta property="og:image" content="https://hskrc.org/hskrc-social-preview.png">
+<meta name="twitter:image" content="https://hskrc.org/hskrc-social-preview.png">
+<meta property="og:image:alt" content="HSKRC — Hassan Sabbah Knowledge & Research Centre">
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64eb5ce85bc34352b46b995fbba45cf8"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -1545,14 +1545,15 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 <p class="description" id="pageDescription">
       Explore books and research materials from the HSKRC digital collection.
     </p>
+<p class="rights-library-note" style="max-width:980px;margin:14px auto 0;color:var(--muted);font-size:13px;line-height:1.7"><strong>Copyright &amp; access:</strong> HSKRC only enables local PDF reading when redistribution permission, an applicable licence, or public-domain status is documented. Otherwise, official or lawful external access links are provided where available.</p>
 </section>
 <div class="login-message" id="loginMessage">
-    Please login to read or access books.
+    Sign in for member features. PDF access is provided only where rights are documented; official external links may be available without sign-in.
   </div>
 <div class="library-tools">
 <div class="search-box">
-<input autocomplete="off" id="searchInput" oninput="filterBooks()" placeholder="Search by title, author or description..." type="search"/>
-<select id="categoryFilter" onchange="filterBooks()">
+<input autocomplete="off" id="searchInput" oninput="filterBooks()" placeholder="Search by title, author or description..." type="search"/ aria-label="Search Input">
+<select id="categoryFilter" onchange="filterBooks()" aria-label="Category Filter">
 <option value="">
           All Categories
         </option>
@@ -1811,7 +1812,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
     ).textContent =
       fa
         ? "برای مطالعه یا دسترسی به کتاب‌ها ابتدا وارد حساب خود شوید."
-        : "Please login to read or access books.";
+        : "Sign in for member features. PDF access is provided only where rights are documented; official external links may be available without sign-in.";
 
 
     document.getElementById(
@@ -2470,6 +2471,14 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
     }
   }
 
+  const LOCAL_PDF_RIGHTS = new Set(["licensed", "public_domain", "permission_granted"]);
+  function localPdfAllowed(book) {
+    return Boolean(book?.pdf_path && LOCAL_PDF_RIGHTS.has(String(book?.rights_status || "").toLowerCase()));
+  }
+  function localCoverAllowed(book) {
+    return LOCAL_PDF_RIGHTS.has(String(book?.rights_status || "").toLowerCase());
+  }
+
   function renderBooks(books) {
     const container = document.getElementById("booksContainer");
 
@@ -2508,8 +2517,11 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
       const language = book.language || "";
       const category = book.category || "";
       const pdfPath = book.pdf_path || "";
+      const canUseLocalPdf = localPdfAllowed(book);
+      const externalAccess = String(book.access_url || "").trim();
+      const canUseCover = localCoverAllowed(book);
 
-      let coverHtml = book.cover_url
+      let coverHtml = canUseCover && book.cover_url
         ? `<img src="${escapeHtml(book.cover_url)}" alt="${escapeHtml(title)}" loading="lazy">`
         : `<div class="no-cover">📚</div>`;
 
@@ -2541,8 +2553,12 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
             <a class="details-button" href="book.html?id=${encodeURIComponent(book.id || "")}">
               ${currentLanguage === "fa" ? "↗ جزئیات کتاب" : "↗ View Details"}
             </a>
-            <button class="read-button" type="button" ${pdfPath ? "" : "disabled"}>
-              ${currentLanguage === "fa" ? "📖 مشاهده PDF" : "📖 View PDF"}
+            <button class="read-button" type="button" ${(canUseLocalPdf || externalAccess) ? "" : "disabled"}>
+              ${canUseLocalPdf
+                ? (currentLanguage === "fa" ? "📖 مشاهده PDF مجاز" : "📖 Read authorised PDF")
+                : externalAccess
+                  ? (currentLanguage === "fa" ? "↗ دسترسی رسمی / قانونی" : "↗ Official / legal access")
+                  : (currentLanguage === "fa" ? "⏳ بررسی حقوق نشر" : "⏳ Rights review")}
             </button>
           </div>
         </div>`;
@@ -2555,13 +2571,17 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
       }
 
       article.querySelector(".read-button").addEventListener("click", () => {
-        if (!pdfPath) {
-          alert(currentLanguage === "fa"
-            ? "فایل PDF برای این کتاب ثبت نشده است."
-            : "No PDF file is available for this book.");
+        if (canUseLocalPdf) {
+          openPdf(pdfPath, title);
           return;
         }
-        openPdf(pdfPath, title);
+        if (externalAccess) {
+          window.open(externalAccess, "_blank", "noopener,noreferrer");
+          return;
+        }
+        alert(currentLanguage === "fa"
+          ? "حقوق نشر و مجوز دسترسی این فایل هنوز تأیید نشده است."
+          : "Rights and redistribution permission for this file have not yet been verified.");
       });
 
       const favoriteButton = article.querySelector(".favorite-toggle");
@@ -2579,7 +2599,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 
       container.appendChild(article);
 
-      if (!book.cover_url && book.cover_path) {
+      if (canUseCover && !book.cover_url && book.cover_path) {
         supabaseClient.storage.from("Books")
           .createSignedUrl(book.cover_path, 3600)
           .then(({data}) => {
