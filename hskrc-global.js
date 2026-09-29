@@ -158,7 +158,7 @@
     footer.innerHTML=`
       <div class="hskrc-global-footer-inner">
         <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas</strong> · Founder & CEO</a>
-        <div class="hskrc-global-copy"><a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · <a href="${sitePath("editorial-policy.html")}">Editorial Policy</a> · <a href="${sitePath("privacy.html")}">Privacy</a> · <a href="${sitePath("terms.html")}">Terms</a> · © 2026 HSKRC - All rights reserved.</div>
+        <div class="hskrc-global-copy"><a href="${sitePath("project-overview.html")}">Project Overview</a> · <a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · <a href="${sitePath("editorial-policy.html")}">Editorial Policy</a> · <a href="${sitePath("privacy.html")}">Privacy</a> · <a href="${sitePath("terms.html")}">Terms</a> · © 2026 HSKRC - All rights reserved.</div>
       </div>`;
     document.body.appendChild(footer);
   }
