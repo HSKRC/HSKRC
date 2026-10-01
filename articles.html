@@ -1506,6 +1506,50 @@
 
 
     /* =========================================
+       BILINGUAL ARTICLE PAIRS
+       One research article can have separate
+       English and Dari records in Supabase,
+       while appearing only once in the archive.
+    ========================================= */
+
+    const ARTICLE_LANGUAGE_PAIRS = [
+      {
+        en: "90ed5861-4206-4cc1-98a5-d5836ceaa10c",
+        fa: "78eec163-bdf8-4e20-a961-fb2ea0c4c02c"
+      }
+    ];
+
+
+    function getDisplayArticles() {
+
+      const hiddenIds =
+        new Set();
+
+
+      ARTICLE_LANGUAGE_PAIRS.forEach(
+        pair => {
+
+          hiddenIds.add(
+            currentLanguage === "fa"
+              ? pair.en
+              : pair.fa
+          );
+
+        }
+      );
+
+
+      return allArticles.filter(
+        article =>
+          !hiddenIds.has(
+            String(article.id || "")
+          )
+      );
+
+    }
+
+
+    /* =========================================
        DOM
     ========================================= */
 
@@ -1645,6 +1689,17 @@
       );
 
 
+      if (
+        allArticles.length
+      ) {
+
+        categorySelect.value = "";
+
+        buildCategories();
+
+      }
+
+
       updateResultsHeader();
 
       renderArticles();
@@ -1779,7 +1834,7 @@
       const categories =
         [
           ...new Set(
-            allArticles
+            getDisplayArticles()
               .map(article =>
                 (article.category || "")
                   .trim()
@@ -1873,7 +1928,7 @@
           .toLowerCase();
 
 
-      return allArticles.filter(
+      return getDisplayArticles().filter(
         article => {
 
           const title =
