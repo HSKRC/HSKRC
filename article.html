@@ -1992,21 +1992,26 @@
         "";
 
 
-      /* COVER */
+      /* COVER
+         Only render the cover area when a real image exists.
+         Articles without a cover have no blank image space.
+      */
 
-      const cover =
-        document.createElement(
-          "div"
-        );
-
-
-      cover.className =
-        "article-cover";
-
+      let cover = null;
 
       if (
         coverUrl
       ) {
+
+        cover =
+          document.createElement(
+            "div"
+          );
+
+
+        cover.className =
+          "article-cover";
+
 
         const image =
           document.createElement(
@@ -2026,24 +2031,13 @@
         image.onerror =
           () => {
 
-            image.remove();
-
-
-            cover.appendChild(
-              createCoverPlaceholder()
-            );
+            cover.remove();
 
           };
 
 
         cover.appendChild(
           image
-        );
-
-      } else {
-
-        cover.appendChild(
-          createCoverPlaceholder()
         );
 
       }
@@ -2316,9 +2310,15 @@
 
       /* APPEND */
 
-      articleContainer.appendChild(
+      if (
         cover
-      );
+      ) {
+
+        articleContainer.appendChild(
+          cover
+        );
+
+      }
 
       const visualPolicy = document.createElement("div");
       visualPolicy.className = "visual-evidence-policy";
