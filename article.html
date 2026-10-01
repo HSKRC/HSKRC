@@ -587,6 +587,44 @@
 
 
     /* =========================================
+       ARTICLE LANGUAGE PAIR
+    ========================================= */
+
+    .article-language-pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 16px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .article-language-pair a {
+      min-width: 70px;
+      padding: 6px 10px;
+      border-radius: 7px;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+      transition: color .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .article-language-pair a:hover {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .article-language-pair a.active {
+      color: var(--green);
+      background: var(--green-soft);
+      box-shadow: inset 0 0 0 1px var(--green-border);
+    }
+
+
+    /* =========================================
        CONTENT
     ========================================= */
 
@@ -1880,6 +1918,57 @@
 
 
     /* =========================================
+       BILINGUAL ARTICLE PAIRS
+    ========================================= */
+
+    const ARTICLE_LANGUAGE_PAIRS = {
+      "90ed5861-4206-4cc1-98a5-d5836ceaa10c": {
+        en: "90ed5861-4206-4cc1-98a5-d5836ceaa10c",
+        fa: "78eec163-bdf8-4e20-a961-fb2ea0c4c02c"
+      },
+      "78eec163-bdf8-4e20-a961-fb2ea0c4c02c": {
+        en: "90ed5861-4206-4cc1-98a5-d5836ceaa10c",
+        fa: "78eec163-bdf8-4e20-a961-fb2ea0c4c02c"
+      }
+    };
+
+    function createArticleLanguagePair(article) {
+      const articleId = String(article?.id || "");
+      const pair = ARTICLE_LANGUAGE_PAIRS[articleId];
+      if (!pair) return null;
+
+      const wrap = document.createElement("div");
+      wrap.className = "article-language-pair";
+      wrap.setAttribute("aria-label", "Article language");
+
+      [
+        ["en", "English"],
+        ["fa", "دری"]
+      ].forEach(([key, label]) => {
+        const link = document.createElement("a");
+        link.href = `article.html?id=${encodeURIComponent(pair[key])}`;
+        link.textContent = label;
+        link.lang = key === "fa" ? "fa" : "en";
+
+        if (articleId === pair[key]) {
+          link.classList.add("active");
+          link.setAttribute("aria-current", "page");
+        }
+
+        link.addEventListener("click", () => {
+          try {
+            localStorage.setItem("hskrc_language", key);
+          } catch (error) {}
+        });
+
+        wrap.appendChild(link);
+      });
+
+      return wrap;
+    }
+
+
+    /* =========================================
        RENDER ARTICLE
     ========================================= */
 
@@ -2023,6 +2112,24 @@
 
         header.appendChild(
           category
+        );
+
+      }
+
+
+      /* BILINGUAL ARTICLE SWITCH */
+
+      const languagePair =
+        createArticleLanguagePair(
+          article
+        );
+
+      if (
+        languagePair
+      ) {
+
+        header.appendChild(
+          languagePair
         );
 
       }
