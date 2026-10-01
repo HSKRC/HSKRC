@@ -1020,7 +1020,10 @@ html[data-theme="light"] body.hskrc-page-articles .read-button{
   color:#ffffff !important;
 }
 html[data-theme="light"] body.hskrc-page-articles .category-badge{
-  color:#dceafb !important;
+  color:#244a6b !important;
+  background:rgba(47,95,136,.08) !important;
+  border-color:rgba(47,95,136,.24) !important;
+  opacity:1 !important;
 }
 
 /* Digital Library */
