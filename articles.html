@@ -690,10 +690,10 @@
 
 
     .category-badge {
-      position: absolute;
+      display: inline-flex;
+      align-self: flex-start;
 
-      left: 14px;
-      top: 14px;
+      margin-bottom: 12px;
 
       padding:
         6px 9px;
@@ -701,20 +701,17 @@
       border-radius: 8px;
 
       background:
-        rgba(8,10,13,0.78);
+        var(--green-soft);
 
       border:
         1px solid
-        rgba(255,255,255,0.12);
+        var(--green-border);
 
       color:
         var(--green);
 
       font-size: 11px;
       font-weight: 800;
-
-      backdrop-filter:
-        blur(8px);
     }
 
 
@@ -2082,48 +2079,18 @@
         "article-card";
 
 
-      /* COVER */
+      /* COVER
+         A cover area is created only when a real image exists.
+         Articles without images have no blank image space.
+      */
 
-      const cover =
-        document.createElement(
-          "div"
-        );
-
-
-      cover.className =
-        "article-cover";
-
+      let cover = null;
 
       const category =
         (
           article.category || ""
         )
         .trim();
-
-
-      if (
-        category
-      ) {
-
-        const badge =
-          document.createElement(
-            "div"
-          );
-
-
-        badge.className =
-          "category-badge";
-
-
-        badge.textContent =
-          category;
-
-
-        cover.appendChild(
-          badge
-        );
-
-      }
 
 
       const coverUrl =
@@ -2135,6 +2102,16 @@
       if (
         coverUrl
       ) {
+
+        cover =
+          document.createElement(
+            "div"
+          );
+
+
+        cover.className =
+          "article-cover";
+
 
         const image =
           document.createElement(
@@ -2158,28 +2135,13 @@
         image.onerror =
           () => {
 
-            image.remove();
-
-
-            const placeholder =
-              createCoverPlaceholder();
-
-
-            cover.appendChild(
-              placeholder
-            );
+            cover.remove();
 
           };
 
 
         cover.appendChild(
           image
-        );
-
-      } else {
-
-        cover.appendChild(
-          createCoverPlaceholder()
         );
 
       }
@@ -2195,6 +2157,33 @@
 
       body.className =
         "article-body";
+
+
+      /* CATEGORY */
+
+      if (
+        category
+      ) {
+
+        const badge =
+          document.createElement(
+            "div"
+          );
+
+
+        badge.className =
+          "category-badge";
+
+
+        badge.textContent =
+          category;
+
+
+        body.appendChild(
+          badge
+        );
+
+      }
 
 
       /* META */
@@ -2419,9 +2408,15 @@
       );
 
 
-      card.appendChild(
+      if (
         cover
-      );
+      ) {
+
+        card.appendChild(
+          cover
+        );
+
+      }
 
 
       card.appendChild(
