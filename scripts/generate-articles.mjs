@@ -96,7 +96,7 @@ function articleBody(content = "") {
   return String(content || "");
 }
 
-function buildHtml(article, slug) {
+function buildHtml(article, slug, translations = {}) {
   const canonical =
     `${SITE_URL}/${OUTPUT_DIR}/${slug}.html`;
 
@@ -129,24 +129,51 @@ function buildHtml(article, slug) {
     coverUrl(article);
 
   /*
-    Detect Persian/Arabic-script articles.
-
-    If the title or description contains characters
-    from the Arabic/Persian Unicode range, the
-    generated page uses Persian language metadata
-    and right-to-left direction.
+    Prefer explicit translation metadata from
+    Supabase. Fall back to script detection for
+    legacy rows.
   */
   const lang =
-    /[\u0600-\u06FF]/.test(
-      `${title} ${description}`
-    )
-      ? "fa"
-      : "en";
+    article.language_code === "fa" ||
+    article.language_code === "en"
+      ? article.language_code
+      : (
+          /[\u0600-\u06FF]/.test(
+            `${title} ${description}`
+          )
+            ? "fa"
+            : "en"
+        );
 
   const dir =
     lang === "fa"
       ? "rtl"
       : "ltr";
+
+
+  const alternateEn =
+    translations.en
+      ? `${SITE_URL}/${OUTPUT_DIR}/${makeSlug(translations.en)}.html`
+      : null;
+
+
+  const alternateFa =
+    translations.fa
+      ? `${SITE_URL}/${OUTPUT_DIR}/${makeSlug(translations.fa)}.html`
+      : null;
+
+
+  const languageSwitchHtml =
+    (alternateEn || alternateFa)
+      ? `<div class="article-language-pair" aria-label="${lang === "fa" ? "زبان مقاله" : "Article language"}">
+  ${alternateEn
+    ? `<a class="${lang === "en" ? "active" : ""}" lang="en" href="${escapeHtml(alternateEn)}">English</a>`
+    : `<span class="disabled" aria-disabled="true">English</span>`}
+  ${alternateFa
+    ? `<a class="${lang === "fa" ? "active" : ""}" lang="fa" href="${escapeHtml(alternateFa)}">دری</a>`
+    : `<span class="disabled" aria-disabled="true">دری</span>`}
+</div>`
+      : "";
 
   const schema = {
     "@context": "https://schema.org",
@@ -305,6 +332,14 @@ function buildHtml(article, slug) {
   rel="canonical"
   href="${escapeHtml(canonical)}"
 >
+
+${alternateEn
+  ? `<link rel="alternate" hreflang="en" href="${escapeHtml(alternateEn)}">`
+  : ""}
+${alternateFa
+  ? `<link rel="alternate" hreflang="fa" href="${escapeHtml(alternateFa)}">`
+  : ""}
+<link rel="alternate" hreflang="x-default" href="${escapeHtml(alternateEn || alternateFa || canonical)}">
 
 <meta
   property="og:type"
@@ -472,7 +507,44 @@ h1 {
 
 .meta {
   color: #9ca3af;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
+}
+
+.article-language-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 28px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+}
+
+.article-language-pair a,
+.article-language-pair span {
+  min-width: 72px;
+  padding: 7px 11px;
+  border-radius: 7px;
+  color: #c4ccd7;
+  text-decoration: none;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.article-language-pair a:hover,
+.article-language-pair a.active {
+  color: #c9a45c;
+  background: rgba(201,164,92,.12);
+}
+
+.article-language-pair a.active {
+  box-shadow: inset 0 0 0 1px rgba(201,164,92,.30);
+}
+
+.article-language-pair .disabled {
+  opacity: .45;
 }
 
 .cover {
@@ -580,6 +652,8 @@ ${category
 
 </div>
 
+${languageSwitchHtml}
+
 ${image
   ? `<img
   class="cover"
@@ -625,7 +699,7 @@ async function fetchArticles() {
 
   const endpoint =
     `${SUPABASE_URL}/rest/v1/articles` +
-    `?select=id,title,author,category,excerpt,content,cover_path,published,published_at,created_at,updated_at` +
+    `?select=id,title,author,category,excerpt,content,cover_path,published,published_at,created_at,updated_at,language_code,translation_group` +
     `&published=eq.true` +
     `&order=published_at.desc`;
 
@@ -768,6 +842,57 @@ async function main() {
     }
   );
 
+  const translationGroups =
+    new Map();
+
+
+  for (
+    const article of articles
+  ) {
+
+    const groupId =
+      String(
+        article.translation_group ||
+        article.id
+      );
+
+
+    if (
+      !translationGroups.has(
+        groupId
+      )
+    ) {
+
+      translationGroups.set(
+        groupId,
+        {}
+      );
+
+    }
+
+
+    const detectedLanguage =
+      article.language_code === "fa" ||
+      article.language_code === "en"
+        ? article.language_code
+        : (
+            /[\u0600-\u06FF]/.test(
+              String(article.title || "")
+            )
+              ? "fa"
+              : "en"
+          );
+
+
+    translationGroups
+      .get(
+        groupId
+      )[detectedLanguage] =
+        article;
+
+  }
+
+
   const generated = [];
 
   for (
@@ -786,10 +911,20 @@ async function main() {
         filename
       );
 
+    const groupId =
+      String(
+        article.translation_group ||
+        article.id
+      );
+
+
     const html =
       buildHtml(
         article,
-        slug
+        slug,
+        translationGroups.get(
+          groupId
+        ) || {}
       );
 
     await fs.writeFile(
