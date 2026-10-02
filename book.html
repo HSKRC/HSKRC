@@ -48,8 +48,153 @@ footer{border-top:1px solid var(--soft);background:#050505;padding:34px;text-ali
 @media(max-width:900px){.research-groups{grid-template-columns:1fr}}
 .rights-note{margin-top:14px;color:var(--muted);font-size:12px;line-height:1.65;max-width:760px}.actions a.primary{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 </style>
-<link href="hskrc-global.css?v=20261003-5" rel="stylesheet"/>
-<script defer="" src="hskrc-global.js?v=20261003-5"></script>
+<link href="hskrc-global.css?v=20261003-7" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js?v=20261003-7"></script>
+<style id="book-v7-fix">
+/* HSKRC Book Details — same institutional light system as Founder/Researchers/Knowledge Base */
+html[data-theme="light"] body.hskrc-page-book main{color:#161616!important}
+html[data-theme="light"] body.hskrc-page-book .back{color:#8a8a8a!important}
+html[data-theme="light"] body.hskrc-page-book .back:hover{color:#8f1d2c!important;transform:none!important}
+
+html[data-theme="light"] body.hskrc-page-book .details{
+  grid-template-columns:300px minmax(0,1fr)!important;
+  gap:40px!important;
+  padding:34px!important;
+  background:#fff!important;
+  color:#161616!important;
+  border:1px solid #d8d8d8!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+html[data-theme="light"] body.hskrc-page-book .details.no-cover-image{
+  grid-template-columns:1fr!important;
+}
+html[data-theme="light"] body.hskrc-page-book .details:before{background:#8f1d2c!important;left:0!important;right:auto!important;width:4px!important;height:100%!important}
+html[data-theme="light"] body.hskrc-page-book .details:after{display:none!important}
+
+html[data-theme="light"] body.hskrc-page-book .cover{
+  width:100%!important;
+  aspect-ratio:3/4.35!important;
+  background:#f4f4f4!important;
+  border:1px solid #d8d8d8!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.hskrc-page-book .cover[hidden]{display:none!important}
+html[data-theme="light"] body.hskrc-page-book .cover img{filter:none!important}
+
+html[data-theme="light"] body.hskrc-page-book .eyebrow,
+html[data-theme="light"] body.hskrc-page-book .desc-title,
+html[data-theme="light"] body.hskrc-page-book .section-kicker,
+html[data-theme="light"] body.hskrc-page-book .research-group-label,
+html[data-theme="light"] body.hskrc-page-book .research-count{
+  color:#8f1d2c!important;
+}
+html[data-theme="light"] body.hskrc-page-book .dot{background:#8f1d2c!important;box-shadow:none!important}
+html[data-theme="light"] body.hskrc-page-book h1,
+html[data-theme="light"] body.hskrc-page-book .section-heading h2,
+html[data-theme="light"] body.hskrc-page-book .related-book-title,
+html[data-theme="light"] body.hskrc-page-book .research-item-title{
+  color:#161616!important;
+}
+html[data-theme="light"] body.hskrc-page-book .author{color:#414141!important}
+html[data-theme="light"] body.hskrc-page-book .desc,
+html[data-theme="light"] body.hskrc-page-book .rights-note,
+html[data-theme="light"] body.hskrc-page-book .research-intro,
+html[data-theme="light"] body.hskrc-page-book .related-author,
+html[data-theme="light"] body.hskrc-page-book .research-item-meta,
+html[data-theme="light"] body.hskrc-page-book .research-empty{color:#6f6f6f!important}
+
+html[data-theme="light"] body.hskrc-page-book .meta-grid{
+  border-top:1px solid #d8d8d8!important;
+  border-bottom:1px solid #d8d8d8!important;
+}
+html[data-theme="light"] body.hskrc-page-book .meta{border-right:1px solid #d8d8d8!important}
+html[data-theme="light"] body.hskrc-page-book .label{color:#777!important}
+html[data-theme="light"] body.hskrc-page-book .value{color:#161616!important}
+
+html[data-theme="light"] body.hskrc-page-book .primary,
+html[data-theme="light"] body.hskrc-page-book .secondary{
+  border-radius:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+html[data-theme="light"] body.hskrc-page-book .primary{
+  background:#8f1d2c!important;
+  border:1px solid #8f1d2c!important;
+  color:#fff!important;
+}
+html[data-theme="light"] body.hskrc-page-book .primary:hover:not(:disabled){background:#67131f!important}
+html[data-theme="light"] body.hskrc-page-book .primary:disabled{background:#ededed!important;color:#8a8a8a!important;border-color:#d8d8d8!important}
+html[data-theme="light"] body.hskrc-page-book .secondary{
+  background:#fff!important;
+  border:1px solid #b9b9b9!important;
+  color:#414141!important;
+}
+html[data-theme="light"] body.hskrc-page-book .secondary:hover{border-color:#8f1d2c!important;color:#8f1d2c!important;background:#fff!important}
+html[data-theme="light"] body.hskrc-page-book .favorite-btn.is-favorite{color:#8f1d2c!important;border-color:#8f1d2c!important;background:#f7eef0!important}
+
+html[data-theme="light"] body.hskrc-page-book .related-section,
+html[data-theme="light"] body.hskrc-page-book .research-network{border-top:1px solid #d8d8d8!important}
+html[data-theme="light"] body.hskrc-page-book .section-link{color:#8f1d2c!important;border-color:rgba(143,29,44,.4)!important}
+
+html[data-theme="light"] body.hskrc-page-book .related-card,
+html[data-theme="light"] body.hskrc-page-book .research-group{
+  background:#fff!important;
+  border:1px solid #d8d8d8!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.hskrc-page-book .related-card:hover,
+html[data-theme="light"] body.hskrc-page-book .research-group:hover{
+  transform:none!important;
+  border-color:#b9b9b9!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.hskrc-page-book .related-cover{
+  background:#f4f4f4!important;
+  border-bottom:1px solid #d8d8d8!important;
+}
+html[data-theme="light"] body.hskrc-page-book .related-button{
+  border:1px solid #8f1d2c!important;
+  border-radius:0!important;
+  color:#8f1d2c!important;
+  background:#fff!important;
+}
+html[data-theme="light"] body.hskrc-page-book .related-button:hover{background:#f7eef0!important}
+
+html[data-theme="light"] body.hskrc-page-book .research-groups{
+  gap:0!important;
+  border-top:1px solid #d8d8d8!important;
+  border-left:1px solid #d8d8d8!important;
+}
+html[data-theme="light"] body.hskrc-page-book .research-group{
+  border:0!important;
+  border-right:1px solid #d8d8d8!important;
+  border-bottom:1px solid #d8d8d8!important;
+}
+html[data-theme="light"] body.hskrc-page-book .research-item{
+  background:#fff!important;
+  border:1px solid #d8d8d8!important;
+  border-radius:0!important;
+}
+html[data-theme="light"] body.hskrc-page-book .research-item:hover{
+  background:#f6f6f6!important;
+  border-color:#b9b9b9!important;
+  transform:none!important;
+}
+
+/* Never reserve image space for books that do not have a real displayable cover. */
+body.hskrc-page-book .details.no-cover-image .cover{display:none!important}
+body.hskrc-page-book .related-card.no-cover-image .related-cover{display:none!important}
+body.hskrc-page-book .related-card.no-cover-image .related-content{padding-top:20px!important}
+
+@media(max-width:880px){
+  html[data-theme="light"] body.hskrc-page-book .details{grid-template-columns:1fr!important}
+  html[data-theme="light"] body.hskrc-page-book .cover{width:min(320px,100%)!important}
+}
+</style>
 <link href="https://hskrc.org/book.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Book Details" property="og:title"/><meta content="HSKRC Digital Library book details." property="og:description"/><meta content="https://hskrc.org/book.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Book Details" name="twitter:title"/><meta content="HSKRC Digital Library book details." name="twitter:description"/><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
 <meta name="author" content="HSKRC"/>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -59,7 +204,7 @@ footer{border-top:1px solid var(--soft);background:#050505;padding:34px;text-ali
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64eb5ce85bc34352b46b995fbba45cf8"}'></script><!-- End Cloudflare Web Analytics -->
 </head><body>
 <header><div class="container header-inner"><a class="logo-area" href="index.html"><div class="logo-mark">H</div><div><div class="logo-name">HSKRC</div><div class="logo-subtitle">Knowledge &amp; Research Centre</div></div></a><nav><a href="index.html" id="home">Home</a><a href="alamut-knowledge-base.html" id="kb">Knowledge Base</a><a class="nav-active" href="library.html" id="library">Library</a><a href="articles.html" id="articles">Articles</a><a href="researchers.html" id="researchers">Researchers</a><a href="sources.html" id="sources">Sources</a><a href="about.html" id="about">About</a><a href="auth.html" id="account">Login / Register</a><button class="language" id="lang" onclick="toggleLang()">فارسی</button></nav></div></header>
-<main class="container"><a class="back" href="library.html" id="back">← Back to Library</a><div class="state" id="state"><div class="box"><div class="state-icon">📚</div><div class="state-title" id="stateTitle">Loading book...</div><p id="stateText">Please wait while the book details are loaded.</p></div></div><article class="details" hidden="" id="details"><div class="cover" id="cover"><div class="no-cover">📚</div></div><div><div class="eyebrow"><span class="dot"></span><span id="eyebrow">Book Details</span></div><h1 dir="auto" id="title"></h1><div class="author" dir="auto" id="author"></div><div class="meta-grid"><div class="meta"><div class="label" id="catL">Category</div><div class="value" dir="auto" id="category">—</div></div><div class="meta"><div class="label" id="langL">Language</div><div class="value" dir="auto" id="bookLang">—</div></div><div class="meta"><div class="label" id="yearL">Publication Year</div><div class="value" dir="auto" id="year">—</div></div><div class="meta"><div class="label" id="accessL">Access</div><div class="value" id="access">Member access</div></div></div><div class="desc-title" id="descL">About this book</div><p class="desc" dir="auto" id="description"></p><div class="actions"><button class="primary" disabled="" id="read">📖 Read PDF</button><a class="primary" href="#" id="externalAccess" target="_blank" rel="noopener noreferrer" hidden>↗ Official / legal access</a><button class="secondary favorite-btn" id="favoriteBtn" onclick="toggleFavorite()" type="button">♡ Add to Favorites</button><a class="secondary" href="library.html" id="libraryBtn">← Back to Library</a></div><p class="rights-note" id="rightsNotice"></p></div></article>
+<main class="container"><a class="back" href="library.html" id="back">← Back to Library</a><div class="state" id="state"><div class="box"><div class="state-icon">📚</div><div class="state-title" id="stateTitle">Loading book...</div><p id="stateText">Please wait while the book details are loaded.</p></div></div><article class="details no-cover-image" hidden="" id="details"><div class="cover" id="cover" hidden></div><div class="book-main"><div class="eyebrow"><span class="dot"></span><span id="eyebrow">Book Details</span></div><h1 dir="auto" id="title"></h1><div class="author" dir="auto" id="author"></div><div class="meta-grid"><div class="meta"><div class="label" id="catL">Category</div><div class="value" dir="auto" id="category">—</div></div><div class="meta"><div class="label" id="langL">Language</div><div class="value" dir="auto" id="bookLang">—</div></div><div class="meta"><div class="label" id="yearL">Publication Year</div><div class="value" dir="auto" id="year">—</div></div><div class="meta"><div class="label" id="accessL">Access</div><div class="value" id="access">Member access</div></div></div><div class="desc-title" id="descL">About this book</div><p class="desc" dir="auto" id="description"></p><div class="actions"><button class="primary" disabled="" id="read">📖 Read PDF</button><a class="primary" href="#" id="externalAccess" target="_blank" rel="noopener noreferrer" hidden>↗ Official / legal access</a><button class="secondary favorite-btn" id="favoriteBtn" onclick="toggleFavorite()" type="button">♡ Add to Favorites</button><a class="secondary" href="library.html" id="libraryBtn">← Back to Library</a></div><p class="rights-note" id="rightsNotice"></p></div></article>
 <section class="research-network" hidden="" id="researchNetwork">
 <div class="section-heading">
 <div>
@@ -120,7 +265,7 @@ function render(b){document.getElementById("state").hidden=true;document.getElem
         "inLanguage":b.language||undefined,
         "datePublished":b.publication_year?String(b.publication_year):undefined
       }
-    });document.getElementById("title").textContent=title;document.getElementById("author").textContent=b.author||(lang==="fa"?"نویسنده نامشخص":"Unknown author");document.getElementById("category").textContent=b.category||"—";document.getElementById("bookLang").textContent=b.language||"—";document.getElementById("year").textContent=b.publication_year||"—";document.getElementById("description").textContent=b.description||(lang==="fa"?"توضیحی برای این کتاب ثبت نشده است.":"No description available.");const c=document.getElementById("cover");c.innerHTML='<div class="no-cover">📚</div>';if(localCoverAllowed(b)){if(b.cover_url)setCover(b.cover_url,title);else if(b.cover_path)supabaseClient.storage.from("Books").createSignedUrl(b.cover_path,3600).then(({data})=>{if(data?.signedUrl)setCover(data.signedUrl,title)})}refreshBookAccess();loadFavoriteState(b.id);loadBookResearchNetwork(b.id);loadRelatedBooks(b)}
+    });document.getElementById("title").textContent=title;document.getElementById("author").textContent=b.author||(lang==="fa"?"نویسنده نامشخص":"Unknown author");document.getElementById("category").textContent=b.category||"—";document.getElementById("bookLang").textContent=b.language||"—";document.getElementById("year").textContent=b.publication_year||"—";document.getElementById("description").textContent=b.description||(lang==="fa"?"توضیحی برای این کتاب ثبت نشده است.":"No description available.");const detailsEl=document.getElementById("details"),c=document.getElementById("cover");c.hidden=true;c.innerHTML="";detailsEl.classList.add("no-cover-image");if(localCoverAllowed(b)){if(b.cover_url)setCover(b.cover_url,title);else if(b.cover_path)supabaseClient.storage.from("Books").createSignedUrl(b.cover_path,3600).then(({data})=>{if(data?.signedUrl)setCover(data.signedUrl,title)}).catch(()=>removeMainCover())}refreshBookAccess();loadFavoriteState(b.id);loadBookResearchNetwork(b.id);loadRelatedBooks(b)}
 async function loadFavoriteState(bookId){
   const btn=document.getElementById("favoriteBtn");
   if(!btn)return;
@@ -222,11 +367,11 @@ async function loadRelatedBooks(currentBook){
   data.slice(0,4).forEach(b=>{
     const title=b.title||"Untitled",author=b.author||(lang==="fa"?"نویسنده نامشخص":"Unknown author");
     const card=document.createElement("article");card.className="related-card";
-    card.innerHTML=`<a href="book.html?id=${encodeURIComponent(b.id)}" aria-label="${esc(title)}"><div class="related-cover"><div class="related-no-cover">📚</div></div></a><div class="related-content"><div class="related-book-title" dir="auto">${esc(title)}</div><div class="related-author" dir="auto">${esc(author)}</div><a class="related-button" href="book.html?id=${encodeURIComponent(b.id)}">${lang==="fa"?"مشاهده جزئیات":"View Details"}</a></div>`;
+    card.classList.add("no-cover-image");
+    card.innerHTML=`<div class="related-content"><div class="related-book-title" dir="auto">${esc(title)}</div><div class="related-author" dir="auto">${esc(author)}</div><a class="related-button" href="book.html?id=${encodeURIComponent(b.id)}">${lang==="fa"?"مشاهده جزئیات":"View Details"}</a></div>`;
     grid.appendChild(card);
-    const c=card.querySelector(".related-cover");
-    if(localCoverAllowed(b)&&b.cover_url)setRelatedCover(c,b.cover_url,title);
-    else if(localCoverAllowed(b)&&b.cover_path)supabaseClient.storage.from("Books").createSignedUrl(b.cover_path,3600).then(({data})=>{if(data?.signedUrl)setRelatedCover(c,data.signedUrl,title)});
+    if(localCoverAllowed(b)&&b.cover_url)setRelatedCover(card,b.cover_url,title);
+    else if(localCoverAllowed(b)&&b.cover_path)supabaseClient.storage.from("Books").createSignedUrl(b.cover_path,3600).then(({data})=>{if(data?.signedUrl)setRelatedCover(card,data.signedUrl,title)}).catch(()=>{});
   });
   const rt=document.getElementById("relatedTitle"),rk=document.getElementById("relatedKicker"),rl=document.getElementById("relatedLink");
   if(rt)rt.textContent=lang==="fa"?"کتاب‌های بیشتر":"More from the Library";
@@ -234,8 +379,8 @@ async function loadRelatedBooks(currentBook){
   if(rl)rl.textContent=lang==="fa"?"مشاهده همه کتاب‌ها ←":"View all books →";
   section.hidden=false;
 }
-function setRelatedCover(container,url,title){container.innerHTML=`<img src="${esc(url)}" alt="${esc(title)}" loading="lazy">`;const img=container.querySelector("img");img.addEventListener("error",()=>container.innerHTML='<div class="related-no-cover">📚</div>')}
-function setCover(url,title){const c=document.getElementById("cover");c.innerHTML=`<img src="${esc(url)}" alt="${esc(title)}">`;c.querySelector("img").onerror=()=>c.innerHTML='<div class="no-cover">📚</div>'}
+function setRelatedCover(card,url,title){if(!card||!url)return;let cover=card.querySelector(".related-cover");if(!cover){cover=document.createElement("a");cover.className="related-cover";cover.href=card.querySelector(".related-button")?.href||"#";card.prepend(cover)}cover.innerHTML=`<img src="${esc(url)}" alt="${esc(title)}" loading="lazy">`;card.classList.remove("no-cover-image");const img=cover.querySelector("img");img.addEventListener("error",()=>{cover.remove();card.classList.add("no-cover-image")})}
+function removeMainCover(){const c=document.getElementById("cover"),d=document.getElementById("details");if(c){c.hidden=true;c.innerHTML=""}if(d)d.classList.add("no-cover-image")}function setCover(url,title){const c=document.getElementById("cover"),d=document.getElementById("details");if(!c||!url){removeMainCover();return}c.hidden=false;c.innerHTML=`<img src="${esc(url)}" alt="${esc(title)}">`;if(d)d.classList.remove("no-cover-image");c.querySelector("img").onerror=removeMainCover}
 async function openPdf(path,title){const {data,error}=await supabaseClient.auth.getSession();if(error||!data?.session){location.href="auth.html";return}const {data:signed,error:signedError}=await supabaseClient.storage.from("Books").createSignedUrl(path,3600);if(signedError||!signed?.signedUrl){alert(lang==="fa"?"امکان دسترسی به PDF وجود ندارد.":"Unable to access the PDF file.");return}window.open(signed.signedUrl,"_blank","noopener,noreferrer")}
 applyLang();load();
 </script></body></html>
