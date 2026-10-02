@@ -1434,8 +1434,17 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 <style>
 header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!important;border-color:rgba(199,161,90,.22)!important}
 </style>
-<link href="hskrc-global.css?v=20261003-5" rel="stylesheet"/>
-<script defer="" src="hskrc-global.js?v=20261003-5"></script>
+<link href="hskrc-global.css?v=20261003-7" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js?v=20261003-7"></script>
+<style id="library-no-empty-cover-v7">
+/* Never reserve a cover area when there is no real displayable book cover. */
+body.hskrc-page-library .book.no-cover-image .cover{display:none!important}
+body.hskrc-page-library .book.no-cover-image:after{display:none!important}
+body.hskrc-page-library .book.no-cover-image:not(.static-fallback-book) .book-content{padding-top:58px!important}
+body.hskrc-page-library .book.no-cover-image.static-fallback-book .book-content{padding-top:22px!important}
+body.hskrc-page-library .book.no-cover-image{background:#fff!important}
+html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:#171717!important}
+</style>
 <link href="https://hskrc.org/library.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="HSKRC" property="og:site_name"/><meta content="HSKRC | Digital Library" property="og:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." property="og:description"/><meta content="https://hskrc.org/library.html" property="og:url"/><meta content="summary" name="twitter:card"/><meta content="HSKRC | Digital Library" name="twitter:title"/><meta content="HSKRC Digital Library — Books, research materials and historical resources." name="twitter:description"/>
 <script type="application/ld+json">
 {
@@ -1584,8 +1593,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 </div>
 <div class="books" id="booksContainer">
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">خواجه نصیرالدین طوسی و اسماعیلیان</h2>
     <div class="author" dir="auto">حمید ملک‌مکان</div>
@@ -1597,8 +1605,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">اسماعیلیان در الموت و جنوب ناحیه دریای مازندران پس از فتوحات مغول</h2>
     <div class="author" dir="auto">پروفسور شفیق ویرانی</div>
@@ -1610,8 +1617,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">شاهین سپید</h2>
     <div class="author" dir="auto">احمد احرار</div>
@@ -1623,8 +1629,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">کتاب به‌هدایت المؤمنین الطالبین، معروف به تاریخ اسماعیلیه</h2>
     <div class="author" dir="auto">محمد بن زین‌العابدین خراسانی فدائی</div>
@@ -1636,8 +1641,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">قلاع اسماعیلیه در رشته‌کوه‌های البرز</h2>
     <div class="author" dir="auto">دکتر منوچهر ستوده</div>
@@ -1649,8 +1653,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">رودکی و اسماعیلیه</h2>
     <div class="author" dir="auto">دکتر حکیم قلندراف</div>
@@ -1662,8 +1665,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">تاریخ و سنت‌های اسماعیلیه</h2>
     <div class="author" dir="auto">دکتر فرهاد دفتری</div>
@@ -1675,8 +1677,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">اسماعیلیان در تاریخ</h2>
     <div class="author" dir="auto">برنارد لوئیس، لوئی ماسینیون، ع. حمدانی، م. هاجسن، آصف فیضی، ایوانف</div>
@@ -1688,8 +1689,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">تاریخ و عقاید اسماعیلیه</h2>
     <div class="author" dir="auto">دکتر فرهاد دفتری</div>
@@ -1701,8 +1701,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">سرگذشت حسن صباح و قلعه الموت</h2>
     <div class="author" dir="auto">ناصر نجمی</div>
@@ -1714,8 +1713,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">حسن صباح؛ چهره شگفت‌انگیز تاریخ</h2>
     <div class="author" dir="auto">محمد احمد پناهی سمنانی</div>
@@ -1727,8 +1725,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">ترجمه کتاب دعائم‌الاسلام – جلد دوم</h2>
     <div class="author" dir="auto">ابوحنیفه نعمان بن محمد بن منصور بن احمد بن حیون تمیمی مغربی</div>
@@ -1740,8 +1737,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">ترجمه کتاب دعائم‌الاسلام – جلد اول</h2>
     <div class="author" dir="auto">ابوحنیفه نعمان بن محمد بن منصور بن احمد بن حیون تمیمی مغربی</div>
@@ -1753,8 +1749,7 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
   </div>
 </article>
 
-<article class="book static-fallback-book">
-  <div class="cover"><div class="no-cover">📚</div></div>
+<article class="book static-fallback-book no-cover-image">
   <div class="book-content">
     <h2 class="book-title" dir="auto">خداوند الموت</h2>
     <div class="author" dir="auto">پل امیر</div>
@@ -2676,7 +2671,6 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 
     books.forEach(book => {
       const article = document.createElement("article");
-      article.className = "book";
 
       const title = String(book.title || "");
       const author = book.author ||
@@ -2692,26 +2686,30 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
       const canUseLocalPdf = localPdfAllowed(book);
       const externalAccess = String(book.access_url || "").trim();
       const canUseCover = localCoverAllowed(book);
+      const directCover = canUseCover && String(book.cover_url || "").trim();
 
-      let coverHtml = canUseCover && book.cover_url
-        ? `<img src="${escapeHtml(book.cover_url)}" alt="${escapeHtml(title)}" loading="lazy">`
-        : `<div class="no-cover">📚</div>`;
+      article.className = "book" + (directCover ? "" : " no-cover-image");
+
+      const favoriteHtml = `
+        <button class="favorite-toggle ${favoriteBookIds.has(String(book.id)) ? "is-favorite" : ""}"
+          type="button"
+          data-favorite-book="${escapeHtml(book.id || "")}"
+          aria-label="${favoriteBookIds.has(String(book.id))
+            ? (currentLanguage === "fa" ? "حذف از علاقه‌مندی‌ها" : "Remove from Favorites")
+            : (currentLanguage === "fa" ? "افزودن به علاقه‌مندی‌ها" : "Add to Favorites")}"
+          title="${favoriteBookIds.has(String(book.id))
+            ? (currentLanguage === "fa" ? "حذف از علاقه‌مندی‌ها" : "Remove from Favorites")
+            : (currentLanguage === "fa" ? "افزودن به علاقه‌مندی‌ها" : "Add to Favorites")}">
+          ${favoriteBookIds.has(String(book.id)) ? "♥" : "♡"}
+        </button>`;
+
+      const coverHtml = directCover
+        ? `<div class="cover"><img src="${escapeHtml(directCover)}" alt="${escapeHtml(title)}" loading="lazy"></div>`
+        : "";
 
       article.innerHTML = `
-        <div class="cover">
-          ${coverHtml}
-          <button class="favorite-toggle ${favoriteBookIds.has(String(book.id)) ? "is-favorite" : ""}"
-            type="button"
-            data-favorite-book="${escapeHtml(book.id || "")}"
-            aria-label="${favoriteBookIds.has(String(book.id))
-              ? (currentLanguage === "fa" ? "حذف از علاقه‌مندی‌ها" : "Remove from Favorites")
-              : (currentLanguage === "fa" ? "افزودن به علاقه‌مندی‌ها" : "Add to Favorites")}"
-            title="${favoriteBookIds.has(String(book.id))
-              ? (currentLanguage === "fa" ? "حذف از علاقه‌مندی‌ها" : "Remove from Favorites")
-              : (currentLanguage === "fa" ? "افزودن به علاقه‌مندی‌ها" : "Add to Favorites")}">
-            ${favoriteBookIds.has(String(book.id)) ? "♥" : "♡"}
-          </button>
-        </div>
+        ${favoriteHtml}
+        ${coverHtml}
         <div class="book-content">
           <h2 class="book-title" dir="auto">${escapeHtml(title)}</h2>
           <div class="author" dir="auto">${escapeHtml(author)}</div>
@@ -2738,7 +2736,8 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
       const image = article.querySelector(".cover img");
       if (image) {
         image.addEventListener("error", () => {
-          image.parentElement.innerHTML = '<div class="no-cover">📚</div>';
+          image.closest(".cover")?.remove();
+          article.classList.add("no-cover-image");
         });
       }
 
@@ -2771,16 +2770,22 @@ header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!
 
       container.appendChild(article);
 
-      if (canUseCover && !book.cover_url && book.cover_path) {
+      if (canUseCover && !directCover && book.cover_path) {
         supabaseClient.storage.from("Books")
           .createSignedUrl(book.cover_path, 3600)
           .then(({data}) => {
-            if (data && data.signedUrl) {
-              const cover = article.querySelector(".cover");
-              cover.innerHTML = `
-                <img src="${escapeHtml(data.signedUrl)}"
-                     alt="${escapeHtml(title)}" loading="lazy">`;
-            }
+            if (!data?.signedUrl) return;
+            const cover = document.createElement("div");
+            cover.className = "cover";
+            cover.innerHTML = `<img src="${escapeHtml(data.signedUrl)}" alt="${escapeHtml(title)}" loading="lazy">`;
+            const content = article.querySelector(".book-content");
+            article.insertBefore(cover, content);
+            article.classList.remove("no-cover-image");
+            const img = cover.querySelector("img");
+            img.addEventListener("error", () => {
+              cover.remove();
+              article.classList.add("no-cover-image");
+            });
           })
           .catch(error => console.warn("Cover URL error:", error));
       }
