@@ -306,6 +306,15 @@ function buildHtml(article, slug, translations = {}) {
   return `<!doctype html>
 <html lang="${lang}" dir="${dir}">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J5SGW38HSK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J5SGW38HSK');
+</script>
+
 
 <meta charset="utf-8">
 
