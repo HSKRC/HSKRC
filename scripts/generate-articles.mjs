@@ -167,12 +167,12 @@ function buildHtml(article, slug, translations = {}) {
 
   const languageSwitchHtml =
     (alternateEn || alternateFa)
-      ? `<div class="article-language-pair" aria-label="${lang === "fa" ? "زبان مقاله" : "Article language"}">
+      ? `<div class="article-language-pair notranslate" translate="no" aria-label="${lang === "fa" ? "زبان مقاله" : "Article language"}">
   ${alternateEn
-    ? `<a class="${lang === "en" ? "active" : ""}" lang="en" href="${escapeHtml(alternateEn)}">English</a>`
+    ? `<a class="notranslate ${lang === "en" ? "active" : ""}" translate="no" lang="en" href="${escapeHtml(alternateEn)}">English</a>`
     : `<span class="disabled" aria-disabled="true">English</span>`}
   ${alternateFa
-    ? `<a class="${lang === "fa" ? "active" : ""}" lang="fa" href="${escapeHtml(alternateFa)}">دری</a>`
+    ? `<a class="notranslate ${lang === "fa" ? "active" : ""}" translate="no" lang="fa-AF" href="${escapeHtml(alternateFa)}">دری</a>`
     : `<span class="disabled" aria-disabled="true">دری</span>`}
 </div>`
       : "";
@@ -292,9 +292,10 @@ function buildHtml(article, slug, translations = {}) {
           published
         ).toLocaleDateString(
           lang === "fa"
-            ? "fa-IR"
+            ? "fa-AF-u-ca-gregory"
             : "en-AU",
           {
+            calendar: "gregory",
             year: "numeric",
             month: "long",
             day: "numeric"
@@ -307,6 +308,9 @@ function buildHtml(article, slug, translations = {}) {
 <head>
 
 <meta charset="utf-8">
+
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="en, fa">
 
 <meta
   name="viewport"
@@ -593,7 +597,7 @@ footer {
 
 </head>
 
-<body>
+<body class="notranslate" translate="no">
 
 <header>
   <div class="wrap">
