@@ -970,6 +970,23 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:image:alt" content="HSKRC — Hassan Sabbah Knowledge & Research Centre">
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64eb5ce85bc34352b46b995fbba45cf8"}'></script><!-- End Cloudflare Web Analytics -->
+<style id="hero-contrast-hotfix">
+/* Homepage image hero must always use high-contrast white text. */
+html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1,
+html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1 span,
+html[data-theme="light"] body.hskrc-page-home .hero .hero-content .green{
+  color:#fff !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero .hero-content .hero-tagline{
+  color:#fff !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero .hero-content .hero-description{
+  color:rgba(255,255,255,.94) !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1{
+  text-shadow:0 2px 18px rgba(0,0,0,.38) !important;
+}
+</style>
 </head>
 <body>
 <!-- =========================
