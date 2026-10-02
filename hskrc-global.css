@@ -1761,3 +1761,423 @@ html[data-theme="dark"] body.hskrc-page-home .feature-card:hover{background:#202
   }
   body.hskrc-page-home .cta-box{padding:60px 24px !important}
 }
+
+
+/* ===== HSKRC GLOBAL VISUAL HARMONY PASS ===== */
+
+/*
+  One visual grammar across HSKRC:
+  - English body: Arial/Helvetica
+  - English headings: Georgia
+  - Persian/Dari: Tahoma/Arial
+  - Light: white + charcoal + burgundy + neutral grey
+  - Dark: charcoal + off-white + muted burgundy
+  - One border tone, one contrast scale, one control style.
+  Functional DOM, Supabase, search, filters, language and research data are untouched.
+*/
+
+:root{
+  --hskrc-rule:#d9d9d9;
+  --hskrc-rule-strong:#bdbdbd;
+  --hskrc-ink:#161616;
+  --hskrc-copy:#3f3f3f;
+  --hskrc-muted:#6f6f6f;
+  --hskrc-paper:#ffffff;
+  --hskrc-paper-soft:#f6f6f6;
+  --hskrc-accent:#8f1d2c;
+  --hskrc-accent-dark:#67131f;
+  --hskrc-accent-soft:#f7eef0;
+}
+
+html[data-theme="dark"]{
+  --hskrc-rule:rgba(255,255,255,.13);
+  --hskrc-rule-strong:rgba(255,255,255,.24);
+  --hskrc-ink:#f5f5f5;
+  --hskrc-copy:#d2d2d2;
+  --hskrc-muted:#a8a8a8;
+  --hskrc-paper:#171717;
+  --hskrc-paper-soft:#1d1d1d;
+  --hskrc-accent:#d46a79;
+  --hskrc-accent-dark:#b84c5d;
+  --hskrc-accent-soft:rgba(212,106,121,.10);
+}
+
+/* Typography and readable contrast */
+body,
+button,
+input,
+select,
+textarea{
+  font-family:Arial,Helvetica,sans-serif !important;
+}
+
+html[dir="rtl"] body,
+html[dir="rtl"] button,
+html[dir="rtl"] input,
+html[dir="rtl"] select,
+html[dir="rtl"] textarea{
+  font-family:Tahoma,Arial,"Segoe UI",sans-serif !important;
+}
+
+main h1,
+main h2,
+main h3,
+main .title,
+main .page-title,
+main .article-title,
+main .book-title,
+main .results-title{
+  font-family:Georgia,"Times New Roman",serif !important;
+  color:var(--hskrc-ink) !important;
+  font-weight:700 !important;
+  letter-spacing:-.025em !important;
+}
+
+html[dir="rtl"] main h1,
+html[dir="rtl"] main h2,
+html[dir="rtl"] main h3,
+html[dir="rtl"] main .title,
+html[dir="rtl"] main .page-title,
+html[dir="rtl"] main .article-title,
+html[dir="rtl"] main .book-title,
+html[dir="rtl"] main .results-title{
+  font-family:Tahoma,Arial,"Segoe UI",sans-serif !important;
+  letter-spacing:0 !important;
+}
+
+main p,
+main li,
+main .description,
+main .hero-description,
+main .article-excerpt,
+main .article-content,
+main .book-description,
+main .results-description,
+main .answer{
+  line-height:1.75 !important;
+}
+
+html[data-theme="light"] main{
+  color:var(--hskrc-ink) !important;
+}
+html[data-theme="dark"] main{
+  color:var(--hskrc-ink) !important;
+}
+
+/* Standard secondary copy */
+main .muted,
+main .meta,
+main .article-meta,
+main .author,
+main .description,
+main .hero-description,
+main .results-description,
+main .article-excerpt,
+main .book-description,
+main small{
+  color:var(--hskrc-muted) !important;
+}
+
+/* One accent language */
+main .eyebrow,
+main .section-kicker,
+main .kick,
+main .category-badge,
+main .article-category,
+main .type,
+main .feature-link,
+main .read-arrow{
+  color:var(--hskrc-accent) !important;
+}
+
+/* Consistent page heroes except the image-led homepage hero */
+body:not(.hskrc-page-home) main .hero,
+body:not(.hskrc-page-home) main .page-hero{
+  background:var(--hskrc-paper) !important;
+  color:var(--hskrc-ink) !important;
+  border-bottom:1px solid var(--hskrc-rule) !important;
+  box-shadow:none !important;
+}
+
+body:not(.hskrc-page-home) main .hero::before,
+body:not(.hskrc-page-home) main .hero::after,
+body:not(.hskrc-page-home) main .page-hero::before,
+body:not(.hskrc-page-home) main .page-hero::after{
+  background:none !important;
+  box-shadow:none !important;
+}
+
+body:not(.hskrc-page-home) main .hero h1,
+body:not(.hskrc-page-home) main .page-hero h1,
+body:not(.hskrc-page-home) main .page-hero h2{
+  color:var(--hskrc-ink) !important;
+}
+
+body:not(.hskrc-page-home) main .hero p,
+body:not(.hskrc-page-home) main .page-hero p{
+  color:var(--hskrc-muted) !important;
+}
+
+/* One rule / one surface style across library, articles, explorer and detail pages */
+main .feature-card,
+main .article-intro,
+main .about-panel,
+main .cta-box,
+main .library-tools,
+main .search-box,
+main .toolbar,
+main .category-box,
+main .filters,
+main .tabs,
+main .book,
+main .article-card,
+main .card,
+main .details,
+main .state-box,
+main .research-gateway,
+main .research-link,
+main .stat,
+main .article-container,
+main .article-language-pair{
+  border-color:var(--hskrc-rule) !important;
+  box-shadow:none !important;
+}
+
+html[data-theme="light"] main .feature-card,
+html[data-theme="light"] main .article-intro,
+html[data-theme="light"] main .about-panel,
+html[data-theme="light"] main .cta-box,
+html[data-theme="light"] main .library-tools,
+html[data-theme="light"] main .search-box,
+html[data-theme="light"] main .toolbar,
+html[data-theme="light"] main .category-box,
+html[data-theme="light"] main .filters,
+html[data-theme="light"] main .tabs,
+html[data-theme="light"] main .book,
+html[data-theme="light"] main .article-card,
+html[data-theme="light"] main .card,
+html[data-theme="light"] main .details,
+html[data-theme="light"] main .state-box,
+html[data-theme="light"] main .research-gateway,
+html[data-theme="light"] main .research-link,
+html[data-theme="light"] main .stat,
+html[data-theme="light"] main .article-container,
+html[data-theme="light"] main .article-language-pair{
+  background:var(--hskrc-paper) !important;
+}
+
+html[data-theme="dark"] main .feature-card,
+html[data-theme="dark"] main .article-intro,
+html[data-theme="dark"] main .about-panel,
+html[data-theme="dark"] main .cta-box,
+html[data-theme="dark"] main .library-tools,
+html[data-theme="dark"] main .search-box,
+html[data-theme="dark"] main .toolbar,
+html[data-theme="dark"] main .category-box,
+html[data-theme="dark"] main .filters,
+html[data-theme="dark"] main .tabs,
+html[data-theme="dark"] main .book,
+html[data-theme="dark"] main .article-card,
+html[data-theme="dark"] main .card,
+html[data-theme="dark"] main .details,
+html[data-theme="dark"] main .state-box,
+html[data-theme="dark"] main .research-gateway,
+html[data-theme="dark"] main .research-link,
+html[data-theme="dark"] main .stat,
+html[data-theme="dark"] main .article-container,
+html[data-theme="dark"] main .article-language-pair{
+  background:var(--hskrc-paper) !important;
+}
+
+/* Square editorial edges, matching the Foundation design */
+main .feature-card,
+main .article-intro,
+main .about-panel,
+main .library-tools,
+main .search-box,
+main .toolbar,
+main .category-box,
+main .filters,
+main .book,
+main .article-card,
+main .card,
+main .details,
+main .state-box,
+main .research-gateway,
+main .research-link,
+main .stat,
+main .article-container{
+  border-radius:0 !important;
+}
+
+/* Cards should differ by hierarchy, not random contrast */
+main .book:hover,
+main .article-card:hover,
+main .card:hover,
+main .research-link:hover,
+main .feature-card:hover{
+  border-color:var(--hskrc-rule-strong) !important;
+  box-shadow:none !important;
+}
+
+/* Covers/placeholders use neutral surfaces */
+main .cover-placeholder,
+main .no-cover{
+  background:var(--hskrc-paper-soft) !important;
+  color:var(--hskrc-muted) !important;
+  border-color:var(--hskrc-rule) !important;
+}
+
+/* Buttons and interactive controls */
+main .btn,
+main .read-button,
+main .action-button,
+main .state-back{
+  border-radius:0 !important;
+}
+
+main .btn-primary,
+main .read-button{
+  background:var(--hskrc-accent) !important;
+  color:#fff !important;
+  border-color:var(--hskrc-accent) !important;
+  box-shadow:none !important;
+}
+
+main .btn-primary:hover,
+main .read-button:hover{
+  background:var(--hskrc-accent-dark) !important;
+  border-color:var(--hskrc-accent-dark) !important;
+}
+
+main .btn-secondary,
+main .action-button,
+main .state-back{
+  background:var(--hskrc-paper) !important;
+  color:var(--hskrc-ink) !important;
+  border:1px solid var(--hskrc-rule-strong) !important;
+}
+
+main .btn-secondary:hover,
+main .action-button:hover,
+main .state-back:hover{
+  color:var(--hskrc-accent) !important;
+  border-color:var(--hskrc-accent) !important;
+}
+
+/* Tabs and language-pair controls */
+main .tab,
+main .article-language-pair a,
+main .article-language-pair button{
+  border-radius:0 !important;
+  border-color:var(--hskrc-rule) !important;
+  color:var(--hskrc-copy) !important;
+  background:var(--hskrc-paper) !important;
+}
+main .tab.active,
+main .article-language-pair .active{
+  color:#fff !important;
+  background:var(--hskrc-accent) !important;
+  border-color:var(--hskrc-accent) !important;
+}
+
+/* Forms */
+main input,
+main select,
+main textarea{
+  border-radius:0 !important;
+  border:1px solid var(--hskrc-rule-strong) !important;
+  background:var(--hskrc-paper) !important;
+  color:var(--hskrc-ink) !important;
+  box-shadow:none !important;
+}
+main input:focus,
+main select:focus,
+main textarea:focus{
+  outline:none !important;
+  border-color:var(--hskrc-accent) !important;
+  box-shadow:0 0 0 3px var(--hskrc-accent-soft) !important;
+}
+
+/* Horizontal rules, tables and content separators */
+main hr{
+  border:0 !important;
+  border-top:1px solid var(--hskrc-rule) !important;
+}
+main table{
+  border-color:var(--hskrc-rule) !important;
+  border-collapse:collapse !important;
+}
+main th,
+main td{
+  border-color:var(--hskrc-rule) !important;
+}
+main blockquote{
+  border-left:4px solid var(--hskrc-accent) !important;
+  color:var(--hskrc-copy) !important;
+  background:var(--hskrc-accent-soft) !important;
+}
+
+/* Metadata dividers and repeated separators */
+main .meta-dot{color:var(--hskrc-rule-strong) !important}
+main .article-footer,
+main .results-header,
+main .library-summary,
+main .top-actions{
+  border-color:var(--hskrc-rule) !important;
+}
+
+/* Article reading contrast */
+main .article-content{
+  color:var(--hskrc-copy) !important;
+  font-size:clamp(16px,1.25vw,18px) !important;
+}
+main .article-content h2,
+main .article-content h3{
+  color:var(--hskrc-ink) !important;
+}
+main .article-content a{
+  color:var(--hskrc-accent) !important;
+  text-decoration-color:rgba(143,29,44,.45) !important;
+}
+
+/* Shared footer typography/contrast */
+.hskrc-global-footer,
+.hskrc-global-footer *{
+  font-family:Arial,Helvetica,sans-serif !important;
+}
+.hskrc-global-footer{
+  border-top:1px solid rgba(255,255,255,.10) !important;
+}
+.hskrc-global-copy{
+  line-height:1.7 !important;
+}
+
+/* RTL typography remains readable and consistent */
+html[dir="rtl"] .hskrc-global-header *,
+html[dir="rtl"] .hskrc-global-footer *{
+  font-family:Tahoma,Arial,"Segoe UI",sans-serif !important;
+}
+
+/* Preserve the homepage's white-on-image hero contrast */
+body.hskrc-page-home .hero h1,
+body.hskrc-page-home .hero h2,
+body.hskrc-page-home .hero h3{
+  color:#fff !important;
+}
+body.hskrc-page-home .hero .hero-description,
+body.hskrc-page-home .hero .hero-tagline{
+  color:rgba(255,255,255,.88) !important;
+}
+
+/* Mobile: keep the same design language rather than switching styles */
+@media(max-width:680px){
+  main .book,
+  main .article-card,
+  main .card,
+  main .feature-card,
+  main .about-panel,
+  main .article-intro{
+    border-radius:0 !important;
+  }
+}
