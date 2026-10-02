@@ -1750,3 +1750,204 @@ html[data-theme="light"] body[class*="hskrc-page-"] main :is(.card,.book,.articl
   box-shadow:none !important;
 }
 
+
+
+/* ===== HSKRC DETAIL PANELS + HOME CTA FIX V4 ===== */
+/* Fixes the remaining dark legacy panels visible on Researcher, Source and
+   dynamic Knowledge Node pages in light mode, and fixes the Home CTA contrast. */
+
+/* Home CTA — no white card inside the charcoal band. */
+html[data-theme="light"] body.hskrc-page-home .cta{
+  background:#171717 !important;
+  border:0 !important;
+}
+html[data-theme="light"] body.hskrc-page-home .cta .container{
+  width:min(1240px,calc(100% - 40px)) !important;
+  max-width:1240px !important;
+}
+html[data-theme="light"] body.hskrc-page-home .cta .cta-box{
+  background:#171717 !important;
+  background-image:none !important;
+  color:#fff !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body.hskrc-page-home .cta .cta-box h2{
+  color:#fff !important;
+}
+html[data-theme="light"] body.hskrc-page-home .cta .cta-box p{
+  color:#bdbdbd !important;
+}
+html[data-theme="light"] body.hskrc-page-home .cta .cta-box .btn-primary{
+  background:#8f1d2c !important;
+  border-color:#8f1d2c !important;
+  color:#fff !important;
+}
+
+/* Shared detail pages: Researcher / Source / dynamic Knowledge Node. */
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) main{
+  color:#161616 !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .back{
+  color:#8a8a8a !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .back:hover{
+  color:#8f1d2c !important;
+}
+
+/* Hero on detail pages is editorial/open rather than a dark card. */
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) main .hero{
+  margin-top:22px !important;
+  padding:42px 0 34px !important;
+  background:#fff !important;
+  border:0 !important;
+  border-bottom:1px solid #d8d8d8 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) main .hero .kick,
+html[data-theme="light"] body.hskrc-page-sources main .hero .code{
+  color:#8f1d2c !important;
+  display:inline-block !important;
+  padding-bottom:7px !important;
+  border-bottom:2px solid #8f1d2c !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) main .hero h1{
+  color:#161616 !important;
+}
+html[data-theme="light"] body.hskrc-page-researchers main .hero .field,
+html[data-theme="light"] body.hskrc-page-sources main .hero .by{
+  color:#8f1d2c !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge)
+:is(.notes,.desc,.meta,.intro,.empty){
+  color:#6f6f6f !important;
+}
+
+/* Statistics use the same white cards and grey rule throughout HSKRC. */
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .stats{
+  gap:8px !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .stat{
+  min-width:130px !important;
+  padding:13px 15px !important;
+  background:#fff !important;
+  border:1px solid #d8d8d8 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .stat b{
+  color:#8f1d2c !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .stat span{
+  color:#6f6f6f !important;
+}
+
+/* Researcher's affiliation disclaimer. */
+html[data-theme="light"] body.hskrc-page-researchers .notice{
+  margin-top:20px !important;
+  padding:12px 14px !important;
+  border:0 !important;
+  border-left:3px solid #8f1d2c !important;
+  background:#f7eef0 !important;
+  color:#5f5f5f !important;
+}
+html[dir="rtl"][data-theme="light"] body.hskrc-page-researchers .notice{
+  border-left:0 !important;
+  border-right:3px solid #8f1d2c !important;
+}
+
+/* Two-column evidence panels: line-based, white, no black islands. */
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .grid{
+  gap:0 !important;
+  margin-top:32px !important;
+  border-top:1px solid #d8d8d8 !important;
+  border-left:1px solid #d8d8d8 !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .panel{
+  padding:28px !important;
+  background:#fff !important;
+  color:#161616 !important;
+  border:0 !important;
+  border-right:1px solid #d8d8d8 !important;
+  border-bottom:1px solid #d8d8d8 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .panel h2{
+  color:#161616 !important;
+  margin:0 0 6px !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .panel .intro{
+  color:#6f6f6f !important;
+}
+
+/* Inner records use the same grey rule and white paper. */
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .item,
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .path{
+  margin-top:10px !important;
+  padding:14px !important;
+  background:#fff !important;
+  color:#161616 !important;
+  border:1px solid #d8d8d8 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .item:hover,
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .path:hover{
+  background:#f6f6f6 !important;
+  border-color:#b9b9b9 !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .item strong,
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .path strong{
+  color:#161616 !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge)
+:is(.item .meta,.item .small,.small){
+  color:#6f6f6f !important;
+}
+html[data-theme="light"] body.hskrc-page-researchers .code,
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) :is(.ext,.path a){
+  color:#8f1d2c !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .arrow{
+  color:#9a9a9a !important;
+}
+
+/* Primary outbound/profile links. */
+html[data-theme="light"] body:is(.hskrc-page-sources,.hskrc-page-knowledge) :is(.external,.profile){
+  display:inline-block !important;
+  border:1px solid #8f1d2c !important;
+  border-radius:0 !important;
+  background:#fff !important;
+  color:#8f1d2c !important;
+  padding:10px 14px !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-sources,.hskrc-page-knowledge) :is(.external,.profile):hover{
+  background:#f7eef0 !important;
+}
+
+/* Dark mode retains a matching charcoal version, not mixed black islands. */
+html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .panel,
+html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .item,
+html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .path,
+html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .stat{
+  background:#171717 !important;
+  border-color:rgba(255,255,255,.13) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .item strong,
+html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .panel h2{
+  color:#f4f4f4 !important;
+}
+
+@media(max-width:760px){
+  html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .grid{
+    border-right:1px solid #d8d8d8 !important;
+  }
+  html[data-theme="light"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hskrc-page-knowledge) .panel{
+    border-right:0 !important;
+  }
+}
+
