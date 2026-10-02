@@ -87,6 +87,7 @@
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
     if(f==="sources.html" || f==="source.html") return "sources";
     if(f==="research-explorer.html") return "explorer";
+    if(f==="knowledge-node.html") return "knowledge";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
     if(f==="community-impact.html") return "impact";
