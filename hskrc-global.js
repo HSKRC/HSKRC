@@ -1,3 +1,40 @@
+/* =========================================================
+   HSKRC GOOGLE ANALYTICS 4
+   Loaded once across the public site through this shared file.
+   Production-only to avoid polluting analytics from previews.
+   ========================================================= */
+(function(){
+  "use strict";
+
+  const MEASUREMENT_ID = "G-J5SGW38HSK";
+  const host = String(window.location.hostname || "").toLowerCase();
+
+  if(host !== "hskrc.org" && host !== "www.hskrc.org"){
+    return;
+  }
+
+  if(window.__HSKRC_GA4_LOADED__){
+    return;
+  }
+  window.__HSKRC_GA4_LOADED__ = true;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function(){
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", MEASUREMENT_ID, {
+    send_page_view: true
+  });
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(MEASUREMENT_ID);
+  script.setAttribute("data-hskrc-ga4", MEASUREMENT_ID);
+  document.head.appendChild(script);
+})();
+
 (function(){
   "use strict";
 
