@@ -1596,3 +1596,157 @@ main blockquote{border-left:4px solid var(--h-red) !important;background:var(--h
   body.hskrc-page-explorer .tabs{gap:22px !important}
 }
 
+
+
+/* ===== HSKRC V3 SPECIFICITY LOCK ===== */
+/* Final cascade lock. These selectors deliberately outrank older page-specific
+   light-mode rules so the shared visual system is actually identical site-wide. */
+
+html[data-theme="light"] body[class*="hskrc-page-"]{
+  --bg:#fff !important;--bg-soft:#f5f5f5 !important;--panel:#fff !important;--panel2:#fafafa !important;
+  --panel-2:#fafafa !important;--panel-hover:#f7f7f7 !important;--surface:#fff !important;
+  --surface-2:#fafafa !important;--surface-3:#f3f3f3 !important;--soft:#f5f5f5 !important;
+  --text:#161616 !important;--text-soft:#414141 !important;--tx:#161616 !important;--t:#161616 !important;
+  --muted:#6f6f6f !important;--muted-2:#858585 !important;--m:#6f6f6f !important;
+  --border:#d8d8d8 !important;--border-strong:#b9b9b9 !important;--line:#d8d8d8 !important;
+  --ln:#d8d8d8 !important;--bd:#d8d8d8 !important;
+  --gold:#8f1d2c !important;--gold2:#a52a3b !important;--gold-2:#a52a3b !important;
+  --gold-dark:#67131f !important;--gold-soft:rgba(143,29,44,.07) !important;--goldline:rgba(143,29,44,.26) !important;
+  --g:#8f1d2c !important;--g2:#a52a3b !important;--green:#8f1d2c !important;--green-dark:#67131f !important;
+  --green-light:#b64b5a !important;--green-soft:rgba(143,29,44,.07) !important;
+  --green-border:rgba(143,29,44,.26) !important;--border-green:rgba(143,29,44,.26) !important;
+  --p:#fff !important;--white:#161616 !important;
+  background:#fff !important;color:#161616 !important;
+}
+
+html[data-theme="dark"] body[class*="hskrc-page-"]{
+  --bg:#111 !important;--bg-soft:#171717 !important;--panel:#171717 !important;--panel2:#202020 !important;
+  --panel-2:#202020 !important;--panel-hover:#222 !important;--surface:#171717 !important;
+  --surface-2:#202020 !important;--surface-3:#242424 !important;--soft:#202020 !important;
+  --text:#f4f4f4 !important;--text-soft:#d2d2d2 !important;--tx:#f4f4f4 !important;--t:#f4f4f4 !important;
+  --muted:#a6a6a6 !important;--muted-2:#8d8d8d !important;--m:#a6a6a6 !important;
+  --border:rgba(255,255,255,.13) !important;--border-strong:rgba(255,255,255,.24) !important;
+  --line:rgba(255,255,255,.13) !important;--ln:rgba(255,255,255,.13) !important;--bd:rgba(255,255,255,.13) !important;
+  --gold:#d46a79 !important;--gold2:#df7f8c !important;--gold-2:#df7f8c !important;--gold-dark:#b64d5e !important;
+  --gold-soft:rgba(212,106,121,.10) !important;--goldline:rgba(212,106,121,.30) !important;
+  --g:#d46a79 !important;--g2:#df7f8c !important;--green:#d46a79 !important;--green-dark:#b64d5e !important;
+  --green-light:#e3949e !important;--green-soft:rgba(212,106,121,.10) !important;
+  --green-border:rgba(212,106,121,.30) !important;--border-green:rgba(212,106,121,.30) !important;
+  background:#111 !important;color:#f4f4f4 !important;
+}
+
+/* Header colors: outrank old blue light-theme rules. */
+html[data-theme="light"] .hskrc-global-header{background:rgba(255,255,255,.98) !important;border-bottom-color:#d8d8d8 !important;color:#161616 !important}
+html[data-theme="light"] .hskrc-global-mark{background:#fff !important;border-color:#8f1d2c !important;color:#8f1d2c !important}
+html[data-theme="light"] .hskrc-global-brandcopy strong{color:#161616 !important}
+html[data-theme="light"] .hskrc-global-brandcopy small{color:#6f6f6f !important}
+html[data-theme="light"] .hskrc-global-nav>a,
+html[data-theme="light"] .hskrc-global-more>summary{color:#444 !important;background:transparent !important;border-color:transparent !important}
+html[data-theme="light"] .hskrc-global-nav>a:hover,
+html[data-theme="light"] .hskrc-global-nav>a.is-active,
+html[data-theme="light"] .hskrc-global-more>summary:hover{color:#8f1d2c !important;background:transparent !important}
+html[data-theme="light"] .hskrc-global-nav>a.is-active::after{background:#8f1d2c !important}
+html[data-theme="light"] .hskrc-global-account,
+html[data-theme="light"] .hskrc-global-theme,
+html[data-theme="light"] .hskrc-global-lang{background:#fff !important;color:#333 !important;border-color:#d8d8d8 !important}
+html[data-theme="light"] .hskrc-global-account:hover,
+html[data-theme="light"] .hskrc-global-theme:hover,
+html[data-theme="light"] .hskrc-global-lang:hover,
+html[data-theme="light"] .hskrc-global-account.is-active{color:#8f1d2c !important;border-color:#8f1d2c !important;background:#fff !important}
+
+/* Reassert the home image hero in LIGHT mode. */
+html[data-theme="light"] body.hskrc-page-home .hero{
+  background:#1b1b1b url("alamut-hero.jpg") center 48%/cover no-repeat !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero::before{
+  display:block !important;background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.50) 52%,rgba(0,0,0,.12)) !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero::after{
+  display:block !important;background:linear-gradient(to top,rgba(0,0,0,.34),transparent 48%) !important;
+}
+html[data-theme="light"] body.hskrc-page-home .hero h1,
+html[data-theme="light"] body.hskrc-page-home .hero h1 .green,
+html[data-theme="light"] body.hskrc-page-home .hero-tagline{color:#fff !important}
+html[data-theme="light"] body.hskrc-page-home .hero-description{color:rgba(255,255,255,.86) !important}
+html[data-theme="light"] body.hskrc-page-home .eyebrow{color:#fff !important;background:transparent !important;border-color:#c95a69 !important}
+html[data-theme="light"] body.hskrc-page-home .btn-primary{background:#8f1d2c !important;border-color:#8f1d2c !important;color:#fff !important}
+html[data-theme="light"] body.hskrc-page-home .btn-primary:hover{background:#67131f !important;border-color:#67131f !important}
+html[data-theme="light"] body.hskrc-page-home .feature-icon,
+html[data-theme="light"] body.hskrc-page-home .feature-link,
+html[data-theme="light"] body.hskrc-page-home .section-kicker{color:#8f1d2c !important}
+
+/* Digital Library: explicit high-specificity reset. */
+html[data-theme="light"] body.hskrc-page-library .hero{background:#fff !important;border-bottom-color:#d8d8d8 !important}
+html[data-theme="light"] body.hskrc-page-library .title,
+html[data-theme="light"] body.hskrc-page-library .title .green{color:#161616 !important}
+html[data-theme="light"] body.hskrc-page-library .eyebrow{color:#8f1d2c !important;background:transparent !important;border-color:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-library .eyebrow-dot{display:none !important}
+html[data-theme="light"] body.hskrc-page-library .summary-count{color:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-library .book{background:#fff !important;border-color:#d8d8d8 !important;box-shadow:none !important}
+html[data-theme="light"] body.hskrc-page-library .book-title{color:#161616 !important}
+html[data-theme="light"] body.hskrc-page-library .details-button{background:#fff !important;color:#8f1d2c !important;border-color:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-library .read-button{background:#8f1d2c !important;border-color:#8f1d2c !important;color:#fff !important}
+html[data-theme="light"] body.hskrc-page-library .login-message{background:#f7eef0 !important;border-color:#8f1d2c !important;color:#414141 !important}
+html[data-theme="light"] body.hskrc-page-library .search-box{background:transparent !important;border-color:transparent !important}
+html[data-theme="light"] body.hskrc-page-library :is(input,select){background:#fff !important;color:#161616 !important;border-color:#b9b9b9 !important}
+
+/* Articles. */
+html[data-theme="light"] body.hskrc-page-articles .page-hero{background:#fff !important;border-bottom-color:#d8d8d8 !important}
+html[data-theme="light"] body.hskrc-page-articles .page-hero::before{display:none !important}
+html[data-theme="light"] body.hskrc-page-articles .eyebrow,
+html[data-theme="light"] body.hskrc-page-articles .category-badge{color:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-articles .article-title{color:#161616 !important}
+html[data-theme="light"] body.hskrc-page-articles .article-card,
+html[data-theme="light"] body.hskrc-page-articles .research-link{background:#fff !important;border-color:#d8d8d8 !important;box-shadow:none !important}
+html[data-theme="light"] body.hskrc-page-articles .read-button{background:#8f1d2c !important;border-color:#8f1d2c !important;color:#fff !important}
+
+/* Research Explorer: tab row must be line-based, not pill-based. */
+html[data-theme="light"] body.hskrc-page-explorer .hero{background:#fff !important;border-color:transparent !important}
+html[data-theme="light"] body.hskrc-page-explorer .hero h1{color:#161616 !important}
+html[data-theme="light"] body.hskrc-page-explorer .kick,
+html[data-theme="light"] body.hskrc-page-explorer .stat b,
+html[data-theme="light"] body.hskrc-page-explorer .type{color:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-explorer .tabs{
+  background:#fff !important;border-top:1px solid #d8d8d8 !important;border-bottom:1px solid #d8d8d8 !important;
+}
+html[data-theme="light"] body.hskrc-page-explorer .tab{
+  background:transparent !important;border:0 !important;border-radius:0 !important;color:#4d4d4d !important;
+}
+html[data-theme="light"] body.hskrc-page-explorer .tab.active,
+html[data-theme="light"] body.hskrc-page-explorer .tab:hover{color:#8f1d2c !important;background:transparent !important;border:0 !important}
+html[data-theme="light"] body.hskrc-page-explorer .tab.active::after{background:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-explorer :is(input,select){background:#fff !important;color:#161616 !important;border-color:#b9b9b9 !important}
+html[data-theme="light"] body.hskrc-page-explorer a.card,
+html[data-theme="light"] body.hskrc-page-explorer a.card:link,
+html[data-theme="light"] body.hskrc-page-explorer a.card:visited{background:#fff !important;color:#161616 !important;border-color:#d8d8d8 !important}
+html[data-theme="light"] body.hskrc-page-explorer a.card h2,
+html[data-theme="light"] body.hskrc-page-explorer a.card:link h2,
+html[data-theme="light"] body.hskrc-page-explorer a.card:visited h2{color:#161616 !important}
+html[data-theme="light"] body.hskrc-page-explorer a.card:hover,
+html[data-theme="light"] body.hskrc-page-explorer a.card:hover h2{color:#8f1d2c !important;background:#f6f6f6 !important}
+
+/* Older About / Founder / Sources / Researchers direct blue rules. */
+html[data-theme="light"] body:is(.hskrc-page-about,.hskrc-page-founder,.hskrc-page-sources,.hskrc-page-researchers)
+:is(.eyebrow,.eye,.role,.num,.id,.link,.type,.rule span,.step small,.initial,.profile-link,.node small){
+  color:#8f1d2c !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-about,.hskrc-page-founder,.hskrc-page-sources,.hskrc-page-researchers)
+:is(.statement,.answer,.notice,.initial,.profile-link,.tag){
+  border-color:rgba(143,29,44,.24) !important;
+}
+html[data-theme="light"] body:is(.hskrc-page-about,.hskrc-page-founder,.hskrc-page-sources,.hskrc-page-researchers)
+:is(.statement,.answer,.notice,.initial,.profile-link){
+  background:#f7eef0 !important;
+}
+html[data-theme="light"] body.hskrc-page-sources .rule{border-color:#8f1d2c !important;background:#fff !important}
+html[data-theme="light"] body.hskrc-page-sources .hero{background:#fff !important}
+html[data-theme="light"] body.hskrc-page-researchers .profile-link{color:#8f1d2c !important}
+html[data-theme="light"] body:is(.hskrc-page-involved,.hskrc-page-impact)
+:is(.number,.year,.live-stat b,.live-badge){color:#8f1d2c !important}
+html[data-theme="light"] body.hskrc-page-impact .live-dot{background:#8f1d2c !important;box-shadow:0 0 0 4px rgba(143,29,44,.10) !important}
+
+/* Final universal border discipline. */
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.card,.book,.article-card,.research-link,.statement,.step,.details,.state-box,.toolbar,.search-box,.research-gateway,.stat){
+  box-shadow:none !important;
+}
+
