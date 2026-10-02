@@ -1951,3 +1951,92 @@ html[data-theme="dark"] body:is(.hskrc-page-researchers,.hskrc-page-sources,.hsk
   }
 }
 
+
+
+/* ===== HSKRC NEUTRAL CHARCOAL SYSTEM V8 ===== */
+/* Remove burgundy/red from HSKRC. Use white + charcoal + neutral greys. */
+:root{
+  --h-red:#1d1d1d!important;
+  --h-red-dark:#000!important;
+  --h-red-soft:#f2f2f2!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"]{
+  --gold:#1d1d1d!important;--gold2:#2a2a2a!important;--gold-2:#2a2a2a!important;
+  --gold-dark:#000!important;--gold-soft:#f2f2f2!important;--goldline:rgba(0,0,0,.25)!important;
+  --g:#1d1d1d!important;--g2:#2a2a2a!important;
+  --green:#1d1d1d!important;--green-dark:#000!important;--green-light:#4b4b4b!important;
+  --green-soft:#f2f2f2!important;--green-border:rgba(0,0,0,.25)!important;--border-green:rgba(0,0,0,.25)!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(
+  h1,h2,h3,h4,.title,.page-title,.article-title,.book-title,.results-title,
+  .section-heading h2,.related-book-title,.research-item-title,.card h3,.card h3 a,.fort strong
+),
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(
+  h1,h2,h3,h4,.title,.page-title,.article-title,.book-title,.results-title,.section-heading h2
+) span{
+  color:#161616!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(
+  .eyebrow,.section-kicker,.kick,.k,.role,.field,.year,.type,.code,.desc-title,
+  .research-group-label,.research-count,.category-badge,.article-category,.summary-count,.num,.id,.link
+){
+  color:#3a3a3a!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.eyebrow,.section-kicker,.kick,.k,.code){
+  border-color:#2a2a2a!important;
+}
+html[data-theme="light"] .hskrc-global-mark{border-color:#222!important;color:#222!important}
+html[data-theme="light"] .hskrc-global-nav>a:hover,
+html[data-theme="light"] .hskrc-global-nav>a.is-active,
+html[data-theme="light"] .hskrc-global-more>summary:hover{color:#161616!important}
+html[data-theme="light"] .hskrc-global-nav>a.is-active::after{background:#161616!important}
+html[data-theme="light"] .hskrc-global-account:hover,
+html[data-theme="light"] .hskrc-global-theme:hover,
+html[data-theme="light"] .hskrc-global-lang:hover,
+html[data-theme="light"] .hskrc-global-account.is-active{color:#161616!important;border-color:#777!important}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.btn-primary,.read-button,.primary){
+  background:#1b1b1b!important;border-color:#1b1b1b!important;color:#fff!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.btn-primary,.read-button,.primary):hover:not(:disabled){
+  background:#000!important;border-color:#000!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(
+  .btn-secondary,.details-button,.secondary,.action-button,.state-back,.related-button,.external,.profile
+){
+  background:#fff!important;border-color:#777!important;color:#252525!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(
+  .btn-secondary,.details-button,.secondary,.action-button,.state-back,.related-button,.external,.profile
+):hover{
+  background:#f5f5f5!important;border-color:#222!important;color:#111!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(
+  .feature-link,.section-link,.ext,.path a,.article-content a,.profile-link
+){
+  color:#292929!important;border-color:#777!important;text-decoration-color:#777!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.notice,.statement,.answer,.login-message,blockquote){
+  background:#f4f4f4!important;border-color:#444!important;color:#4f4f4f!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.stat b,.live-stat b,.summary-count,.research-count){
+  color:#1f1f1f!important;
+}
+html[data-theme="light"] body[class*="hskrc-page-"] main .tab.active{color:#161616!important}
+html[data-theme="light"] body[class*="hskrc-page-"] main .tab.active::after{background:#161616!important}
+html[data-theme="light"] body[class*="hskrc-page-"] main :is(.initial,.tag,.profile-link,.category-badge){
+  background:#f4f4f4!important;border-color:#d0d0d0!important;color:#303030!important;
+}
+/* Homepage photo hero remains white-on-image. */
+html[data-theme="light"] body.hskrc-page-home .hero :is(h1,h1 span,h2,h3),
+html[data-theme="light"] body.hskrc-page-home .hero .eyebrow,
+html[data-theme="light"] body.hskrc-page-home .hero .hero-tagline{color:#fff!important}
+html[data-theme="light"] body.hskrc-page-home .hero .eyebrow{border-color:rgba(255,255,255,.72)!important}
+html[data-theme="light"] body.hskrc-page-home .hero .btn-primary{
+  background:#1b1b1b!important;border-color:#1b1b1b!important;color:#fff!important;
+}
+html[data-theme="dark"] body[class*="hskrc-page-"]{
+  --gold:#f0f0f0!important;--gold2:#fff!important;--gold-dark:#d0d0d0!important;
+  --gold-soft:rgba(255,255,255,.08)!important;--goldline:rgba(255,255,255,.24)!important;
+  --g:#f0f0f0!important;--g2:#fff!important;--green:#f0f0f0!important;--green-dark:#d0d0d0!important;
+  --green-soft:rgba(255,255,255,.08)!important;--green-border:rgba(255,255,255,.20)!important;
+}
