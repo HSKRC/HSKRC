@@ -1248,7 +1248,7 @@
       "@type": "ItemList",
       "@id": "https://hskrc.org/articles.html#itemlist",
       "name": "HSKRC Published Research Articles",
-      "numberOfItems": 3,
+      "numberOfItems": 4,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -1506,45 +1506,102 @@
 
 
     /* =========================================
-       BILINGUAL ARTICLE PAIRS
-       One research article can have separate
-       English and Dari records in Supabase,
-       while appearing only once in the archive.
+       BILINGUAL ARTICLE GROUPING
+       Each translation pair shares one
+       translation_group in Supabase. The archive
+       displays only the version matching the
+       interface language, so articles never
+       appear twice.
     ========================================= */
-
-    const ARTICLE_LANGUAGE_PAIRS = [
-      {
-        en: "90ed5861-4206-4cc1-98a5-d5836ceaa10c",
-        fa: "78eec163-bdf8-4e20-a961-fb2ea0c4c02c"
-      }
-    ];
-
 
     function getDisplayArticles() {
 
-      const hiddenIds =
-        new Set();
+      const groups =
+        new Map();
 
 
-      ARTICLE_LANGUAGE_PAIRS.forEach(
-        pair => {
+      allArticles.forEach(
+        article => {
 
-          hiddenIds.add(
-            currentLanguage === "fa"
-              ? pair.en
-              : pair.fa
-          );
+          const groupId =
+            String(
+              article.translation_group ||
+              article.id ||
+              ""
+            );
+
+
+          if (
+            !groups.has(
+              groupId
+            )
+          ) {
+
+            groups.set(
+              groupId,
+              []
+            );
+
+          }
+
+
+          groups
+            .get(
+              groupId
+            )
+            .push(
+              article
+            );
 
         }
       );
 
 
-      return allArticles.filter(
-        article =>
-          !hiddenIds.has(
-            String(article.id || "")
-          )
+      const display =
+        [];
+
+
+      groups.forEach(
+        groupArticles => {
+
+          const preferred =
+            groupArticles.find(
+              article =>
+                article.language_code ===
+                currentLanguage
+            );
+
+
+          const fallback =
+            preferred ||
+            groupArticles.find(
+              article =>
+                article.language_code ===
+                  "en"
+            ) ||
+            groupArticles.find(
+              article =>
+                article.language_code ===
+                  "fa"
+            ) ||
+            groupArticles[0];
+
+
+          if (
+            fallback
+          ) {
+
+            display.push(
+              fallback
+            );
+
+          }
+
+        }
       );
+
+
+      return display;
 
     }
 
@@ -1776,7 +1833,7 @@
         await supabaseClient
           .from("articles")
           .select(
-            "id,title,author,category,excerpt,content,cover_path,published,published_at,created_at"
+            "id,title,author,category,excerpt,content,cover_path,published,published_at,created_at,language_code,translation_group"
           )
           .eq(
             "published",
@@ -2425,7 +2482,11 @@
         "read-button";
 
 
-      readButton.href = window.HSKRCArticleUrl ? window.HSKRCArticleUrl(article) : ("article.html?id=" + encodeURIComponent(article.id));
+      readButton.href =
+        "article.html?id=" +
+        encodeURIComponent(
+          article.id
+        );
 
 
       readButton.textContent =
