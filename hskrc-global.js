@@ -32,7 +32,7 @@
     if(persist) localStorage.setItem(THEME_KEY,theme);
 
     const meta=document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content",theme==="light" ? "#f4f6f8" : "#0b0b0c");
+    if(meta) meta.setAttribute("content",theme==="light" ? "#ffffff" : "#111111");
   }
 
   // Light mode is the default HSKRC design; a saved dark preference is preserved.
