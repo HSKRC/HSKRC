@@ -601,7 +601,8 @@
       background: rgba(255,255,255,0.02);
     }
 
-    .article-language-pair a {
+    .article-language-pair a,
+    .article-language-pair span {
       min-width: 70px;
       padding: 6px 10px;
       border-radius: 7px;
@@ -621,6 +622,11 @@
       color: var(--green);
       background: var(--green-soft);
       box-shadow: inset 0 0 0 1px var(--green-border);
+    }
+
+    .article-language-pair .disabled {
+      opacity: .45;
+      cursor: not-allowed;
     }
 
 
@@ -1918,53 +1924,220 @@
 
 
     /* =========================================
-       BILINGUAL ARTICLE PAIRS
+       BILINGUAL ARTICLE SWITCH
+       Translation relationships are stored in
+       Supabase so every article can use the
+       same language-switching system.
     ========================================= */
 
-    const ARTICLE_LANGUAGE_PAIRS = {
-      "90ed5861-4206-4cc1-98a5-d5836ceaa10c": {
-        en: "90ed5861-4206-4cc1-98a5-d5836ceaa10c",
-        fa: "78eec163-bdf8-4e20-a961-fb2ea0c4c02c"
-      },
-      "78eec163-bdf8-4e20-a961-fb2ea0c4c02c": {
-        en: "90ed5861-4206-4cc1-98a5-d5836ceaa10c",
-        fa: "78eec163-bdf8-4e20-a961-fb2ea0c4c02c"
+    async function createArticleLanguagePair(article) {
+
+      const groupId =
+        String(
+          article?.translation_group ||
+          article?.id ||
+          ""
+        );
+
+
+      if (
+        !groupId
+      ) {
+
+        return null;
+
       }
-    };
 
-    function createArticleLanguagePair(article) {
-      const articleId = String(article?.id || "");
-      const pair = ARTICLE_LANGUAGE_PAIRS[articleId];
-      if (!pair) return null;
 
-      const wrap = document.createElement("div");
-      wrap.className = "article-language-pair";
-      wrap.setAttribute("aria-label", "Article language");
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("articles")
+          .select(
+            "id,language_code,translation_group,published"
+          )
+          .eq(
+            "translation_group",
+            groupId
+          )
+          .eq(
+            "published",
+            true
+          )
+          .in(
+            "language_code",
+            ["en", "fa"]
+          );
+
+
+      if (
+        error
+      ) {
+
+        console.error(
+          "Article translation pair error:",
+          error
+        );
+
+        return null;
+
+      }
+
+
+      const translations =
+        new Map();
+
+
+      (data || []).forEach(
+        row => {
+
+          if (
+            row.language_code === "en" ||
+            row.language_code === "fa"
+          ) {
+
+            translations.set(
+              row.language_code,
+              row
+            );
+
+          }
+
+        }
+      );
+
+
+      if (
+        !translations.size
+      ) {
+
+        return null;
+
+      }
+
+
+      const wrap =
+        document.createElement(
+          "div"
+        );
+
+
+      wrap.className =
+        "article-language-pair";
+
+
+      wrap.setAttribute(
+        "aria-label",
+        currentLanguage === "fa"
+          ? "زبان مقاله"
+          : "Article language"
+      );
+
 
       [
         ["en", "English"],
         ["fa", "دری"]
-      ].forEach(([key, label]) => {
-        const link = document.createElement("a");
-        link.href = `article.html?id=${encodeURIComponent(pair[key])}`;
-        link.textContent = label;
-        link.lang = key === "fa" ? "fa" : "en";
+      ].forEach(
+        ([key, label]) => {
 
-        if (articleId === pair[key]) {
-          link.classList.add("active");
-          link.setAttribute("aria-current", "page");
+          const target =
+            translations.get(
+              key
+            );
+
+
+          const control =
+            document.createElement(
+              target
+                ? "a"
+                : "span"
+            );
+
+
+          control.textContent =
+            label;
+
+
+          control.lang =
+            key === "fa"
+              ? "fa"
+              : "en";
+
+
+          if (
+            target
+          ) {
+
+            control.href =
+              "article.html?id=" +
+              encodeURIComponent(
+                target.id
+              );
+
+
+            if (
+              String(article.id) ===
+              String(target.id)
+            ) {
+
+              control.classList.add(
+                "active"
+              );
+
+
+              control.setAttribute(
+                "aria-current",
+                "page"
+              );
+
+            }
+
+
+            control.addEventListener(
+              "click",
+              () => {
+
+                try {
+
+                  localStorage.setItem(
+                    LANGUAGE_KEY,
+                    key
+                  );
+
+                } catch (
+                  error
+                ) {}
+
+              }
+            );
+
+          } else {
+
+            control.classList.add(
+              "disabled"
+            );
+
+
+            control.setAttribute(
+              "aria-disabled",
+              "true"
+            );
+
+          }
+
+
+          wrap.appendChild(
+            control
+          );
+
         }
+      );
 
-        link.addEventListener("click", () => {
-          try {
-            localStorage.setItem("hskrc_language", key);
-          } catch (error) {}
-        });
-
-        wrap.appendChild(link);
-      });
 
       return wrap;
+
     }
 
 
@@ -2114,7 +2287,7 @@
       /* BILINGUAL ARTICLE SWITCH */
 
       const languagePair =
-        createArticleLanguagePair(
+        await createArticleLanguagePair(
           article
         );
 
