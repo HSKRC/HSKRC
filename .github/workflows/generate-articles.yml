@@ -2,6 +2,9 @@ name: Generate SEO Article Pages
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/generate-articles.mjs"
   schedule:
     - cron: "17 */6 * * *"
 
