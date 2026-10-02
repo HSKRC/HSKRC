@@ -6,12 +6,12 @@
     en:{
       home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", about:"About", founder:"Founder & CEO",
-      impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", lang:"فارسی", themeOn:"Dark ON", themeOff:"Dark OFF"
+      impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark ON", themeOff:"Dark OFF"
     },
     fa:{
       home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
-      impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", lang:"English", themeOn:"تاریک: روشن", themeOff:"تاریک: خاموش"
+      impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک: روشن", themeOff:"تاریک: خاموش"
     }
   };
 
@@ -130,15 +130,20 @@
           ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
           ${navLink("library","library.html",L.library)}
           ${navLink("articles","articles.html",L.articles)}
-          ${navLink("researchers","researchers.html",L.researchers)}
-          ${navLink("sources","sources.html",L.sources)}
           ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("about","about.html",L.about)}
-          ${navLink("founder","founder.html",L.founder)}
-          ${navLink("impact","community-impact.html",L.impact)}
-          ${navLink("involved","get-involved.html",L.involved)}
-          ${navLink("support","support.html",L.support)}
-          ${navLink("contact","contact.html",L.contact)}
+          <details class="hskrc-global-more">
+            <summary>${L.more}</summary>
+            <div class="hskrc-global-more-menu">
+              ${navLink("researchers","researchers.html",L.researchers)}
+              ${navLink("sources","sources.html",L.sources)}
+              ${navLink("founder","founder.html",L.founder)}
+              ${navLink("impact","community-impact.html",L.impact)}
+              ${navLink("involved","get-involved.html",L.involved)}
+              ${navLink("support","support.html",L.support)}
+              ${navLink("contact","contact.html",L.contact)}
+            </div>
+          </details>
         </nav>
 
         <div class="hskrc-global-actions">
@@ -195,6 +200,7 @@
       const el=document.querySelector(`.hskrc-global-nav [data-hskrc-key="${k}"]`);
       if(el) el.textContent=v;
     });
+    const more=document.querySelector(".hskrc-global-more > summary"); if(more) more.textContent=L.more;
     const b=document.getElementById("hskrcGlobalLang");
     if(b) b.textContent=L.lang;
     syncThemeButton();
