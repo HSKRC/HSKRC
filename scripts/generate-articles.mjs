@@ -7,7 +7,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const SITE_URL = "https://hskrc.org";
 const OUTPUT_DIR = "generated-articles";
 
-// Bilingual article generation is data-driven via language_code and translation_group.
+// Bilingual article generation is data-driven via language_code and translation_group. GA4 is embedded in every generated page.
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   throw new Error(
