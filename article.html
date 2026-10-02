@@ -3,6 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta name="google" content="notranslate"/>
+<meta http-equiv="Content-Language" content="en, fa"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script id="hskrc-theme-init">(function(){try{var t=localStorage.getItem("hskrc_theme")==="dark"?"dark":"light";document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light";}})();</script>
 <meta content="HSKRC Research Article" name="description"/>
@@ -1366,7 +1368,7 @@
 <meta property="og:image" content="https://hskrc.org/hskrc-social-preview.png">
 <meta name="twitter:image" content="https://hskrc.org/hskrc-social-preview.png">
 </head>
-<body>
+<body class="notranslate" translate="no">
 <!-- =========================================
        HEADER
   ========================================= -->
@@ -1959,6 +1961,29 @@
         data;
 
 
+      const articleLanguage =
+        data.language_code === "fa" ||
+        data.language_code === "en"
+          ? data.language_code
+          : (
+              /[\u0600-\u06FF]/.test(
+                String(data.title || "") +
+                " " +
+                String(data.content || "")
+              )
+                ? "fa"
+                : "en"
+            );
+
+
+      applyLanguage(
+        articleLanguage
+      );
+
+
+      await updateAccountLink();
+
+
       await renderArticle(
         data
       );
@@ -2145,7 +2170,13 @@
 
 
       wrap.className =
-        "article-language-pair";
+        "article-language-pair notranslate";
+
+
+      wrap.setAttribute(
+        "translate",
+        "no"
+      );
 
 
       wrap.setAttribute(
@@ -2178,6 +2209,17 @@
 
           control.textContent =
             label;
+
+
+          control.classList.add(
+            "notranslate"
+          );
+
+
+          control.setAttribute(
+            "translate",
+            "no"
+          );
 
 
           control.lang =
@@ -2390,7 +2432,13 @@
 
 
         category.className =
-          "article-category";
+          "article-category notranslate";
+
+
+        category.setAttribute(
+          "translate",
+          "no"
+        );
 
 
         category.textContent =
@@ -2431,7 +2479,13 @@
 
 
       title.className =
-        "article-title";
+        "article-title notranslate";
+
+
+      title.setAttribute(
+        "translate",
+        "no"
+      );
 
 
       title.textContent =
@@ -2463,7 +2517,13 @@
 
 
       meta.className =
-        "article-meta";
+        "article-meta notranslate";
+
+
+      meta.setAttribute(
+        "translate",
+        "no"
+      );
 
 
       meta.setAttribute(
@@ -2581,7 +2641,20 @@
 
       content.setAttribute(
         "lang",
-        "auto"
+        article.language_code === "fa"
+          ? "fa-AF"
+          : "en-AU"
+      );
+
+
+      content.setAttribute(
+        "translate",
+        "no"
+      );
+
+
+      content.classList.add(
+        "notranslate"
       );
 
 
@@ -3088,9 +3161,12 @@
 
         return new Intl.DateTimeFormat(
           currentLanguage === "fa"
-            ? "fa-IR"
-            : "en-US",
+            ? "fa-AF-u-ca-gregory"
+            : "en-AU",
           {
+            calendar:
+              "gregory",
+
             year:
               "numeric",
 
