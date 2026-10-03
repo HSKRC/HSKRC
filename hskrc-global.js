@@ -246,6 +246,60 @@
     });
   }
 
+  function bindMobileMoreMenu(){
+    const details=document.querySelector(".hskrc-global-more");
+    const summary=details?.querySelector(":scope > summary");
+    const menu=details?.querySelector(".hskrc-global-more-menu");
+    if(!details || !summary || !menu) return;
+
+    const mq=window.matchMedia("(max-width: 900px)");
+
+    function clearMobilePosition(){
+      ["position","top","left","right","width","max-height","overflow-y"].forEach(p=>menu.style.removeProperty(p));
+    }
+
+    function positionMobileMenu(){
+      if(!details.open || !mq.matches){
+        clearMobilePosition();
+        return;
+      }
+
+      const rect=summary.getBoundingClientRect();
+      const gutter=13;
+      const width=Math.min(320,window.innerWidth-(gutter*2));
+      const left=Math.max(gutter,Math.min(rect.left,window.innerWidth-width-gutter));
+      const top=Math.min(rect.bottom+2,window.innerHeight-120);
+
+      menu.style.setProperty("position","fixed","important");
+      menu.style.setProperty("top",top+"px","important");
+      menu.style.setProperty("left",left+"px","important");
+      menu.style.setProperty("right","auto","important");
+      menu.style.setProperty("width",width+"px","important");
+      menu.style.setProperty("max-height",Math.max(110,window.innerHeight-top-gutter)+"px","important");
+      menu.style.setProperty("overflow-y","auto","important");
+    }
+
+    details.addEventListener("toggle",()=>{
+      if(details.open) requestAnimationFrame(positionMobileMenu);
+      else clearMobilePosition();
+    });
+
+    document.addEventListener("click",(event)=>{
+      if(details.open && !details.contains(event.target)) details.open=false;
+    });
+
+    document.addEventListener("keydown",(event)=>{
+      if(event.key==="Escape" && details.open){
+        details.open=false;
+        summary.focus();
+      }
+    });
+
+    window.addEventListener("resize",positionMobileMenu,{passive:true});
+    window.addEventListener("orientationchange",()=>setTimeout(positionMobileMenu,120),{passive:true});
+    window.addEventListener("scroll",positionMobileMenu,{passive:true});
+  }
+
   async function syncAccount(){
     const a=document.getElementById("hskrcGlobalAccount");
     if(!a) return;
@@ -288,6 +342,7 @@
     syncGlobalLabels();
     bindLanguage();
     bindTheme();
+    bindMobileMoreMenu();
     syncAccount();
 
     window.addEventListener("storage",(e)=>{
