@@ -1,0 +1,14 @@
+name: Temporary Lifetime Analytics Test
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call lifetime stats endpoint
+        run: |
+          set -e
+          curl --fail-with-body --silent --show-error \
+            -H "Accept: application/json" \
+            "https://uwuklryzxexpofcxrbnm.supabase.co/functions/v1/cloudflare-stats"
+          echo
