@@ -1,0 +1,17 @@
+name: Preserve Lifetime Analytics
+
+on:
+  schedule:
+    - cron: "20 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refresh cumulative HSKRC analytics
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -H "Accept: application/json" \
+            "https://uwuklryzxexpofcxrbnm.supabase.co/functions/v1/cloudflare-stats" \
+            > /dev/null
