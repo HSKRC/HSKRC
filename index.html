@@ -988,6 +988,60 @@ html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1{
 }
 </style>
 <link rel="preload" as="image" href="alamut-hero.jpg" fetchpriority="high">
+
+<style id="hskrc-live-stats-style">
+  .hskrc-live-stats{display:none;padding:0 0 78px}
+  .hskrc-live-stats.is-ready{display:block}
+  .hskrc-live-stats-card{
+    position:relative;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:1.25fr .75fr .75fr;
+    align-items:stretch;
+    gap:1px;
+    border:1px solid rgba(201,164,92,.18);
+    border-radius:18px;
+    background:rgba(255,255,255,.07);
+    box-shadow:0 18px 48px rgba(0,0,0,.16)
+  }
+  .hskrc-live-stats-intro,.hskrc-live-stat{
+    background:var(--panel);
+    padding:25px 28px
+  }
+  .hskrc-live-stats-intro{display:flex;flex-direction:column;justify-content:center}
+  .hskrc-live-badge{
+    width:max-content;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:9px;
+    color:var(--gold);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase
+  }
+  .hskrc-live-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:#65c889;
+    box-shadow:0 0 0 5px rgba(101,200,137,.10)
+  }
+  .hskrc-live-stats-intro h2{font-size:22px;margin:0 0 6px}
+  .hskrc-live-stats-intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+  .hskrc-live-stat{display:flex;flex-direction:column;justify-content:center;min-height:126px}
+  .hskrc-live-value{font-size:30px;line-height:1;font-weight:850;color:var(--text);letter-spacing:-.04em}
+  .hskrc-live-label{margin-top:8px;color:var(--muted);font-size:12px;font-weight:700}
+  @media(max-width:760px){
+    .hskrc-live-stats-card{grid-template-columns:1fr 1fr}
+    .hskrc-live-stats-intro{grid-column:1/-1}
+  }
+  @media(max-width:470px){
+    .hskrc-live-stats-card{grid-template-columns:1fr}
+    .hskrc-live-stats-intro{grid-column:auto}
+    .hskrc-live-stat{min-height:100px}
+  }
+</style>
+
 </head>
 <body>
 <!-- =========================
@@ -1227,6 +1281,36 @@ html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1{
 </div>
 </div>
 </section>
+
+<!-- =========================
+         LIVE CLOUDFLARE STATS
+    ========================= -->
+<section id="hskrcLiveStats" class="hskrc-live-stats" aria-live="polite">
+  <div class="container">
+    <div class="hskrc-live-stats-card">
+      <div class="hskrc-live-stats-intro">
+        <div class="hskrc-live-badge">
+          <span class="hskrc-live-dot" aria-hidden="true"></span>
+          <span data-en="Live website reach" data-fa="آمار زنده وب‌سایت">Live website reach</span>
+        </div>
+        <h2 data-en="HSKRC Web Analytics" data-fa="آمار بازدید HSKRC">HSKRC Web Analytics</h2>
+        <p data-en="Last 14 days · bots excluded · refreshed automatically every minute"
+           data-fa="۱۴ روز گذشته · ربات‌ها حذف شده‌اند · به‌روزرسانی خودکار هر دقیقه">
+          Last 14 days · bots excluded · refreshed automatically every minute
+        </p>
+      </div>
+      <div class="hskrc-live-stat">
+        <strong id="hskrcLiveVisits" class="hskrc-live-value">—</strong>
+        <span class="hskrc-live-label" data-en="Visits" data-fa="بازدیدها">Visits</span>
+      </div>
+      <div class="hskrc-live-stat">
+        <strong id="hskrcLivePageViews" class="hskrc-live-value">—</strong>
+        <span class="hskrc-live-label" data-en="Page views" data-fa="بازدید صفحات">Page views</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- =========================
          CTA
     ========================= -->
@@ -1469,5 +1553,57 @@ html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1{
     );
 
   </script>
+
+<script id="hskrc-live-stats-script">
+(function(){
+  "use strict";
+
+  const endpoint="https://uwuklryzxexpofcxrbnm.supabase.co/functions/v1/cloudflare-stats";
+  const section=document.getElementById("hskrcLiveStats");
+  const visitsEl=document.getElementById("hskrcLiveVisits");
+  const viewsEl=document.getElementById("hskrcLivePageViews");
+  let lastStats=null;
+
+  function formatNumber(value){
+    const locale=localStorage.getItem("hskrc_language")==="fa" ? "fa-AF" : "en-AU";
+    return new Intl.NumberFormat(locale,{maximumFractionDigits:0}).format(Number(value)||0);
+  }
+
+  function render(stats){
+    if(!section || !visitsEl || !viewsEl) return;
+    lastStats=stats;
+    visitsEl.textContent=formatNumber(stats.visits);
+    viewsEl.textContent=formatNumber(stats.pageViews);
+    section.classList.add("is-ready");
+  }
+
+  async function refresh(){
+    try{
+      const response=await fetch(endpoint,{method:"GET",cache:"no-store",headers:{"Accept":"application/json"}});
+      if(!response.ok) return;
+      const stats=await response.json();
+      if(Number.isFinite(Number(stats?.visits)) && Number.isFinite(Number(stats?.pageViews))){
+        render(stats);
+      }
+    }catch(_){
+      // Keep the panel hidden until the secure analytics endpoint is available.
+    }
+  }
+
+  refresh();
+  setInterval(refresh,60000);
+
+  window.addEventListener("storage",function(event){
+    if(event.key==="hskrc_language" && lastStats) render(lastStats);
+  });
+
+  document.addEventListener("click",function(event){
+    if(event.target && event.target.closest && event.target.closest("#languageToggle,#hskrcGlobalLang")){
+      setTimeout(function(){ if(lastStats) render(lastStats); },20);
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
