@@ -91,11 +91,12 @@ html[data-theme="light"]{--bg:#f4f6f8;--panel:#ffffff;--panel2:#eef2f5;--text:#1
 </section>
 
 <section class="block" id="measured-traction">
-<div class="head"><div><h2 data-en="Measured Early Traction" data-fa="کشش اولیه قابل اندازه‌گیری">Measured Early Traction</h2><p data-en="Early usage is reported as traffic activity, not as unique-person counts." data-fa="استفاده اولیه به‌عنوان فعالیت ترافیکی گزارش می‌شود، نه تعداد افراد یکتا.">Early usage is reported as traffic activity, not as unique-person counts.</p></div></div>
+<div class="head"><div><h2 data-en="Measured Website Reach" data-fa="دسترسی قابل اندازه‌گیری وب‌سایت">Measured Website Reach</h2><p data-en="Cumulative traffic activity from the beginning of analytics monitoring to the present. These figures update automatically and are not unique-person counts." data-fa="مجموع فعالیت ترافیکی از آغاز ثبت آمار تا اکنون. این ارقام به‌صورت خودکار به‌روزرسانی می‌شوند و تعداد افراد یکتا نیستند.">Cumulative traffic activity from the beginning of analytics monitoring to the present. These figures update automatically and are not unique-person counts.</p></div></div>
 <div class="grid">
-<div class="card"><div class="number">331</div><h3 data-en="Visits" data-fa="بازدیدها">Visits</h3><p data-en="Recorded during the first seven days of monitored activity. Source: Cloudflare Web Analytics snapshot, 28 September 2026." data-fa="در هفت روز نخست فعالیت تحت نظارت ثبت شده است. منبع: تصویر Cloudflare Web Analytics، ۲۸ سپتامبر ۲۰۲۶.">Recorded during the first seven days of monitored activity. Source: Cloudflare Web Analytics snapshot, 28 September 2026.</p></div>
-<div class="card"><div class="number">1,245</div><h3 data-en="Page Views" data-fa="بازدید صفحات">Page Views</h3><p data-en="Recorded during the same seven-day period. Page views are not presented as unique users." data-fa="در همان دوره هفت‌روزه ثبت شده است. بازدید صفحات به‌عنوان کاربران یکتا ارائه نمی‌شود.">Recorded during the same seven-day period. Page views are not presented as unique users.</p></div>
+<div class="card"><div class="number" id="impactAllTimeVisits">—</div><h3 data-en="All-time Visits" data-fa="مجموع بازدیدها">All-time Visits</h3><p data-en="Cumulative visits recorded by Cloudflare Web Analytics, with automated preservation of the lifetime total." data-fa="مجموع بازدیدهای ثبت‌شده توسط Cloudflare Web Analytics با ذخیره خودکار آمار تجمعی بلندمدت.">Cumulative visits recorded by Cloudflare Web Analytics, with automated preservation of the lifetime total.</p></div>
+<div class="card"><div class="number" id="impactAllTimePageViews">—</div><h3 data-en="All-time Page Views" data-fa="مجموع بازدید صفحات">All-time Page Views</h3><p data-en="Cumulative page views from the start of monitoring to now. Page views are not presented as unique users." data-fa="مجموع بازدید صفحات از آغاز ثبت آمار تا اکنون. بازدید صفحات به‌عنوان کاربران یکتا ارائه نمی‌شود.">Cumulative page views from the start of monitoring to now. Page views are not presented as unique users.</p></div>
 </div>
+<div id="impactTrafficStatus" class="live-status" data-en="Loading cumulative Cloudflare analytics…" data-fa="در حال بارگذاری آمار تجمعی Cloudflare…">Loading cumulative Cloudflare analytics…</div>
 </section>
 
 <section class="block" id="sdg-alignment">
@@ -264,6 +265,77 @@ html[data-theme="light"]{--bg:#f4f6f8;--panel:#ffffff;--panel2:#eef2f5;--text:#1
 
   window.addEventListener("storage",e=>{
     if(e.key==="hskrc_language") setTimeout(loadLiveImpact,50);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const endpoint="https://uwuklryzxexpofcxrbnm.supabase.co/functions/v1/cloudflare-stats";
+  const visitsEl=document.getElementById("impactAllTimeVisits");
+  const pageViewsEl=document.getElementById("impactAllTimePageViews");
+  const statusEl=document.getElementById("impactTrafficStatus");
+  let lastStats=null;
+
+  function currentLang(){
+    return localStorage.getItem("hskrc_language")==="fa" ? "fa" : "en";
+  }
+
+  function formatNumber(value){
+    try{
+      return new Intl.NumberFormat(currentLang()==="fa" ? "fa-AF" : "en-AU",{maximumFractionDigits:0}).format(Number(value)||0);
+    }catch(_){
+      return String(Number(value)||0);
+    }
+  }
+
+  function render(stats){
+    if(!visitsEl || !pageViewsEl) return;
+    lastStats=stats;
+    visitsEl.textContent=formatNumber(stats.visits);
+    pageViewsEl.textContent=formatNumber(stats.pageViews);
+    if(statusEl){
+      statusEl.textContent=currentLang()==="fa"
+        ? "آمار تجمعی از آغاز تا اکنون · به‌روزرسانی خودکار از Cloudflare Web Analytics"
+        : "All-time cumulative analytics · updated automatically from Cloudflare Web Analytics";
+      statusEl.classList.add("ok");
+    }
+  }
+
+  async function loadTraffic(){
+    try{
+      const response=await fetch(endpoint,{method:"GET",cache:"no-store",headers:{"Accept":"application/json"}});
+      if(!response.ok) throw new Error("Analytics unavailable");
+      const stats=await response.json();
+      if(Number.isFinite(Number(stats?.visits)) && Number.isFinite(Number(stats?.pageViews))){
+        render(stats);
+      }
+    }catch(_){
+      if(statusEl){
+        statusEl.textContent=currentLang()==="fa"
+          ? "آمار ترافیک موقتاً در دسترس نیست."
+          : "Traffic analytics are temporarily unavailable.";
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    loadTraffic();
+    setInterval(loadTraffic,60000);
+  });
+
+  document.addEventListener("visibilitychange",()=>{
+    if(!document.hidden) loadTraffic();
+  });
+
+  window.addEventListener("storage",e=>{
+    if(e.key==="hskrc_language" && lastStats) render(lastStats);
+  });
+
+  document.addEventListener("click",e=>{
+    if(e.target && e.target.closest && e.target.closest("#lang,#hskrcGlobalLang")){
+      setTimeout(()=>{ if(lastStats) render(lastStats); },50);
+    }
   });
 })();
 </script>
