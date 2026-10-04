@@ -57,6 +57,30 @@ html[data-theme="light"] .filter:hover,html[data-theme="light"] .filter.active{b
 .empty{display:none;border:1px dashed var(--line);border-radius:16px;padding:34px;text-align:center;color:var(--muted);background:var(--panel)}
 .note{margin-top:24px;border:1px solid rgba(201,164,92,.28);background:var(--soft);border-radius:14px;padding:17px 19px;color:var(--muted);line-height:1.7;font-size:13px}
 html[data-theme="light"] .note{border-color:rgba(47,95,136,.25)}
+.submit-person{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}
+.submit-person>summary{list-style:none;cursor:pointer;padding:16px 18px;font-weight:850;color:var(--gold2);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.submit-person>summary::-webkit-details-marker{display:none}
+.submit-person>summary::after{content:"+";font-size:22px;line-height:1;color:var(--muted)}
+.submit-person[open]>summary::after{content:"−"}
+.submit-person-intro{padding:0 18px 16px;color:var(--muted);font-size:13px;line-height:1.65}
+.person-form{padding:0 18px 19px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:12px;font-weight:800;color:var(--text)}
+.form-field input,.form-field select,.form-field textarea{width:100%;border:1px solid var(--line);border-radius:11px;background:var(--panel2);color:var(--text);padding:11px 12px;font:inherit;outline:none}
+.form-field textarea{min-height:105px;resize:vertical;line-height:1.55}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--soft)}
+.form-check{grid-column:1/-1;display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:12px;line-height:1.45}
+.form-check input{margin-top:3px}
+.form-actions{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.submit-btn{border:1px solid transparent;border-radius:10px;background:var(--gold);color:#fff;padding:11px 16px;font:800 13px/1 inherit;cursor:pointer}
+html[data-theme="dark"] .submit-btn{color:#15110a}
+.submit-btn:disabled{opacity:.55;cursor:not-allowed}
+.form-status{font-size:12px;color:var(--muted)}
+.form-status.success{color:#4f9f6d}
+.form-status.error{color:#c97070}
+.hp-field{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+@media(max-width:700px){.person-form{grid-template-columns:1fr}.form-field.full,.form-check,.form-actions{grid-column:1}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.page{width:min(100% - 24px,1180px);padding-top:42px}.grid{grid-template-columns:1fr}.meta{align-items:flex-start;flex-direction:column}}
 html[dir="rtl"] .eyebrow{letter-spacing:0}
@@ -100,6 +124,107 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
       <button class="filter" type="button" data-filter="women" data-en="Women of Influence" data-fa="زنان اثرگذار">Women of Influence</button>
     </div>
   </section>
+
+  <details class="submit-person" id="submitPersonPanel">
+    <summary data-en="Submit or suggest a person" data-fa="معرفی یا پیشنهاد یک شخصیت">Submit or suggest a person</summary>
+    <div class="submit-person-intro"
+      data-en="You can suggest a historical or contemporary person, including yourself. Submissions are not published automatically; HSKRC reviews sources and editorial suitability first."
+      data-fa="می‌توانید یک شخصیت تاریخی یا معاصر، حتی خودتان، را پیشنهاد کنید. مطالب به‌صورت خودکار نشر نمی‌شوند؛ HSKRC ابتدا منابع و مناسب‌بودن آن را بررسی می‌کند.">
+      You can suggest a historical or contemporary person, including yourself. Submissions are not published automatically; HSKRC reviews sources and editorial suitability first.
+    </div>
+
+    <form class="person-form" id="personSubmissionForm" novalidate>
+      <div class="hp-field" aria-hidden="true">
+        <label>Website <input type="text" id="personWebsiteTrap" autocomplete="off" tabindex="-1"></label>
+      </div>
+
+      <div class="form-field">
+        <label for="personFullName" data-en="Full name *" data-fa="نام کامل *">Full name *</label>
+        <input id="personFullName" name="full_name" maxlength="160" required>
+      </div>
+
+      <div class="form-field">
+        <label for="personCategory" data-en="Category *" data-fa="دسته‌بندی *">Category *</label>
+        <select id="personCategory" name="category" required>
+          <option value="" data-en="Choose a category" data-fa="یک دسته را انتخاب کنید">Choose a category</option>
+          <option value="ismaili-scholars" data-en="Ismaili Thinkers & Scholars" data-fa="اندیشمندان و دانشمندان اسماعیلی">Ismaili Thinkers & Scholars</option>
+          <option value="hujjats" data-en="Hujjats" data-fa="حجت‌ها">Hujjats</option>
+          <option value="dais" data-en="Da'is" data-fa="داعیان">Da'is</option>
+          <option value="philosophers" data-en="Philosophers & Theologians" data-fa="فیلسوفان و متکلمان">Philosophers & Theologians</option>
+          <option value="writers" data-en="Writers & Poets" data-fa="نویسندگان و شاعران">Writers & Poets</option>
+          <option value="leaders" data-en="Political & Social Leaders" data-fa="رهبران سیاسی و اجتماعی">Political & Social Leaders</option>
+          <option value="military" data-en="Military & Historical Figures" data-fa="چهره‌های نظامی و تاریخی">Military & Historical Figures</option>
+          <option value="local-commanders" data-en="Local Commanders & Generals" data-fa="فرماندهان و جنرالان محلی">Local Commanders & Generals</option>
+          <option value="cultural" data-en="Cultural Figures" data-fa="شخصیت‌های فرهنگی">Cultural Figures</option>
+          <option value="women" data-en="Women of Influence" data-fa="زنان اثرگذار">Women of Influence</option>
+          <option value="other" data-en="Other" data-fa="سایر">Other</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="personDates" data-en="Birth–death / active years" data-fa="تولد–وفات / سال‌های فعالیت">Birth–death / active years</label>
+        <input id="personDates" name="life_dates" maxlength="120" placeholder="e.g. 1950–2010">
+      </div>
+
+      <div class="form-field">
+        <label for="personRegion" data-en="Region / country" data-fa="منطقه / کشور">Region / country</label>
+        <input id="personRegion" name="region" maxlength="160">
+      </div>
+
+      <div class="form-field full">
+        <label for="personBio" data-en="Short biography *" data-fa="زندگی‌نامه کوتاه *">Short biography *</label>
+        <textarea id="personBio" name="short_bio" maxlength="5000" required
+          data-placeholder-en="Tell us who this person is and the main facts of their life."
+          data-placeholder-fa="بنویسید این شخص کیست و مهم‌ترین معلومات زندگی او چیست."></textarea>
+      </div>
+
+      <div class="form-field full">
+        <label for="personWhy" data-en="Why should HSKRC include this person?" data-fa="چرا HSKRC باید این شخص را اضافه کند؟">Why should HSKRC include this person?</label>
+        <textarea id="personWhy" name="why_notable" maxlength="3000"></textarea>
+      </div>
+
+      <div class="form-field full">
+        <label for="personSources" data-en="Sources / links *" data-fa="منابع / لینک‌ها *">Sources / links *</label>
+        <textarea id="personSources" name="sources" maxlength="6000" required
+          data-placeholder-en="Add reliable books, articles, archives or web links. One source per line is helpful."
+          data-placeholder-fa="کتاب‌ها، مقالات، آرشیف‌ها یا لینک‌های معتبر را اضافه کنید. بهتر است هر منبع در یک خط باشد."></textarea>
+      </div>
+
+      <div class="form-check">
+        <input id="personIsSelf" type="checkbox">
+        <label for="personIsSelf" data-en="I am submitting myself as this person." data-fa="من خودم همین شخص هستم و پروفایل خود را پیشنهاد می‌کنم.">I am submitting myself as this person.</label>
+      </div>
+
+      <div class="form-field">
+        <label for="personSubmitterName" data-en="Your name" data-fa="نام شما">Your name</label>
+        <input id="personSubmitterName" maxlength="160">
+      </div>
+
+      <div class="form-field">
+        <label for="personSubmitterEmail" data-en="Your email (optional)" data-fa="ایمیل شما (اختیاری)">Your email (optional)</label>
+        <input id="personSubmitterEmail" type="email" maxlength="254">
+      </div>
+
+      <div class="form-field full" id="relationshipField">
+        <label for="personRelationship" data-en="Your relationship to this person" data-fa="رابطه شما با این شخص">Your relationship to this person</label>
+        <input id="personRelationship" maxlength="160" data-placeholder-en="e.g. family member, researcher, community member" data-placeholder-fa="مثلاً عضو خانواده، پژوهشگر، عضو جامعه">
+      </div>
+
+      <div class="form-check">
+        <input id="personAccuracy" type="checkbox" required>
+        <label for="personAccuracy"
+          data-en="I confirm that I have provided this information in good faith and understand that HSKRC will verify it before publication."
+          data-fa="تأیید می‌کنم که این معلومات را با حسن نیت ارائه کرده‌ام و می‌دانم HSKRC پیش از نشر آن را بررسی می‌کند.">
+          I confirm that I have provided this information in good faith and understand that HSKRC will verify it before publication.
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="submit-btn" id="personSubmitBtn" type="submit" data-en="Send for review" data-fa="ارسال برای بررسی">Send for review</button>
+        <span class="form-status" id="personFormStatus" aria-live="polite"></span>
+      </div>
+    </form>
+  </details>
 
   <div class="meta">
     <span id="peopleCount">6 profiles</span>
@@ -286,9 +411,96 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
 
   document.addEventListener("click",e=>{
     if(e.target && e.target.closest && e.target.closest("#hskrcGlobalLang")){
-      setTimeout(()=>{updatePlaceholder();apply();},90);
+      setTimeout(()=>{updatePlaceholder();apply();updateFormPlaceholders();},90);
     }
   });
+
+  const submissionForm=document.getElementById("personSubmissionForm");
+  const submissionStatus=document.getElementById("personFormStatus");
+  const submissionBtn=document.getElementById("personSubmitBtn");
+  const selfBox=document.getElementById("personIsSelf");
+  const relationship=document.getElementById("personRelationship");
+
+  function updateFormPlaceholders(){
+    document.querySelectorAll("[data-placeholder-en][data-placeholder-fa]").forEach(el=>{
+      el.placeholder=lang()==="fa" ? el.dataset.placeholderFa : el.dataset.placeholderEn;
+    });
+  }
+
+  async function submitPersonSuggestion(event){
+    event.preventDefault();
+    if(!submissionForm) return;
+
+    const trap=document.getElementById("personWebsiteTrap");
+    if(trap && trap.value) return;
+
+    if(!submissionForm.checkValidity()){
+      submissionForm.reportValidity();
+      return;
+    }
+
+    const payload={
+      full_name:document.getElementById("personFullName").value.trim(),
+      category:document.getElementById("personCategory").value,
+      life_dates:document.getElementById("personDates").value.trim() || null,
+      region:document.getElementById("personRegion").value.trim() || null,
+      short_bio:document.getElementById("personBio").value.trim(),
+      why_notable:document.getElementById("personWhy").value.trim() || null,
+      sources:document.getElementById("personSources").value.trim(),
+      submitter_name:document.getElementById("personSubmitterName").value.trim() || null,
+      submitter_email:document.getElementById("personSubmitterEmail").value.trim() || null,
+      is_self_submission:Boolean(selfBox && selfBox.checked),
+      relationship_to_person:relationship && relationship.value.trim() ? relationship.value.trim() : null
+    };
+
+    if(submissionBtn) submissionBtn.disabled=true;
+    if(submissionStatus){
+      submissionStatus.className="form-status";
+      submissionStatus.textContent=lang()==="fa" ? "در حال ارسال…" : "Sending…";
+    }
+
+    try{
+      const key="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
+      const response=await fetch("https://uwuklryzxexpofcxrbnm.supabase.co/rest/v1/people_submissions",{
+        method:"POST",
+        headers:{
+          "apikey":key,
+          "Authorization":"Bearer "+key,
+          "Content-Type":"application/json",
+          "Prefer":"return=minimal"
+        },
+        body:JSON.stringify(payload)
+      });
+
+      if(!response.ok){
+        throw new Error("Submission failed");
+      }
+
+      submissionForm.reset();
+      updateFormPlaceholders();
+      if(submissionStatus){
+        submissionStatus.className="form-status success";
+        submissionStatus.textContent=lang()==="fa"
+          ? "تشکر. پیشنهاد شما ثبت شد و پیش از نشر توسط HSKRC بررسی می‌شود."
+          : "Thank you. Your suggestion was received and will be reviewed by HSKRC before publication.";
+      }
+    }catch(_){
+      if(submissionStatus){
+        submissionStatus.className="form-status error";
+        submissionStatus.textContent=lang()==="fa"
+          ? "ارسال انجام نشد. لطفاً دوباره کوشش کنید."
+          : "The submission could not be sent. Please try again.";
+      }
+    }finally{
+      if(submissionBtn) submissionBtn.disabled=false;
+    }
+  }
+
+  submissionForm?.addEventListener("submit",submitPersonSuggestion);
+  selfBox?.addEventListener("change",()=>{
+    if(selfBox.checked && relationship) relationship.value="Self";
+  });
+  updateFormPlaceholders();
 })();
 </script>
 </body>
