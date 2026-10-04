@@ -512,7 +512,7 @@ document.addEventListener("click", function(event) {
           "@type":"Person",
           "@id":SITE_URL + "/founder.html#kamal-barlas",
           "name":"Kamal Barlas",
-          "alternateName":["Kamaluddin Barlas","کمال برلاس","کمال‌الدین برلاس"],
+          "alternateName": ["کمال برلاس"],
           "jobTitle":["Founder","Chief Executive Officer"],
           "url":SITE_URL + "/founder.html",
           "worksFor":{"@id":SITE_URL + "/#organization"}

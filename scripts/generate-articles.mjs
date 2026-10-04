@@ -248,11 +248,7 @@ function buildHtml(article, slug, translations = {}) {
         "@id":
           `${SITE_URL}/founder.html#kamal-barlas`,
         "name": "Kamal Barlas",
-        "alternateName": [
-          "Kamaluddin Barlas",
-          "کمال برلاس",
-          "کمال‌الدین برلاس"
-        ],
+        "alternateName": ["کمال برلاس"],
         "jobTitle": [
           "Founder",
           "Chief Executive Officer"
@@ -696,8 +692,6 @@ ${articleBody(article.content)}
         Kamal Barlas
       </strong>
     </a>
-
-    (Kamaluddin Barlas)
     — Founder &amp; CEO
     · © 2026 HSKRC
 
