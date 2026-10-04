@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>HSKRC | Feedback & Support Admin</title>
+<title>HSKRC | Administration</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="hskrc-global.css">
@@ -130,7 +130,7 @@ h1{
 .stats{
   margin-top:28px;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
   gap:14px;
 }
 .stat{
@@ -308,6 +308,103 @@ tr:last-child td{border-bottom:none}
 }
 .hidden{display:none!important}
 
+.people-modal{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  display:none;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.72);
+}
+.people-modal.open{display:grid}
+.people-editor{
+  width:min(920px,100%);
+  max-height:92vh;
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#10151c;
+  box-shadow:0 28px 80px rgba(0,0,0,.5);
+}
+.people-editor-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px 20px;
+  background:#10151c;
+  border-bottom:1px solid var(--border);
+}
+.people-editor-title{font-size:19px;font-weight:850}
+.people-editor-close{
+  width:38px;height:38px;border-radius:9px;border:1px solid var(--border);
+  background:transparent;color:var(--text);cursor:pointer;font-size:20px
+}
+.people-form{
+  padding:20px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.people-field{display:flex;flex-direction:column;gap:7px}
+.people-field.full{grid-column:1/-1}
+.people-field label{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.7px;
+  text-transform:uppercase
+}
+.people-field input,.people-field select,.people-field textarea{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:#0c1118;
+  color:var(--text);
+  outline:none
+}
+.people-field textarea{min-height:120px;resize:vertical;line-height:1.55}
+.people-field input:focus,.people-field select:focus,.people-field textarea:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,164,92,.08)
+}
+.people-check{
+  grid-column:1/-1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#d8dee7;
+  font-size:12px
+}
+.people-editor-actions{
+  grid-column:1/-1;
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  padding-top:5px
+}
+.people-mini{
+  max-width:280px;
+  white-space:normal;
+  line-height:1.45;
+  color:#bfc7d1
+}
+.people-person{font-weight:800;color:#f1f3f5}
+.people-sub{margin-top:3px;color:var(--muted);font-size:10px}
+.status-pending{color:#e8c87c;background:rgba(201,164,92,.10)}
+.status-review{color:#8dbff2;background:rgba(80,145,220,.10)}
+.status-approved{color:#86d9a4;background:rgba(70,180,110,.10)}
+.status-rejected{color:#ff9090;background:rgba(255,119,119,.10)}
+@media(max-width:700px){
+  .people-form{grid-template-columns:1fr}
+  .people-field.full,.people-check,.people-editor-actions{grid-column:1}
+}
+
 @media(max-width:850px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .header-actions{display:none}
@@ -373,10 +470,10 @@ tr:last-child td{border-bottom:none}
 
 <div class="eyebrow">Administration</div>
 
-<h1>HSKRC Feedback & Support</h1>
+<h1>HSKRC Administration</h1>
 
 <p class="lead">
-Review feedback, private support records and public-display requests submitted through HSKRC.
+Review feedback, support records and People submissions. People submissions can be opened, edited, approved, rejected or kept under review.
 </p>
 
 <div class="admin-info">
@@ -406,6 +503,16 @@ Review feedback, private support records and public-display requests submitted t
   <div class="stat-value" id="publicRequestCount">0</div>
 </div>
 
+<div class="stat">
+  <div class="stat-label">People Submissions</div>
+  <div class="stat-value" id="peopleSubmissionCount">0</div>
+</div>
+
+<div class="stat">
+  <div class="stat-label">Pending People</div>
+  <div class="stat-value" id="pendingPeopleCount">0</div>
+</div>
+
 </section>
 
 <div class="tabs">
@@ -416,6 +523,10 @@ Feedback
 
 <button class="tab" data-panel="donationsPanel">
 Support / Donations
+</button>
+
+<button class="tab" data-panel="peoplePanel">
+People Submissions
 </button>
 
 </div>
@@ -446,8 +557,125 @@ Support / Donations
 
 </section>
 
+<section class="panel" id="peoplePanel">
+
+<div class="panel-header">
+  <div>
+    <div class="panel-title">People Submissions</div>
+    <div style="margin-top:4px;color:var(--muted);font-size:11px">Private review queue. Nothing here is published automatically.</div>
+  </div>
+  <button class="btn" onclick="loadPeopleSubmissions()">Refresh</button>
+</div>
+
+<div class="table-wrap" id="peopleContainer">
+  <div class="loading">Loading People submissions...</div>
+</div>
+
+</section>
+
 </div>
 </main>
+
+<div class="people-modal" id="peopleModal" aria-hidden="true">
+  <div class="people-editor" role="dialog" aria-modal="true" aria-labelledby="peopleEditorTitle">
+    <div class="people-editor-head">
+      <div class="people-editor-title" id="peopleEditorTitle">Edit People Submission</div>
+      <button class="people-editor-close" type="button" onclick="closePersonEditor()" aria-label="Close">×</button>
+    </div>
+
+    <form class="people-form" id="peopleEditorForm">
+      <input type="hidden" id="editPersonId">
+
+      <div class="people-field">
+        <label for="editFullName">Full name</label>
+        <input id="editFullName" maxlength="160" required>
+      </div>
+
+      <div class="people-field">
+        <label for="editCategory">Primary category</label>
+        <select id="editCategory" required>
+          <option value="ismaili-scholars">Ismaili Thinkers & Scholars</option>
+          <option value="hujjats">Hujjats</option>
+          <option value="dais">Da'is</option>
+          <option value="philosophers">Philosophers & Theologians</option>
+          <option value="writers">Writers & Poets</option>
+          <option value="leaders">Political & Social Leaders</option>
+          <option value="military">Military & Historical Figures</option>
+          <option value="local-commanders">Local Commanders & Generals</option>
+          <option value="cultural">Cultural Figures</option>
+          <option value="women">Women of Influence</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="people-field">
+        <label for="editLifeDates">Birth–death / active years</label>
+        <input id="editLifeDates" maxlength="120">
+      </div>
+
+      <div class="people-field">
+        <label for="editRegion">Region / country</label>
+        <input id="editRegion" maxlength="160">
+      </div>
+
+      <div class="people-field full">
+        <label for="editShortBio">Short biography</label>
+        <textarea id="editShortBio" maxlength="5000" required></textarea>
+      </div>
+
+      <div class="people-field full">
+        <label for="editWhyNotable">Why notable</label>
+        <textarea id="editWhyNotable" maxlength="3000"></textarea>
+      </div>
+
+      <div class="people-field full">
+        <label for="editSources">Sources / links</label>
+        <textarea id="editSources" maxlength="6000" required></textarea>
+      </div>
+
+      <div class="people-field">
+        <label for="editSubmitterName">Submitter name</label>
+        <input id="editSubmitterName" maxlength="160">
+      </div>
+
+      <div class="people-field">
+        <label for="editSubmitterEmail">Submitter email</label>
+        <input id="editSubmitterEmail" type="email" maxlength="254">
+      </div>
+
+      <div class="people-check">
+        <input id="editIsSelf" type="checkbox">
+        <label for="editIsSelf">Self-submission</label>
+      </div>
+
+      <div class="people-field full">
+        <label for="editRelationship">Relationship to person</label>
+        <input id="editRelationship" maxlength="160">
+      </div>
+
+      <div class="people-field">
+        <label for="editStatus">Review status</label>
+        <select id="editStatus">
+          <option value="pending">Pending</option>
+          <option value="review">Needs Review</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+
+      <div class="people-field">
+        <label for="editAdminNotes">Admin notes</label>
+        <textarea id="editAdminNotes" style="min-height:92px"></textarea>
+      </div>
+
+      <div class="people-editor-actions">
+        <button class="btn btn-danger" type="button" id="deletePersonBtn">Delete</button>
+        <button class="btn" type="button" onclick="closePersonEditor()">Cancel</button>
+        <button class="btn" type="submit" id="savePersonBtn">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
 
@@ -462,6 +690,9 @@ window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+
+let peopleRows = [];
+let currentAdminUserId = null;
 
 function escapeHtml(value){
   return String(value ?? "")
@@ -512,6 +743,8 @@ async function checkAdmin(){
     ).textContent =
       session.user.email || "Administrator";
 
+    currentAdminUserId = session.user.id;
+
     const {
       data:isAdmin,
       error
@@ -537,7 +770,8 @@ async function checkAdmin(){
 
     await Promise.all([
       loadFeedback(),
-      loadDonations()
+      loadDonations(),
+      loadPeopleSubmissions()
     ]);
 
   }catch(error){
@@ -1131,6 +1365,219 @@ async function makePrivate(
 
   await loadDonations();
 }
+
+
+function peopleCategoryLabel(value){
+  const map={
+    "ismaili-scholars":"Ismaili Thinkers & Scholars",
+    "hujjats":"Hujjats",
+    "dais":"Da'is",
+    "philosophers":"Philosophers & Theologians",
+    "writers":"Writers & Poets",
+    "leaders":"Political & Social Leaders",
+    "military":"Military & Historical Figures",
+    "local-commanders":"Local Commanders & Generals",
+    "cultural":"Cultural Figures",
+    "women":"Women of Influence",
+    "other":"Other"
+  };
+  return map[value] || value || "-";
+}
+
+function peopleStatusBadge(status){
+  const safe=["pending","review","approved","rejected"].includes(status) ? status : "pending";
+  const label={
+    pending:"Pending",
+    review:"Needs Review",
+    approved:"Approved",
+    rejected:"Rejected"
+  }[safe];
+  return '<span class="badge status-'+safe+'">'+label+'</span>';
+}
+
+async function loadPeopleSubmissions(){
+  const container=document.getElementById("peopleContainer");
+  if(!container) return;
+
+  container.innerHTML='<div class="loading">Loading People submissions...</div>';
+
+  const {data,error}=await db
+    .from("people_submissions")
+    .select("id,created_at,full_name,category,life_dates,region,short_bio,why_notable,sources,submitter_name,submitter_email,is_self_submission,relationship_to_person,status,admin_notes,reviewed_at,reviewed_by")
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("People submissions:",error);
+    container.innerHTML='<div class="error">Unable to load People submissions.</div>';
+    return;
+  }
+
+  peopleRows=data || [];
+
+  document.getElementById("peopleSubmissionCount").textContent=peopleRows.length;
+  document.getElementById("pendingPeopleCount").textContent=
+    peopleRows.filter(row=>(row.status || "pending")==="pending").length;
+
+  if(!peopleRows.length){
+    container.innerHTML='<div class="empty">No People submissions have been received yet.</div>';
+    return;
+  }
+
+  container.innerHTML=`
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Person</th>
+          <th>Category</th>
+          <th>Biography</th>
+          <th>Submitter</th>
+          <th>Self?</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${peopleRows.map(row=>`
+          <tr>
+            <td>${escapeHtml(formatDate(row.created_at))}</td>
+            <td>
+              <div class="people-person">${escapeHtml(row.full_name || "-")}</div>
+              <div class="people-sub">${escapeHtml(row.life_dates || "")}${row.region ? " · "+escapeHtml(row.region) : ""}</div>
+            </td>
+            <td>${escapeHtml(peopleCategoryLabel(row.category))}</td>
+            <td class="people-mini">${escapeHtml(row.short_bio || "-")}</td>
+            <td>
+              ${escapeHtml(row.submitter_name || "-")}
+              <div class="people-sub">${escapeHtml(row.submitter_email || "")}</div>
+            </td>
+            <td>${row.is_self_submission ? '<span class="badge yes">Yes</span>' : '<span class="badge no">No</span>'}</td>
+            <td>${peopleStatusBadge(row.status || "pending")}</td>
+            <td><button class="btn" onclick="openPersonEditor('${escapeHtml(row.id)}')">Open / Edit</button></td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+function openPersonEditor(id){
+  const row=peopleRows.find(item=>item.id===id);
+  if(!row) return;
+
+  document.getElementById("editPersonId").value=row.id;
+  document.getElementById("editFullName").value=row.full_name || "";
+  document.getElementById("editCategory").value=row.category || "other";
+  document.getElementById("editLifeDates").value=row.life_dates || "";
+  document.getElementById("editRegion").value=row.region || "";
+  document.getElementById("editShortBio").value=row.short_bio || "";
+  document.getElementById("editWhyNotable").value=row.why_notable || "";
+  document.getElementById("editSources").value=row.sources || "";
+  document.getElementById("editSubmitterName").value=row.submitter_name || "";
+  document.getElementById("editSubmitterEmail").value=row.submitter_email || "";
+  document.getElementById("editIsSelf").checked=Boolean(row.is_self_submission);
+  document.getElementById("editRelationship").value=row.relationship_to_person || "";
+  document.getElementById("editStatus").value=row.status || "pending";
+  document.getElementById("editAdminNotes").value=row.admin_notes || "";
+
+  const modal=document.getElementById("peopleModal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+
+function closePersonEditor(){
+  const modal=document.getElementById("peopleModal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+}
+
+async function savePersonSubmission(event){
+  event.preventDefault();
+
+  const id=document.getElementById("editPersonId").value;
+  const status=document.getElementById("editStatus").value;
+  const saveBtn=document.getElementById("savePersonBtn");
+
+  const payload={
+    full_name:document.getElementById("editFullName").value.trim(),
+    category:document.getElementById("editCategory").value,
+    life_dates:document.getElementById("editLifeDates").value.trim() || null,
+    region:document.getElementById("editRegion").value.trim() || null,
+    short_bio:document.getElementById("editShortBio").value.trim(),
+    why_notable:document.getElementById("editWhyNotable").value.trim() || null,
+    sources:document.getElementById("editSources").value.trim(),
+    submitter_name:document.getElementById("editSubmitterName").value.trim() || null,
+    submitter_email:document.getElementById("editSubmitterEmail").value.trim() || null,
+    is_self_submission:document.getElementById("editIsSelf").checked,
+    relationship_to_person:document.getElementById("editRelationship").value.trim() || null,
+    status,
+    admin_notes:document.getElementById("editAdminNotes").value.trim() || null,
+    reviewed_at:status==="pending" ? null : new Date().toISOString(),
+    reviewed_by:status==="pending" ? null : currentAdminUserId
+  };
+
+  if(!payload.full_name || !payload.short_bio || !payload.sources){
+    alert("Full name, short biography and sources are required.");
+    return;
+  }
+
+  saveBtn.disabled=true;
+
+  const {error}=await db
+    .from("people_submissions")
+    .update(payload)
+    .eq("id",id);
+
+  saveBtn.disabled=false;
+
+  if(error){
+    console.error("People update:",error);
+    alert("Unable to save this submission.");
+    return;
+  }
+
+  closePersonEditor();
+  await loadPeopleSubmissions();
+}
+
+async function deletePersonSubmission(){
+  const id=document.getElementById("editPersonId").value;
+  if(!id) return;
+
+  if(!confirm("Delete this People submission permanently?")) return;
+
+  const btn=document.getElementById("deletePersonBtn");
+  btn.disabled=true;
+
+  const {error}=await db
+    .from("people_submissions")
+    .delete()
+    .eq("id",id);
+
+  btn.disabled=false;
+
+  if(error){
+    console.error("People delete:",error);
+    alert("Unable to delete this submission.");
+    return;
+  }
+
+  closePersonEditor();
+  await loadPeopleSubmissions();
+}
+
+document.getElementById("peopleEditorForm").addEventListener("submit",savePersonSubmission);
+document.getElementById("deletePersonBtn").addEventListener("click",deletePersonSubmission);
+document.getElementById("peopleModal").addEventListener("click",event=>{
+  if(event.target.id==="peopleModal") closePersonEditor();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape" && document.getElementById("peopleModal").classList.contains("open")){
+    closePersonEditor();
+  }
+});
 
 document
 .querySelectorAll(".tab")
