@@ -87,7 +87,7 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
     </div>
 
     <div class="filters" id="peopleFilters">
-      <button class="filter active" type="button" data-filter="all" data-en="All Figures" data-fa="همه شخصیت‌ها">All Figures</button>
+      <button class="filter" type="button" data-filter="all" data-en="All Figures" data-fa="همه شخصیت‌ها">All Figures</button>
       <button class="filter" type="button" data-filter="ismaili-scholars" data-en="Ismaili Thinkers & Scholars" data-fa="اندیشمندان و دانشمندان اسماعیلی">Ismaili Thinkers & Scholars</button>
       <button class="filter" type="button" data-filter="hujjats" data-en="Hujjats" data-fa="حجت‌ها">Hujjats</button>
       <button class="filter" type="button" data-filter="dais" data-en="Da'is" data-fa="داعیان">Da'is</button>
@@ -104,6 +104,12 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
   <div class="meta">
     <span id="peopleCount">6 profiles</span>
     <span data-en="Profiles are written with source-based, neutral historical framing." data-fa="پروفایل‌ها با رویکرد بی‌طرفانه و مبتنی بر منابع تاریخی نوشته می‌شوند.">Profiles are written with source-based, neutral historical framing.</span>
+  </div>
+
+  <div id="peopleChoose" class="empty" style="display:block"
+       data-en="Choose a category above to view its people, or search a name directly."
+       data-fa="برای دیدن افراد، یکی از دسته‌های بالا را انتخاب کنید یا نام شخص را مستقیماً جست‌وجو کنید.">
+       Choose a category above to view its people, or search a name directly.
   </div>
 
   <section class="grid" id="peopleGrid">
@@ -196,7 +202,8 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
   const search=document.getElementById("peopleSearch");
   const count=document.getElementById("peopleCount");
   const empty=document.getElementById("peopleEmpty");
-  let active="all";
+  const choose=document.getElementById("peopleChoose");
+  let active=null;
 
   function lang(){ return localStorage.getItem("hskrc_language")==="fa" ? "fa" : "en"; }
 
@@ -206,35 +213,77 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
     search.setAttribute("aria-label",search.placeholder);
   }
 
+  function setCount(visible, mode){
+    if(!count) return;
+
+    if(mode==="choose"){
+      count.textContent=lang()==="fa"
+        ? "یک دسته را انتخاب کنید"
+        : "Choose a category";
+      return;
+    }
+
+    count.textContent=lang()==="fa"
+      ? visible.toLocaleString("fa-AF")+" پروفایل"
+      : visible.toLocaleString("en-AU")+" profile"+(visible===1?"":"s");
+  }
+
   function apply(){
     const q=(search?.value||"").trim().toLowerCase();
+    const hasSearch=Boolean(q);
+    const hasCategory=Boolean(active);
     let visible=0;
+
     cards.forEach(card=>{
       const cats=(card.dataset.categories||"").split(/\s+/);
       const hay=(card.textContent+" "+(card.dataset.search||"")).toLowerCase();
-      const okCategory=active==="all" || cats.includes(active);
-      const okSearch=!q || hay.includes(q);
-      const show=okCategory && okSearch;
+
+      let show=false;
+
+      if(hasSearch){
+        // Search works across the whole People archive.
+        show=hay.includes(q);
+      }else if(hasCategory){
+        show=active==="all" || cats.includes(active);
+      }
+
       card.style.display=show?"flex":"none";
       if(show) visible++;
     });
-    if(count){
-      count.textContent=lang()==="fa"
-        ? visible.toLocaleString("fa-AF")+" پروفایل"
-        : visible.toLocaleString("en-AU")+" profile"+(visible===1?"":"s");
-    }
-    if(empty) empty.style.display=visible===0?"block":"none";
+
+    const choosing=!hasSearch && !hasCategory;
+    if(choose) choose.style.display=choosing?"block":"none";
+    if(empty) empty.style.display=!choosing && visible===0 ? "block" : "none";
+    setCount(visible, choosing ? "choose" : "results");
   }
 
   buttons.forEach(btn=>btn.addEventListener("click",()=>{
     active=btn.dataset.filter||"all";
     buttons.forEach(x=>x.classList.toggle("active",x===btn));
+    if(search) search.value="";
     apply();
   }));
-  search?.addEventListener("input",apply);
 
-  document.addEventListener("DOMContentLoaded",()=>{updatePlaceholder();apply();});
-  window.addEventListener("storage",e=>{if(e.key==="hskrc_language"){setTimeout(()=>{updatePlaceholder();apply();},40);}});
+  search?.addEventListener("input",()=>{
+    if(search.value.trim()){
+      active=null;
+      buttons.forEach(x=>x.classList.remove("active"));
+    }
+    apply();
+  });
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    updatePlaceholder();
+    cards.forEach(card=>card.style.display="none");
+    apply();
+  });
+
+  window.addEventListener("storage",e=>{
+    if(e.key==="hskrc_language"){
+      setTimeout(()=>{updatePlaceholder();apply();},40);
+    }
+  });
+
   document.addEventListener("click",e=>{
     if(e.target && e.target.closest && e.target.closest("#hskrcGlobalLang")){
       setTimeout(()=>{updatePlaceholder();apply();},90);
