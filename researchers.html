@@ -126,6 +126,14 @@ html[dir=rtl] body{font-family:Tahoma,Arial,sans-serif}html[dir=rtl] .eyebrow{le
 <article class="card"><div class="initial">MG</div><h3><a href="researcher.html?id=58906114-5614-4f2d-b51c-2a5880b1b9d0">Marshall G. S. Hodgson</a></h3><div class="role">Islamic and Nizari History</div><p>Scholar represented in the HSKRC research archive through identifiable source records.</p></article>
 <article class="card"><div class="initial">MS</div><h3><a href="researcher.html?id=4998564f-bcff-47cb-8306-fb5e693b91f4">Miklós Sárközy</a></h3><div class="role">Early Nizari History</div><p>Scholar represented in the HSKRC research archive through identifiable source records.</p></article>
 <article class="card"><div class="initial">PW</div><h3><a href="researcher.html?id=5de0947c-88bd-45f4-8ff0-7c408c7c82c5">Peter Willey</a></h3><div class="role">Nizari Castles and Field Research</div><p>Scholar represented in the HSKRC research archive through identifiable source records.</p></article>
+<article class="card"><div class="initial">AC</div><h3><a href="researcher.html?id=b942e4c8-ddc3-450a-9f85-e0a0e0070b1a">Alice C. Hunsberger</a></h3><div class="role">Nasir Khusraw, Ismaili Thought and Persian Literature</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">AN</div><h3><a href="researcher.html?id=5fbff61e-0b2a-4de0-afce-dd4f63496ac2">Azim Nanji</a></h3><div class="role">Nizari Ismaili Studies and Islamic Studies</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">HH</div><h3><a href="researcher.html?id=fd7393e6-ee0e-48a1-b969-34049ebcd0d3">Heinz Halm</a></h3><div class="role">Fatimid and Ismaili History</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">IP</div><h3><a href="researcher.html?id=033f79fc-4a9a-4a2f-b7f9-4c611c2f0e47">Ismail K. Poonawala</a></h3><div class="role">Ismaili History, Doctrine and Manuscript Studies</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">NE</div><h3><a href="researcher.html?id=73c1a177-088a-4716-9447-462cb63026a3">Nadia Eboo Jamal</a></h3><div class="role">Nizari Ismaili History and Mongol-era Persia</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">PE</div><h3><a href="researcher.html?id=de1bec5c-d35c-4572-9323-5d97735f0beb">Paul E. Walker</a></h3><div class="role">Fatimid History and Ismaili Intellectual History</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">SN</div><h3><a href="researcher.html?id=b739f3bc-3f69-4d81-94d9-a7fa089c9dad">Shafique N. Virani</a></h3><div class="role">Ismaili, Shi'i and Islamic Studies</div><p>Scholar represented through a documented HSKRC source record.</p></article>
+<article class="card"><div class="initial">WM</div><h3><a href="researcher.html?id=5b740ab5-dd96-4f22-9d08-e3715de19347">Wafi A. Momin</a></h3><div class="role">Ismaili Manuscripts and South Asian Ismaili History</div><p>Scholar represented through a documented HSKRC source record.</p></article>
 </div><div class="empty" data-en="No matching researcher found." data-fa="پژوهشگر مطابق جستجو پیدا نشد." id="empty" style="display:none">No matching researcher found.</div>
 </div></section>
 <section><div class="wrap"><div class="section-head"><div><div class="eyebrow" data-en="Research Architecture" data-fa="معماری پژوهش">Research Architecture</div><h2 data-en="A connected evidence network" data-fa="شبکه متصل شواهد">A connected evidence network</h2></div></div>
@@ -170,7 +178,7 @@ function fieldKey(v=""){
 }
 function sourceLinks(sources=[]){
   if(!sources.length) return `<span class="tag">${lang==="fa"?"منبع متصل ثبت نشده":"No linked source"}</span>`;
-  return sources.map(x=>`<a href="sources.html#${esc(x.source_code)}" title="${esc(x.title||"")}">${esc(x.source_code)}</a>`).join("");
+  return sources.map(x=>`<a href="source.html?id=${encodeURIComponent(x.id)}" title="${esc(x.title||"")}">${esc(x.source_code)}</a>`).join("");
 }
 function render(){
   const term=q.value.trim().toLowerCase(), f=field.value;
