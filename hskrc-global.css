@@ -2193,3 +2193,251 @@ html[data-theme="light"] body.hskrc-hassan-page footer{
   color:#606060 !important;
   border-top:1px solid #d8d8d8 !important;
 }
+
+
+/* =========================================================
+   HSKRC HEADER V4 — MONOCHROME NAVIGATION
+   White / black / grey only. No gold or coloured accent in header.
+   ========================================================= */
+.hskrc-global-header{
+  background:rgba(255,255,255,.94) !important;
+  border-bottom:1px solid rgba(17,17,17,.10) !important;
+  box-shadow:0 8px 26px rgba(0,0,0,.055) !important;
+  -webkit-backdrop-filter:blur(16px) saturate(140%) !important;
+  backdrop-filter:blur(16px) saturate(140%) !important;
+}
+.hskrc-global-shell{
+  width:min(1320px,calc(100% - 40px)) !important;
+  min-height:78px !important;
+  gap:18px !important;
+}
+.hskrc-global-brand{
+  min-width:210px !important;
+  gap:11px !important;
+}
+.hskrc-global-mark{
+  width:44px !important;
+  height:44px !important;
+  flex:0 0 44px !important;
+  border:1px solid #1c1c1c !important;
+  border-radius:12px !important;
+  background:#fff !important;
+  color:#111 !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.045) !important;
+  font:700 17px/1 Georgia,"Times New Roman",serif !important;
+}
+.hskrc-global-brandcopy strong{
+  color:#151515 !important;
+  font-size:14px !important;
+  letter-spacing:.11em !important;
+}
+.hskrc-global-brandcopy small{
+  color:#777 !important;
+  font-size:8px !important;
+  letter-spacing:.105em !important;
+}
+
+.hskrc-global-nav{
+  gap:5px !important;
+  padding:8px 0 !important;
+  overflow:visible !important;
+}
+.hskrc-global-nav>a,
+.hskrc-global-more>summary{
+  min-height:42px !important;
+  padding:0 14px !important;
+  border:1px solid transparent !important;
+  border-radius:12px !important;
+  background:transparent !important;
+  color:#4a4a4a !important;
+  font-size:12px !important;
+  font-weight:680 !important;
+  transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease !important;
+}
+.hskrc-global-nav>a:hover,
+.hskrc-global-more>summary:hover{
+  color:#111 !important;
+  background:#f2f2f2 !important;
+  border-color:#e8e8e8 !important;
+  transform:translateY(-1px) !important;
+}
+.hskrc-global-nav>a.is-active{
+  color:#fff !important;
+  background:#161616 !important;
+  border-color:#161616 !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.10) !important;
+}
+.hskrc-global-nav>a.is-active::after{
+  display:none !important;
+}
+.hskrc-global-more>summary::after{
+  content:"⌄" !important;
+  display:inline-block !important;
+  margin-left:7px !important;
+  color:#777 !important;
+  font-size:11px !important;
+  line-height:1 !important;
+  transform:translateY(-1px) !important;
+}
+.hskrc-global-more[open]>summary{
+  color:#111 !important;
+  background:#f2f2f2 !important;
+  border-color:#e4e4e4 !important;
+}
+.hskrc-global-more[open]>summary::after{
+  transform:rotate(180deg) translateY(1px) !important;
+}
+.hskrc-global-more-menu{
+  top:calc(100% + 8px) !important;
+  right:0 !important;
+  min-width:250px !important;
+  padding:9px !important;
+  border:1px solid #e1e1e1 !important;
+  border-radius:16px !important;
+  background:rgba(255,255,255,.98) !important;
+  box-shadow:0 18px 45px rgba(0,0,0,.12) !important;
+  overflow:hidden !important;
+}
+.hskrc-global-more-menu a{
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  padding:0 13px !important;
+  border:0 !important;
+  border-radius:10px !important;
+  background:transparent !important;
+  color:#414141 !important;
+  font-size:12px !important;
+  font-weight:620 !important;
+}
+.hskrc-global-more-menu a:hover{
+  color:#111 !important;
+  background:#f2f2f2 !important;
+}
+.hskrc-global-more-menu a.is-active{
+  color:#fff !important;
+  background:#161616 !important;
+}
+
+.hskrc-global-actions{
+  gap:8px !important;
+}
+.hskrc-global-account,
+.hskrc-global-theme,
+.hskrc-global-lang{
+  min-height:42px !important;
+  padding:0 14px !important;
+  border:1px solid #dedede !important;
+  border-radius:12px !important;
+  background:#fff !important;
+  color:#292929 !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.025) !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+  transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease !important;
+}
+.hskrc-global-account:hover,
+.hskrc-global-theme:hover,
+.hskrc-global-lang:hover{
+  color:#fff !important;
+  background:#161616 !important;
+  border-color:#161616 !important;
+  transform:translateY(-1px) !important;
+}
+.hskrc-global-account.is-active{
+  color:#fff !important;
+  background:#161616 !important;
+  border-color:#161616 !important;
+}
+.hskrc-global-theme{
+  min-width:104px !important;
+}
+.hskrc-global-theme-icon{
+  color:currentColor !important;
+}
+
+/* Dark header — still strictly monochrome. */
+html[data-theme="dark"] .hskrc-global-header{
+  background:rgba(16,16,16,.95) !important;
+  border-bottom-color:rgba(255,255,255,.10) !important;
+  box-shadow:0 8px 28px rgba(0,0,0,.24) !important;
+}
+html[data-theme="dark"] .hskrc-global-mark{
+  border-color:#777 !important;
+  background:#151515 !important;
+  color:#fff !important;
+  box-shadow:none !important;
+}
+html[data-theme="dark"] .hskrc-global-brandcopy strong{color:#fff !important}
+html[data-theme="dark"] .hskrc-global-brandcopy small{color:#8c8c8c !important}
+html[data-theme="dark"] .hskrc-global-nav>a,
+html[data-theme="dark"] .hskrc-global-more>summary{
+  color:#c9c9c9 !important;
+}
+html[data-theme="dark"] .hskrc-global-nav>a:hover,
+html[data-theme="dark"] .hskrc-global-more>summary:hover,
+html[data-theme="dark"] .hskrc-global-more[open]>summary{
+  color:#fff !important;
+  background:#242424 !important;
+  border-color:#303030 !important;
+}
+html[data-theme="dark"] .hskrc-global-nav>a.is-active{
+  color:#111 !important;
+  background:#f2f2f2 !important;
+  border-color:#f2f2f2 !important;
+  box-shadow:none !important;
+}
+html[data-theme="dark"] .hskrc-global-more>summary::after{color:#999 !important}
+html[data-theme="dark"] .hskrc-global-more-menu{
+  background:rgba(24,24,24,.99) !important;
+  border-color:#333 !important;
+  box-shadow:0 18px 48px rgba(0,0,0,.34) !important;
+}
+html[data-theme="dark"] .hskrc-global-more-menu a{
+  color:#d3d3d3 !important;
+  background:transparent !important;
+}
+html[data-theme="dark"] .hskrc-global-more-menu a:hover{
+  color:#fff !important;
+  background:#2a2a2a !important;
+}
+html[data-theme="dark"] .hskrc-global-more-menu a.is-active{
+  color:#111 !important;
+  background:#f2f2f2 !important;
+}
+html[data-theme="dark"] .hskrc-global-account,
+html[data-theme="dark"] .hskrc-global-theme,
+html[data-theme="dark"] .hskrc-global-lang{
+  color:#ddd !important;
+  background:#191919 !important;
+  border-color:#353535 !important;
+  box-shadow:none !important;
+}
+html[data-theme="dark"] .hskrc-global-account:hover,
+html[data-theme="dark"] .hskrc-global-theme:hover,
+html[data-theme="dark"] .hskrc-global-lang:hover,
+html[data-theme="dark"] .hskrc-global-account.is-active{
+  color:#111 !important;
+  background:#f2f2f2 !important;
+  border-color:#f2f2f2 !important;
+}
+
+@media(max-width:1120px){
+  .hskrc-global-brand{min-width:165px !important}
+  .hskrc-global-nav{gap:3px !important}
+  .hskrc-global-nav>a,.hskrc-global-more>summary{padding:0 10px !important;font-size:11.5px !important}
+}
+@media(max-width:820px){
+  .hskrc-global-shell{
+    min-height:auto !important;
+    padding:10px 0 9px !important;
+  }
+  .hskrc-global-nav{
+    padding:5px 0 0 !important;
+    overflow-x:auto !important;
+  }
+  .hskrc-global-nav>a,.hskrc-global-more>summary{
+    min-height:39px !important;
+    border-radius:10px !important;
+  }
+}
