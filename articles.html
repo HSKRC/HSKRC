@@ -2097,6 +2097,8 @@
       }
 
 
+      if (/^https:\/\//i.test(article.cover_path)) return article.cover_path;
+
       try {
 
         const {
@@ -2937,5 +2939,69 @@
     startArticlesPage();
 
   </script>
+
+<style id="hskrc-share-menu-style">
+.hskrc-menu-box{position:relative;display:inline-block;flex-shrink:0}
+.hskrc-more-button{cursor:pointer;min-width:36px;min-height:36px;padding:5px 10px;border:1px solid var(--border,#d5d5d5);border-radius:9px;background:var(--surface,#fff);color:var(--text,#222);font-size:21px;line-height:1}
+.hskrc-more-panel{position:absolute;top:calc(100% + 5px);right:0;z-index:1000;width:210px;padding:6px;border:1px solid #c7c7c7;border-radius:12px;background:#fff;color:#222;box-shadow:0 10px 30px #0003;text-align:left;direction:ltr}
+.hskrc-more-panel[hidden]{display:none}
+.hskrc-more-panel button{display:block;width:100%;border:0;background:transparent;color:#222;padding:11px 12px;border-radius:7px;font-size:14px;text-align:left;cursor:pointer}
+.hskrc-more-panel button:hover,.hskrc-more-panel button:focus{background:#eee}
+.hskrc-feedback{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:9px;z-index:2000}
+@media print{.hskrc-menu-box,.hskrc-feedback{display:none!important}}
+</style>
+<script>
+(function(){
+  const fa=()=>document.documentElement.lang==="fa" || document.documentElement.getAttribute("dir")==="rtl";
+  const t=(en,faText)=>fa()?faText:en;
+  const copy=async(v)=>{
+    try{await navigator.clipboard.writeText(v);notice(t("Copied","کاپی شد"));}
+    catch(e){const el=document.createElement("textarea");el.value=v;document.body.append(el);el.select();document.execCommand("copy");el.remove();notice(t("Copied","کاپی شد"));}
+  };
+  function notice(message){const p=document.createElement("div");p.className="hskrc-feedback";p.textContent=message;document.body.append(p);setTimeout(()=>p.remove(),2300);}
+  function addMenu(parent,url,title,getImage,getText){
+    const wrap=document.createElement("div");wrap.className="hskrc-menu-box";
+    const trigger=document.createElement("button");trigger.className="hskrc-more-button";trigger.type="button";trigger.textContent="⋮";trigger.setAttribute("aria-label",t("More options","گزینه‌های بیشتر"));trigger.setAttribute("aria-expanded","false");
+    const panel=document.createElement("div");panel.className="hskrc-more-panel";panel.hidden=true;
+    const items=[
+      [t("Copy link","کاپی لینک"),()=>copy(url)],
+      [t("Share article","اشتراک‌گذاری مقاله"),async()=>{if(navigator.share){try{await navigator.share({title,url});}catch(e){}}else await copy(url);}],
+      [t("Copy article text","کاپی متن مقاله"),()=>copy(getText())],
+      [t("Open / save image","باز کردن / ذخیرۀ عکس"),()=>{const img=getImage();if(img){window.open(img,"_blank","noopener");}else notice(t("No image available","عکسی موجود نیست"));}]
+    ];
+    for(const [name,fn] of items){const b=document.createElement("button");b.type="button";b.textContent=name;b.addEventListener("click",()=>{panel.hidden=true;trigger.setAttribute("aria-expanded","false");fn();});panel.append(b);}
+    trigger.addEventListener("click",(e)=>{e.stopPropagation();document.querySelectorAll(".hskrc-more-panel").forEach(p=>{if(p!==panel)p.hidden=true});panel.hidden=!panel.hidden;trigger.setAttribute("aria-expanded",String(!panel.hidden));});
+    document.addEventListener("click",(e)=>{if(!wrap.contains(e.target)){panel.hidden=true;trigger.setAttribute("aria-expanded","false");}});
+    wrap.append(trigger,panel);parent.append(wrap);
+  }
+  const isDetail=location.pathname.endsWith("/article.html");
+  if(isDetail){
+    const bar=document.querySelector(".top-actions")||document.querySelector("main");
+    if(!bar)return;
+    function addDetail(){
+      if(bar.querySelector(".hskrc-menu-box"))return;
+      const title=document.querySelector(".article-title")?.textContent || document.title;
+      const url=location.href;
+      addMenu(bar,url,title,()=>document.querySelector(".article-cover img")?.src || null,()=>document.querySelector(".article-content")?.innerText || "");
+    }
+    addDetail();
+  }else{
+    const grid=document.querySelector(".articles-grid")||document.getElementById("articlesGrid")||document.querySelector("[id*=articles-grid]");
+    if(!grid)return;
+    function attach(){
+      grid.querySelectorAll(".article-card").forEach(card=>{
+        if(card.querySelector(".hskrc-menu-box"))return;
+        const footer=card.querySelector(".article-footer");if(!footer)return;
+        const link=card.querySelector("a.read-button");
+        const url=link?new URL(link.href,location.href).href:location.href;
+        const title=card.querySelector(".article-title")?.textContent||document.title;
+        addMenu(footer,url,title,()=>card.querySelector(".article-cover img")?.src || null,()=>[title,card.querySelector(".article-excerpt")?.innerText].filter(Boolean).join("\n\n"));
+      });
+    }
+    new MutationObserver(attach).observe(grid,{childList:true,subtree:false});attach();
+  }
+})();
+</script>
+
 </body>
 </html>
