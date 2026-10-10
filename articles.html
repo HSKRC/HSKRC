@@ -2959,7 +2959,16 @@
     catch(e){const el=document.createElement("textarea");el.value=v;document.body.append(el);el.select();document.execCommand("copy");el.remove();notice(t("Copied","کاپی شد"));}
   };
   function notice(message){const p=document.createElement("div");p.className="hskrc-feedback";p.textContent=message;document.body.append(p);setTimeout(()=>p.remove(),2300);}
+  function shareUrl(url){
+    try{
+      const id=new URL(url,location.href).searchParams.get("id");
+      if(id==="0dfd3c06-9325-4e2b-a0e1-9bf53e95d5a0")return "https://hskrc.org/share-mawlana-shah-rahim-2026.html";
+      if(id==="f035b1f5-cdb9-4919-bdc0-7a2167ee568c")return "https://hskrc.org/share-mawlana-shah-rahim-2026-fa.html";
+    }catch(e){}
+    return url;
+  }
   function addMenu(parent,url,title,getImage,getText){
+    url=shareUrl(url);
     const wrap=document.createElement("div");wrap.className="hskrc-menu-box";
     const trigger=document.createElement("button");trigger.className="hskrc-more-button";trigger.type="button";trigger.textContent="⋮";trigger.setAttribute("aria-label",t("More options","گزینه‌های بیشتر"));trigger.setAttribute("aria-expanded","false");
     const panel=document.createElement("div");panel.className="hskrc-more-panel";panel.hidden=true;
