@@ -2029,6 +2029,12 @@
       }
 
 
+      // Existing article covers may be full signed/public HTTPS URLs.
+      // Do not treat a complete URL as a relative object inside Books.
+      if (/^https:\/\//i.test(article.cover_path)) {
+        return article.cover_path;
+      }
+
       try {
 
         const {
