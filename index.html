@@ -1043,6 +1043,32 @@ html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1{
 </style>
 
 <style>.hskrc-brand-logo{display:block!important;width:42px!important;height:42px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;flex-shrink:0!important}</style>
+
+<style id="hskrc-header-refinement-20261011">
+/* Clean, borderless emblem and cohesive responsive navigation. */
+header .brand{gap:12px;min-width:0}
+header .hskrc-brand-logo{width:54px!important;height:54px!important;object-fit:contain!important;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+header .nav{gap:14px}
+header .nav-links{gap:5px;min-width:0}
+header .nav-links a{font-weight:650;border-radius:13px;padding:11px 14px;white-space:nowrap}
+header .nav-links a:hover{transform:translateY(-1px)}
+header .nav-links a:focus-visible,header .nav-actions a:focus-visible,header .nav-actions button:focus-visible{outline:2px solid #f36b3c;outline-offset:3px}
+@media(max-width:900px){
+ header .nav{padding-top:13px;padding-bottom:13px;row-gap:12px}
+ header .nav-links{flex:0 0 100%;order:3;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:9px 3px 11px;border-top:1px solid rgba(125,135,150,.16);border-bottom:1px solid rgba(125,135,150,.12);scroll-snap-type:x proximity}
+ header .nav-links::-webkit-scrollbar{display:none}
+ header .nav-links a{scroll-snap-align:start;flex-shrink:0;padding:10px 14px}
+ header .nav-actions{margin-left:auto}
+}
+@media(max-width:480px){header .hskrc-brand-logo{width:48px!important;height:48px!important}header .brand-title{font-size:16px}header .nav{column-gap:8px}header .nav-actions{gap:5px}}
+html[data-theme="light"] header .nav-links a{color:#475569}
+html[data-theme="light"] header .nav-links a:hover{background:#f1f5f9;color:#111827}
+html[data-theme="light"] header .nav-links a[href="#home"]{background:#fff;color:#17212f;border:1px solid #dbe2ea;box-shadow:0 3px 12px rgba(15,23,42,.06)}
+html[data-theme="light"] header .nav-links a[href="#home"]::after{display:none}
+html[data-theme="light"] header .nav-links a[href="alamut-knowledge-base.html"]{background:transparent;color:#475569;border-color:transparent}
+html[data-theme="light"] header .nav-links a[href="alamut-knowledge-base.html"]::before{display:none}
+html[data-theme="dark"] header .nav-links a[href="#home"]{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+</style>
 </head>
 <body>
 <!-- =========================
@@ -1051,7 +1077,7 @@ html[data-theme="light"] body.hskrc-page-home .hero .hero-content h1{
 <header>
 <div class="container nav">
 <a class="brand" href="#home">
-<img class="hskrc-brand-logo" src="assets/hskrc-logo.svg" alt="HSKRC logo">
+<img class="hskrc-brand-logo" src="assets/hskrc-logo.svg?v=20261011" alt="HSKRC logo">
 <div class="brand-text">
 <div class="brand-title">HSKRC</div>
 <div class="brand-subtitle">Knowledge &amp; Research Centre</div>
