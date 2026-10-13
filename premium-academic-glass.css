@@ -31,7 +31,7 @@ html[data-theme="light"] .hskrc-global-lang{
   border-color:rgba(60,78,100,.20)!important;
 }
 /* Featured cards; the home class is set by the shared page script. */
-html body .feature-card{
+html[data-theme] body.hskrc-page-home main .feature-grid .feature-card{
   background:var(--glass-bg)!important;
   border:1px solid var(--glass-line)!important;
   border-radius:19px!important;
@@ -40,7 +40,7 @@ html body .feature-card{
   backdrop-filter:blur(15px) saturate(130%);
   transition:transform .22s ease,box-shadow .22s ease!important;
 }
-html body .feature-card:hover{
+html[data-theme] body.hskrc-page-home main .feature-grid .feature-card:hover{
   transform:translateY(-3px)!important;
   box-shadow:0 22px 50px rgba(0,0,0,.19)!important;
 }
@@ -125,7 +125,7 @@ html[data-theme="dark"] .hskrc-global-footer{
   border-top-color:rgba(255,255,255,.15)!important;
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  html body .feature-card{background:var(--panel)!important}
+  html[data-theme] body.hskrc-page-home main .feature-grid .feature-card{background:var(--panel)!important}
   body.hskrc-page-home .hskrc-live-stats .hskrc-live-stats-card{background:var(--panel)!important}
   html[data-theme] body.hskrc-page-home main .cta .container .cta-box{background:#303947!important}
 }
@@ -136,9 +136,20 @@ html[data-theme="dark"] .hskrc-global-footer{
   body.hskrc-page-home main .cta{padding:44px 0 52px!important}
   html[data-theme] body.hskrc-page-home main .cta .container .cta-box{padding:34px 20px!important;border-radius:19px!important}
   body.hskrc-page-home .feature-grid{gap:12px!important}
-  html body .feature-card{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  html[data-theme] body.hskrc-page-home main .feature-grid .feature-card{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 }
 @media(prefers-reduced-motion:reduce){
-  html body .feature-card,body.hskrc-page-home main .btn{transition:none!important}
-  html body .feature-card:hover,body.hskrc-page-home main .btn:hover{transform:none!important}
+  html[data-theme] body.hskrc-page-home main .feature-grid .feature-card,body.hskrc-page-home main .btn{transition:none!important}
+  html[data-theme] body.hskrc-page-home main .feature-grid .feature-card:hover,body.hskrc-page-home main .btn:hover{transform:none!important}
+}
+
+/* Specificity fixes for the earlier institutional light-mode rules. */
+html[data-theme="light"] body.hskrc-page-home main .cta{
+  background:radial-gradient(circle at 16% 8%,rgba(138,154,184,.16),transparent 38%),
+    radial-gradient(circle at 85% 75%,rgba(143,29,44,.16),transparent 40%),#151b25!important;
+}
+html[data-theme="light"] body.hskrc-page-home main .cta .cta-box .btn-primary{
+  background:linear-gradient(145deg,#a52a3b,#761925)!important;
+  border:1px solid rgba(255,255,255,.19)!important;
+  box-shadow:0 8px 24px rgba(90,11,22,.30)!important;
 }
