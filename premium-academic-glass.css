@@ -1,0 +1,10 @@
+/* HSKRC Premium Academic Glass — subtle light/dark styling */
+:root{--glass-bg:rgba(18,25,34,.70);--glass-line:rgba(255,255,255,.15);--glass-shadow:0 16px 44px rgba(0,0,0,.18)}
+html[data-theme="light"]{--glass-bg:rgba(255,255,255,.77);--glass-line:rgba(47,95,136,.18);--glass-shadow:0 14px 40px rgba(35,55,75,.10)}
+.hskrc-global-header{background:rgba(10,13,17,.84)!important;border-bottom-color:var(--glass-line)!important;-webkit-backdrop-filter:blur(18px) saturate(130%)!important;backdrop-filter:blur(18px) saturate(130%)!important}
+html[data-theme="light"] .hskrc-global-header{background:rgba(248,251,253,.86)!important}
+body.hskrc-page-home .feature-card{background:var(--glass-bg)!important;border:1px solid var(--glass-line)!important;box-shadow:var(--glass-shadow)!important;-webkit-backdrop-filter:blur(14px) saturate(120%);backdrop-filter:blur(14px) saturate(120%);transition:transform .2s ease,box-shadow .2s ease}
+body.hskrc-page-home .feature-card:hover{transform:translateY(-3px);border-color:var(--hskrc-g-line-gold)!important}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){body.hskrc-page-home .feature-card{background:var(--panel)!important}}
+@media(prefers-reduced-motion:reduce){body.hskrc-page-home .feature-card{transition:none!important}body.hskrc-page-home .feature-card:hover{transform:none!important}}
+@media(max-width:680px){body.hskrc-page-home .feature-card{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}}
