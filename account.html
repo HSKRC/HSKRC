@@ -1049,6 +1049,18 @@
             💾 Save Changes
           </button>
 </section>
+<section class="section full-width" id="hskrcEmailPrefPanel">
+  <div class="section-header"><div class="section-heading-wrap">
+    <div class="section-title" id="hskrcEmailTitle">Publication email updates</div>
+    <div class="section-description" id="hskrcEmailDescription">Receive emails about new HSKRC articles, books and updates.</div>
+  </div><div class="section-icon">✉️</div></div>
+  <label for="hskrcEmailToggle" style="display:flex;gap:12px;align-items:center;cursor:pointer;margin:16px 0">
+    <input type="checkbox" id="hskrcEmailToggle" disabled style="width:22px;height:22px;flex-shrink:0"/>
+    <span id="hskrcEmailToggleLabel">I agree to receive publication emails from HSKRC. I may unsubscribe any time.</span>
+  </label>
+  <button class="button primary" id="hskrcEmailSave" type="button" disabled onclick="savePublicationEmails()">Save email preferences</button>
+  <p id="hskrcEmailStatus" role="status" aria-live="polite" style="margin-top:12px;font-size:13px"></p>
+</section>
 <section class="section full-width">
 <div class="section-header">
 <div class="section-heading-wrap">
@@ -1175,6 +1187,7 @@
 
       localStorage.setItem("hskrc_language", currentLanguage);
       updateLanguage();
+      syncPublicationEmailLabels();
 
     }
 
@@ -1584,6 +1597,7 @@
         accountContent.classList.remove(
           "hidden"
         );
+        await loadPublicationEmails(user);
 
       }
 
@@ -2052,6 +2066,52 @@
        START
        ========================================= */
 
+
+    let publicationEmailUser=null;
+    function syncPublicationEmailLabels(){
+      const fa=(localStorage.getItem("hskrc_language")||"en")==="fa";
+      const labels=fa?[
+        "اعلان‌های ایمیلی مطالب تازه","برای دریافت ایمیل درباره کتاب‌ها، مقاله‌ها و خبرهای جدید.",
+        "مایلم ایمیل‌های اطلاع‌رسانی HSKRC دریافت کنم. هر زمان می‌توانم لغو کنم.","ذخیره تنظیمات ایمیل"
+      ]:[
+        "Publication email updates","Receive emails about new HSKRC articles, books and updates.",
+        "I agree to receive publication emails from HSKRC. I may unsubscribe any time.","Save email preferences"
+      ];
+      ["hskrcEmailTitle","hskrcEmailDescription","hskrcEmailToggleLabel","hskrcEmailSave"].forEach((id,i)=>{
+        const element=document.getElementById(id);if(element)element.textContent=labels[i];
+      });
+    }
+    async function loadPublicationEmails(user){
+      publicationEmailUser=user;
+      syncPublicationEmailLabels();
+      const input=document.getElementById("hskrcEmailToggle");
+      const save=document.getElementById("hskrcEmailSave");
+      const status=document.getElementById("hskrcEmailStatus");
+      const {data,error}=await supabaseClient.from("profiles")
+        .select("email_consent,email_updates").eq("id",user.id).maybeSingle();
+      if(error||!data){
+        status.textContent=currentLanguage==="fa"?"تنظیمات ایمیل بارگذاری نشد.":"Unable to load email preferences.";
+        return;
+      }
+      input.checked=data.email_consent===true && data.email_updates===true;
+      input.disabled=false;save.disabled=false;
+    }
+    async function savePublicationEmails(){
+      const input=document.getElementById("hskrcEmailToggle");
+      const save=document.getElementById("hskrcEmailSave");
+      const status=document.getElementById("hskrcEmailStatus");
+      if(!publicationEmailUser||input.disabled)return;
+      save.disabled=true;
+      const enabled=input.checked;
+      const {error}=await supabaseClient.from("profiles")
+        .update({email_consent:enabled,email_updates:enabled})
+        .eq("id",publicationEmailUser.id);
+      status.textContent=error
+        ? (currentLanguage==="fa"?"ذخیره نشد؛ دوباره کوشش کنید.":"Could not save; please try again.")
+        : (currentLanguage==="fa"?(enabled?"اعلان‌ها فعال شدند.":"اعلان‌ها غیرفعال شدند."):(enabled?"Email updates enabled.":"Email updates disabled."));
+      save.disabled=false;
+    }
+    syncPublicationEmailLabels();
     updateLanguage();
 
     loadUser();
