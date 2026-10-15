@@ -82,3 +82,56 @@ html[data-theme="dark"] .person-gallery{
 
 /* Biography profile pages already have a centered content container. */
 .profile-page > .person-gallery{width:100%;margin:28px 0 0}
+
+/* Prominent portrait beside the biography heading and facts (not below the biography). */
+.profile-hero > .person-media--hero{align-self:start;width:100%}
+.profile-hero > .profile-hero-intro{min-width:0}
+.person-media--hero .person-media-surface{
+  aspect-ratio:3/4;min-height:270px;border-radius:17px;
+}
+.person-media--hero .person-media-placeholder{
+  transform:scale(1.18);margin-bottom:5px;
+}
+.person-media--hero .person-media-label{font-weight:700}
+.person-media--hero figcaption{margin-top:9px}
+.profile-hero.profile-hero--with-image{
+  grid-template-columns:minmax(0,1fr) minmax(210px,250px) minmax(250px,300px);
+  column-gap:24px;align-items:start;
+}
+.person-gallery-grid.person-gallery-grid--extras{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.person-gallery-grid--extras .person-media:first-child{grid-column:auto!important}
+.person-gallery-grid--extras .person-media-surface{aspect-ratio:16/10}
+.hero .wrap.profile-hero-gallery{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,290px);
+  gap:32px;align-items:center;
+}
+.hero .profile-hero-copy{min-width:0}
+.hero .profile-hero-gallery > .person-media--hero{
+  width:100%;max-width:290px;justify-self:end
+}
+@media(max-width:1050px){
+  .profile-hero.profile-hero--with-image{
+    grid-template-columns:minmax(0,1fr) minmax(185px,230px) minmax(235px,275px);
+    gap:18px
+  }
+}
+@media(max-width:900px){
+  .profile-hero.profile-hero--with-image{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px
+  }
+  .profile-hero--with-image > .profile-hero-intro{grid-column:1/-1}
+  .profile-hero--with-image > .person-media--hero{max-width:320px}
+  .profile-hero--with-image > .infobox{max-width:none}
+}
+@media(max-width:700px){
+  .hero .wrap.profile-hero-gallery{grid-template-columns:1fr;gap:22px}
+  .hero .profile-hero-gallery > .person-media--hero{justify-self:start;max-width:310px}
+}
+@media(max-width:560px){
+  .profile-hero.profile-hero--with-image{grid-template-columns:1fr;gap:18px}
+  .profile-hero--with-image > .profile-hero-intro{grid-column:auto}
+  .profile-hero--with-image > .person-media--hero{max-width:320px}
+  .person-gallery-grid.person-gallery-grid--extras{grid-template-columns:1fr}
+}
