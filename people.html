@@ -84,6 +84,112 @@ html[data-theme="dark"] .submit-btn{color:#15110a}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.page{width:min(100% - 24px,1180px);padding-top:42px}.grid{grid-template-columns:1fr}.meta{align-items:flex-start;flex-direction:column}}
 html[dir="rtl"] .eyebrow{letter-spacing:0}
+
+/* People directory — Premium Academic Glass, scoped to this page. */
+body{
+  background:
+    radial-gradient(ellipse at 16% 2%,rgba(77,143,195,.14),transparent 37%),
+    radial-gradient(ellipse at 87% 32%,rgba(72,113,166,.10),transparent 37%),
+    var(--bg);
+  min-height:100vh;
+}
+.page{position:relative}
+.hero{
+  position:relative;
+  padding:38px clamp(22px,4vw,42px) 36px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  overflow:hidden;
+  background:linear-gradient(130deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 50%,rgba(92,149,198,.08));
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 20px 60px rgba(4,16,34,.09),inset 0 1px 0 rgba(255,255,255,.23);
+}
+.hero::before{
+  content:"";position:absolute;pointer-events:none;
+  inset:0 0 auto;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(185,218,248,.6),transparent);
+}
+.hero>*{position:relative}
+html[data-theme="light"] .hero{
+  background:linear-gradient(135deg,rgba(255,255,255,.88),rgba(244,249,255,.69));
+  border-color:rgba(87,136,179,.18);
+}
+.toolbar{padding-top:27px}
+.search-wrap{position:relative;gap:0}
+.search{
+  min-height:54px;border-radius:15px;
+  padding-inline:18px 115px;
+  background:linear-gradient(135deg,var(--panel),var(--panel2));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09);
+}
+html[dir="rtl"] .search{padding-inline:115px 18px}
+.clear-search,.reset-filter{
+  border:1px solid var(--line);border-radius:10px;background:var(--panel2);
+  color:var(--text);font:750 12px/1.2 inherit;padding:10px 12px;cursor:pointer;
+}
+.clear-search{position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);max-width:105px}
+.clear-search[hidden]{display:none!important}
+.clear-search:hover,.reset-filter:hover{color:var(--gold2);border-color:var(--gold)}
+.filters{flex-wrap:wrap;overflow-x:visible;gap:9px}
+.filter{
+  padding:10px 15px;font-size:12px;
+  background:linear-gradient(160deg,var(--panel),var(--panel2));
+  transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;
+}
+.filter:hover{transform:translateY(-1px)}
+.filter.active{
+  color:var(--gold2);
+  border-color:rgba(115,177,224,.45);
+  background:linear-gradient(145deg,rgba(78,143,191,.17),var(--soft));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 4px 15px rgba(7,27,49,.08);
+}
+.meta{margin-top:23px;margin-bottom:18px;font-size:13px}
+#peopleCount{font-weight:850;color:var(--text)}
+.card{
+  position:relative;overflow:hidden;isolation:isolate;
+  padding:24px;border-radius:21px;min-height:284px;
+  background:linear-gradient(146deg,rgba(255,255,255,.115),rgba(255,255,255,.035) 40%,rgba(105,164,210,.09));
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  box-shadow:0 14px 36px rgba(0,0,0,.09),inset 0 1px 0 rgba(255,255,255,.14);
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+}
+.card::before{
+  content:"";position:absolute;inset:0 0 auto;height:68px;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
+  pointer-events:none;
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(122,175,214,.4);box-shadow:0 20px 40px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.2)}
+html[data-theme="light"] .card{
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(246,250,254,.84) 60%,rgba(224,237,249,.77));
+  border-color:rgba(69,114,160,.15);
+}
+.card-kicker{line-height:1.55}
+.card h2{font-size:21px;line-height:1.3}
+.card p{font-size:14px}
+.card-link{font-size:13px;padding:5px 0}
+.card-link:focus-visible,.filter:focus-visible,.search:focus-visible,.clear-search:focus-visible,.reset-filter:focus-visible,.submit-person>summary:focus-visible{
+  outline:2px solid var(--gold2);outline-offset:3px;
+}
+.submit-person{
+  margin-top:22px;border-radius:19px;
+  background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(120,169,210,.06));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09);
+  -webkit-backdrop-filter:blur(13px);backdrop-filter:blur(13px);
+}
+html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
+.empty{line-height:1.65}
+.empty p{margin:0 0 15px}
+.note{border-radius:17px}
+@media(max-width:620px){
+  .hero{padding:28px 20px 26px;border-radius:19px}
+  .filters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px}
+  .card{min-height:0;padding:20px}
+  .search{padding-inline:14px 108px}
+  html[dir="rtl"] .search{padding-inline:108px 14px}
+  .clear-search{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.card,.filter{transition:none}.card:hover,.filter:hover{transform:none}}
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"People & Historical Figures","url":"https://hskrc.org/people.html","isPartOf":{"@type":"WebSite","name":"HSKRC","url":"https://hskrc.org/"}}
@@ -108,10 +214,11 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
         data-placeholder-en="Search people…"
         data-placeholder-fa="جست‌وجوی شخصیت‌ها…"
         aria-label="Search people">
+      <button id="clearPeopleSearch" class="clear-search" type="button" data-en="Clear search" data-fa="پاک‌کردن جستجو" aria-label="Clear search" hidden>Clear search</button>
     </div>
 
     <div class="filters" id="peopleFilters">
-      <button class="filter" type="button" data-filter="all" data-en="All Figures" data-fa="همه شخصیت‌ها">All Figures</button>
+      <button class="filter active" type="button" aria-pressed="true" data-filter="all" data-en="All Figures" data-fa="همه شخصیت‌ها">All Figures</button>
       <button class="filter" type="button" data-filter="ismaili-scholars" data-en="Ismaili Thinkers & Scholars" data-fa="اندیشمندان و دانشمندان اسماعیلی">Ismaili Thinkers & Scholars</button>
       <button class="filter" type="button" data-filter="hujjats" data-en="Hujjats" data-fa="حجت‌ها">Hujjats</button>
       <button class="filter" type="button" data-filter="dais" data-en="Da'is" data-fa="داعیان">Da'is</button>
@@ -227,18 +334,13 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
   </details>
 
   <div class="meta">
-    <span id="peopleCount">6 profiles</span>
-    <span data-en="Each person is assigned to one primary category. Profiles are written with source-based, neutral historical framing." data-fa="هر شخص تنها در یک دسته اصلی قرار می‌گیرد. پروفایل‌ها با رویکرد بی‌طرفانه و مبتنی بر منابع تاریخی نوشته می‌شوند.">Profiles are written with source-based, neutral historical framing.</span>
+    <span id="peopleCount" role="status" aria-live="polite" aria-atomic="true">6 profiles</span>
+    <span data-en="Profiles may appear in multiple relevant categories. Biographies follow a neutral, source-based approach." data-fa="هر پروفایل می‌تواند در چند دسته مرتبط ظاهر شود. زندگی‌نامه‌ها با رویکرد بی‌طرفانه و مبتنی بر منابع نوشته می‌شوند.">Profiles are written with source-based, neutral historical framing.</span>
   </div>
 
-  <div id="peopleChoose" class="empty" style="display:block"
-       data-en="Choose a category above to view its people, or search a name directly."
-       data-fa="برای دیدن افراد، یکی از دسته‌های بالا را انتخاب کنید یا نام شخص را مستقیماً جست‌وجو کنید.">
-       Choose a category above to view its people, or search a name directly.
-  </div>
 
   <section class="grid" id="peopleGrid">
-    <article class="card" data-categories="hujjats" data-search="nasir khusraw naser khosrow ناصر خسرو">
+    <article class="card" data-categories="hujjats dais philosophers writers ismaili-scholars" data-search="nasir khusraw naser khosrow ناصر خسرو">
       <div class="card-kicker" data-en="Hujjat · Da'i · Philosopher · Poet" data-fa="حجت · داعی · فیلسوف · شاعر">Hujjat · Da'i · Philosopher · Poet</div>
       <h2 data-en="Nasir Khusraw" data-fa="ناصر خسرو">Nasir Khusraw</h2>
       <div class="dates">1004 – c. 1077</div>
@@ -262,7 +364,7 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
     <a class="card-link" href="qadi-al-numan.html" data-en="Open full profile →" data-fa="باز کردن پروفایل کامل ←">Open full profile →</a>
 </article>
 
-    <article class="card" data-categories="dais" data-search="abu yaqub sijistani al-sijistani ابو یعقوب سجستانی">
+    <article class="card" data-categories="dais philosophers ismaili-scholars" data-search="abu yaqub sijistani al-sijistani ابو یعقوب سجستانی">
       <div class="card-kicker" data-en="Da'i · Philosopher" data-fa="داعی · فیلسوف">Da'i · Philosopher</div>
       <h2 data-en="Abu Ya'qub al-Sijistani" data-fa="ابو یعقوب سجستانی">Abu Ya'qub al-Sijistani</h2>
       <div class="dates" data-en="10th century" data-fa="قرن دهم میلادی">10th century</div>
@@ -274,7 +376,7 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
     <a class="card-link" href="abu-yaqub-al-sijistani.html" data-en="Open full profile →" data-fa="باز کردن پروفایل کامل ←">Open full profile →</a>
 </article>
 
-    <article class="card" data-categories="philosophers" data-search="hamid al din kirmani al-kirmani حمیدالدین کرمانی">
+    <article class="card" data-categories="philosophers dais ismaili-scholars" data-search="hamid al din kirmani al-kirmani حمیدالدین کرمانی">
       <div class="card-kicker" data-en="Da'i · Philosopher · Theologian" data-fa="داعی · فیلسوف · متکلم">Da'i · Philosopher · Theologian</div>
       <h2 data-en="Hamid al-Din al-Kirmani" data-fa="حمیدالدین کرمانی">Hamid al-Din al-Kirmani</h2>
       <div class="dates" data-en="d. after 1020" data-fa="وفات پس از ۱۰۲۰ میلادی">d. after 1020</div>
@@ -311,7 +413,10 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
 </article>
   </section>
 
-  <div id="peopleEmpty" class="empty" data-en="No profiles are available in this category yet." data-fa="هنوز پروفایلی در این دسته ثبت نشده است.">No profiles are available in this category yet.</div>
+  <div id="peopleEmpty" class="empty" role="status" aria-live="polite">
+    <p id="peopleEmptyText" data-en="No matching profiles found. Try another category or search." data-fa="پروفایلی پیدا نشد. دسته یا عبارت جستجو را تغییر دهید.">No matching profiles found. Try another category or search.</p>
+    <button id="peopleReset" class="reset-filter" type="button" data-en="Show all figures" data-fa="نمایش همه شخصیت‌ها">Show all figures</button>
+  </div>
 
   <div class="note"
        data-en="HSKRC will distinguish between documented affiliation, intellectual influence, family or network connections, military or political roles, and later historical claims. Profiles of commanders and generals will separate verified biography from allegations, propaganda and later legend, and will cite reliable sources."
@@ -323,94 +428,84 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
 <script>
 (function(){
   const buttons=[...document.querySelectorAll(".filter")];
-  const cards=[...document.querySelectorAll(".card")];
+  const cards=[...document.querySelectorAll("#peopleGrid .card")];
   const search=document.getElementById("peopleSearch");
+  const clearSearch=document.getElementById("clearPeopleSearch");
   const count=document.getElementById("peopleCount");
   const empty=document.getElementById("peopleEmpty");
-  const choose=document.getElementById("peopleChoose");
-  let active=null;
+  const reset=document.getElementById("peopleReset");
+  let active="all";
 
-  function lang(){ return localStorage.getItem("hskrc_language")==="fa" ? "fa" : "en"; }
-
+  function lang(){return localStorage.getItem("hskrc_language")==="fa"?"fa":"en";}
+  function normalize(value){
+    return String(value||"").normalize("NFKD").toLowerCase()
+      .replace(/[\u0300-\u036f\u064b-\u065f]/g,"")
+      .replace(/[يى]/g,"ی").replace(/ك/g,"ک")
+      .replace(/\s+/g," ").trim();
+  }
   function updatePlaceholder(){
-    if(!search) return;
-    search.placeholder=lang()==="fa" ? search.dataset.placeholderFa : search.dataset.placeholderEn;
+    if(!search)return;
+    search.placeholder=lang()==="fa"?search.dataset.placeholderFa:search.dataset.placeholderEn;
     search.setAttribute("aria-label",search.placeholder);
+    if(clearSearch)clearSearch.setAttribute("aria-label",lang()==="fa"?"پاک‌کردن جستجو":"Clear search");
   }
-
-  function setCount(visible, mode){
-    if(!count) return;
-
-    if(mode==="choose"){
-      count.textContent=lang()==="fa"
-        ? "یک دسته را انتخاب کنید"
-        : "Choose a category";
-      return;
-    }
-
-    count.textContent=lang()==="fa"
-      ? visible.toLocaleString("fa-AF")+" پروفایل"
-      : visible.toLocaleString("en-AU")+" profile"+(visible===1?"":"s");
-  }
-
-  function apply(){
-    const q=(search?.value||"").trim().toLowerCase();
-    const hasSearch=Boolean(q);
-    const hasCategory=Boolean(active);
-    let visible=0;
-
-    cards.forEach(card=>{
-      const cats=(card.dataset.categories||"").split(/\s+/);
-      const hay=(card.textContent+" "+(card.dataset.search||"")).toLowerCase();
-
-      let show=false;
-
-      if(hasSearch){
-        // Search works across the whole People archive.
-        show=hay.includes(q);
-      }else if(hasCategory){
-        show=active==="all" || cats.includes(active);
-      }
-
-      card.style.display=show?"flex":"none";
-      if(show) visible++;
+  function setActive(next){
+    active=next;
+    buttons.forEach(btn=>{
+      const selected=btn.dataset.filter===active;
+      btn.classList.toggle("active",selected);
+      btn.setAttribute("aria-pressed",String(selected));
     });
-
-    const choosing=!hasSearch && !hasCategory;
-    if(choose) choose.style.display=choosing?"block":"none";
-    if(empty) empty.style.display=!choosing && visible===0 ? "block" : "none";
-    setCount(visible, choosing ? "choose" : "results");
+  }
+  function apply(){
+    const q=normalize(search?.value||"");
+    let visible=0;
+    cards.forEach(card=>{
+      const categories=(card.dataset.categories||"").split(/\s+/);
+      const texts=[card.dataset.search||"",card.textContent||""];
+      card.querySelectorAll("[data-en],[data-fa]").forEach(el=>{
+        texts.push(el.dataset.en||"",el.dataset.fa||"");
+      });
+      const matchesCategory=active==="all"||categories.includes(active);
+      const matchesSearch=!q||normalize(texts.join(" ")).includes(q);
+      const show=matchesCategory&&matchesSearch;
+      card.style.display=show?"flex":"none";
+      if(show)visible++;
+    });
+    if(count)count.textContent=lang()==="fa"
+      ?visible.toLocaleString("fa-AF")+" پروفایل"
+      :visible.toLocaleString("en-AU")+" profile"+(visible===1?"":"s");
+    if(empty)empty.style.display=visible===0?"block":"none";
+    if(clearSearch)clearSearch.hidden=!(search&&search.value);
   }
 
   buttons.forEach(btn=>btn.addEventListener("click",()=>{
-    active=btn.dataset.filter||"all";
-    buttons.forEach(x=>x.classList.toggle("active",x===btn));
-    if(search) search.value="";
+    setActive(btn.dataset.filter||"all");
     apply();
   }));
-
-  search?.addEventListener("input",()=>{
-    if(search.value.trim()){
-      active=null;
-      buttons.forEach(x=>x.classList.remove("active"));
-    }
-    apply();
-  });
-
-  document.addEventListener("DOMContentLoaded",()=>{
-    updatePlaceholder();
-    cards.forEach(card=>card.style.display="none");
-    apply();
-  });
-
-  window.addEventListener("storage",e=>{
-    if(e.key==="hskrc_language"){
-      setTimeout(()=>{updatePlaceholder();apply();},40);
+  search?.addEventListener("input",apply);
+  search?.addEventListener("keydown",event=>{
+    if(event.key==="Escape"&&search.value){
+      search.value="";
+      apply();
     }
   });
+  clearSearch?.addEventListener("click",()=>{
+    search.value="";search.focus();apply();
+  });
+  reset?.addEventListener("click",()=>{
+    if(search)search.value="";
+    setActive("all");apply();search?.focus();
+  });
 
-  document.addEventListener("click",e=>{
-    if(e.target && e.target.closest && e.target.closest("#hskrcGlobalLang")){
+  updatePlaceholder();
+  setActive("all");
+  apply();
+  window.addEventListener("storage",event=>{
+    if(event.key==="hskrc_language")setTimeout(()=>{updatePlaceholder();apply();updateFormPlaceholders();},40);
+  });
+  document.addEventListener("click",event=>{
+    if(event.target?.closest?.("#hskrcGlobalLang")){
       setTimeout(()=>{updatePlaceholder();apply();updateFormPlaceholders();},90);
     }
   });
