@@ -531,7 +531,7 @@ html[dir="rtl"] .filter{text-align:right;padding:15px 15px 15px 44px}
   function updateCategoryCounts(){
     buttons.forEach(btn=>{
       const category=btn.dataset.filter||"";
-      const n=cards.filter(card=>(card.dataset.categories||"").split(/\\s+/).includes(category)).length;
+      const n=cards.filter(card=>(card.dataset.categories||"").split(/\s+/).includes(category)).length;
       btn.dataset.count=n.toLocaleString(lang()==="fa"?"fa-AF":"en-AU");
       btn.setAttribute("aria-label",(lang()==="fa"?btn.dataset.fa:btn.dataset.en)+" — "+n);
     });
