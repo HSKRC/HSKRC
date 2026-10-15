@@ -79,3 +79,6 @@ html[data-theme="dark"] .person-gallery{
   .person-gallery-grid{grid-template-columns:1fr}
   .person-gallery-grid .person-media:first-child{grid-column:auto}
 }
+
+/* Biography profile pages already have a centered content container. */
+.profile-page > .person-gallery{width:100%;margin:28px 0 0}
