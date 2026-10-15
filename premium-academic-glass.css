@@ -1,22 +1,22 @@
 /* HSKRC Premium Academic Glass v2: home-only accents, RTL-safe, theme-aware. */
 :root{
-  --glass-bg:rgba(22,28,35,.73);
+  --glass-bg:rgba(27,27,27,.73);
   --glass-line:rgba(255,255,255,.19);
   --glass-shadow:0 18px 48px rgba(0,0,0,.20);
 }
 html[data-theme="light"]{
   --glass-bg:rgba(255,255,255,.73);
-  --glass-line:rgba(71,95,120,.22);
-  --glass-shadow:0 17px 46px rgba(38,57,76,.12);
+  --glass-line:rgba(92,92,92,.22);
+  --glass-shadow:0 17px 46px rgba(54,54,54,.12);
 }
 /* Translucent navigation, with contrast preserved in both themes. */
 html[data-theme="light"] .hskrc-global-header{
-  background:rgba(246,249,253,.78)!important;
-  border-bottom-color:rgba(70,91,112,.20)!important;
-  box-shadow:0 10px 30px rgba(30,48,64,.10)!important;
+  background:rgba(249,249,249,.78)!important;
+  border-bottom-color:rgba(88,88,88,.20)!important;
+  box-shadow:0 10px 30px rgba(45,45,45,.10)!important;
 }
 html[data-theme="dark"] .hskrc-global-header{
-  background:rgba(15,19,25,.82)!important;
+  background:rgba(19,19,19,.82)!important;
   border-bottom-color:rgba(255,255,255,.18)!important;
   box-shadow:0 10px 30px rgba(0,0,0,.25)!important;
 }
@@ -28,7 +28,7 @@ html[data-theme="light"] .hskrc-global-account,
 html[data-theme="light"] .hskrc-global-theme,
 html[data-theme="light"] .hskrc-global-lang{
   background:rgba(255,255,255,.68)!important;
-  border-color:rgba(60,78,100,.20)!important;
+  border-color:rgba(76,76,76,.20)!important;
 }
 /* Featured cards; the home class is set by the shared page script. */
 html[data-theme] body.hskrc-page-home main .feature-grid .feature-card{
@@ -66,12 +66,12 @@ body.hskrc-page-home .hskrc-live-stat{
 body.hskrc-page-home main .cta{
   padding:72px 0 80px!important;
   background:
-    radial-gradient(circle at 16% 8%,rgba(138,154,184,.16),transparent 38%),
+    radial-gradient(circle at 16% 8%,rgba(153,153,153,.16),transparent 38%),
     radial-gradient(circle at 85% 75%,rgba(143,29,44,.16),transparent 40%),
-    #151b25!important;
+    #1a1a1a!important;
 }
 html[data-theme="dark"] body.hskrc-page-home main .cta{
-  background:radial-gradient(circle at 25% 15%,rgba(255,255,255,.065),transparent 42%),#11151b!important;
+  background:radial-gradient(circle at 25% 15%,rgba(255,255,255,.065),transparent 42%),#151515!important;
 }
 html[data-theme] body.hskrc-page-home main .cta .container .cta-box{
   max-width:1080px;
@@ -111,23 +111,23 @@ body.hskrc-page-home main .btn:hover{transform:translateY(-2px)!important;box-sh
 body.hskrc-page-home main .btn:focus-visible,
 .hskrc-global-header a:focus-visible,
 .hskrc-global-header button:focus-visible{
-  outline:2px solid #90b9ee!important;
+  outline:2px solid #b4b4b4!important;
   outline-offset:3px!important;
 }
 /* Footer is softly frosted, with all original links and hierarchy retained. */
 html[data-theme="light"] .hskrc-global-footer{
-  background:linear-gradient(135deg,rgba(241,246,251,.94),rgba(228,237,247,.85))!important;
-  border-top:1px solid rgba(60,85,108,.20)!important;
-  box-shadow:0 -8px 32px rgba(28,47,68,.07)!important;
+  background:linear-gradient(135deg,rgba(245,245,245,.94),rgba(236,236,236,.85))!important;
+  border-top:1px solid rgba(81,81,81,.20)!important;
+  box-shadow:0 -8px 32px rgba(44,44,44,.07)!important;
 }
 html[data-theme="dark"] .hskrc-global-footer{
-  background:rgba(23,28,35,.91)!important;
+  background:rgba(27,27,27,.91)!important;
   border-top-color:rgba(255,255,255,.15)!important;
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   html[data-theme] body.hskrc-page-home main .feature-grid .feature-card{background:var(--panel)!important}
   body.hskrc-page-home .hskrc-live-stats .hskrc-live-stats-card{background:var(--panel)!important}
-  html[data-theme] body.hskrc-page-home main .cta .container .cta-box{background:#303947!important}
+  html[data-theme] body.hskrc-page-home main .cta .container .cta-box{background:#383838!important}
 }
 @media(max-width:760px){
   body.hskrc-page-home .hskrc-live-stats .hskrc-live-stat:first-of-type{border-inline-start:0}
@@ -145,11 +145,23 @@ html[data-theme="dark"] .hskrc-global-footer{
 
 /* Specificity fixes for the earlier institutional light-mode rules. */
 html[data-theme="light"] body.hskrc-page-home main .cta{
-  background:radial-gradient(circle at 16% 8%,rgba(138,154,184,.16),transparent 38%),
-    radial-gradient(circle at 85% 75%,rgba(143,29,44,.16),transparent 40%),#151b25!important;
+  background:radial-gradient(circle at 16% 8%,rgba(153,153,153,.16),transparent 38%),
+    radial-gradient(circle at 85% 75%,rgba(143,29,44,.16),transparent 40%),#1a1a1a!important;
 }
 html[data-theme="light"] body.hskrc-page-home main .cta .cta-box .btn-primary{
   background:linear-gradient(145deg,#a52a3b,#761925)!important;
   border:1px solid rgba(255,255,255,.19)!important;
   box-shadow:0 8px 24px rgba(90,11,22,.30)!important;
+}
+
+/* Keep the home page's premium effect clear and color-neutral. */
+html[data-theme="light"] body.hskrc-page-home main :is(.feature-card,.hskrc-live-stats-card){
+  background:rgba(255,255,255,.72)!important;
+  border-color:rgba(50,50,50,.14)!important;
+  box-shadow:0 9px 25px rgba(0,0,0,.07)!important;
+}
+html[data-theme="dark"] body.hskrc-page-home main :is(.feature-card,.hskrc-live-stats-card){
+  background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.14)!important;
+  box-shadow:0 9px 25px rgba(0,0,0,.12)!important;
 }
