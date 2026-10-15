@@ -10,22 +10,22 @@
 <meta content="#0a0d11" name="theme-color"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- Shared HSKRC institutional design -->
-<link href="hskrc-global.css?v=20261006-12" rel="stylesheet"/>
+<link href="hskrc-global.css?v=20261015-neutralglass1" rel="stylesheet"/>
 <script defer="" src="hskrc-global.js?v=20261003-5"></script>
 <style>
     :root{
-      --bg:#0a0d11;
-      --surface:#10151b;
-      --surface-2:#151b22;
-      --surface-3:#1a212a;
+      --bg:#0d0d0d;
+      --surface:#141414;
+      --surface-2:#1a1a1a;
+      --surface-3:#202020;
       --line:rgba(255,255,255,.09);
       --line-strong:rgba(255,255,255,.14);
       --gold:#c9a45c;
       --gold-2:#e1c785;
       --gold-soft:rgba(201,164,92,.10);
-      --text:#f5f7f8;
-      --muted:#99a3ae;
-      --muted-2:#747f8a;
+      --text:#f7f7f7;
+      --muted:#a2a2a2;
+      --muted-2:#7d7d7d;
       --danger:#ff8c8c;
       --danger-bg:rgba(150,42,42,.18);
       --success:#e1c785;
@@ -73,7 +73,7 @@
       padding:54px;
       background:
         linear-gradient(145deg,rgba(201,164,92,.10),transparent 48%),
-        linear-gradient(180deg,#12171d,#0e1217);
+        linear-gradient(180deg,#161616,#121212);
       box-shadow:0 24px 70px rgba(0,0,0,.26);
     }
 
@@ -114,7 +114,7 @@
     .intro-lead{
       max-width:650px;
       margin:24px 0 0;
-      color:#c4cad1;
+      color:#c9c9c9;
       font-size:16px;
       line-height:1.9;
     }
@@ -164,7 +164,7 @@
       left:54px;
       right:54px;
       bottom:42px;
-      color:#7f8994;
+      color:#888888;
       font-size:11px;
       line-height:1.7;
       border-top:1px solid var(--line);
@@ -220,7 +220,7 @@
       border:1px solid var(--line-strong);
       border-radius:9px;
       background:rgba(255,255,255,.025);
-      color:#dce1e6;
+      color:#e0e0e0;
       font-weight:750;
       cursor:pointer;
     }
@@ -238,7 +238,7 @@
       padding:5px;
       border:1px solid var(--line);
       border-radius:12px;
-      background:#0d1116;
+      background:#111111;
       margin-bottom:25px;
     }
 
@@ -247,7 +247,7 @@
       border:1px solid transparent;
       border-radius:9px;
       background:transparent;
-      color:#919ba6;
+      color:#9a9a9a;
       font:800 13px/1 Inter,"Segoe UI",Arial,sans-serif;
       cursor:pointer;
       transition:.18s ease;
@@ -274,13 +274,13 @@
       justify-content:space-between;
       gap:10px;
       margin-bottom:7px;
-      color:#d9dee4;
+      color:#dddddd;
       font-size:12px;
       font-weight:750;
     }
 
     .optional{
-      color:#6f7a85;
+      color:#787878;
       font-size:10px;
       font-weight:650;
     }
@@ -292,18 +292,18 @@
       padding:0 13px;
       border-radius:10px;
       border:1px solid var(--line-strong);
-      background:#0d1218;
+      background:#111111;
       color:#fff;
       outline:none;
       font:500 14px/1 Inter,"Segoe UI",Arial,sans-serif;
       transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
     }
 
-    input::placeholder{color:#59636e}
+    input::placeholder{color:#626262}
     input:focus{
       border-color:rgba(201,164,92,.55);
       box-shadow:0 0 0 3px rgba(201,164,92,.07);
-      background:#0e141b;
+      background:#131313;
     }
 
     .password-toggle{
@@ -316,7 +316,7 @@
       border:0;
       border-radius:7px;
       background:transparent;
-      color:#86909b;
+      color:#8f8f8f;
       font-size:10px;
       font-weight:800;
       cursor:pointer;
@@ -331,7 +331,7 @@
       align-items:flex-start;
       gap:9px;
       margin:3px 0 18px;
-      color:#9ba5af;
+      color:#a4a4a4;
       font-size:11.5px;
       line-height:1.5;
     }
@@ -411,7 +411,7 @@
       margin-top:20px;
       padding-top:17px;
       border-top:1px solid var(--line);
-      color:#737d88;
+      color:#7c7c7c;
       font-size:10.5px;
       line-height:1.6;
     }
@@ -438,83 +438,83 @@
     /* Light mode: keep the account panel fully readable and consistent with HSKRC. */
     html[data-theme="light"] .auth-card{
       background:#ffffff;
-      border-color:rgba(26,47,68,.13);
-      box-shadow:0 24px 70px rgba(35,55,75,.14);
+      border-color:rgba(44,44,44,.13);
+      box-shadow:0 24px 70px rgba(52,52,52,.14);
     }
-    html[data-theme="light"] .auth-title-wrap h2{color:#172433}
-    html[data-theme="light"] .auth-title-wrap p{color:#667483}
-    html[data-theme="light"] .auth-title-wrap small{color:#2f5f88}
+    html[data-theme="light"] .auth-title-wrap h2{color:#222222}
+    html[data-theme="light"] .auth-title-wrap p{color:#727272}
+    html[data-theme="light"] .auth-title-wrap small{color:#585858}
     html[data-theme="light"] .auth-lang{
-      color:#244a6b;
-      background:#f7f9fb;
-      border-color:rgba(26,47,68,.16);
+      color:#444444;
+      background:#f9f9f9;
+      border-color:rgba(44,44,44,.16);
     }
     html[data-theme="light"] .auth-lang:hover{
-      color:#172433;
-      background:#eef3f7;
-      border-color:rgba(47,95,136,.30);
+      color:#222222;
+      background:#f2f2f2;
+      border-color:rgba(88,88,88,.30);
     }
     html[data-theme="light"] .tabs{
-      background:#eef2f5;
-      border-color:rgba(26,47,68,.13);
+      background:#f1f1f1;
+      border-color:rgba(44,44,44,.13);
     }
-    html[data-theme="light"] .tab{color:#667483}
+    html[data-theme="light"] .tab{color:#727272}
     html[data-theme="light"] .tab:hover{
-      color:#244a6b;
+      color:#444444;
       background:#ffffff;
     }
     html[data-theme="light"] .tab.active{
       color:#ffffff;
-      background:#2f5f88;
-      border-color:#2f5f88;
+      background:#585858;
+      border-color:#585858;
       box-shadow:none;
     }
-    html[data-theme="light"] .form-group label{color:#405364}
-    html[data-theme="light"] .optional{color:#75818c}
+    html[data-theme="light"] .form-group label{color:#505050}
+    html[data-theme="light"] .optional{color:#7f7f7f}
     html[data-theme="light"] input{
       background:#ffffff;
-      color:#172433;
-      border-color:rgba(26,47,68,.18);
+      color:#222222;
+      border-color:rgba(44,44,44,.18);
     }
     html[data-theme="light"] input:focus{
       background:#ffffff;
-      border-color:rgba(47,95,136,.48);
-      box-shadow:0 0 0 3px rgba(47,95,136,.08);
+      border-color:rgba(88,88,88,.48);
+      box-shadow:0 0 0 3px rgba(88,88,88,.08);
     }
-    html[data-theme="light"] input::placeholder{color:#87939e}
-    html[data-theme="light"] .password-toggle{color:#5f6f7e}
+    html[data-theme="light"] input::placeholder{color:#919191}
+    html[data-theme="light"] .password-toggle{color:#6d6d6d}
     html[data-theme="light"] .password-toggle:hover{
-      color:#244a6b;
-      background:#eef3f7;
+      color:#444444;
+      background:#f2f2f2;
     }
-    html[data-theme="light"] .checkbox{color:#667483}
+    html[data-theme="light"] .checkbox{color:#727272}
     html[data-theme="light"] .submit{
       color:#ffffff;
-      background:#2f5f88;
-      border-color:#2f5f88;
-      box-shadow:0 12px 28px rgba(47,95,136,.16);
+      background:#585858;
+      border-color:#585858;
+      box-shadow:0 12px 28px rgba(88,88,88,.16);
     }
     html[data-theme="light"] .submit:hover:not(:disabled){
-      background:#244a6b;
-      box-shadow:0 16px 34px rgba(47,95,136,.20);
+      background:#444444;
+      box-shadow:0 16px 34px rgba(88,88,88,.20);
     }
     html[data-theme="light"] .forgot,
-    html[data-theme="light"] .back{color:#2f5f88}
+    html[data-theme="light"] .back{color:#585858}
     html[data-theme="light"] .forgot:hover,
-    html[data-theme="light"] .back:hover{color:#244a6b}
+    html[data-theme="light"] .back:hover{color:#444444}
     html[data-theme="light"] .security-note{
-      color:#667483;
-      border-top-color:rgba(26,47,68,.12);
+      color:#727272;
+      border-top-color:rgba(44,44,44,.12);
     }
     html[data-theme="light"] .security-icon{
-      color:#2f5f88;
-      border-color:rgba(26,47,68,.13);
-      background:#f7f9fb;
+      color:#585858;
+      border-color:rgba(44,44,44,.13);
+      background:#f9f9f9;
     }
     html[data-theme="light"] .message.success{
-      color:#244a6b;
-      background:rgba(47,95,136,.08);
-      border-color:rgba(47,95,136,.22);
+      color:#444444;
+      background:rgba(88,88,88,.08);
+      border-color:rgba(88,88,88,.22);
     }
 
     @media(max-width:980px){
