@@ -9,7 +9,7 @@
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="canonical" href="https://hskrc.org/people.html">
-<link rel="stylesheet" href="hskrc-global.css?v=20261013-crystal2">
+<link rel="stylesheet" href="hskrc-global.css?v=20261015-neutralglass1">
 <script defer src="hskrc-global.js?v=20261004-1"></script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
@@ -21,12 +21,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
-  --bg:#0b0d10;--panel:#11151a;--panel2:#151a20;--text:#f3f4f6;--muted:#aab1bb;
+  --bg:#0d0d0d;--panel:#151515;--panel2:#191919;--text:#f4f4f4;--muted:#b0b0b0;
   --line:rgba(255,255,255,.09);--gold:#c9a45c;--gold2:#e2c47f;--soft:rgba(201,164,92,.09)
 }
 html[data-theme="light"]{
-  --bg:#f4f6f8;--panel:#fff;--panel2:#eef2f5;--text:#18212b;--muted:#5f6b78;
-  --line:rgba(24,33,43,.12);--gold:#2f5f88;--gold2:#244a6b;--soft:rgba(47,95,136,.08)
+  --bg:#f6f6f6;--panel:#fff;--panel2:#f1f1f1;--text:#202020;--muted:#696969;
+  --line:rgba(32,32,32,.12);--gold:#585858;--gold2:#444444;--soft:rgba(88,88,88,.08)
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
@@ -42,7 +42,7 @@ h1{font-size:clamp(38px,6vw,66px);line-height:1.03;letter-spacing:-.04em;margin:
 .filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px;scrollbar-width:thin}
 .filter{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:9px 12px;font:750 12px/1 inherit;cursor:pointer}
 .filter:hover,.filter.active{border-color:rgba(201,164,92,.35);color:var(--gold2);background:var(--soft)}
-html[data-theme="light"] .filter:hover,html[data-theme="light"] .filter.active{border-color:rgba(47,95,136,.28)}
+html[data-theme="light"] .filter:hover,html[data-theme="light"] .filter.active{border-color:rgba(88,88,88,.28)}
 .meta{display:flex;justify-content:space-between;gap:14px;align-items:center;color:var(--muted);font-size:12px;margin:8px 0 18px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .card{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--panel2));border-radius:17px;padding:20px;display:flex;flex-direction:column;min-height:260px}
@@ -56,7 +56,7 @@ html[data-theme="light"] .filter:hover,html[data-theme="light"] .filter.active{b
 .card-link:hover{text-decoration:underline}
 .empty{display:none;border:1px dashed var(--line);border-radius:16px;padding:34px;text-align:center;color:var(--muted);background:var(--panel)}
 .note{margin-top:24px;border:1px solid rgba(201,164,92,.28);background:var(--soft);border-radius:14px;padding:17px 19px;color:var(--muted);line-height:1.7;font-size:13px}
-html[data-theme="light"] .note{border-color:rgba(47,95,136,.25)}
+html[data-theme="light"] .note{border-color:rgba(88,88,88,.25)}
 .submit-person{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}
 .submit-person>summary{list-style:none;cursor:pointer;padding:16px 18px;font-weight:850;color:var(--gold2);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .submit-person>summary::-webkit-details-marker{display:none}
@@ -88,8 +88,8 @@ html[dir="rtl"] .eyebrow{letter-spacing:0}
 /* People directory — Premium Academic Glass, scoped to this page. */
 body{
   background:
-    radial-gradient(ellipse at 16% 2%,rgba(77,143,195,.14),transparent 37%),
-    radial-gradient(ellipse at 87% 32%,rgba(72,113,166,.10),transparent 37%),
+    radial-gradient(ellipse at 16% 2%,rgba(133,133,133,.14),transparent 37%),
+    radial-gradient(ellipse at 87% 32%,rgba(108,108,108,.10),transparent 37%),
     var(--bg);
   min-height:100vh;
 }
@@ -100,19 +100,19 @@ body{
   border:1px solid var(--line);
   border-radius:26px;
   overflow:hidden;
-  background:linear-gradient(130deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 50%,rgba(92,149,198,.08));
+  background:linear-gradient(130deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 50%,rgba(140,140,140,.08));
   -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-  box-shadow:0 20px 60px rgba(4,16,34,.09),inset 0 1px 0 rgba(255,255,255,.23);
+  box-shadow:0 20px 60px rgba(15,15,15,.09),inset 0 1px 0 rgba(255,255,255,.23);
 }
 .hero::before{
   content:"";position:absolute;pointer-events:none;
   inset:0 0 auto;height:2px;
-  background:linear-gradient(90deg,transparent,rgba(185,218,248,.6),transparent);
+  background:linear-gradient(90deg,transparent,rgba(213,213,213,.6),transparent);
 }
 .hero>*{position:relative}
 html[data-theme="light"] .hero{
-  background:linear-gradient(135deg,rgba(255,255,255,.88),rgba(244,249,255,.69));
-  border-color:rgba(87,136,179,.18);
+  background:linear-gradient(135deg,rgba(255,255,255,.88),rgba(248,248,248,.69));
+  border-color:rgba(129,129,129,.18);
 }
 .toolbar{padding-top:27px}
 .search-wrap{position:relative;gap:0}
@@ -139,16 +139,16 @@ html[data-theme="light"] .hero{
 .filter:hover{transform:translateY(-1px)}
 .filter.active{
   color:var(--gold2);
-  border-color:rgba(115,177,224,.45);
-  background:linear-gradient(145deg,rgba(78,143,191,.17),var(--soft));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 4px 15px rgba(7,27,49,.08);
+  border-color:rgba(167,167,167,.45);
+  background:linear-gradient(145deg,rgba(133,133,133,.17),var(--soft));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 4px 15px rgba(24,24,24,.08);
 }
 .meta{margin-top:23px;margin-bottom:18px;font-size:13px}
 #peopleCount{font-weight:850;color:var(--text)}
 .card{
   position:relative;overflow:hidden;isolation:isolate;
   padding:24px;border-radius:21px;min-height:284px;
-  background:linear-gradient(146deg,rgba(255,255,255,.115),rgba(255,255,255,.035) 40%,rgba(105,164,210,.09));
+  background:linear-gradient(146deg,rgba(255,255,255,.115),rgba(255,255,255,.035) 40%,rgba(155,155,155,.09));
   -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
   box-shadow:0 14px 36px rgba(0,0,0,.09),inset 0 1px 0 rgba(255,255,255,.14);
   transition:transform .2s,border-color .2s,box-shadow .2s;
@@ -158,10 +158,10 @@ html[data-theme="light"] .hero{
   background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
   pointer-events:none;
 }
-.card:hover{transform:translateY(-4px);border-color:rgba(122,175,214,.4);box-shadow:0 20px 40px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.2)}
+.card:hover{transform:translateY(-4px);border-color:rgba(167,167,167,.4);box-shadow:0 20px 40px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.2)}
 html[data-theme="light"] .card{
-  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(246,250,254,.84) 60%,rgba(224,237,249,.77));
-  border-color:rgba(69,114,160,.15);
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(249,249,249,.84) 60%,rgba(235,235,235,.77));
+  border-color:rgba(108,108,108,.15);
 }
 .card-kicker{line-height:1.55}
 .card h2{font-size:21px;line-height:1.3}
@@ -172,7 +172,7 @@ html[data-theme="light"] .card{
 }
 .submit-person{
   margin-top:22px;border-radius:19px;
-  background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(120,169,210,.06));
+  background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(162,162,162,.06));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.09);
   -webkit-backdrop-filter:blur(13px);backdrop-filter:blur(13px);
 }
@@ -210,7 +210,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
   position:relative;display:flex;flex:initial;align-items:center;min-height:74px;
   white-space:normal;text-align:start;line-height:1.4;
   border-radius:16px;padding:15px 44px 15px 15px;font-size:13px;font-weight:800;
-  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(110,159,204,.08));
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(152,152,152,.08));
   -webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 7px 22px rgba(0,0,0,.06);
 }
@@ -221,17 +221,17 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
   background:var(--soft);font-size:12px;color:var(--gold2);font-variant-numeric:tabular-nums;
 }
 .filter.active{
-  background:linear-gradient(145deg,rgba(60,124,184,.25),rgba(99,156,207,.1));
-  border-color:rgba(93,164,221,.54);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 24px rgba(36,97,160,.12);
+  background:linear-gradient(145deg,rgba(115,115,115,.25),rgba(148,148,148,.1));
+  border-color:rgba(153,153,153,.54);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 24px rgba(89,89,89,.12);
 }
 html[data-theme="light"] .filter{
-  background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(229,240,251,.85));
-  border-color:rgba(64,114,156,.2);
+  background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(238,238,238,.85));
+  border-color:rgba(106,106,106,.2);
 }
 html[data-theme="light"] .filter.active{
-  background:linear-gradient(145deg,rgba(213,234,252,.98),rgba(235,245,255,.9));
-  border-color:rgba(47,95,136,.55);
+  background:linear-gradient(145deg,rgba(231,231,231,.98),rgba(244,244,244,.9));
+  border-color:rgba(88,88,88,.55);
 }
 html[dir="rtl"] .filter{text-align:right;padding:15px 15px 15px 44px}
 @media(max-width:1040px){.filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -242,6 +242,22 @@ html[dir="rtl"] .filter{text-align:right;padding:15px 15px 15px 44px}
   .category-heading{align-items:flex-start;gap:8px;flex-wrap:wrap}
 }
 
+
+/* People cards: clear, neutral glass; preserve the existing layout. */
+html[data-theme="light"] .hero,html[data-theme="light"] .card,
+html[data-theme="light"] .filter,html[data-theme="light"] .submit-person{
+  background:rgba(255,255,255,.72)!important;
+  border-color:rgba(60,60,60,.16)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.065),inset 0 1px 0 rgba(255,255,255,.8)!important;
+}
+html[data-theme="dark"] .hero,html[data-theme="dark"] .card,
+html[data-theme="dark"] .filter,html[data-theme="dark"] .submit-person{
+  background:rgba(255,255,255,.065)!important;
+  border-color:rgba(255,255,255,.15)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+.hero::before,.card::before{display:none!important}
+.filter.active{outline:1px solid currentColor;outline-offset:-2px}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"People & Historical Figures","url":"https://hskrc.org/people.html","isPartOf":{"@type":"WebSite","name":"HSKRC","url":"https://hskrc.org/"}}
