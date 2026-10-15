@@ -135,3 +135,7 @@ html[data-theme="dark"] .person-gallery{
   .profile-hero--with-image > .person-media--hero{max-width:320px}
   .person-gallery-grid.person-gallery-grid--extras{grid-template-columns:1fr}
 }
+
+/* Show a confirmed, loaded portrait in place of the neutral placeholder. */
+.person-media-surface.is-loaded > .person-media-placeholder,
+.person-media-surface.is-loaded > .person-media-label{display:none}
