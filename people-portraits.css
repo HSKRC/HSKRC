@@ -1,0 +1,81 @@
+/* HSKRC People — neutral glass image frames.
+   Editors: to add a sourced image, insert an <img> inside the .person-media-surface,
+   remove the .person-media-placeholder node, and update the image caption/source. */
+.person-media,
+.person-gallery{box-sizing:border-box}
+.person-media{min-width:0;margin:0;color:inherit}
+.person-media-surface{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;min-height:150px;aspect-ratio:4/3;
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 6px 20px rgba(0,0,0,.075);
+  -webkit-backdrop-filter:blur(15px) saturate(100%);
+  backdrop-filter:blur(15px) saturate(100%);
+}
+.person-media-surface::before{
+  content:"";position:absolute;inset:0 auto auto 0;width:100%;height:45%;
+  pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.11),transparent)
+}
+.person-media-surface>img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:inherit;z-index:2;
+}
+.person-media-placeholder{
+  position:relative;z-index:1;width:62px;height:70px;opacity:.55;
+}
+.person-media-placeholder::before{
+  content:"";position:absolute;top:4px;left:20px;width:22px;height:22px;
+  border-radius:50%;background:currentColor;
+}
+.person-media-placeholder::after{
+  content:"";position:absolute;bottom:3px;left:6px;width:50px;height:32px;
+  border-radius:29px 29px 9px 9px;background:currentColor;
+}
+.person-media-label{position:relative;z-index:1;padding:0 12px;color:inherit;opacity:.74;font-size:12px;line-height:1.55;text-align:center}
+.person-media figcaption{color:inherit;opacity:.68;font-size:11px;line-height:1.55;margin-top:7px;text-align:center}
+.person-media--card{margin:-4px -4px 18px}
+.person-media--card .person-media-surface{aspect-ratio:16/10;min-height:140px}
+.person-media--card .person-media-placeholder{transform:scale(.75);margin-bottom:-8px}
+.person-media--card .person-media-label{font-size:11px}
+.person-gallery{
+  width:min(1180px,calc(100% - 36px));
+  margin:0 auto 30px;padding:24px;
+  border:1px solid rgba(255,255,255,.15);border-radius:20px;
+  background:rgba(255,255,255,.055);
+  box-shadow:0 9px 28px rgba(0,0,0,.07);
+  -webkit-backdrop-filter:blur(12px) saturate(100%);
+  backdrop-filter:blur(12px) saturate(100%);
+}
+.person-gallery-header{margin-bottom:18px}
+.person-gallery-header h2{font-size:clamp(19px,2.2vw,25px);margin:0 0 5px;color:inherit;line-height:1.3}
+.person-gallery-header p{font-size:13px;line-height:1.55;opacity:.73;margin:0}
+.person-gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:13px;align-items:start}
+.person-gallery-grid .person-media-surface{aspect-ratio:4/3;min-height:165px}
+.person-gallery-grid .person-media:first-child .person-media-surface{aspect-ratio:4/3}
+html[data-theme="light"] .person-media-surface{
+  background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(233,233,233,.65));
+  border-color:rgba(70,70,70,.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 20px rgba(0,0,0,.055)
+}
+html[data-theme="light"] .person-gallery{
+  background:rgba(255,255,255,.72);border-color:rgba(70,70,70,.15);
+}
+html[data-theme="dark"] .person-media-surface{
+  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
+  border-color:rgba(255,255,255,.16);
+}
+html[data-theme="dark"] .person-gallery{
+  background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.14);
+}
+@media(max-width:720px){
+  .person-gallery{width:min(100% - 24px,1180px);padding:16px}
+  .person-gallery-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .person-gallery-grid .person-media:first-child{grid-column:1 / -1}
+}
+@media(max-width:440px){
+  .person-gallery-grid{grid-template-columns:1fr}
+  .person-gallery-grid .person-media:first-child{grid-column:auto}
+}
