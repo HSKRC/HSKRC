@@ -190,6 +190,58 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
 }
 @media(prefers-reduced-motion:reduce){.card,.filter{transition:none}.card:hover,.filter:hover{transform:none}}
 
+
+/* Seven public research lists — clear order, accessible badges, glass tiles. */
+.category-heading{
+  display:flex;gap:12px;justify-content:space-between;align-items:center;
+  margin:7px 0 12px;color:var(--text);font-size:14px;font-weight:850;
+}
+.show-all{
+  flex:0 0 auto;border:1px solid var(--line);border-radius:999px;
+  background:linear-gradient(145deg,var(--panel),var(--panel2));color:var(--gold2);
+  padding:10px 14px;font:750 12px/1.15 inherit;cursor:pointer;
+}
+.show-all:hover,.show-all:focus-visible{border-color:var(--gold);outline-offset:2px}
+.filters{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;
+  overflow:visible;padding:0;scrollbar-width:auto;
+}
+.filter{
+  position:relative;display:flex;flex:initial;align-items:center;min-height:74px;
+  white-space:normal;text-align:start;line-height:1.4;
+  border-radius:16px;padding:15px 44px 15px 15px;font-size:13px;font-weight:800;
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(110,159,204,.08));
+  -webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 7px 22px rgba(0,0,0,.06);
+}
+.filter::after{
+  content:attr(data-count);position:absolute;inset-inline-end:12px;top:50%;
+  transform:translateY(-50%);display:grid;place-items:center;min-width:26px;
+  height:26px;padding:0 5px;border:1px solid var(--line);border-radius:8px;
+  background:var(--soft);font-size:12px;color:var(--gold2);font-variant-numeric:tabular-nums;
+}
+.filter.active{
+  background:linear-gradient(145deg,rgba(60,124,184,.25),rgba(99,156,207,.1));
+  border-color:rgba(93,164,221,.54);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 24px rgba(36,97,160,.12);
+}
+html[data-theme="light"] .filter{
+  background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(229,240,251,.85));
+  border-color:rgba(64,114,156,.2);
+}
+html[data-theme="light"] .filter.active{
+  background:linear-gradient(145deg,rgba(213,234,252,.98),rgba(235,245,255,.9));
+  border-color:rgba(47,95,136,.55);
+}
+html[dir="rtl"] .filter{text-align:right;padding:15px 15px 15px 44px}
+@media(max-width:1040px){.filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.filters{grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;gap:10px}.filter{min-height:74px}}
+@media(max-width:470px){
+  .filters{grid-template-columns:1fr}
+  .filter{min-height:58px}
+  .category-heading{align-items:flex-start;gap:8px;flex-wrap:wrap}
+}
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"People & Historical Figures","url":"https://hskrc.org/people.html","isPartOf":{"@type":"WebSite","name":"HSKRC","url":"https://hskrc.org/"}}
@@ -198,12 +250,12 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
 <body>
 <main class="page">
   <section class="hero">
-    <div class="eyebrow" data-en="Biography · Intellectual History · Historical Networks" data-fa="زندگی‌نامه · تاریخ اندیشه · شبکه‌های تاریخی">Biography · Intellectual History · Historical Networks</div>
+    <div class="eyebrow" data-en="Biography · Historical Figures · Collective Memory" data-fa="زندگی‌نامه · شخصیت‌های تاریخی · حافظه جمعی">Biography · Historical Figures · Collective Memory</div>
     <h1 data-en="People & Historical Figures" data-fa="شخصیت‌ها و چهره‌های تاریخی">People & Historical Figures</h1>
     <p class="lead"
-       data-en="A growing biographical gateway to scholars, hujjats, da'is, philosophers, writers, political and social leaders, local commanders, generals and other historical figures connected to Ismaili history, Alamut and related intellectual, cultural and regional histories."
-       data-fa="دروازه‌ای رو به رشد برای زندگی‌نامه دانشمندان، حجت‌ها، داعیان، فیلسوفان، نویسندگان، رهبران سیاسی و اجتماعی، فرماندهان محلی، جنرالان و دیگر چهره‌های تاریخی مرتبط با تاریخ اسماعیلی، الموت و تاریخ‌های فکری، فرهنگی و منطقه‌ای.">
-       A growing biographical gateway to scholars, hujjats, da'is, philosophers, writers, leaders and other figures connected to Ismaili history, Alamut and related intellectual and cultural traditions.
+      data-en="Explore source-based biographies of hujjats, da'is, scholars, poets and resistance figures, with dedicated research lists for Firqah 80 and Ismaili victims of Yakawlang. Names are published only after editorial and source review."
+      data-fa="زندگی‌نامه‌های مستند حجت‌ها، داعیان، دانشمندان، شاعران و مبارزین را مطالعه کنید. دو فهرست اختصاصی نیز به فرقه هشتاد و شهدای اسماعیلی یکاولنگ تعلق دارد. نام‌ها تنها پس از بررسی اسناد و منابع منتشر می‌شوند.">
+      Explore source-based biographies of hujjats, da'is, scholars, poets and resistance figures, with dedicated research lists for Firqah 80 and Ismaili victims of Yakawlang. Names are published only after editorial and source review.
     </p>
   </section>
 
@@ -217,18 +269,18 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
       <button id="clearPeopleSearch" class="clear-search" type="button" data-en="Clear search" data-fa="پاک‌کردن جستجو" aria-label="Clear search" hidden>Clear search</button>
     </div>
 
-    <div class="filters" id="peopleFilters">
-      <button class="filter active" type="button" aria-pressed="true" data-filter="all" data-en="All Figures" data-fa="همه شخصیت‌ها">All Figures</button>
-      <button class="filter" type="button" data-filter="ismaili-scholars" data-en="Ismaili Thinkers & Scholars" data-fa="اندیشمندان و دانشمندان اسماعیلی">Ismaili Thinkers & Scholars</button>
-      <button class="filter" type="button" data-filter="hujjats" data-en="Hujjats" data-fa="حجت‌ها">Hujjats</button>
-      <button class="filter" type="button" data-filter="dais" data-en="Da'is" data-fa="داعیان">Da'is</button>
-      <button class="filter" type="button" data-filter="philosophers" data-en="Philosophers & Theologians" data-fa="فیلسوفان و متکلمان">Philosophers & Theologians</button>
-      <button class="filter" type="button" data-filter="writers" data-en="Writers & Poets" data-fa="نویسندگان و شاعران">Writers & Poets</button>
-      <button class="filter" type="button" data-filter="leaders" data-en="Political & Social Leaders" data-fa="رهبران سیاسی و اجتماعی">Political & Social Leaders</button>
-      <button class="filter" type="button" data-filter="military" data-en="Military & Historical Figures" data-fa="چهره‌های نظامی و تاریخی">Military & Historical Figures</button>
-      <button class="filter" type="button" data-filter="local-commanders" data-en="Local Commanders & Generals" data-fa="فرماندهان و جنرالان محلی">Local Commanders & Generals</button>
-      <button class="filter" type="button" data-filter="cultural" data-en="Cultural Figures" data-fa="شخصیت‌های فرهنگی">Cultural Figures</button>
-      <button class="filter" type="button" data-filter="women" data-en="Women of Influence" data-fa="زنان اثرگذار">Women of Influence</button>
+    <div class="category-heading">
+      <span data-en="Explore seven curated lists" data-fa="هفت فهرست تخصصی">Explore seven curated lists</span>
+      <button type="button" id="peopleShowAll" class="show-all" data-en="Show all profiles" data-fa="نمایش همه پروفایل‌ها">Show all profiles</button>
+    </div>
+    <div class="filters" id="peopleFilters" role="group" aria-label="People categories">
+      <button class="filter" type="button" aria-pressed="false" data-filter="hujjats" data-en="01 · Hujjats" data-fa="۱ · حجت‌ها">01 · Hujjats</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="dais" data-en="02 · Da'is" data-fa="۲ · داعیان">02 · Da'is</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="scholars" data-en="03 · Scholars" data-fa="۳ · دانشمندان">03 · Scholars</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="poets" data-en="04 · Poets" data-fa="۴ · شاعران">04 · Poets</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="fighters" data-en="05 · Resistance Figures" data-fa="۵ · مبارزین">05 · Resistance Figures</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="ismaili-firqah-80" data-en="06 · Ismaili Fighters (Firqah 80)" data-fa="۶ · مبارزین اسماعیلی (فرقه هشتاد)">06 · Ismaili Fighters (Firqah 80)</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="yakawlang-ismaili-martyrs" data-en="07 · Ismaili Martyrs of Yakawlang" data-fa="۷ · شهدای اسماعیلی یکاولنگ">07 · Ismaili Martyrs of Yakawlang</button>
     </div>
   </section>
 
@@ -254,17 +306,13 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
         <label for="personCategory" data-en="Category *" data-fa="دسته‌بندی *">Category *</label>
         <select id="personCategory" name="category" required>
           <option value="" data-en="Choose a category" data-fa="یک دسته را انتخاب کنید">Choose a category</option>
-          <option value="ismaili-scholars" data-en="Ismaili Thinkers & Scholars" data-fa="اندیشمندان و دانشمندان اسماعیلی">Ismaili Thinkers & Scholars</option>
           <option value="hujjats" data-en="Hujjats" data-fa="حجت‌ها">Hujjats</option>
           <option value="dais" data-en="Da'is" data-fa="داعیان">Da'is</option>
-          <option value="philosophers" data-en="Philosophers & Theologians" data-fa="فیلسوفان و متکلمان">Philosophers & Theologians</option>
-          <option value="writers" data-en="Writers & Poets" data-fa="نویسندگان و شاعران">Writers & Poets</option>
-          <option value="leaders" data-en="Political & Social Leaders" data-fa="رهبران سیاسی و اجتماعی">Political & Social Leaders</option>
-          <option value="military" data-en="Military & Historical Figures" data-fa="چهره‌های نظامی و تاریخی">Military & Historical Figures</option>
-          <option value="local-commanders" data-en="Local Commanders & Generals" data-fa="فرماندهان و جنرالان محلی">Local Commanders & Generals</option>
-          <option value="cultural" data-en="Cultural Figures" data-fa="شخصیت‌های فرهنگی">Cultural Figures</option>
-          <option value="women" data-en="Women of Influence" data-fa="زنان اثرگذار">Women of Influence</option>
-          <option value="other" data-en="Other" data-fa="سایر">Other</option>
+          <option value="scholars" data-en="Scholars" data-fa="دانشمندان">Scholars</option>
+          <option value="poets" data-en="Poets" data-fa="شاعران">Poets</option>
+          <option value="fighters" data-en="Resistance Figures" data-fa="مبارزین">Resistance Figures</option>
+          <option value="ismaili-firqah-80" data-en="Ismaili Fighters (Firqah 80)" data-fa="مبارزین اسماعیلی (فرقه هشتاد)">Ismaili Fighters (Firqah 80)</option>
+          <option value="yakawlang-ismaili-martyrs" data-en="Ismaili Martyrs of Yakawlang" data-fa="شهدای اسماعیلی یکاولنگ">Ismaili Martyrs of Yakawlang</option>
         </select>
       </div>
 
@@ -340,7 +388,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
 
 
   <section class="grid" id="peopleGrid">
-    <article class="card" data-categories="hujjats dais philosophers writers ismaili-scholars" data-search="nasir khusraw naser khosrow ناصر خسرو">
+    <article class="card" data-categories="hujjats dais scholars poets" data-search="nasir khusraw naser khosrow ناصر خسرو">
       <div class="card-kicker" data-en="Hujjat · Da'i · Philosopher · Poet" data-fa="حجت · داعی · فیلسوف · شاعر">Hujjat · Da'i · Philosopher · Poet</div>
       <h2 data-en="Nasir Khusraw" data-fa="ناصر خسرو">Nasir Khusraw</h2>
       <div class="dates">1004 – c. 1077</div>
@@ -352,7 +400,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
     <a class="card-link" href="nasir-khusraw.html" data-en="Open full profile →" data-fa="باز کردن پروفایل کامل ←">Open full profile →</a>
 </article>
 
-    <article class="card" data-categories="ismaili-scholars" data-search="qadi al numan al-numan قاضی نعمان">
+    <article class="card" data-categories="scholars" data-search="qadi al numan al-numan قاضی نعمان">
       <div class="card-kicker" data-en="Jurist · Scholar · Author" data-fa="فقیه · دانشمند · نویسنده">Jurist · Scholar · Author</div>
       <h2 data-en="Qadi al-Nu'man" data-fa="قاضی نعمان">Qadi al-Nu'man</h2>
       <div class="dates">d. 974</div>
@@ -364,7 +412,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
     <a class="card-link" href="qadi-al-numan.html" data-en="Open full profile →" data-fa="باز کردن پروفایل کامل ←">Open full profile →</a>
 </article>
 
-    <article class="card" data-categories="dais philosophers ismaili-scholars" data-search="abu yaqub sijistani al-sijistani ابو یعقوب سجستانی">
+    <article class="card" data-categories="dais scholars" data-search="abu yaqub sijistani al-sijistani ابو یعقوب سجستانی">
       <div class="card-kicker" data-en="Da'i · Philosopher" data-fa="داعی · فیلسوف">Da'i · Philosopher</div>
       <h2 data-en="Abu Ya'qub al-Sijistani" data-fa="ابو یعقوب سجستانی">Abu Ya'qub al-Sijistani</h2>
       <div class="dates" data-en="10th century" data-fa="قرن دهم میلادی">10th century</div>
@@ -376,7 +424,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
     <a class="card-link" href="abu-yaqub-al-sijistani.html" data-en="Open full profile →" data-fa="باز کردن پروفایل کامل ←">Open full profile →</a>
 </article>
 
-    <article class="card" data-categories="philosophers dais ismaili-scholars" data-search="hamid al din kirmani al-kirmani حمیدالدین کرمانی">
+    <article class="card" data-categories="dais scholars" data-search="hamid al din kirmani al-kirmani حمیدالدین کرمانی">
       <div class="card-kicker" data-en="Da'i · Philosopher · Theologian" data-fa="داعی · فیلسوف · متکلم">Da'i · Philosopher · Theologian</div>
       <h2 data-en="Hamid al-Din al-Kirmani" data-fa="حمیدالدین کرمانی">Hamid al-Din al-Kirmani</h2>
       <div class="dates" data-en="d. after 1020" data-fa="وفات پس از ۱۰۲۰ میلادی">d. after 1020</div>
@@ -388,7 +436,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
     <a class="card-link" href="hamid-al-din-al-kirmani.html" data-en="Open full profile →" data-fa="باز کردن پروفایل کامل ←">Open full profile →</a>
 </article>
 
-    <article class="card" data-categories="leaders" data-search="hassan sabbah hasan-i sabbah حسن صباح">
+    <article class="card" data-categories="fighters" data-search="hassan sabbah hasan-i sabbah حسن صباح">
       <div class="card-kicker" data-en="Nizari Leader · Historical Figure" data-fa="رهبر نزاری · چهره تاریخی">Nizari Leader · Historical Figure</div>
       <h2 data-en="Hassan Sabbah" data-fa="حسن صباح">Hassan Sabbah</h2>
       <div class="dates">c. 1050 – 1124</div>
@@ -400,7 +448,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
       <a class="card-link" href="hassan-sabbah.html" data-en="Open research profile →" data-fa="باز کردن پروفایل پژوهشی ←">Open research profile →</a>
     </article>
 
-    <article class="card" data-categories="philosophers" data-search="ibn sina avicenna ابن سینا">
+    <article class="card" data-categories="scholars" data-search="ibn sina avicenna ابن سینا">
       <div class="card-kicker" data-en="Philosopher · Physician · Scholar" data-fa="فیلسوف · پزشک · دانشمند">Philosopher · Physician · Scholar</div>
       <h2 data-en="Ibn Sina (Avicenna)" data-fa="ابن‌سینا">Ibn Sina (Avicenna)</h2>
       <div class="dates">980 – 1037</div>
@@ -414,7 +462,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
   </section>
 
   <div id="peopleEmpty" class="empty" role="status" aria-live="polite">
-    <p id="peopleEmptyText" data-en="No matching profiles found. Try another category or search." data-fa="پروفایلی پیدا نشد. دسته یا عبارت جستجو را تغییر دهید.">No matching profiles found. Try another category or search.</p>
+    <p id="peopleEmptyText" data-en="No verified profiles are available for this selection yet. You can suggest a person with reliable sources." data-fa="هنوز پروفایل تأییدشده‌ای برای این بخش ثبت نشده است. می‌توانید شخصیتی را همراه با منابع معتبر پیشنهاد کنید.">No verified profiles are available for this selection yet. You can suggest a person with reliable sources.</p>
     <button id="peopleReset" class="reset-filter" type="button" data-en="Show all figures" data-fa="نمایش همه شخصیت‌ها">Show all figures</button>
   </div>
 
@@ -434,6 +482,7 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
   const count=document.getElementById("peopleCount");
   const empty=document.getElementById("peopleEmpty");
   const reset=document.getElementById("peopleReset");
+  const showAll=document.getElementById("peopleShowAll");
   let active="all";
 
   function lang(){return localStorage.getItem("hskrc_language")==="fa"?"fa":"en";}
@@ -479,6 +528,15 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
     if(clearSearch)clearSearch.hidden=!(search&&search.value);
   }
 
+  function updateCategoryCounts(){
+    buttons.forEach(btn=>{
+      const category=btn.dataset.filter||"";
+      const n=cards.filter(card=>(card.dataset.categories||"").split(/\\s+/).includes(category)).length;
+      btn.dataset.count=n.toLocaleString(lang()==="fa"?"fa-AF":"en-AU");
+      btn.setAttribute("aria-label",(lang()==="fa"?btn.dataset.fa:btn.dataset.en)+" — "+n);
+    });
+  }
+
   buttons.forEach(btn=>btn.addEventListener("click",()=>{
     setActive(btn.dataset.filter||"all");
     apply();
@@ -493,20 +551,23 @@ html[data-theme="light"] .submit-person{background:rgba(255,255,255,.79)}
   clearSearch?.addEventListener("click",()=>{
     search.value="";search.focus();apply();
   });
-  reset?.addEventListener("click",()=>{
+  function showAllProfiles(){
     if(search)search.value="";
-    setActive("all");apply();search?.focus();
-  });
+    setActive("all");apply();
+  }
+  reset?.addEventListener("click",()=>{showAllProfiles();search?.focus();});
+  showAll?.addEventListener("click",showAllProfiles);
 
   updatePlaceholder();
+  updateCategoryCounts();
   setActive("all");
   apply();
   window.addEventListener("storage",event=>{
-    if(event.key==="hskrc_language")setTimeout(()=>{updatePlaceholder();apply();updateFormPlaceholders();},40);
+    if(event.key==="hskrc_language")setTimeout(()=>{updatePlaceholder();updateCategoryCounts();apply();updateFormPlaceholders();},40);
   });
   document.addEventListener("click",event=>{
     if(event.target?.closest?.("#hskrcGlobalLang")){
-      setTimeout(()=>{updatePlaceholder();apply();updateFormPlaceholders();},90);
+      setTimeout(()=>{updatePlaceholder();updateCategoryCounts();apply();updateFormPlaceholders();},90);
     }
   });
 
