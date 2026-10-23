@@ -1,0 +1,33 @@
+# HSKRC — Hassan Sabbah Knowledge & Research Centre
+
+> An independent digital knowledge, library, and research archive focused on Hassan Sabbah, Alamut, Nizari Ismaili history, and related cultural heritage.
+
+HSKRC aims to present historical research with traceable sources. It distinguishes documented evidence from interpretation and later tradition, and avoids presenting speculative reconstructions as historical fact.
+
+## Main sections
+
+- [Home](https://hskrc.org/)
+- [About and Research Standards](https://hskrc.org/about.html): editorial principles, evidence standards, and research method.
+- [Alamut Knowledge Base](https://hskrc.org/alamut-knowledge-base.html): connected research on Alamut, Hassan Sabbah, and related fortifications.
+- [Hassan Sabbah](https://hskrc.org/hassan-sabbah.html): source-linked biographical research.
+- [Alamut](https://hskrc.org/alamut.html): history, geography, and heritage documentation.
+- [Digital Library](https://hskrc.org/library.html): bibliographic records and lawful access information.
+- [Articles and Research](https://hskrc.org/articles.html): published research archive.
+- [Research Explorer](https://hskrc.org/research-explorer.html): discovery across knowledge nodes, articles, sources, researchers, and library records.
+- [Researchers and Scholars](https://hskrc.org/researchers.html): researchers whose work is represented in the archive.
+- [Sources and References](https://hskrc.org/sources.html): registered scholarly, primary, and institutional references.
+- [Editorial Policy](https://hskrc.org/editorial-policy.html): publication standards.
+- [Contact and Feedback](https://hskrc.org/contact.html): contact the project.
+
+## Research and citation principles
+
+- Important historical claims should be linked to identifiable sources where possible.
+- Primary sources, modern scholarship, institutional heritage records, and later traditions should be distinguished.
+- Disputed dates and interpretations should retain their uncertainty.
+- Inclusion of a researcher or institution does not imply affiliation or endorsement.
+- Library records do not imply that HSKRC owns redistribution rights; access should follow the stated rights and licensing information.
+
+## Discovery
+
+- [XML sitemap](https://hskrc.org/sitemap.xml)
+- [Robots directives](https://hskrc.org/robots.txt)
