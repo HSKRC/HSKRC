@@ -1,0 +1,4 @@
+Contact: https://hskrc.org/contact.html
+Expires: 2027-10-24T00:00:00.000Z
+Preferred-Languages: en, fa
+Canonical: https://hskrc.org/.well-known/security.txt
