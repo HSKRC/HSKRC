@@ -94,6 +94,7 @@ html:root[data-theme] body.hskrc-unified :is(.research-entry-card,.card,.panel,.
 /* Equal, predictable sizing for the shared top-level navigation. */
 html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{
   width:min(1540px,calc(100% - 64px))!important;
+  flex-wrap:wrap!important;
 }
 html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
   display:grid!important;
