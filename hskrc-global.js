@@ -15,13 +15,15 @@
     }
   };
 
-  const SUPABASE_URL="https://uwuklryzxexpofcxrbnm.supabase.co";
-  const SUPABASE_KEY="sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2";
 
+  const storage = {
+    getItem(key){ try { return window.localStorage.getItem(key); } catch (_) { return null; } },
+    setItem(key,value){ try { window.localStorage.setItem(key,value); } catch (_) {} }
+  };
   const THEME_KEY="hskrc_theme";
 
   function currentTheme(){
-    const saved=localStorage.getItem(THEME_KEY);
+    const saved=storage.getItem(THEME_KEY);
     return saved==="dark" ? "dark" : "light";
   }
 
@@ -29,7 +31,7 @@
     const theme=next==="light" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme",theme);
     document.documentElement.style.colorScheme=theme;
-    if(persist) localStorage.setItem(THEME_KEY,theme);
+    if(persist) storage.setItem(THEME_KEY,theme);
 
     const meta=document.querySelector('meta[name="theme-color"]');
     if(meta) meta.setAttribute("content",theme==="light" ? "#ffffff" : "#111111");
@@ -40,7 +42,7 @@
 
   function storedSessionActive(){
     try{
-      const raw=localStorage.getItem("sb-uwuklryzxexpofcxrbnm-auth-token");
+      const raw=storage.getItem("sb-uwuklryzxexpofcxrbnm-auth-token");
       if(!raw) return false;
       const data=JSON.parse(raw);
 
@@ -64,7 +66,7 @@
   }
 
   function lang(){
-    return localStorage.getItem("hskrc_language")==="fa" ? "fa" : "en";
+    return storage.getItem("hskrc_language")==="fa" ? "fa" : "en";
   }
 
   function fileName(){
@@ -107,7 +109,7 @@
 
   function navLink(key, href, label){
     const active=activeSection()===key ? " is-active" : "";
-    return `<a class="hskrc-global-navlink${active}" data-hskrc-key="${key}" href="${sitePath(href)}">${label}</a>`;
+    return `<a ${active ? 'aria-current="page"' : ""} class="hskrc-global-navlink${active}" data-hskrc-key="${key}" href="${sitePath(href)}">${label}</a>`;
   }
 
   function renderHeader(){
@@ -120,14 +122,15 @@
     header.innerHTML=`
       <div class="hskrc-global-shell">
         <a class="hskrc-global-brand" href="${sitePath("index.html")}" aria-label="HSKRC Home">
-          <span class="hskrc-global-mark">H</span>
+          <img class="hskrc-global-emblem" src="${sitePath("assets/hskrc-logo.svg")}" alt="" width="44" height="44">
           <span class="hskrc-global-brandcopy">
             <strong>HSKRC</strong>
             <small>Knowledge & Research Centre</small>
           </span>
         </a>
 
-        <nav class="hskrc-global-nav" aria-label="Primary navigation">
+        <button class="hskrc-menu-toggle" id="hskrcMenuToggle" aria-expanded="false" aria-controls="hskrcPrimaryNav" type="button">${lang()==="fa"?"منو":"Menu"} <span aria-hidden="true">☰</span></button>
+        <nav id="hskrcPrimaryNav" class="hskrc-global-nav" aria-label="${lang()==="fa"?"منوی اصلی":"Primary navigation"}">
           ${navLink("home","index.html",L.home)}
           ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
           ${navLink("library","library.html",L.library)}
@@ -159,17 +162,34 @@
         </div>
       </div>`;
     document.body.insertBefore(header,document.body.firstChild);
+    const main=document.querySelector("main");
+    if(main){
+      if(!main.id) main.id="hskrcMain";
+      main.tabIndex=-1;
+      const skip=document.createElement("a");
+      skip.className="hskrc-skip-link";skip.href="#"+main.id;
+      skip.textContent=lang()==="fa"?"رفتن به محتوا":"Skip to content";
+      document.body.insertBefore(skip,header);
+    }
+    document.body.classList.add("hskrc-shared-ready");
   }
 
   function renderFooter(){
-    const footer=document.createElement("footer");
-    footer.className="hskrc-global-footer";
-    footer.innerHTML=`
-      <div class="hskrc-global-footer-inner">
-        <a class="hskrc-global-founder" href="${sitePath("founder.html")}">Founded by <strong>Kamal Barlas</strong> · Founder & CEO</a>
-        <div class="hskrc-global-copy"><a href="${sitePath("project-overview.html")}">Project Overview</a> · <a href="${sitePath("community-impact.html")}">Community Impact</a> · <a href="${sitePath("get-involved.html")}">Get Involved</a> · <a href="${sitePath("support.html")}">Support</a> · <a href="${sitePath("contact.html")}">Feedback</a> · <a href="${sitePath("editorial-policy.html")}">Editorial Policy</a> · <a href="${sitePath("privacy.html")}">Privacy</a> · <a href="${sitePath("terms.html")}">Terms</a> · © 2026 HSKRC - All rights reserved.</div>
-      </div>`;
-    document.body.appendChild(footer);
+    const fa=lang()==="fa";
+    let footer=document.querySelector(".hskrc-global-footer");
+    if(!footer){footer=document.createElement("footer");footer.className="hskrc-global-footer";document.body.appendChild(footer);}
+    const links=[
+      ["library.html","Digital library","کتابخانه دیجیتال"],["articles.html","Articles & research","مقالات و پژوهش"],
+      ["people.html","Historical figures","شخصیت‌های تاریخی"],["sources.html","Sources","منابع"],
+      ["about.html","About HSKRC","درباره HSKRC"],["project-overview.html","Project overview","نمای کلی پروژه"],
+      ["get-involved.html","Contribute","مشارکت"],["contact.html","Contact & feedback","تماس و بازخورد"],
+      ["editorial-policy.html","Editorial policy","سیاست نشر"],["privacy.html","Privacy","حریم خصوصی"],["terms.html","Terms","شرایط استفاده"]
+    ];
+    footer.innerHTML=`<div class="hskrc-global-footer-inner">
+      <div class="hskrc-footer-intro"><strong>HSKRC</strong><p>${fa?"مرکز دانش و پژوهش حسن صباح؛ کتابخانه، تاریخ و میراث فکری.":"Hassan Sabbah Knowledge & Research Centre. A place for books, history and intellectual heritage."}</p>
+      <a class="hskrc-global-founder" href="${sitePath("founder.html")}">${fa?"بنیان‌گذار و مدیرعامل: کمال برلاس":"Founded by Kamal Barlas · Founder & CEO"}</a></div>
+      <nav class="hskrc-footer-links" aria-label="${fa?"پیوندهای پایانی":"Footer navigation"}">${links.map(([url,en,per])=>`<a href="${sitePath(url)}">${fa?per:en}</a>`).join("")}</nav>
+      <div class="hskrc-global-copy">© ${new Date().getFullYear()} HSKRC · ${fa?"تمام حقوق محفوظ است.":"All rights reserved."}</div></div>`;
   }
 
   function legacyLanguageButton(){
@@ -182,7 +202,7 @@
   }
 
   function fallbackApplyLanguage(next){
-    localStorage.setItem("hskrc_language",next);
+    storage.setItem("hskrc_language",next);
     const fixed=document.body?.dataset?.fixedContentLanguage;
     const pageLang=fixed || next;
     document.documentElement.lang=pageLang;
@@ -206,6 +226,15 @@
     const more=document.querySelector(".hskrc-global-more > summary"); if(more) more.textContent=L.more;
     const b=document.getElementById("hskrcGlobalLang");
     if(b) b.textContent=L.lang;
+    const menu=document.getElementById("hskrcMenuToggle");
+    if(menu) menu.firstChild.textContent=lang()==="fa"?"منو ":"Menu ";
+    const skip=document.querySelector(".hskrc-skip-link");
+    if(skip) skip.textContent=lang()==="fa"?"رفتن به محتوا":"Skip to content";
+    document.querySelectorAll("[data-placeholder-en][data-placeholder-fa]").forEach(el=>el.placeholder=el.dataset[lang()==="fa"?"placeholderFa":"placeholderEn"]);
+    const nav=document.getElementById("hskrcPrimaryNav");
+    if(nav) nav.setAttribute("aria-label",lang()==="fa"?"منوی اصلی":"Primary navigation");
+    renderFooter();
+    syncAccount();
     syncThemeButton();
   }
 
@@ -219,7 +248,7 @@
     label.textContent=dark ? L.themeOn : L.themeOff;
     if(icon) icon.textContent=dark ? "☾" : "☀";
     btn.setAttribute("aria-pressed",String(dark));
-    btn.setAttribute("aria-label",dark ? "Turn dark mode off" : "Turn dark mode on");
+    btn.setAttribute("aria-label",lang()==="fa" ? (dark ? "فعال‌کردن حالت روشن" : "فعال‌کردن حالت تاریک") : (dark ? "Turn dark mode off" : "Turn dark mode on"));
   }
 
   function bindTheme(){
@@ -319,17 +348,7 @@
     a.href=sitePath("auth.html");
     a.textContent=L.account;
 
-    // Fallback for pages that already load Supabase.
-    try{
-      if(window.supabase && typeof window.supabase.createClient==="function"){
-        const c=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-        const res=await c.auth.getSession();
-        if(res?.data?.session){
-          a.href=sitePath("account.html");
-          a.textContent=L.myAccount;
-        }
-      }
-    }catch(_){}
+
   }
 
   function addPageClass(){
@@ -345,6 +364,17 @@
     bindLanguage();
     bindTheme();
     bindMobileMoreMenu();
+    const menuToggle=document.getElementById("hskrcMenuToggle");
+    const primaryNav=document.getElementById("hskrcPrimaryNav");
+    menuToggle.addEventListener("click",()=>{
+      const open=menuToggle.getAttribute("aria-expanded")!=="true";
+      menuToggle.setAttribute("aria-expanded",String(open));primaryNav.classList.toggle("is-open",open);
+    });
+    document.addEventListener("keydown",e=>{
+      if(e.key==="Escape" && menuToggle.getAttribute("aria-expanded")==="true"){
+        menuToggle.setAttribute("aria-expanded","false");primaryNav.classList.remove("is-open");menuToggle.focus();
+      }
+    });
     syncAccount();
 
     window.addEventListener("storage",(e)=>{

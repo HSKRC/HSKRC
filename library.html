@@ -1434,8 +1434,8 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 <style>
 header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!important;border-color:rgba(199,161,90,.22)!important}
 </style>
-<link href="hskrc-global.css?v=20261015-neutralglass1" rel="stylesheet"/>
-<script defer="" src="hskrc-global.js?v=20261003-10"></script>
+<link href="hskrc-global.css?v=20261024-professional" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js?v=20261024-professional"></script>
 <style id="library-no-empty-cover-v7">
 /* Never reserve a cover area when there is no real displayable book cover. */
 body.hskrc-page-library .book.no-cover-image .cover{display:none!important}
@@ -1570,7 +1570,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 <div class="library-tools">
 <div class="search-box">
-<input autocomplete="off" id="searchInput" oninput="filterBooks()" placeholder="Search by title, author or description..." type="search"/ aria-label="Search Input">
+<input autocomplete="off" id="searchInput" oninput="filterBooks()" placeholder="Search by title, author or description..." type="search" aria-label="Search Input">
 <select id="categoryFilter" onchange="filterBooks()" aria-label="Category Filter">
 <option value="">
           All Categories
@@ -2920,6 +2920,8 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   async function startLibrary() {
     applyLanguage(getSavedLanguage());
     await checkUser();
+    const query=new URLSearchParams(window.location.search).get("q");
+    if(query) document.getElementById("searchInput").value=query.slice(0,200);
     await loadBooks();
   }
 
