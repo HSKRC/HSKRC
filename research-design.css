@@ -91,17 +91,70 @@ html:root[data-theme] body.hskrc-unified :is(.research-entry-card,.card,.panel,.
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{font-size:14px!important;min-height:44px!important;padding:10px!important}
 }
 
-/* Make every top level tab, including Home and More, the same size. */
-html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{width:min(1540px,calc(100% - 64px))!important}
-html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{display:flex!important;width:100%!important;flex:1 0 100%!important;justify-content:stretch!important;gap:6px!important}
+/* Equal, predictable sizing for the shared top-level navigation. */
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{
+  width:min(1540px,calc(100% - 64px))!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
+  display:grid!important;
+  grid-template-columns:repeat(10,minmax(0,1fr))!important;
+  width:100%!important;
+  flex:1 0 100%!important;
+  order:3!important;
+  gap:8px!important;
+  align-items:stretch!important;
+}
 html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
-html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{flex:1 1 0!important;min-width:0!important;width:auto!important}
-html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}
-html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{width:100%!important;justify-content:center!important;text-align:center!important}
-html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{order:3!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{
+  width:100%!important;
+  min-width:0!important;
+  min-height:50px!important;
+  flex:none!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{
+  display:flex!important;
+  min-height:50px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:8px 10px!important;
+  border:1px solid var(--r-line)!important;
+  border-radius:10px!important;
+  background:var(--r-surface)!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.045)!important;
+  color:var(--r-ink)!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  line-height:1.25!important;
+  text-align:center!important;
+  white-space:normal!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more:has(a.is-active)>summary{
+  border-color:var(--r-accent)!important;
+  background:var(--r-tint)!important;
+  color:var(--r-accent)!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:hover,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:hover{
+  border-color:var(--r-accent)!important;
+  color:var(--r-accent)!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{width:100%!important}
+@media(max-width:1180px) and (min-width:761px){
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  }
+}
 @media(max-width:760px){
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{display:none!important}
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav.is-open{display:grid!important;grid-template-columns:1fr 1fr!important}
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a{width:100%!important;min-width:0!important}
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{grid-column:1/-1!important}
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{display:none!important}
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav.is-open{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{grid-column:auto!important}
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{min-height:48px!important;font-size:13px!important}
 }
