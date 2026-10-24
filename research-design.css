@@ -58,3 +58,7 @@ html:root[data-theme] body.hskrc-unified .research-links .research-link{padding:
 html:root[data-theme] body.hskrc-unified .statement .rule{background:transparent!important}
 html:root[data-theme] body.hskrc-unified .hskrc-global-more:has(a.is-active)>summary{color:var(--r-accent)!important;border-bottom-color:var(--r-accent)!important}
 html:root[data-theme] body.hskrc-unified .hskrc-global-more-menu a.is-active{color:var(--r-accent)!important;background:var(--r-tint)!important}
+
+/* Keep the complete research navigation visible on desktop widths. */
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{gap:3px!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{padding-inline:7px!important;font-size:11px!important}

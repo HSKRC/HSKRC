@@ -137,13 +137,13 @@
           ${navLink("researchers","researchers.html",L.researchers)}
           ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("people","people.html",L.people)}
+          ${navLink("entries","entries.html",L.entries)}
+          ${navLink("library","library.html",L.library)}
+          ${navLink("sources","sources.html",L.sources)}
+          ${navLink("articles","articles.html",L.articles)}
           <details class="hskrc-global-more">
             <summary>${L.more}</summary>
             <div class="hskrc-global-more-menu">
-              ${navLink("entries","entries.html",L.entries)}
-              ${navLink("articles","articles.html",L.articles)}
-              ${navLink("sources","sources.html",L.sources)}
-              ${navLink("library","library.html",L.library)}
               ${navLink("about","about.html",L.about)}
               ${navLink("founder","founder.html",L.founder)}
               ${navLink("impact","community-impact.html",L.impact)}
