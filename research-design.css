@@ -108,8 +108,8 @@ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-ac
 html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
   display:grid!important;
   grid-template-columns:repeat(10,minmax(0,1fr))!important;
-  width:min(100%,1180px)!important;
-  flex:1 0 100%!important;
+  width:min(100%,1140px)!important;
+  flex:0 1 1140px!important;
   order:3!important;
   gap:5px!important;
   align-items:stretch!important;
