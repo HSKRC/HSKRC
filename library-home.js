@@ -12,10 +12,9 @@
     const fa=language()==='fa';
     document.querySelectorAll('[data-en][data-fa]').forEach(element=>element.textContent=element.dataset[fa?'fa':'en']);
     document.querySelectorAll('[data-placeholder-en][data-placeholder-fa]').forEach(element=>element.placeholder=element.dataset[fa?'placeholderFa':'placeholderEn']);
-    document.title=fa?'HSKRC | کتابخانه دیجیتال حسن صباح':'HSKRC Digital Library | Books, History & Research';
-    total.textContent=new Intl.NumberFormat(fa?'fa-AF':'en-AU').format(records.length);
-    if(!records.length){shelf.innerHTML=`<p>${fa?"مجموعه در حال به‌روزرسانی است.":"The collection is being updated."}</p>`;document.querySelector(".catalog-hero-feature").hidden=true;return;}
-    document.querySelector(".catalog-hero-feature").hidden=false;
+    document.title=fa?'HSKRC | مرکز مستقل دانش و پژوهش حسن صباح':'HSKRC | Independent Research & Knowledge Centre';
+    if(total) total.textContent=new Intl.NumberFormat(fa?'fa-AF':'en-AU').format(records.length);
+    if(!records.length){shelf.innerHTML=`<p>${fa?"مجموعه در حال به‌روزرسانی است.":"The collection is being updated."}</p>`;return;}
     shelf.innerHTML=records.slice(0,6).map((book,index)=>`<a class="catalog-record tone-${index%4}" href="book.html?id=${encodeURIComponent(book.id)}"><div class="catalog-record-jacket"><span class="catalog-record-index">HSKRC / ${String(index+1).padStart(2,'0')}</span><div class="catalog-record-title" dir="auto">${escape(book.title)}</div><span class="catalog-record-rule"></span><div class="catalog-record-author" dir="auto">${escape(book.author)}</div><span class="catalog-record-language">${fa?'فارسی · رکورد کتابخانه':'Persian · Catalogue record'}</span></div><div class="catalog-record-bottom"><span>${fa?'معرفی کتاب':'Explore book'}</span><span aria-hidden="true">↗</span></div></a>`).join('');
   }
   render();

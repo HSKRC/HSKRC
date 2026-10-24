@@ -197,3 +197,40 @@ body.hskrc-modern-library .catalog-clear-filters[hidden]{display:none!important}
 html[data-theme] body.hskrc-modern-library main [hidden][hidden]{display:none!important}
 html[data-theme] body.hskrc-modern-library.hskrc-book-detail main .details{border-inline:1px solid var(--catalog-line)!important}
 html[data-theme] body.hskrc-modern-library.hskrc-book-detail main .actions :is(a,button){border-radius:6px!important;box-shadow:none!important;min-height:42px!important;font-size:12px!important;padding:10px 17px!important}
+/* Institutional research identity and reference entry discovery. */
+body.hskrc-research-home .catalog-hero{grid-template-columns:1.5fr 1fr;gap:65px}
+body.hskrc-research-home .catalog-hero h1{font-size:clamp(38px,4.2vw,60px)!important}
+.research-feature-image{display:block;overflow:hidden;border-radius:5px;height:215px}
+.research-feature-image img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.65)}
+.research-feature .catalog-feature-caption{padding-top:22px}
+.research-feature .catalog-feature-caption h2{font-size:23px;line-height:1.5!important}
+.research-feature .catalog-feature-caption .catalog-text-link{margin-top:18px;font-size:11px}
+.research-pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding-bottom:40px}
+.research-pillars>a{padding:20px 25px;border:1px solid var(--catalog-line);background:var(--catalog-surface);display:flex;flex-direction:column;gap:8px}
+.research-pillars>a:hover{background:var(--catalog-soft)}
+.research-pillars strong{font-size:15px;font-weight:600}
+.research-pillars span{font-size:11px;color:var(--catalog-muted)}
+.research-entry-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.research-entry-card{display:flex;flex-direction:column;gap:13px;border:1px solid var(--catalog-line);padding:27px;border-radius:6px;background:var(--catalog-surface);min-height:210px;transition:border-color .15s}
+.research-entry-card:hover{border-color:var(--catalog-muted)}
+body.hskrc-modern-library .research-entry-card :is(h2,h3){font-size:22px;line-height:1.5!important;letter-spacing:-.02em!important}
+.research-entry-card p{font-size:13px;line-height:1.85;color:var(--catalog-muted)}
+.research-entry-link{margin-top:auto;padding-top:14px;font-size:11px}
+html[data-theme] body.hskrc-modern-library main.research-directory{padding-top:55px!important}
+body.hskrc-modern-library .research-directory h1{font-size:44px;margin:15px 0!important}
+.research-directory-intro{font-size:15px;color:var(--catalog-muted);max-width:780px}
+.research-directory .catalog-search{max-width:850px!important}
+.research-directory .catalog-search select{background:var(--catalog-soft);color:var(--catalog-ink);padding:12px;border:1px solid var(--catalog-line);border-radius:5px;max-width:40%}
+.research-alphabet{display:flex;gap:7px;flex-wrap:wrap;margin:25px 0 16px}
+.research-alphabet button{border:1px solid var(--catalog-line);background:var(--catalog-surface);color:var(--catalog-ink);min-width:36px;padding:7px 11px;border-radius:4px;cursor:pointer;font:inherit;font-size:12px}
+.research-alphabet button[aria-pressed=true]{background:var(--catalog-ink);color:var(--catalog-bg)}
+#entryCount{font-size:12px;color:var(--catalog-muted);margin-bottom:22px}
+.research-directory-note{font-size:12px;color:var(--catalog-muted);margin-top:30px!important}
+@media(max-width:900px){.research-entry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.research-pillars{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){body.hskrc-research-home .catalog-hero{grid-template-columns:1fr;gap:30px}.research-feature{display:block}.research-feature-image{height:240px;margin-top:18px}.research-feature .catalog-feature-caption{padding-top:20px}body.hskrc-modern-library .research-directory h1{font-size:32px}}
+@media(max-width:480px){.research-entry-grid{grid-template-columns:1fr}.research-pillars>a{padding:18px}.research-pillars strong{font-size:13px}.research-entry-card{min-height:185px}}
+html[data-theme] body.hskrc-research-explorer main .card{border:1px solid var(--catalog-line)!important;background:var(--catalog-surface)!important;border-radius:6px!important;box-shadow:none!important;padding:24px!important;color:var(--catalog-ink)!important}
+html[data-theme] body.hskrc-research-explorer main :is(.stat,.tab,select){background:var(--catalog-surface)!important;border-color:var(--catalog-line)!important;color:var(--catalog-ink)!important;border-radius:5px!important}
+html[data-theme] body.hskrc-research-explorer main .tab.active{background:var(--catalog-ink)!important;color:var(--catalog-bg)!important}
+html[data-theme] body.hskrc-research-explorer main .card h2{font-size:20px!important;line-height:1.65!important}
+html[data-theme] body.hskrc-research-explorer main .card :is(.small,.type){color:var(--catalog-muted)!important}

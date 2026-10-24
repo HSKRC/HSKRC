@@ -4,12 +4,12 @@
 
   const LABELS = {
     en:{
-      home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
+      entries:"Entries", home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", about:"About", founder:"Founder & CEO",
       impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
     },
     fa:{
-      home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
+      entries:"مدخل‌ها", home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
       impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
     }
@@ -83,6 +83,7 @@
   function activeSection(){
     if(location.pathname.includes("/generated-articles/")) return "articles";
     const f=fileName();
+    if(f==="entries.html") return "entries";
     if(f==="index.html" || f==="hskrc") return "home";
     if(f==="library.html" || f==="book.html") return "library";
     if(f==="articles.html" || f==="article.html") return "articles";
@@ -132,13 +133,15 @@
         <button class="hskrc-menu-toggle" id="hskrcMenuToggle" aria-expanded="false" aria-controls="hskrcPrimaryNav" type="button">${lang()==="fa"?"منو":"Menu"} <span aria-hidden="true">☰</span></button>
         <nav id="hskrcPrimaryNav" class="hskrc-global-nav" aria-label="${lang()==="fa"?"منوی اصلی":"Primary navigation"}">
           ${navLink("home","index.html",L.home)}
-          ${navLink("library","library.html",L.library)}
+          ${navLink("entries","entries.html",L.entries)}
           ${navLink("articles","articles.html",L.articles)}
-          ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
-          ${navLink("people","people.html",L.people)}
+          ${navLink("sources","sources.html",L.sources)}
+          ${navLink("library","library.html",L.library)}
           <details class="hskrc-global-more">
             <summary>${L.more}</summary>
             <div class="hskrc-global-more-menu">
+              ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
+              ${navLink("people","people.html",L.people)}
               ${navLink("about","about.html",L.about)}
               ${navLink("explorer","research-explorer.html",L.explorer)}
               ${navLink("researchers","researchers.html",L.researchers)}
@@ -179,14 +182,14 @@
     let footer=document.querySelector(".hskrc-global-footer");
     if(!footer){footer=document.createElement("footer");footer.className="hskrc-global-footer";document.body.appendChild(footer);}
     const links=[
-      ["library.html","Digital library","کتابخانه دیجیتال"],["articles.html","Articles & research","مقالات و پژوهش"],
+      ["entries.html","Encyclopaedic entries","مدخل‌های دانشنامه‌ای"],["library.html","Digital library","کتابخانه دیجیتال"],["articles.html","Articles & research","مقالات و پژوهش"],
       ["people.html","Historical figures","شخصیت‌های تاریخی"],["sources.html","Sources","منابع"],
       ["about.html","About HSKRC","درباره HSKRC"],["project-overview.html","Project overview","نمای کلی پروژه"],
       ["get-involved.html","Contribute","مشارکت"],["contact.html","Contact & feedback","تماس و بازخورد"],
       ["editorial-policy.html","Editorial policy","سیاست نشر"],["privacy.html","Privacy","حریم خصوصی"],["terms.html","Terms","شرایط استفاده"]
     ];
     footer.innerHTML=`<div class="hskrc-global-footer-inner">
-      <div class="hskrc-footer-intro"><strong>HSKRC</strong><p>${fa?"مرکز دانش و پژوهش حسن صباح؛ کتابخانه، تاریخ و میراث فکری.":"Hassan Sabbah Knowledge & Research Centre. A place for books, history and intellectual heritage."}</p>
+      <div class="hskrc-footer-intro"><strong>HSKRC</strong><p>${fa?"مرکز مستقل دانش و پژوهش حسن صباح؛ تحقیقات علمی، گردآوری منابع و مستندسازی میراث فکری.":"Hassan Sabbah Knowledge & Research Centre. Independent research, source collection and documentation of intellectual heritage."}</p>
       <a class="hskrc-global-founder" href="${sitePath("founder.html")}">${fa?"بنیان‌گذار و مدیرعامل: کمال برلاس":"Founded by Kamal Barlas · Founder & CEO"}</a></div>
       <nav class="hskrc-footer-links" aria-label="${fa?"پیوندهای پایانی":"Footer navigation"}">${links.map(([url,en,per])=>`<a href="${sitePath(url)}">${fa?per:en}</a>`).join("")}</nav>
       <div class="hskrc-global-copy">© ${new Date().getFullYear()} HSKRC · ${fa?"تمام حقوق محفوظ است.":"All rights reserved."}</div></div>`;
@@ -216,7 +219,7 @@
   function syncGlobalLabels(){
     const L=LABELS[lang()];
     const map={
-      home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
+      entries:L.entries,home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
       researchers:L.researchers,sources:L.sources,explorer:L.explorer,people:L.people,about:L.about,founder:L.founder,impact:L.impact,involved:L.involved,support:L.support,contact:L.contact
     };
     Object.entries(map).forEach(([k,v])=>{
