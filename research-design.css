@@ -62,3 +62,31 @@ html:root[data-theme] body.hskrc-unified .hskrc-global-more-menu a.is-active{col
 /* Keep the complete research navigation visible on desktop widths. */
 html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{gap:3px!important}
 html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{padding-inline:7px!important;font-size:11px!important}
+
+/* Clear, roomy navigation and the same research-centre rhythm on every tab. */
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{gap:18px!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{gap:4px!important;align-items:center!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{font-size:14px!important;font-weight:600!important;line-height:1.35!important;min-height:48px!important;padding:12px 10px!important;white-space:nowrap!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{display:flex!important;align-items:center!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-brand{min-width:170px!important}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-actions{gap:8px!important}
+html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) main{width:min(1240px,calc(100% - 64px));margin-inline:auto;padding-block:42px 72px}
+html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) :is(.hero,.page-hero){padding:58px 0 38px!important;border-bottom:1px solid var(--r-line)!important;margin-bottom:30px!important}
+html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) :is(.hero,.page-hero) h1{font-size:clamp(36px,4vw,56px)!important;line-height:1.3!important;margin-block:12px 18px!important}
+html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) :is(.hero,.page-hero) :is(.lead,.hero-description,p){max-width:780px!important;font-size:16px!important;line-height:1.9!important}
+html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) :is(.research-gateway,.method,.statement){margin-block:28px!important}
+html:root[data-theme] body.hskrc-unified :is(.research-entry-card,.catalog-record,.catalog-subject,.card,.panel,.article-card,.research-card,.research-link,.statement,.step,.account-card,.stat-card,.empty-state,.method-card){border-radius:14px!important;box-shadow:var(--r-shadow)!important}
+html:root[data-theme] body.hskrc-unified :is(.research-entry-card,.card,.panel,.article-card,.research-card,.research-link,.statement,.step,.account-card,.stat-card,.method-card){padding:22px!important}
+@media(max-width:1450px) and (min-width:761px){
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{flex-wrap:wrap!important;gap:8px 14px!important;padding-block:12px!important}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-brand{order:1}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-actions{order:2;margin-inline-start:auto!important}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{order:3;width:100%!important;flex:1 0 100%!important;justify-content:center!important}
+}
+@media(max-width:760px){
+ html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) main{width:calc(100% - 32px);padding-block:24px 48px}
+ html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) :is(.hero,.page-hero){padding-block:32px 24px!important;margin-bottom:20px!important}
+ html:root[data-theme] body.hskrc-unified:not(.hskrc-modern-library) :is(.hero,.page-hero) h1{font-size:34px!important}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{font-size:14px!important;min-height:44px!important;padding:10px!important}
+}
