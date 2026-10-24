@@ -614,10 +614,10 @@ People Submissions
         <input id="editLifeDates" maxlength="120">
       </div>
 
-      <div class="people-field">
-        <label for="editRegion">Region / country</label>
-        <input id="editRegion" maxlength="160">
-      </div>
+      <div class="people-field"><label for="editCountry">Country</label><input id="editCountry" maxlength="100"></div><div class="people-field"><label for="editRegion">Region / city</label><input id="editRegion" maxlength="160"></div>
+      <div class="people-field"><label for="editAffiliation">Community or institution</label><input id="editAffiliation" maxlength="180"></div>
+      <div class="people-field"><label for="editAliases">Other names / spellings</label><input id="editAliases" maxlength="500"></div>
+      <div class="people-field full"><label for="editServiceAreas">Service area codes (comma separated)</label><input id="editServiceAreas" maxlength="500" placeholder="education, community-service, culture"></div>
 
       <div class="people-field full">
         <label for="editShortBio">Short biography</label>
@@ -1404,7 +1404,7 @@ async function loadPeopleSubmissions(){
 
   const {data,error}=await db
     .from("people_submissions")
-    .select("id,created_at,full_name,category,life_dates,region,short_bio,why_notable,sources,submitter_name,submitter_email,is_self_submission,relationship_to_person,status,admin_notes,reviewed_at,reviewed_by")
+    .select("id,created_at,full_name,category,life_dates,country,region,affiliation,alternate_names,service_areas,short_bio,why_notable,sources,submitter_name,submitter_email,is_self_submission,relationship_to_person,status,admin_notes,reviewed_at,reviewed_by")
     .order("created_at",{ascending:false});
 
   if(error){
@@ -1471,6 +1471,10 @@ function openPersonEditor(id){
   document.getElementById("editCategory").value=row.category || "other";
   document.getElementById("editLifeDates").value=row.life_dates || "";
   document.getElementById("editRegion").value=row.region || "";
+  document.getElementById("editCountry").value=row.country || "";
+  document.getElementById("editAffiliation").value=row.affiliation || "";
+  document.getElementById("editAliases").value=(row.alternate_names||[]).join(", ");
+  document.getElementById("editServiceAreas").value=(row.service_areas||[]).join(", ");
   document.getElementById("editShortBio").value=row.short_bio || "";
   document.getElementById("editWhyNotable").value=row.why_notable || "";
   document.getElementById("editSources").value=row.sources || "";
@@ -1506,6 +1510,10 @@ async function savePersonSubmission(event){
     category:document.getElementById("editCategory").value,
     life_dates:document.getElementById("editLifeDates").value.trim() || null,
     region:document.getElementById("editRegion").value.trim() || null,
+    country:document.getElementById("editCountry").value.trim() || null,
+    affiliation:document.getElementById("editAffiliation").value.trim() || null,
+    alternate_names:document.getElementById("editAliases").value.split(",").map(v=>v.trim()).filter(Boolean),
+    service_areas:document.getElementById("editServiceAreas").value.split(",").map(v=>v.trim()).filter(Boolean),
     short_bio:document.getElementById("editShortBio").value.trim(),
     why_notable:document.getElementById("editWhyNotable").value.trim() || null,
     sources:document.getElementById("editSources").value.trim(),

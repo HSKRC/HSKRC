@@ -295,6 +295,15 @@ html[data-theme="dark"] .submit-person{
   box-shadow:0 8px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.08)!important;
 }
 .hero::before,.card::before{display:none!important}
+
+.directory-filters{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 18px}
+.directory-filters label{display:grid;gap:6px;min-width:210px;color:var(--muted);font-size:12px;font-weight:700}
+.directory-filters select{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font:inherit}
+.service-area-field{border:0;padding:0;margin:0;min-width:0}.service-area-field legend{font-size:12px;font-weight:800;margin-bottom:8px}
+.service-area-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.service-area-options label{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);font-size:12px}
+.person-sources{margin-top:14px;border-top:1px solid var(--line);padding-top:10px;font-size:12px}.person-sources summary{cursor:pointer;font-weight:700;color:var(--r-accent)}.person-sources ul{padding-inline-start:22px;overflow-wrap:anywhere}
+@media(max-width:760px){.service-area-options{grid-template-columns:1fr 1fr}.directory-filters label{flex:1 1 100%}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"People & Historical Figures","url":"https://hskrc.org/people.html","isPartOf":{"@type":"WebSite","name":"HSKRC","url":"https://hskrc.org/"}}
@@ -323,6 +332,15 @@ html[data-theme="dark"] .submit-person{
       <button id="clearPeopleSearch" class="clear-search" type="button" data-en="Clear search" data-fa="پاک‌کردن جستجو" aria-label="Clear search" hidden>Clear search</button>
     </div>
 
+    <div class="directory-filters">
+      <label><span data-en="Country" data-fa="کشور">Country</span><select id="peopleCountryFilter"><option value="" data-en="All countries" data-fa="همه کشورها">All countries</option></select></label>
+      <label><span data-en="Service area" data-fa="حوزه خدمت">Service area</span><select id="peopleServiceFilter"><option value="" data-en="All service areas" data-fa="همه حوزه‌ها">All service areas</option>
+        <option value="education">Education / آموزش</option><option value="scholarship">Scholarship &amp; research / دانش و پژوهش</option>
+        <option value="community-service">Community service / خدمت اجتماعی</option><option value="leadership">Leadership / رهبری</option>
+        <option value="culture">Culture / فرهنگ</option><option value="humanitarian">Humanitarian / بشردوستانه</option>
+        <option value="arts">Arts / هنر</option><option value="women-leadership">Women's leadership / رهبری زنان</option><option value="other">Other / دیگر</option>
+      </select></label>
+    </div>
     <div class="category-heading">
       <span data-en="Explore seven curated lists" data-fa="هفت فهرست تخصصی">Explore seven curated lists</span>
       <button type="button" id="peopleShowAll" class="show-all" data-en="Show all profiles" data-fa="نمایش همه پروفایل‌ها">Show all profiles</button>
@@ -375,10 +393,12 @@ html[data-theme="dark"] .submit-person{
         <input id="personDates" name="life_dates" maxlength="120" placeholder="e.g. 1950–2010">
       </div>
 
-      <div class="form-field">
-        <label for="personRegion" data-en="Region / country" data-fa="منطقه / کشور">Region / country</label>
-        <input id="personRegion" name="region" maxlength="160">
-      </div>
+      <div class="form-field"><label for="personCountry" data-en="Country *" data-fa="کشور *">Country *</label><input id="personCountry" name="country" maxlength="100" autocomplete="country-name" required list="countryOptions"><datalist id="countryOptions"><option>Afghanistan</option><option>Australia</option><option>Canada</option><option>India</option><option>Pakistan</option><option>Syria</option><option>Tajikistan</option><option>Tanzania</option><option>United Kingdom</option><option>United States</option></datalist></div>
+      <div class="form-field"><label for="personRegion" data-en="Region / city" data-fa="منطقه / شهر">Region / city</label><input id="personRegion" name="region" maxlength="160"></div>
+      <div class="form-field"><label for="personAffiliation" data-en="Community or institution" data-fa="جامعه یا نهاد">Community or institution</label><input id="personAffiliation" name="affiliation" maxlength="180"></div>
+      <div class="form-field"><label for="personAliases" data-en="Other names / spellings" data-fa="نام‌ها و املای دیگر">Other names / spellings</label><input id="personAliases" name="alternate_names" maxlength="500"></div>
+      <fieldset class="form-field full service-area-field"><legend data-en="Areas of service (choose all that apply)" data-fa="حوزه‌های خدمت (همه موارد مناسب را انتخاب کنید)">Areas of service (choose all that apply)</legend><div class="service-area-options">
+      <label><input type="checkbox" name="service_areas" value="education"> Education / آموزش</label><label><input type="checkbox" name="service_areas" value="scholarship"> Scholarship / پژوهش</label><label><input type="checkbox" name="service_areas" value="community-service"> Community service / خدمت اجتماعی</label><label><input type="checkbox" name="service_areas" value="leadership"> Leadership / رهبری</label><label><input type="checkbox" name="service_areas" value="culture"> Culture / فرهنگ</label><label><input type="checkbox" name="service_areas" value="humanitarian"> Humanitarian / بشردوستانه</label><label><input type="checkbox" name="service_areas" value="arts"> Arts / هنر</label><label><input type="checkbox" name="service_areas" value="women-leadership"> Women's leadership / رهبری زنان</label><label><input type="checkbox" name="service_areas" value="other"> Other / دیگر</label></div></fieldset>
 
       <div class="form-field full">
         <label for="personBio" data-en="Short biography *" data-fa="زندگی‌نامه کوتاه *">Short biography *</label>
@@ -582,7 +602,8 @@ html[data-theme="dark"] .submit-person{
 <script>
 (function(){
   const buttons=[...document.querySelectorAll(".filter")];
-  const cards=[...document.querySelectorAll("#peopleGrid .card")];
+  let cards=[...document.querySelectorAll("#peopleGrid .card")];
+  const countryFilter=document.getElementById("peopleCountryFilter"),serviceFilter=document.getElementById("peopleServiceFilter"),directoryGrid=document.getElementById("peopleGrid");
   const search=document.getElementById("peopleSearch");
   const clearSearch=document.getElementById("clearPeopleSearch");
   const count=document.getElementById("peopleCount");
@@ -623,7 +644,9 @@ html[data-theme="dark"] .submit-person{
       });
       const matchesCategory=active==="all"||categories.includes(active);
       const matchesSearch=!q||normalize(texts.join(" ")).includes(q);
-      const show=matchesCategory&&matchesSearch;
+      const matchesCountry=!countryFilter?.value||card.dataset.country===countryFilter.value;
+      const matchesService=!serviceFilter?.value||(card.dataset.services||"").split(/\s+/).includes(serviceFilter.value);
+      const show=matchesCategory&&matchesSearch&&matchesCountry&&matchesService;
       card.style.display=show?"flex":"none";
       if(show)visible++;
     });
@@ -661,7 +684,8 @@ html[data-theme="dark"] .submit-person{
     if(search)search.value="";
     setActive("all");apply();
   }
-  reset?.addEventListener("click",()=>{showAllProfiles();search?.focus();});
+  countryFilter?.addEventListener("change",apply);serviceFilter?.addEventListener("change",apply);
+  reset?.addEventListener("click",()=>{if(countryFilter)countryFilter.value="";if(serviceFilter)serviceFilter.value="";showAllProfiles();search?.focus();});
   showAll?.addEventListener("click",showAllProfiles);
 
   updatePlaceholder();
@@ -677,6 +701,27 @@ html[data-theme="dark"] .submit-person{
     }
   });
 
+  function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+  async function loadApprovedProfiles(){
+    try{
+      const response=await fetch("https://uwuklryzxexpofcxrbnm.supabase.co/rest/v1/people_directory_public?select=id,full_name,alternate_names,category,life_dates,country,region,affiliation,service_areas,short_bio,why_notable,sources&order=full_name.asc",{headers:{apikey:"sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2"}});
+      if(!response.ok)return;
+      const rows=await response.json(),countries=new Set();
+      rows.forEach(row=>{
+        if(!row.full_name)return;if(row.country)countries.add(row.country);
+        const services=Array.isArray(row.service_areas)?row.service_areas:[];
+        const tags=[row.country,row.affiliation,...services].filter(Boolean);
+        const card=document.createElement("article");card.className="card directory-person-card";
+        card.dataset.categories=[row.category||"other",...(row.alternate_names||[])].join(" ");card.dataset.country=row.country||"";card.dataset.services=services.join(" ");
+        card.dataset.search=[row.full_name,...(row.alternate_names||[]),row.country,row.region,row.affiliation,row.short_bio,row.why_notable].join(" ");
+        card.innerHTML='<div class="card-kicker">'+esc(row.category||"")+'</div><h2>'+esc(row.full_name)+'</h2><div class="dates">'+esc([row.life_dates,row.region,row.country].filter(Boolean).join(" · "))+'</div>'+(row.affiliation?'<p>'+esc(row.affiliation)+'</p>':"")+'<p>'+esc(row.why_notable||row.short_bio||"")+'</p><div class="tags">'+tags.map(x=>'<span class="tag">'+esc(x)+'</span>').join("")+'</div>';
+        const details=document.createElement("details");details.className="person-sources";const summary=document.createElement("summary");summary.textContent="Sources / منابع";details.append(summary);const ul=document.createElement("ul");
+        String(row.sources||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(line=>{const li=document.createElement("li");li.textContent=line;ul.append(li);});details.append(ul);card.append(details);directoryGrid.append(card);
+      });
+      [...countries].sort((a,b)=>a.localeCompare(b)).forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;countryFilter.append(o);});
+      cards=[...document.querySelectorAll("#peopleGrid .card")];updateCategoryCounts();apply();
+    }catch(_){}
+  }
   const submissionForm=document.getElementById("personSubmissionForm");
   const submissionStatus=document.getElementById("personFormStatus");
   const submissionBtn=document.getElementById("personSubmitBtn");
@@ -706,6 +751,10 @@ html[data-theme="dark"] .submit-person{
       category:document.getElementById("personCategory").value,
       life_dates:document.getElementById("personDates").value.trim() || null,
       region:document.getElementById("personRegion").value.trim() || null,
+      country:document.getElementById("personCountry").value.trim(),
+      affiliation:document.getElementById("personAffiliation").value.trim() || null,
+      alternate_names:document.getElementById("personAliases").value.split(",").map(v=>v.trim()).filter(Boolean),
+      service_areas:[...submissionForm.querySelectorAll('input[name="service_areas"]:checked')].map(el=>el.value),
       short_bio:document.getElementById("personBio").value.trim(),
       why_notable:document.getElementById("personWhy").value.trim() || null,
       sources:document.getElementById("personSources").value.trim(),
@@ -763,6 +812,7 @@ html[data-theme="dark"] .submit-person{
     if(selfBox.checked && relationship) relationship.value="Self";
   });
   updateFormPlaceholders();
+  loadApprovedProfiles();
 })();
 </script>
 </body>
