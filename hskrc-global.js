@@ -6,12 +6,12 @@
     en:{
       home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", about:"About", founder:"Founder & CEO",
-      impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark ON", themeOff:"Dark OFF"
+      impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
     },
     fa:{
       home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
-      impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک: روشن", themeOff:"تاریک: خاموش"
+      impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
     }
   };
 
@@ -89,7 +89,7 @@
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
     if(f==="sources.html" || f==="source.html") return "sources";
     if(f==="research-explorer.html") return "explorer";
-    if(f==="people.html") return "people";
+    if(["people.html","ibn-sina.html","nasir-khusraw.html","qadi-al-numan.html","abu-yaqub-al-sijistani.html","hamid-al-din-al-kirmani.html"].includes(f)) return "people";
     if(f==="knowledge-node.html") return "knowledge";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
@@ -132,15 +132,15 @@
         <button class="hskrc-menu-toggle" id="hskrcMenuToggle" aria-expanded="false" aria-controls="hskrcPrimaryNav" type="button">${lang()==="fa"?"منو":"Menu"} <span aria-hidden="true">☰</span></button>
         <nav id="hskrcPrimaryNav" class="hskrc-global-nav" aria-label="${lang()==="fa"?"منوی اصلی":"Primary navigation"}">
           ${navLink("home","index.html",L.home)}
-          ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
           ${navLink("library","library.html",L.library)}
           ${navLink("articles","articles.html",L.articles)}
-          ${navLink("explorer","research-explorer.html",L.explorer)}
+          ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
           ${navLink("people","people.html",L.people)}
-          ${navLink("about","about.html",L.about)}
           <details class="hskrc-global-more">
             <summary>${L.more}</summary>
             <div class="hskrc-global-more-menu">
+              ${navLink("about","about.html",L.about)}
+              ${navLink("explorer","research-explorer.html",L.explorer)}
               ${navLink("researchers","researchers.html",L.researchers)}
               ${navLink("sources","sources.html",L.sources)}
               ${navLink("founder","founder.html",L.founder)}

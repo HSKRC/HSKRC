@@ -1434,8 +1434,8 @@ footer{background:#050505!important;border-top-color:rgba(255,255,255,.055)!impo
 <style>
 header nav a.nav-active{color:#e2c47f!important;background:rgba(199,161,90,.10)!important;border-color:rgba(199,161,90,.22)!important}
 </style>
-<link href="hskrc-global.css?v=20261024-professional" rel="stylesheet"/>
-<script defer="" src="hskrc-global.js?v=20261024-professional"></script>
+<link href="hskrc-global.css?v=20261024-library2" rel="stylesheet"/>
+<script defer="" src="hskrc-global.js?v=20261024-library2"></script>
 <style id="library-no-empty-cover-v7">
 /* Never reserve a cover area when there is no real displayable book cover. */
 body.hskrc-page-library .book.no-cover-image .cover{display:none!important}
@@ -1518,8 +1518,9 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
 <meta name="twitter:image" content="https://hskrc.org/hskrc-social-preview.png">
 <meta property="og:image:alt" content="HSKRC — Hassan Sabbah Knowledge & Research Centre">
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64eb5ce85bc34352b46b995fbba45cf8"}'></script><!-- End Cloudflare Web Analytics -->
+<link rel="stylesheet" href="modern-library.css?v=20261024-library2">
 </head>
-<body>
+<body class="hskrc-modern-library">
 <header>
 <div class="container header-inner">
 <a class="logo-area" href="index.html">
@@ -1563,7 +1564,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
 <p class="description" id="pageDescription">
       Explore books and research materials from the HSKRC digital collection.
     </p>
-<p class="rights-library-note" style="max-width:980px;margin:14px auto 0;color:var(--muted);font-size:13px;line-height:1.7"><strong>Copyright &amp; access:</strong> HSKRC only enables local PDF reading when redistribution permission, an applicable licence, or public-domain status is documented. Otherwise, official or lawful external access links are provided where available.</p>
+<p class="rights-library-note" style="max-width:980px;margin:14px auto 0;color:var(--muted);font-size:13px;line-height:1.7"><span data-en="Access to texts follows documented permissions, licences and public-domain status. Official external access is linked where available." data-fa="دسترسی به متن کتاب‌ها بر اساس مجوز مستند، اجازه نشر یا مالکیت عمومی فراهم می‌شود. در صورت موجود بودن، پیوند دسترسی رسمی نیز درج می‌شود.">Access to texts follows documented permissions, licences and public-domain status. Official external access is linked where available.</span></p>
 </section>
 <div class="login-message" id="loginMessage">
     Sign in for member features. PDF access is provided only where rights are documented; official external links may be available without sign-in.
@@ -1576,6 +1577,12 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
           All Categories
         </option>
 </select>
+<select id="sortFilter" onchange="filterBooks()" aria-label="Sort books">
+<option value="newest" data-en="Recently added" data-fa="تازه افزوده‌شده">Recently added</option>
+<option value="title" data-en="Book title: A–Z" data-fa="نام کتاب: الف تا ی">Book title: A–Z</option>
+<option value="author" data-en="Author: A–Z" data-fa="نام نویسنده: الف تا ی">Author: A–Z</option>
+</select>
+<button class="catalog-clear-filters" id="clearFilters" type="button" onclick="clearLibraryFilters()" data-en="Clear filters" data-fa="پاک‌کردن فیلترها" hidden>Clear filters</button>
 </div>
 </div>
 <div class="library-summary" id="librarySummary">
@@ -1593,8 +1600,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
 </div>
 <div class="books" id="booksContainer">
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">خواجه نصیرالدین طوسی و اسماعیلیان</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">خواجه نصیرالدین طوسی و اسماعیلیان</h2>
     <div class="author" dir="auto">حمید ملک‌مکان</div>
     <div class="meta" dir="auto">Persian • 2001</div>
@@ -1605,8 +1611,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">اسماعیلیان در الموت و جنوب ناحیه دریای مازندران پس از فتوحات مغول</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">اسماعیلیان در الموت و جنوب ناحیه دریای مازندران پس از فتوحات مغول</h2>
     <div class="author" dir="auto">پروفسور شفیق ویرانی</div>
     <div class="meta" dir="auto">Persian • 2012</div>
@@ -1617,8 +1622,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">شاهین سپید</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">شاهین سپید</h2>
     <div class="author" dir="auto">احمد احرار</div>
     <div class="meta" dir="auto">Persian • 1988</div>
@@ -1629,8 +1633,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">کتاب به‌هدایت المؤمنین الطالبین، معروف به تاریخ اسماعیلیه</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">کتاب به‌هدایت المؤمنین الطالبین، معروف به تاریخ اسماعیلیه</h2>
     <div class="author" dir="auto">محمد بن زین‌العابدین خراسانی فدائی</div>
     <div class="meta" dir="auto">Persian • 1959</div>
@@ -1641,8 +1644,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">قلاع اسماعیلیه در رشته‌کوه‌های البرز</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">قلاع اسماعیلیه در رشته‌کوه‌های البرز</h2>
     <div class="author" dir="auto">دکتر منوچهر ستوده</div>
     <div class="meta" dir="auto">Persian • 1966</div>
@@ -1653,8 +1655,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">رودکی و اسماعیلیه</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">رودکی و اسماعیلیه</h2>
     <div class="author" dir="auto">دکتر حکیم قلندراف</div>
     <div class="meta" dir="auto">Persian • 2017</div>
@@ -1665,8 +1666,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">تاریخ و سنت‌های اسماعیلیه</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">تاریخ و سنت‌های اسماعیلیه</h2>
     <div class="author" dir="auto">دکتر فرهاد دفتری</div>
     <div class="meta" dir="auto">Persian • 1393</div>
@@ -1677,8 +1677,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">اسماعیلیان در تاریخ</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">اسماعیلیان در تاریخ</h2>
     <div class="author" dir="auto">برنارد لوئیس، لوئی ماسینیون، ع. حمدانی، م. هاجسن، آصف فیضی، ایوانف</div>
     <div class="meta" dir="auto">Persian • 1368</div>
@@ -1689,8 +1688,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">تاریخ و عقاید اسماعیلیه</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">تاریخ و عقاید اسماعیلیه</h2>
     <div class="author" dir="auto">دکتر فرهاد دفتری</div>
     <div class="meta" dir="auto">Persian • 1998</div>
@@ -1701,8 +1699,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">سرگذشت حسن صباح و قلعه الموت</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">سرگذشت حسن صباح و قلعه الموت</h2>
     <div class="author" dir="auto">ناصر نجمی</div>
     <div class="meta" dir="auto">Persian • 1389</div>
@@ -1713,8 +1710,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">حسن صباح؛ چهره شگفت‌انگیز تاریخ</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">حسن صباح؛ چهره شگفت‌انگیز تاریخ</h2>
     <div class="author" dir="auto">محمد احمد پناهی سمنانی</div>
     <div class="meta" dir="auto">Persian • 1365</div>
@@ -1725,8 +1721,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">ترجمه کتاب دعائم‌الاسلام – جلد دوم</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">ترجمه کتاب دعائم‌الاسلام – جلد دوم</h2>
     <div class="author" dir="auto">ابوحنیفه نعمان بن محمد بن منصور بن احمد بن حیون تمیمی مغربی</div>
     <div class="meta" dir="auto">Persian • 1372</div>
@@ -1737,8 +1732,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">ترجمه کتاب دعائم‌الاسلام – جلد اول</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">ترجمه کتاب دعائم‌الاسلام – جلد اول</h2>
     <div class="author" dir="auto">ابوحنیفه نعمان بن محمد بن منصور بن احمد بن حیون تمیمی مغربی</div>
     <div class="meta" dir="auto">Persian • 1372</div>
@@ -1749,8 +1743,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   </div>
 </article>
 
-<article class="book static-fallback-book no-cover-image">
-  <div class="book-content">
+<article class="book static-fallback-book no-cover-image"><div class="catalog-book-jacket"><span>HSKRC / CATALOGUE</span><strong dir="auto">خداوند الموت</strong></div><div class="book-content">
     <h2 class="book-title" dir="auto">خداوند الموت</h2>
     <div class="author" dir="auto">پل امیر</div>
     <div class="meta" dir="auto">Persian • 1386</div>
@@ -1841,6 +1834,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
   let currentSession = null;
 
   let allBooks = [];
+  let libraryLoaded = false;
 
   let currentPdfUrl = "";
 
@@ -2006,7 +2000,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
       "loginMessage"
     ).textContent =
       fa
-        ? "برای مطالعه یا دسترسی به کتاب‌ها ابتدا وارد حساب خود شوید."
+        ? "برای ذخیره کتاب‌های موردعلاقه وارد حساب شوید. پیوندهای رسمی و قانونی، در صورت موجود بودن، بدون ورود نیز در دسترس‌اند."
         : "Sign in for member features. PDF access is provided only where rights are documented; official external links may be available without sign-in.";
 
 
@@ -2050,6 +2044,10 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
         : 'Founded by <a href="founder.html"><strong>Kamal Barlas</strong></a> · Founder & CEO';
 
 
+    document.querySelectorAll("[data-en][data-fa]").forEach(element=>element.textContent=element.dataset[fa?"fa":"en"]);
+    document.getElementById("sortFilter").setAttribute("aria-label",fa?"مرتب‌سازی کتاب‌ها":"Sort books");
+    document.getElementById("searchInput").setAttribute("aria-label",fa?"جست‌وجوی کتاب‌ها":"Search books");
+    document.getElementById("categoryFilter").setAttribute("aria-label",fa?"فیلتر موضوع":"Filter by subject");
     updateAccountLink();
 
     updateCategories();
@@ -2252,6 +2250,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
     }
 
 
+    libraryLoaded = true;
     allBooks =
       data || [];
 
@@ -2373,7 +2372,16 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
      SEARCH / FILTER
   ========================================= */
 
+  function clearLibraryFilters(){
+    document.getElementById("searchInput").value="";
+    document.getElementById("categoryFilter").value="";
+    document.getElementById("sortFilter").value="newest";
+    const url=new URL(window.location.href);url.searchParams.delete("q");history.replaceState(null,"",url);
+    filterBooks();document.getElementById("searchInput").focus();
+  }
+
   function filterBooks() {
+    if(!libraryLoaded) return;
 
     const search =
       document.getElementById(
@@ -2421,7 +2429,8 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
             !search ||
             title.includes(search) ||
             author.includes(search) ||
-            description.includes(search);
+            description.includes(search) ||
+            String(book.category || "").toLowerCase().includes(search);
 
 
           return (
@@ -2433,6 +2442,10 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
       );
 
 
+    const sort=document.getElementById("sortFilter")?.value || "newest";
+    if(sort!=="newest") filtered.sort((a,b)=>String(a[sort] || "").localeCompare(String(b[sort] || ""),currentLanguage==="fa"?"fa":"en"));
+    const clear=document.getElementById("clearFilters");
+    if(clear) clear.hidden=!(search || category || sort!=="newest");
     updateSummary(
       filtered.length,
       search,
@@ -2717,7 +2730,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
 
       const coverHtml = directCover
         ? `<div class="cover"><img src="${escapeHtml(directCover)}" alt="${escapeHtml(title)}" loading="lazy"></div>`
-        : "";
+        : `<div class="catalog-book-jacket"><span>HSKRC / ${escapeHtml(String(book.publication_year || "CATALOGUE"))}</span><strong dir="auto">${escapeHtml(title)}</strong></div>`;
 
       article.innerHTML = `
         ${favoriteHtml}
@@ -2749,6 +2762,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
       if (image) {
         image.addEventListener("error", () => {
           image.closest(".cover")?.remove();
+          if(!article.querySelector(".catalog-book-jacket")){const jacket=document.createElement("div");jacket.className="catalog-book-jacket";const label=document.createElement("span");label.textContent="HSKRC / CATALOGUE";const titleEl=document.createElement("strong");titleEl.dir="auto";titleEl.textContent=title;jacket.append(label,titleEl);article.prepend(jacket);}
           article.classList.add("no-cover-image");
         });
       }
@@ -2791,6 +2805,7 @@ html[data-theme="dark"] body.hskrc-page-library .book.no-cover-image{background:
             cover.className = "cover";
             cover.innerHTML = `<img src="${escapeHtml(data.signedUrl)}" alt="${escapeHtml(title)}" loading="lazy">`;
             const content = article.querySelector(".book-content");
+            article.querySelector(".catalog-book-jacket")?.remove();
             article.insertBefore(cover, content);
             article.classList.remove("no-cover-image");
             const img = cover.querySelector("img");
