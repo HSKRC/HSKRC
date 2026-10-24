@@ -133,19 +133,18 @@
         <button class="hskrc-menu-toggle" id="hskrcMenuToggle" aria-expanded="false" aria-controls="hskrcPrimaryNav" type="button">${lang()==="fa"?"منو":"Menu"} <span aria-hidden="true">☰</span></button>
         <nav id="hskrcPrimaryNav" class="hskrc-global-nav" aria-label="${lang()==="fa"?"منوی اصلی":"Primary navigation"}">
           ${navLink("home","index.html",L.home)}
-          ${navLink("entries","entries.html",L.entries)}
-          ${navLink("articles","articles.html",L.articles)}
-          ${navLink("sources","sources.html",L.sources)}
-          ${navLink("library","library.html",L.library)}
+          ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
+          ${navLink("researchers","researchers.html",L.researchers)}
+          ${navLink("explorer","research-explorer.html",L.explorer)}
+          ${navLink("people","people.html",L.people)}
           <details class="hskrc-global-more">
             <summary>${L.more}</summary>
             <div class="hskrc-global-more-menu">
-              ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
-              ${navLink("people","people.html",L.people)}
-              ${navLink("about","about.html",L.about)}
-              ${navLink("explorer","research-explorer.html",L.explorer)}
-              ${navLink("researchers","researchers.html",L.researchers)}
+              ${navLink("entries","entries.html",L.entries)}
+              ${navLink("articles","articles.html",L.articles)}
               ${navLink("sources","sources.html",L.sources)}
+              ${navLink("library","library.html",L.library)}
+              ${navLink("about","about.html",L.about)}
               ${navLink("founder","founder.html",L.founder)}
               ${navLink("impact","community-impact.html",L.impact)}
               ${navLink("involved","get-involved.html",L.involved)}
@@ -189,7 +188,7 @@
       ["editorial-policy.html","Editorial policy","سیاست نشر"],["privacy.html","Privacy","حریم خصوصی"],["terms.html","Terms","شرایط استفاده"]
     ];
     footer.innerHTML=`<div class="hskrc-global-footer-inner">
-      <div class="hskrc-footer-intro"><strong>HSKRC</strong><p>${fa?"مرکز مستقل دانش و پژوهش حسن صباح؛ تحقیقات علمی، گردآوری منابع و مستندسازی میراث فکری.":"Hassan Sabbah Knowledge & Research Centre. Independent research, source collection and documentation of intellectual heritage."}</p>
+      <div class="hskrc-footer-intro"><a class="hskrc-footer-brand" href="${sitePath("index.html")}"><img src="${sitePath("assets/hskrc-logo.svg")}" alt="" width="48" height="48"><strong>HSKRC</strong></a><p>${fa?"مرکز مستقل دانش و پژوهش حسن صباح؛ تحقیقات علمی، گردآوری منابع و مستندسازی میراث فکری.":"Hassan Sabbah Knowledge & Research Centre. Independent research, source collection and documentation of intellectual heritage."}</p>
       <a class="hskrc-global-founder" href="${sitePath("founder.html")}">${fa?"بنیان‌گذار و مدیرعامل: کمال برلاس":"Founded by Kamal Barlas · Founder & CEO"}</a></div>
       <nav class="hskrc-footer-links" aria-label="${fa?"پیوندهای پایانی":"Footer navigation"}">${links.map(([url,en,per])=>`<a href="${sitePath(url)}">${fa?per:en}</a>`).join("")}</nav>
       <div class="hskrc-global-copy">© ${new Date().getFullYear()} HSKRC · ${fa?"تمام حقوق محفوظ است.":"All rights reserved."}</div></div>`;
