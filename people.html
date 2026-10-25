@@ -633,6 +633,7 @@ html[data-theme="dark"] .submit-person{
     countryFilter.value=previous;
   }
   function updatePlaceholder(){
+    document.querySelectorAll("[data-en][data-fa]").forEach(el=>el.textContent=el.dataset[lang()]);
     if(!search)return;
     search.placeholder=lang()==="fa"?search.dataset.placeholderFa:search.dataset.placeholderEn;
     search.setAttribute("aria-label",search.placeholder);
