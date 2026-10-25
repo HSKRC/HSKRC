@@ -83,6 +83,7 @@
   function activeSection(){
     if(location.pathname.includes("/generated-articles/")) return "articles";
     const f=fileName();
+    if(f.startsWith("firqah-80-")) return "people";
     if(f==="entries.html") return "entries";
     if(f==="index.html" || f==="hskrc") return "home";
     if(f==="library.html" || f==="book.html") return "library";
