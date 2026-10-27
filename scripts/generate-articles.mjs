@@ -780,6 +780,27 @@ async function updateSitemap(
   }
 
   /*
+    Keep the main biographical directories in the sitemap even when article
+    pages are regenerated. These pages are maintained separately from the
+    generated article collection.
+  */
+  const directoryUrls = [
+    `${SITE_URL}/women-ismaili.html`,
+    `${SITE_URL}/men-ismaili.html`,
+    `${SITE_URL}/imams-ismaili.html`
+  ];
+
+  for (const url of directoryUrls) {
+    const loc = `<loc>${xmlEscape(url)}</loc>`;
+    if (!sitemap.includes(loc)) {
+      sitemap = sitemap.replace(
+        "</urlset>",
+        `\n  <url>\n    ${loc}\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>\n</urlset>`
+      );
+    }
+  }
+
+  /*
     Remove generated article entries from
     previous runs so duplicates are not
     created.
