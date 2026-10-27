@@ -5,12 +5,12 @@
   const LABELS = {
     en:{
       entries:"Entries", home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
-      researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", about:"About", founder:"Founder & CEO",
+      researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", women:"Women", about:"About", founder:"Founder & CEO",
       impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
     },
     fa:{
       entries:"مدخل‌ها", home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
-      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
+      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", women:"زنان", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
       impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
     }
   };
@@ -138,6 +138,7 @@
           ${navLink("researchers","researchers.html",L.researchers)}
           ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("people","people.html",L.people)}
+          ${navLink("women","women-ismaili.html",L.women)}
           ${navLink("entries","entries.html",L.entries)}
           ${navLink("library","library.html",L.library)}
           ${navLink("sources","sources.html",L.sources)}
