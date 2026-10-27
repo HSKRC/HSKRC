@@ -166,3 +166,71 @@ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-mo
   html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
   html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{transition:none!important}
 }
+
+
+/* HSKRC desktop header polish: keep primary navigation on one row. */
+@media (min-width: 1181px){
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{
+    width:min(1560px,calc(100% - 40px))!important;
+    min-height:72px!important;
+    flex-wrap:nowrap!important;
+    gap:10px!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-brand{
+    order:0!important;
+    flex:0 0 auto!important;
+    min-width:158px!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
+    display:flex!important;
+    order:0!important;
+    flex:1 1 auto!important;
+    width:auto!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+    grid-template-columns:none!important;
+    grid-auto-flow:column!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+    gap:1px!important;
+    overflow:visible!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{
+    width:auto!important;
+    min-width:0!important;
+    min-height:40px!important;
+    flex:0 0 auto!important;
+    white-space:nowrap!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a{
+    padding-inline:6px!important;
+    font-size:10.5px!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{
+    width:auto!important;
+    min-height:40px!important;
+    padding-inline:6px!important;
+    font-size:10.5px!important;
+    white-space:nowrap!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more-menu{
+    top:44px!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-actions{
+    order:0!important;
+    flex:0 0 auto!important;
+    margin-inline-start:auto!important;
+  }
+}
+@media (min-width:761px) and (max-width:1180px){
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  }
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{
+    grid-column:6!important;
+    grid-row:2!important;
+  }
+}
