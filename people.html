@@ -1295,6 +1295,7 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
       const category=btn.dataset.filter||"";
       const n=cards.filter(card=>(card.dataset.categories||"").split(/\s+/).includes(category)).length;
       btn.dataset.count=n.toLocaleString(lang()==="fa"?"fa-AF":"en-AU");
+      btn.hidden=n===0;
       btn.setAttribute("aria-label",(lang()==="fa"?btn.dataset.fa:btn.dataset.en)+" — "+n);
     });
   }
