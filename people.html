@@ -304,6 +304,27 @@ html[data-theme="dark"] .submit-person{
 .service-area-options label{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);font-size:12px}
 .person-sources{margin-top:14px;border-top:1px solid var(--line);padding-top:10px;font-size:12px}.person-sources summary{cursor:pointer;font-weight:700;color:var(--r-accent)}.person-sources ul{padding-inline-start:22px;overflow-wrap:anywhere}
 @media(max-width:760px){.service-area-options{grid-template-columns:1fr 1fr}.directory-filters label{flex:1 1 100%}}
+
+.collection-hub{margin:30px 0 26px}
+.collection-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:14px}
+.collection-heading>div{min-width:0}
+.collection-eyebrow{font-size:11px;font-weight:850;letter-spacing:.11em;text-transform:uppercase;color:var(--gold2)}
+.collection-heading h2{font-size:clamp(23px,3vw,30px);letter-spacing:-.025em;margin:7px 0 0}
+.collection-heading>p{max-width:500px;margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+.collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.collection-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;min-height:220px;padding:20px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,var(--panel),var(--panel2));box-shadow:0 12px 30px rgba(0,0,0,.055);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.collection-card::after{content:"";position:absolute;z-index:-1;width:150px;height:150px;border-radius:50%;inset-inline-end:-72px;top:-76px;background:var(--soft);opacity:.8}
+.collection-card:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 16px 34px rgba(0,0,0,.09)}
+.collection-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.collection-number{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--soft);color:var(--gold2);font-size:11px;font-weight:850}
+.collection-kind{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.collection-card h3{font-size:18px;line-height:1.25;letter-spacing:-.015em;margin:17px 0 7px}
+.collection-card p{margin:0 0 18px;color:var(--muted);font-size:12px;line-height:1.7}
+.collection-link{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);color:var(--gold2);font-size:12px;font-weight:850;text-decoration:none}
+.collection-link:hover{text-decoration:underline;text-underline-offset:3px}
+html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
+@media(max-width:900px){.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-card:last-child{grid-column:1/-1}}
+@media(max-width:620px){.collection-heading{align-items:flex-start;flex-direction:column;gap:8px}.collection-grid{grid-template-columns:1fr}.collection-card:last-child{grid-column:auto}.collection-card{min-height:190px}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"People & Historical Figures","url":"https://hskrc.org/people.html","isPartOf":{"@type":"WebSite","name":"HSKRC","url":"https://hskrc.org/"}}
@@ -316,10 +337,40 @@ html[data-theme="dark"] .submit-person{
     <div class="eyebrow" data-en="Biography · Historical Figures · Collective Memory" data-fa="زندگی‌نامه · شخصیت‌های تاریخی · حافظه جمعی">Biography · Historical Figures · Collective Memory</div>
     <h1 data-en="People & Historical Figures" data-fa="شخصیت‌ها و چهره‌های تاریخی">People & Historical Figures</h1>
     <p class="lead"
-      data-en="Explore source-based biographies of hujjats, da'is, scholars, poets and resistance figures, with dedicated research lists for Firqah 80 and Ismaili victims of Yakawlang. Names are published only after editorial and source review."
-      data-fa="زندگی‌نامه‌های مستند حجت‌ها، داعیان، دانشمندان، شاعران و مبارزین را مطالعه کنید. دو فهرست اختصاصی نیز به فرقه هشتاد و شهدای اسماعیلی یکاولنگ تعلق دارد. نام‌ها تنها پس از بررسی اسناد و منابع منتشر می‌شوند.">
-      Explore source-based biographies of hujjats, da'is, scholars, poets and resistance figures, with dedicated research lists for Firqah 80 and Ismaili victims of Yakawlang. Names are published only after editorial and source review.
+      data-en="Explore source-based biographies of Ismaili figures across centuries and regions. Browse focused collections on women, Nizari Ismaili men and Imams, alongside the Firqah 80 and Yakawlang research lists. Profiles are published after editorial and source review."
+      data-fa="زندگی‌نامه‌های مستند چهره‌های اسماعیلی را از دوره‌ها و سرزمین‌های گوناگون بخوانید. مجموعه‌های زنان، مردان اسماعیلی نزاری و امامان را در کنار فهرست‌های فرقهٔ هشتاد و شهدای اسماعیلی یکاولنگ ببینید. پروفایل‌ها پس از بررسی منابع منتشر می‌شوند.">
+      Explore source-based biographies of Ismaili figures across centuries and regions. Browse focused collections on women, Nizari Ismaili men and Imams, alongside the Firqah 80 and Yakawlang research lists. Profiles are published after editorial and source review.
     </p>
+  </section>
+
+  <section class="collection-hub" aria-labelledby="collectionHubTitle">
+    <div class="collection-heading">
+      <div>
+        <div class="collection-eyebrow" data-en="Featured biography collections" data-fa="مجموعه‌های ویژهٔ زندگی‌نامه">Featured biography collections</div>
+        <h2 id="collectionHubTitle" data-en="Explore focused collections" data-fa="مجموعه‌های ویژه را ببینید">Explore focused collections</h2>
+      </div>
+      <p data-en="Browse dedicated, source-led directories alongside the main historical figures index." data-fa="در کنار فهرست اصلی شخصیت‌های تاریخی، مجموعه‌های جداگانه و مستند را ببینید.">Browse dedicated, source-led directories alongside the main historical figures index.</p>
+    </div>
+    <div class="collection-grid">
+      <article class="collection-card collection-card--women">
+        <div class="collection-card-top"><span class="collection-number">01</span><span class="collection-kind" data-en="Global collection" data-fa="مجموعهٔ جهانی">Global collection</span></div>
+        <h3 data-en="Women in Ismaili history" data-fa="زنان در تاریخ اسماعیلی">Women in Ismaili history</h3>
+        <p data-en="Documented lives and contributions of women across Ismaili history and community life." data-fa="زندگی و نقش مستند زنان در تاریخ و زندگی اجتماعی جوامع اسماعیلی.">Documented lives and contributions of women across Ismaili history and community life.</p>
+        <a class="collection-link" href="women-ismaili.html"><span data-en="Explore women’s biographies" data-fa="دیدن زندگی‌نامهٔ زنان">Explore women’s biographies</span><span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="collection-card collection-card--men">
+        <div class="collection-card-top"><span class="collection-number">02</span><span class="collection-kind" data-en="Nizari history" data-fa="تاریخ نزاری">Nizari history</span></div>
+        <h3 data-en="Influential Nizari Ismaili men" data-fa="مردان تأثیرگذار اسماعیلی نزاری">Influential Nizari Ismaili men</h3>
+        <p data-en="Biographical profiles of leaders, scholars and figures who shaped Nizari history." data-fa="زندگی‌نامهٔ رهبران، دانشمندان و چهره‌های اثرگذار در تاریخ نزاری.">Biographical profiles of leaders, scholars and figures who shaped Nizari history.</p>
+        <a class="collection-link" href="men-ismaili.html"><span data-en="Explore men’s biographies" data-fa="دیدن زندگی‌نامهٔ مردان">Explore men’s biographies</span><span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="collection-card collection-card--imams">
+        <div class="collection-card-top"><span class="collection-number">03</span><span class="collection-kind" data-en="Line of the Imamat" data-fa="سلسلهٔ امامت">Line of the Imamat</span></div>
+        <h3 data-en="Nizari Imams’ biographies" data-fa="زندگی‌نامهٔ امامان نزاری">Nizari Imams’ biographies</h3>
+        <p data-en="A chronological directory from Ali ibn Abi Talib to Mawlana Shah Rahim." data-fa="فهرست زندگی‌نامه‌ها از امام علی بن ابی‌طالب تا مولانا شاه رحیم.">A chronological directory from Ali ibn Abi Talib to Mawlana Shah Rahim.</p>
+        <a class="collection-link" href="imams-ismaili.html"><span data-en="Explore the Imams’ biographies" data-fa="دیدن زندگی‌نامهٔ امامان">Explore the Imams’ biographies</span><span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
   </section>
 
   <section class="toolbar" aria-label="People filters">
@@ -335,15 +386,24 @@ html[data-theme="dark"] .submit-person{
     <div class="directory-filters">
       <label><span data-en="Country" data-fa="کشور">Country</span><select id="peopleCountryFilter"><option value="" data-en="All countries" data-fa="همه کشورها">All countries</option></select></label>
       <label><span data-en="Service area" data-fa="حوزه خدمت">Service area</span><select id="peopleServiceFilter"><option value="" data-en="All service areas" data-fa="همه حوزه‌ها">All service areas</option>
-        <option value="education">Education / آموزش</option><option value="scholarship">Scholarship &amp; research / دانش و پژوهش</option>
-        <option value="community-service">Community service / خدمت اجتماعی</option><option value="leadership">Leadership / رهبری</option>
-        <option value="culture">Culture / فرهنگ</option><option value="humanitarian">Humanitarian / بشردوستانه</option>
-        <option value="arts">Arts / هنر</option><option value="women-leadership">Women's leadership / رهبری زنان</option><option value="military-service" data-en="Military service" data-fa="خدمت نظامی">Military service</option><option value="other">Other / دیگر</option>
+        <option value="education" data-en="Education" data-fa="آموزش">Education</option>
+        <option value="scholarship" data-en="Scholarship &amp; research" data-fa="دانش و پژوهش">Scholarship &amp; research</option>
+        <option value="community-service" data-en="Community service" data-fa="خدمت اجتماعی">Community service</option>
+        <option value="leadership" data-en="Leadership" data-fa="رهبری">Leadership</option>
+        <option value="culture" data-en="Culture" data-fa="فرهنگ">Culture</option>
+        <option value="poetry" data-en="Poetry &amp; literature" data-fa="شعر و ادبیات">Poetry &amp; literature</option>
+        <option value="arts" data-en="Arts" data-fa="هنر">Arts</option>
+        <option value="humanitarian" data-en="Humanitarian work" data-fa="خدمات بشردوستانه">Humanitarian work</option>
+        <option value="women-leadership" data-en="Women’s leadership" data-fa="رهبری زنان">Women’s leadership</option>
+        <option value="military-service" data-en="Military service" data-fa="خدمت نظامی">Military service</option>
+        <option value="imamat" data-en="Imamat" data-fa="امامت">Imamat</option>
+        <option value="memorial" data-en="Memorial documentation" data-fa="ثبت یادبود و خاطره">Memorial documentation</option>
+        <option value="other" data-en="Other" data-fa="دیگر">Other</option>
       </select></label>
     </div>
     <p data-en="For historical figures, country filters refer to documented places of life or work using present-day geography, not nationality. Uncertain regions are listed separately." data-fa="برای شخصیت‌های تاریخی، کشور به محل مستند زندگی یا فعالیت بر اساس جغرافیای امروزی اشاره دارد، نه تابعیت. مناطق نامشخص جداگانه نمایش داده می‌شوند.">For historical figures, country filters refer to documented places of life or work using present-day geography, not nationality. Uncertain regions are listed separately.</p>
     <div class="category-heading">
-      <span data-en="Explore eight curated lists" data-fa="هشت فهرست تخصصی">Explore eight curated lists</span>
+      <span data-en="Browse nine profile categories" data-fa="مرور نه دستهٔ پروفایل">Browse nine profile categories</span>
       <button type="button" id="peopleShowAll" class="show-all" data-en="Show all profiles" data-fa="نمایش همه پروفایل‌ها">Show all profiles</button>
     </div>
     <div class="filters" id="peopleFilters" role="group" aria-label="People categories">
@@ -355,6 +415,7 @@ html[data-theme="dark"] .submit-person{
       <button class="filter" type="button" aria-pressed="false" data-filter="ismaili-firqah-80" data-en="06 · Firqah 80 Fighters & Martyrs" data-fa="۶ · مبارزین و شهدای فرقهٔ هشتاد">06 · Firqah 80 Fighters & Martyrs</button>
       <button class="filter" type="button" aria-pressed="false" data-filter="yakawlang-ismaili-martyrs" data-en="07 · Ismaili Martyrs of Yakawlang" data-fa="۷ · شهدای اسماعیلی یکاولنگ">07 · Ismaili Martyrs of Yakawlang</button>
       <button class="filter" type="button" aria-pressed="false" data-filter="imams" data-en="08 · Nizari Imams" data-fa="۸ · امامان نزاری">08 · Nizari Imams</button>
+      <button class="filter" type="button" aria-pressed="false" data-filter="other" data-en="09 · Other profiles" data-fa="۹ · دیگر شخصیت‌ها">09 · Other profiles</button>
     </div>
   </section>
 
@@ -384,9 +445,11 @@ html[data-theme="dark"] .submit-person{
           <option value="dais" data-en="Da'is" data-fa="داعیان">Da'is</option>
           <option value="scholars" data-en="Scholars" data-fa="دانشمندان">Scholars</option>
           <option value="poets" data-en="Poets" data-fa="شاعران">Poets</option>
-          <option value="fighters" data-en="Resistance Figures" data-fa="مبارزین">Resistance Figures</option>
-          <option value="ismaili-firqah-80" data-en="Ismaili Fighters (Firqah 80)" data-fa="مبارزین اسماعیلی (فرقه هشتاد)">Ismaili Fighters (Firqah 80)</option>
-          <option value="yakawlang-ismaili-martyrs" data-en="Ismaili Martyrs of Yakawlang" data-fa="شهدای اسماعیلی یکاولنگ">Ismaili Martyrs of Yakawlang</option>
+          <option value="fighters" data-en="Resistance figures" data-fa="چهره‌های مقاومت">Resistance figures</option>
+          <option value="ismaili-firqah-80" data-en="Firqah 80 fighters &amp; martyrs" data-fa="مبارزین و شهدای فرقهٔ هشتاد">Firqah 80 fighters &amp; martyrs</option>
+          <option value="yakawlang-ismaili-martyrs" data-en="Ismaili martyrs of Yakawlang" data-fa="شهدای اسماعیلی یکاولنگ">Ismaili martyrs of Yakawlang</option>
+          <option value="imams" data-en="Nizari Imams" data-fa="امامان نزاری">Nizari Imams</option>
+          <option value="other" data-en="Other profiles" data-fa="دیگر شخصیت‌ها">Other profiles</option>
         </select>
       </div>
 
@@ -400,7 +463,20 @@ html[data-theme="dark"] .submit-person{
       <div class="form-field"><label for="personAffiliation" data-en="Community or institution" data-fa="جامعه یا نهاد">Community or institution</label><input id="personAffiliation" name="affiliation" maxlength="180"></div>
       <div class="form-field"><label for="personAliases" data-en="Other names / spellings" data-fa="نام‌ها و املای دیگر">Other names / spellings</label><input id="personAliases" name="alternate_names" maxlength="500"></div>
       <fieldset class="form-field full service-area-field"><legend data-en="Areas of service (choose all that apply)" data-fa="حوزه‌های خدمت (همه موارد مناسب را انتخاب کنید)">Areas of service (choose all that apply)</legend><div class="service-area-options">
-      <label><input type="checkbox" name="service_areas" value="education"> Education / آموزش</label><label><input type="checkbox" name="service_areas" value="scholarship"> Scholarship / پژوهش</label><label><input type="checkbox" name="service_areas" value="community-service"> Community service / خدمت اجتماعی</label><label><input type="checkbox" name="service_areas" value="leadership"> Leadership / رهبری</label><label><input type="checkbox" name="service_areas" value="culture"> Culture / فرهنگ</label><label><input type="checkbox" name="service_areas" value="humanitarian"> Humanitarian / بشردوستانه</label><label><input type="checkbox" name="service_areas" value="arts"> Arts / هنر</label><label><input type="checkbox" name="service_areas" value="women-leadership"> Women's leadership / رهبری زنان</label><label><input type="checkbox" name="service_areas" value="other"> Other / دیگر</label></div></fieldset>
+      <label><input type="checkbox" name="service_areas" value="education"><span data-en="Education" data-fa="آموزش">Education</span></label>
+      <label><input type="checkbox" name="service_areas" value="scholarship"><span data-en="Scholarship &amp; research" data-fa="دانش و پژوهش">Scholarship &amp; research</span></label>
+      <label><input type="checkbox" name="service_areas" value="community-service"><span data-en="Community service" data-fa="خدمت اجتماعی">Community service</span></label>
+      <label><input type="checkbox" name="service_areas" value="leadership"><span data-en="Leadership" data-fa="رهبری">Leadership</span></label>
+      <label><input type="checkbox" name="service_areas" value="culture"><span data-en="Culture" data-fa="فرهنگ">Culture</span></label>
+      <label><input type="checkbox" name="service_areas" value="poetry"><span data-en="Poetry &amp; literature" data-fa="شعر و ادبیات">Poetry &amp; literature</span></label>
+      <label><input type="checkbox" name="service_areas" value="arts"><span data-en="Arts" data-fa="هنر">Arts</span></label>
+      <label><input type="checkbox" name="service_areas" value="humanitarian"><span data-en="Humanitarian work" data-fa="خدمات بشردوستانه">Humanitarian work</span></label>
+      <label><input type="checkbox" name="service_areas" value="women-leadership"><span data-en="Women’s leadership" data-fa="رهبری زنان">Women’s leadership</span></label>
+      <label><input type="checkbox" name="service_areas" value="military-service"><span data-en="Military service" data-fa="خدمت نظامی">Military service</span></label>
+      <label><input type="checkbox" name="service_areas" value="imamat"><span data-en="Imamat" data-fa="امامت">Imamat</span></label>
+      <label><input type="checkbox" name="service_areas" value="memorial"><span data-en="Memorial documentation" data-fa="ثبت یادبود و خاطره">Memorial documentation</span></label>
+      <label><input type="checkbox" name="service_areas" value="other"><span data-en="Other" data-fa="دیگر">Other</span></label>
+    </div></fieldset>
 
       <div class="form-field full">
         <label for="personBio" data-en="Short biography *" data-fa="زندگی‌نامه کوتاه *">Short biography *</label>
@@ -463,9 +539,7 @@ html[data-theme="dark"] .submit-person{
   </div>
 
 
-  <div class="note women-directory-link"><strong data-en="New collection" data-fa="مجموعهٔ تازه">New collection</strong> · <a href="women-ismaili.html" data-en="Explore influential women in Ismaili history →" data-fa="زنان تأثیرگذار در تاریخ اسماعیلی را ببینید ←">Explore influential women in Ismaili history →</a></div>
-  <div class="note women-directory-link"><strong data-en="New collection" data-fa="مجموعهٔ تازه">New collection</strong> · <a href="men-ismaili.html" data-en="Explore influential Nizari Ismaili men →" data-fa="مردان تأثیرگذار اسماعیلی نزاری را ببینید ←">Explore influential Nizari Ismaili men →</a></div>
-  <div class="note women-directory-link"><strong data-en="New collection" data-fa="مجموعهٔ تازه">New collection</strong> · <a href="imams-ismaili.html" data-en="Read the Nizari Imams’ biographies, from Ali to Mawlana Shah Rahim →" data-fa="زندگی‌نامهٔ امامان نزاری از امام علی تا مولانا شاه رحیم را بخوانید ←">Read the Nizari Imams’ biographies, from Ali to Mawlana Shah Rahim →</a></div>
+
 
   <section class="grid" id="peopleGrid">
     <article class="card" data-categories="hujjats scholars poets" data-search="nasir khusraw naser khosrow ناصر خسرو" data-country="AF|EG" data-services="scholarship culture">
@@ -1130,6 +1204,14 @@ html[data-theme="dark"] .submit-person{
   const reset=document.getElementById("peopleReset");
   const showAll=document.getElementById("peopleShowAll");
   let active="all";
+  const SERVICE_LABELS={
+    education:["Education","آموزش"],scholarship:["Scholarship & research","دانش و پژوهش"],
+    "community-service":["Community service","خدمت اجتماعی"],leadership:["Leadership","رهبری"],
+    culture:["Culture","فرهنگ"],poetry:["Poetry & literature","شعر و ادبیات"],arts:["Arts","هنر"],
+    humanitarian:["Humanitarian work","خدمات بشردوستانه"],"women-leadership":["Women’s leadership","رهبری زنان"],
+    "military-service":["Military service","خدمت نظامی"],imamat:["Imamat","امامت"],
+    memorial:["Memorial documentation","ثبت یادبود و خاطره"],other:["Other","دیگر"]
+  };
 
   function lang(){return localStorage.getItem("hskrc_language")==="fa"?"fa":"en";}
   function normalize(value){
@@ -1150,6 +1232,25 @@ html[data-theme="dark"] .submit-person{
     });
     countryFilter.value=previous;
   }
+  function updateServiceOptions(){
+    if(!serviceFilter)return;
+    const previous=serviceFilter.value;
+    const available=[...new Set(cards.flatMap(card=>(card.dataset.services||"").split(/\s+/).filter(Boolean)))];
+    const order=Object.keys(SERVICE_LABELS);
+    available.sort((a,b)=>{
+      const ai=order.indexOf(a),bi=order.indexOf(b);
+      return (ai<0?999:ai)-(bi<0?999:bi)||a.localeCompare(b);
+    });
+    serviceFilter.querySelectorAll('option:not([value=""])').forEach(option=>option.remove());
+    available.forEach(code=>{
+      const option=document.createElement("option");option.value=code;
+      const label=SERVICE_LABELS[code]||[code.replace(/[-_]/g," "),code.replace(/[-_]/g," ")];
+      option.dataset.en=label[0];option.dataset.fa=label[1];
+      option.textContent=label[lang()==="fa"?1:0];serviceFilter.append(option);
+    });
+    serviceFilter.value=available.includes(previous)?previous:"";
+  }
+
   function updatePlaceholder(){
     document.querySelectorAll("[data-en][data-fa]").forEach(el=>el.textContent=el.dataset[lang()]);
     if(!search)return;
@@ -1222,17 +1323,18 @@ html[data-theme="dark"] .submit-person{
   showAll?.addEventListener("click",showAllProfiles);
 
   updateCountryOptions();
+  updateServiceOptions();
   updatePlaceholder();
   updateCategoryCounts();
   const requestedCategory=new URLSearchParams(location.search).get("category");
   setActive(buttons.some(btn=>btn.dataset.filter===requestedCategory)?requestedCategory:"all");
   apply();
   window.addEventListener("storage",event=>{
-    if(event.key==="hskrc_language")setTimeout(()=>{updatePlaceholder();updateCategoryCounts();apply();updateFormPlaceholders();},40);
+    if(event.key==="hskrc_language")setTimeout(()=>{updatePlaceholder();updateCountryOptions();updateServiceOptions();updateCategoryCounts();apply();updateFormPlaceholders();},40);
   });
   document.addEventListener("click",event=>{
     if(event.target?.closest?.("#hskrcGlobalLang")){
-      setTimeout(()=>{updatePlaceholder();updateCategoryCounts();apply();updateFormPlaceholders();},90);
+      setTimeout(()=>{updatePlaceholder();updateCountryOptions();updateServiceOptions();updateCategoryCounts();apply();updateFormPlaceholders();},90);
     }
   });
 
@@ -1253,7 +1355,7 @@ html[data-theme="dark"] .submit-person{
         const details=document.createElement("details");details.className="person-sources";const summary=document.createElement("summary");summary.textContent="Sources / منابع";details.append(summary);const ul=document.createElement("ul");
         String(row.sources||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(line=>{const li=document.createElement("li");li.textContent=line;ul.append(li);});details.append(ul);card.append(details);directoryGrid.append(card);
       });
-      cards=[...document.querySelectorAll("#peopleGrid .card")];updateCountryOptions();updateCategoryCounts();apply();
+      cards=[...document.querySelectorAll("#peopleGrid .card")];updateCountryOptions();updateServiceOptions();updateCategoryCounts();apply();
     }catch(_){}
   }
   const submissionForm=document.getElementById("personSubmissionForm");
