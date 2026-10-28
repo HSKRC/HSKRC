@@ -2830,3 +2830,31 @@ html[dir="rtl"] :is(h1,h2,h3){letter-spacing:0!important;line-height:1.6!importa
 }
 @media(max-width:390px){body > .hskrc-global-header .hskrc-global-brandcopy{display:none!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Keep expanded biographical tabs readable on the shared header. */
+html[data-theme] body > .hskrc-global-header .hskrc-global-nav > a,
+html[data-theme] body > .hskrc-global-header .hskrc-global-more > summary{
+  padding-inline:6px!important;
+  font-size:11.5px!important;
+}
+@media (min-width:761px) and (max-width:1180px){
+  body > .hskrc-global-header .hskrc-global-shell{flex-wrap:wrap!important;gap:10px!important;padding:14px 0!important}
+  body > .hskrc-global-header .hskrc-global-brand{order:1!important}
+  body > .hskrc-global-header .hskrc-global-actions{order:2!important;margin-inline-start:auto!important}
+  body > .hskrc-global-header .hskrc-global-nav{
+    display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    order:3!important;width:100%!important;flex:1 0 100%!important;
+    justify-content:stretch!important;gap:5px!important;overflow:visible!important;padding:2px 0!important;
+  }
+  body > .hskrc-global-header .hskrc-global-nav>a,
+  body > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{
+    width:100%!important;min-width:0!important;min-height:36px!important;flex:none!important;
+  }
+  body > .hskrc-global-header .hskrc-global-nav>a,
+  body > .hskrc-global-header .hskrc-global-more>summary{
+    display:flex!important;min-height:36px!important;align-items:center!important;justify-content:center!important;
+    padding:5px 6px!important;font-size:11px!important;line-height:1.15!important;
+    text-align:center!important;white-space:normal!important;
+  }
+  body > .hskrc-global-header .hskrc-global-more{grid-column:7!important;grid-row:2!important}
+}
