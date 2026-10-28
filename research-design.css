@@ -227,10 +227,10 @@ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-mo
 }
 @media (min-width:761px) and (max-width:1180px){
   html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{
-    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    grid-template-columns:repeat(7,minmax(0,1fr))!important;
   }
   html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{
-    grid-column:6!important;
+    grid-column:7!important;
     grid-row:2!important;
   }
 }

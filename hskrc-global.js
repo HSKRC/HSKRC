@@ -5,12 +5,12 @@
   const LABELS = {
     en:{
       entries:"Entries", home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
-      researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", women:"Women", about:"About", founder:"Founder & CEO",
+      researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", women:"Women", men:"Men", imams:"Imams", about:"About", founder:"Founder & CEO",
       impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
     },
     fa:{
       entries:"مدخل‌ها", home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
-      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", women:"زنان", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
+      researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", women:"زنان", men:"مردان", imams:"امامان", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
       impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
     }
   };
@@ -91,6 +91,8 @@
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
     if(f==="sources.html" || f==="source.html") return "sources";
     if(f==="research-explorer.html") return "explorer";
+    if(f==="men-ismaili.html") return "men";
+    if(f==="imams-ismaili.html") return "imams";
     if(["people.html","ibn-sina.html","nasir-khusraw.html","qadi-al-numan.html","abu-yaqub-al-sijistani.html","hamid-al-din-al-kirmani.html"].includes(f)) return "people";
     if(f==="knowledge-node.html") return "knowledge";
     if(f==="about.html") return "about";
@@ -139,6 +141,8 @@
           ${navLink("explorer","research-explorer.html",L.explorer)}
           ${navLink("people","people.html",L.people)}
           ${navLink("women","women-ismaili.html",L.women)}
+          ${navLink("men","men-ismaili.html",L.men)}
+          ${navLink("imams","imams-ismaili.html",L.imams)}
           ${navLink("entries","entries.html",L.entries)}
           ${navLink("library","library.html",L.library)}
           ${navLink("sources","sources.html",L.sources)}
@@ -221,7 +225,7 @@
     const L=LABELS[lang()];
     const map={
       entries:L.entries,home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
-      researchers:L.researchers,sources:L.sources,explorer:L.explorer,people:L.people,about:L.about,founder:L.founder,impact:L.impact,involved:L.involved,support:L.support,contact:L.contact
+      researchers:L.researchers,sources:L.sources,explorer:L.explorer,people:L.people,women:L.women,men:L.men,imams:L.imams,about:L.about,founder:L.founder,impact:L.impact,involved:L.involved,support:L.support,contact:L.contact
     };
     Object.entries(map).forEach(([k,v])=>{
       const el=document.querySelector(`.hskrc-global-nav [data-hskrc-key="${k}"]`);
