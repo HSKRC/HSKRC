@@ -91,6 +91,7 @@
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
     if(f==="sources.html" || f==="source.html") return "sources";
     if(f==="research-explorer.html") return "explorer";
+    if(f==="women-ismaili.html") return "women";
     if(f==="men-ismaili.html") return "men";
     if(f==="imams-ismaili.html") return "imams";
     if(["people.html","ibn-sina.html","nasir-khusraw.html","qadi-al-numan.html","abu-yaqub-al-sijistani.html","hamid-al-din-al-kirmani.html"].includes(f)) return "people";
