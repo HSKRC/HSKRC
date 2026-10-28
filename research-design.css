@@ -297,3 +297,31 @@ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-mo
     min-height:36px!important;padding:5px 8px!important;font-size:11.5px!important;
   }
 }
+
+
+/* Keep hover and active states flat across every research-design page. */
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:hover,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:hover{
+  border:0!important;border-radius:4px!important;box-shadow:none!important;transform:none!important;
+}
+html:root[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:hover,
+html:root[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:hover{
+  color:#303030!important;background:rgba(88,88,88,.055)!important;
+}
+html:root[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:hover,
+html:root[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:hover{
+  color:#fff!important;background:rgba(255,255,255,.07)!important;
+}
+html:root[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active,
+html:root[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more:has(a.is-active)>summary{
+  color:#444!important;background:rgba(88,88,88,.085)!important;
+  border:0!important;border-radius:4px!important;box-shadow:none!important;transform:none!important;
+}
+html:root[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active,
+html:root[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more:has(a.is-active)>summary{
+  color:#f1ddb0!important;background:rgba(201,164,92,.095)!important;
+  border:0!important;border-radius:4px!important;box-shadow:none!important;transform:none!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active::after{
+  height:2px!important;bottom:3px!important;background:currentColor!important;
+}
