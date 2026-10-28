@@ -234,3 +234,66 @@ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-mo
     grid-row:2!important;
   }
 }
+
+
+/* Match every shared navigation tab to the biographical collection pages. */
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:40px!important;
+  padding:10px 6px!important;
+  border:0!important;
+  border-radius:4px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font-size:11.5px!important;
+  font-weight:600!important;
+  line-height:1.35!important;
+  white-space:nowrap!important;
+  transform:none!important;
+  transition:color .18s ease,background .18s ease!important;
+}
+html[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+html[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{color:#303030!important}
+html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{color:#ededed!important}
+html[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:hover,
+html[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:hover{
+  color:#303030!important;background:rgba(88,88,88,.055)!important;
+}
+html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:hover,
+html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:hover{
+  color:#fff!important;background:rgba(255,255,255,.07)!important;
+}
+html[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active,
+html[data-theme="light"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more:has(a.is-active)>summary{
+  color:#444!important;background:rgba(88,88,88,.085)!important;
+  border:0!important;box-shadow:none!important;transform:none!important;
+}
+html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active,
+html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-more:has(a.is-active)>summary{
+  color:#f1ddb0!important;background:rgba(201,164,92,.095)!important;
+  border:0!important;box-shadow:none!important;transform:none!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a.is-active::after,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more:has(a.is-active)>summary::after{
+  height:2px!important;bottom:3px!important;background:currentColor!important;
+}
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a:focus-visible,
+html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary:focus-visible{
+  outline:2px solid currentColor!important;outline-offset:3px!important;
+}
+@media (min-width:761px) and (max-width:1180px){
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{
+    min-height:36px!important;padding:5px 6px!important;font-size:11px!important;
+  }
+}
+@media(max-width:760px){
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>a,
+  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{
+    min-height:36px!important;padding:5px 8px!important;font-size:11.5px!important;
+  }
+}
