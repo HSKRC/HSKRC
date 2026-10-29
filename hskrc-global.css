@@ -2877,3 +2877,5 @@ html[data-theme="light"] body[data-fixed-content-language] .article-language-pai
 html[data-theme="light"] body[data-fixed-content-language] .article-language-pair a.active{color:#493715 !important;background:#f2e9d7 !important}
 html[data-theme="light"] body[data-fixed-content-language] .content a{color:#70501c !important;text-decoration:underline}
 html[data-theme="dark"] body[data-fixed-content-language] .content a{color:#e4c98d !important;text-decoration:underline}
+
+@media(min-width:901px){#hskrcPrimaryNav.hskrc-global-nav{overflow:visible !important}}

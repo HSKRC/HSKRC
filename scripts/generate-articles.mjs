@@ -429,7 +429,7 @@ ${image
 
 <link
   rel="stylesheet"
-  href="../hskrc-global.css?v=20261029-review2"
+  href="../hskrc-global.css?v=20261029-review3"
 >
 
 <script type="application/ld+json">
@@ -600,7 +600,7 @@ footer {
 
 </style>
 
-<script src="../hskrc-global.js?v=20261029-review2" defer></script>
+<script src="../hskrc-global.js?v=20261029-review3" defer></script>
 </head>
 
 <body class="notranslate" translate="no" data-fixed-content-language="${lang}">

@@ -18,8 +18,8 @@
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <link rel="canonical" href="https://hskrc.org/project-overview.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="hskrc-global.css?v=20261029-review2">
-<script defer src="hskrc-global.js?v=20261029-review2"></script>
+<link rel="stylesheet" href="hskrc-global.css?v=20261029-review3">
+<script defer src="hskrc-global.js?v=20261029-review3"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HSKRC">
@@ -65,6 +65,9 @@ html[data-theme="light"]{--bg:#f7f7f7;--panel:#fff;--panel2:#f1f1f1;--text:#2020
 <section><div class="wrap"><h2  data-en="Responsibility and research standards" data-fa="مسئولیت و معیارهای پژوهش">Responsibility and research standards</h2><p  data-en="Founded and developed by Kamal Barlas, HSKRC is an independent project. Inclusion of external scholars, institutions or sources does not imply affiliation or endorsement. AI-assisted work is not treated as a scholarly source." data-fa="HSKRC را کمال برلاس ایجاد کرده و توسعه می‌دهد و پروژه‌ای مستقل است. معرفی پژوهشگران، مؤسسات یا منابع بیرونی به معنای وابستگی یا تأیید پروژه نیست. محتوای تولیدشده با کمک هوش مصنوعی منبع علمی محسوب نمی‌شود.">Founded and developed by Kamal Barlas, HSKRC is an independent project. Inclusion of external scholars, institutions or sources does not imply affiliation or endorsement. AI-assisted work is not treated as a scholarly source.</p><div class="actions"><a class="btn" href="founder.html"><span  data-en="Project responsibility" data-fa="مسئولیت پروژه">Project responsibility</span></a><a class="btn" href="editorial-policy.html"><span  data-en="Editorial policy" data-fa="سیاست نشر">Editorial policy</span></a><a class="btn" href="get-involved.html"><span  data-en="Contribute evidence" data-fa="مشارکت در مستندسازی">Contribute evidence</span></a></div><p  data-en="Page revised: 29 October 2026. Current traffic and documented contributions are shown on the Community Impact page." data-fa="بازنگری صفحه: ۲۹ اکتبر ۲۰۲۶. آمار جاری و مشارکت‌های مستند در صفحه تأثیر اجتماعی نمایش داده می‌شوند.">Page revised: 29 October 2026. Current traffic and documented contributions are shown on the Community Impact page.</p></div></section></main>
 <script>
 (function(){
+ const selectedLanguage=localStorage.getItem("hskrc_language")==="fa"?"fa":"en";
+ document.documentElement.lang=selectedLanguage;document.documentElement.dir=selectedLanguage==="fa"?"rtl":"ltr";
+ document.querySelectorAll("[data-en][data-fa]").forEach(el=>{el.textContent=el.getAttribute("data-"+selectedLanguage);});
  const db=window.supabase?.createClient("https://uwuklryzxexpofcxrbnm.supabase.co","sb_publishable_pC4zCrTiZLb0hW0oXqt0tg_i1vjIoW2");
  let busy=false,lastError=null,lastTime="";
  function renderStatus(){if(lastError===null)return;const fa=localStorage.getItem("hskrc_language")==="fa";document.getElementById("metricStatus").textContent=(lastError?(fa?"آمار زنده موقتاً در دسترس نیست.":"Live counts are temporarily unavailable."):(fa?"آمار زنده به‌روز شد":"Live collection updated"))+" · "+lastTime;}
