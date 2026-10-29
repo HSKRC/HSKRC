@@ -600,9 +600,10 @@ footer {
 
 </style>
 
+<script src="../hskrc-global.js?v=20261029-review1" defer></script>
 </head>
 
-<body class="notranslate" translate="no">
+<body class="notranslate" translate="no" data-fixed-content-language="${lang}">
 
 <header>
   <div class="wrap">
@@ -853,6 +854,12 @@ async function main() {
   const articles =
     await fetchArticles();
 
+  // Keep source revisions when published database articles are regenerated.
+  const overrides = JSON.parse(await fs.readFile("editorial/article-overrides.json", "utf8"));
+  for (const article of articles) {
+    if (overrides[article.id]) Object.assign(article, overrides[article.id]);
+  }
+
   console.log(
     `Found ${articles.length} published article(s).`
   );
@@ -1004,3 +1011,4 @@ main().catch(
 
   }
 );
+

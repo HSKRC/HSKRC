@@ -17,7 +17,7 @@
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="canonical" href="https://hskrc.org/community-impact.html">
-<link rel="stylesheet" href="hskrc-global.css?v=20261028-collection-tabs2"><script defer src="hskrc-global.js?v=20261028-collection-tabs1"></script>
+<link rel="stylesheet" href="hskrc-global.css?v=20261029-review1"><script defer src="hskrc-global.js?v=20261029-review1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#0d0d0d;--panel:#151515;--panel2:#191919;--text:#f4f4f4;--muted:#b0b0b0;--line:rgba(255,255,255,.09);--gold:#c9a45c;--gold2:#e2c47f;--soft:rgba(201,164,92,.09)}
@@ -82,11 +82,11 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
 </div></div>
 <div class="live-grid">
 <div class="live-stat"><b id="liveBooks">—</b><span data-en="Published Books" data-fa="کتاب‌های منتشرشده">Published Books</span><small data-en="Public books currently available in the HSKRC collection." data-fa="کتاب‌های عمومی موجود در مجموعه HSKRC.">Public books currently available in the HSKRC collection.</small></div>
-<div class="live-stat"><b id="liveArticles">—</b><span data-en="Published Articles" data-fa="مقالات منتشرشده">Published Articles</span><small data-en="Published research and cultural articles." data-fa="مقالات پژوهشی و فرهنگی منتشرشده.">Published research and cultural articles.</small></div>
+<div class="live-stat"><b id="liveArticles">—</b><span  data-en="Article works" data-fa="عنوان‌های مستقل مقاله">Article works</span><small  data-en="Translations grouped as one work." data-fa="ترجمه‌ها یک عنوان شمرده می‌شوند.">Translations grouped as one work.</small></div><div class="live-stat"><b id="liveArticleVersions">—</b><span  data-en="Article language versions" data-fa="نسخه‌های زبانی مقاله">Article language versions</span><small  data-en="Each published language version is a database record." data-fa="هر نسخه زبانی منتشرشده یک رکورد است.">Each published language version is a database record.</small></div>
 <div class="live-stat"><b id="liveSources">—</b><span data-en="Research Sources" data-fa="منابع پژوهشی">Research Sources</span><small data-en="Traceable source records in the research network." data-fa="رکوردهای منابع قابل ردیابی در شبکه پژوهشی.">Traceable source records in the research network.</small></div>
 <div class="live-stat"><b id="liveNodes">—</b><span data-en="Knowledge Nodes" data-fa="گره‌های دانشی">Knowledge Nodes</span><small data-en="Structured topics and historical knowledge nodes." data-fa="موضوعات ساختاریافته و گره‌های دانش تاریخی.">Structured topics and historical knowledge nodes.</small></div>
-<div class="live-stat"><b id="liveResearchers">—</b><span data-en="Researchers" data-fa="پژوهشگران">Researchers</span><small data-en="Researchers represented in the HSKRC research network." data-fa="پژوهشگران ثبت‌شده در شبکه پژوهشی HSKRC.">Researchers represented in the HSKRC research network.</small></div>
-<div class="live-stat"><b id="liveTotal">—</b><span data-en="Research Records" data-fa="رکوردهای پژوهشی">Research Records</span><small data-en="Combined live total across the five public collection types above." data-fa="مجموع زنده پنج نوع مجموعه عمومی بالا.">Combined live total across the five public collection types above.</small></div>
+<div class="live-stat"><b id="liveResearchers">—</b><span data-en="Researchers" data-fa="پژوهشگران">Researchers</span><small data-en="Scholars whose work is represented; listing does not imply affiliation." data-fa="پژوهشگرانی که آثارشان معرفی شده؛ ثبت نام به معنای وابستگی نیست.">Scholars whose work is represented; listing does not imply affiliation.</small></div>
+<div class="live-stat"><b id="liveTotal">—</b><span data-en="Research Records" data-fa="رکوردهای پژوهشی">Research Records</span><small data-en="Books + article language versions + sources + nodes + scholar records. Static profiles are excluded." data-fa="مجموع کتاب‌ها، نسخه‌های زبانی مقاله، منابع، گره‌ها و سوابق پژوهشگران؛ پروفایل‌های ثابت شامل نیستند.">Books + article language versions + sources + nodes + scholar records. Static profiles are excluded.</small></div>
 </div>
 <div id="liveStatus" class="live-status" data-en="Loading live collection data…" data-fa="در حال بارگذاری آمار زنده مجموعه…">Loading live collection data…</div>
 </section>
@@ -130,6 +130,7 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
 <div class="grid"><div class="card"><h3 data-en="Usage" data-fa="استفاده">Usage</h3><p data-en="Website visits, returning users and engagement with books, articles and research tools." data-fa="بازدیدهای وب‌سایت، کاربران بازگشتی و تعامل با کتاب‌ها، مقالات و ابزارهای پژوهش.">Website visits, returning users and engagement with books, articles and research tools.</p></div><div class="card"><h3 data-en="Collection growth" data-fa="رشد مجموعه">Collection growth</h3><p data-en="Published books, articles, source records and other research resources added to HSKRC." data-fa="کتاب‌های منتشرشده، مقالات، رکوردهای منابع و سایر منابع پژوهشی افزوده‌شده به HSKRC.">Published books, articles, source records and other research resources added to HSKRC.</p></div><div class="card"><h3 data-en="Community feedback" data-fa="بازخورد جامعه">Community feedback</h3><p data-en="Documented feedback, suggestions, requests and testimonials from people who use the project." data-fa="بازخوردها، پیشنهادها، درخواست‌ها و دیدگاه‌های ثبت‌شده از افرادی که از پروژه استفاده می‌کنند.">Documented feedback, suggestions, requests and testimonials from people who use the project.</p></div><div class="card"><h3 data-en="Partnerships" data-fa="همکاری‌ها">Partnerships</h3><p data-en="Future collaboration with community, cultural, educational and research organisations will be recorded transparently." data-fa="همکاری‌های آینده با نهادهای اجتماعی، فرهنگی، آموزشی و پژوهشی به‌صورت شفاف ثبت خواهد شد.">Future collaboration with community, cultural, educational and research organisations will be recorded transparently.</p></div></div>
 <div class="actions"><a class="btn primary" href="get-involved.html" data-en="Get Involved" data-fa="مشارکت کنید">Get Involved</a><a class="btn" href="about.html" data-en="About HSKRC" data-fa="درباره HSKRC">About HSKRC</a></div>
 </section>
+<section class="block" id="heritage-case-study"><div class="head"><h2  data-en="A documented community contribution" data-fa="یک مشارکت مستند از جامعه">A documented community contribution</h2></div><div class="card"><h3  data-en="Lakhshom Qala · Bulula, Bamyan" data-fa="لخشوم قلعه · بلوله، بامیان">Lakhshom Qala · Bulula, Bamyan</h3><p  data-en="The public profile brings together a local account, published references and a contributor-supplied image of a 500-afghani banknote. The oral account is attributed to the community; the image attribution and the site’s age require further independent documentation." data-fa="پروفایل عمومی روایت محلی، منابع منتشرشده و تصویر ارسالی اسکناس ۵۰۰ افغانی را کنار هم قرار می‌دهد. روایت شفاهی به جامعه نسبت داده شده؛ انتساب تصویر و قدمت محل به مستندات مستقل بیشتر نیاز دارد.">The public profile brings together a local account, published references and a contributor-supplied image of a 500-afghani banknote. The oral account is attributed to the community; the image attribution and the site’s age require further independent documentation.</p><p  data-en="Documented output: one bilingual heritage profile. This is an initial documentation record; conservation outcomes have not been measured. Next steps: site photographs with permission, dated oral-history interviews and archival corroboration." data-fa="حاصل قابل بررسی: یک پروفایل دوزبانه میراثی. این ثبت ابتدایی مستندات است؛ نتیجه حفاظت میدانی هنوز اندازه‌گیری نشده است. گام بعدی: عکس‌های محل با اجازه، مصاحبه‌های تاریخ‌دار و تطبیق با اسناد آرشیوی.">Documented output: one bilingual heritage profile. This is an initial documentation record; conservation outcomes have not been measured. Next steps: site photographs with permission, dated oral-history interviews and archival corroboration.</p><a href="lakhshom-qala.html"><span  data-en="Examine the profile →" data-fa="بررسی پروفایل ←">Examine the profile →</span></a> · <a href="contact.html"><span  data-en="Contribute evidence or corrections" data-fa="ارسال سند یا اصلاحیه">Contribute evidence or corrections</span></a></div></section>
 </main>
 
 <script>
@@ -178,10 +179,13 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
     }catch(_){ return ""; }
   }
 
+  let impactBusy=false;
   async function loadLiveImpact(){
+    if(impactBusy)return;
     const status=document.getElementById("liveStatus");
     if(!window.supabase || !status) return;
 
+    impactBusy=true;
     const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
     const specs=[
       {kind:"book",name:"books",run:()=>db.from("books").select("*").eq("published",true)},
@@ -193,7 +197,13 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
 
     const results=await Promise.all(specs.map(async spec=>{
       try{
-        const r=await spec.run();
+        let data=[],from=0,r;
+        do {
+          r=await spec.run().order("id").range(from,from+999);
+          if(r.error) throw r.error;
+          data.push(...(r.data||[]));from+=1000;
+        } while(r.data?.length===1000);
+        r={data,error:null};
         if(r.error) throw r.error;
         return {kind:spec.kind,data:r.data||[],error:null};
       }catch(error){
@@ -202,6 +212,7 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
       }
     }));
 
+    impactBusy=false;
     const byKind=Object.fromEntries(results.map(r=>[r.kind,r.data]));
     const counts={
       book:(byKind.book||[]).length,
@@ -214,7 +225,8 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
 
     const ids={
       liveBooks:counts.book,
-      liveArticles:counts.article,
+      liveArticles:new Set((byKind.article||[]).map(r=>r.translation_group||r.id)).size,
+      liveArticleVersions:counts.article,
       liveSources:counts.source,
       liveNodes:counts.node,
       liveResearchers:counts.researcher,
@@ -227,7 +239,10 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
 
     const L=labels[currentLang()];
     const failed=results.filter(r=>r.error);
-    status.textContent=failed.length ? L.partial : L.updated;
+    const failedIds={book:["liveBooks"],article:["liveArticles","liveArticleVersions"],source:["liveSources"],node:["liveNodes"],researcher:["liveResearchers"]};
+    failed.forEach(r=>failedIds[r.kind].forEach(id=>{document.getElementById(id).textContent="—";}));
+    if(failed.length)document.getElementById("liveTotal").textContent="—";
+    status.textContent=(failed.length ? L.partial : L.updated)+" · "+new Date().toLocaleTimeString(currentLang()==="fa"?"fa-AF":"en-GB");
     status.classList.toggle("ok",!failed.length);
 
     const all=results.flatMap(r=>r.data.map(row=>({
@@ -239,7 +254,7 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
     if(!host) return;
 
     const badge=`<div class="live-badge"><span class="live-dot"></span><span>${currentLang()==="fa"?"مراحل زنده مجموعه":"Live collection milestones"}</span></div>`;
-    const totalText=L.total.replace("{n}",String(total));
+    const totalText=L.total.replace("{n}",failed.length?"—":String(total));
     let items=`<div class="milestone"><div class="year">${new Date().getFullYear()}</div><div><b>${totalText}</b><span>${L.updated}</span></div></div>`;
 
     newest.forEach((x,index)=>{
@@ -250,6 +265,8 @@ html[data-theme="light"]{--bg:#f6f6f6;--panel:#ffffff;--panel2:#f1f1f1;--text:#2
 
     host.innerHTML=badge+items;
   }
+
+  document.addEventListener("click",e=>{if(e.target.closest?.("#hskrcGlobalLang,#lang"))setTimeout(loadLiveImpact,100);});
 
   function escapeHtml(v){
     return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[ch]));
