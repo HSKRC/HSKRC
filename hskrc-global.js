@@ -4,12 +4,12 @@
 
   const LABELS = {
     en:{
-      entries:"Entries", home:"Home", knowledge:"Knowledge Base", library:"Library", articles:"Articles",
+      entries:"Entries", home:"Home", knowledge:"Knowledge Base", fatimids:"Fatimid era", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", women:"Women", men:"Men", imams:"Imams", about:"About", founder:"Founder & CEO",
       impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
     },
     fa:{
-      entries:"مدخل‌ها", home:"خانه", knowledge:"پایگاه دانش", library:"کتابخانه", articles:"مقالات",
+      entries:"مدخل‌ها", home:"خانه", knowledge:"پایگاه دانش", fatimids:"فاطمیان", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", women:"زنان", men:"مردان", imams:"امامان", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
       impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
     }
@@ -95,6 +95,7 @@
     if(f==="men-ismaili.html") return "men";
     if(f==="imams-ismaili.html") return "imams";
     if(["people.html","ibn-sina.html","nasir-khusraw.html","qadi-al-numan.html","abu-yaqub-al-sijistani.html","hamid-al-din-al-kirmani.html"].includes(f)) return "people";
+    if(["fatimids.html","fatimid-cairo.html","fatimid-al-azhar.html","fatimid-dar-al-ilm.html"].includes(f)) return "fatimids";
     if(f==="knowledge-node.html") return "knowledge";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
@@ -146,6 +147,7 @@
             <summary>${L.more}</summary>
             <div class="hskrc-global-more-menu">
 ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
+${navLink("fatimids","fatimids.html",L.fatimids)}
 ${navLink("researchers","researchers.html",L.researchers)}
 ${navLink("explorer","research-explorer.html",L.explorer)}
 ${navLink("women","women-ismaili.html",L.women)}
@@ -225,7 +227,7 @@ ${navLink("imams","imams-ismaili.html",L.imams)}
   function syncGlobalLabels(){
     const L=LABELS[lang()];
     const map={
-      entries:L.entries,home:L.home,knowledge:L.knowledge,library:L.library,articles:L.articles,
+      entries:L.entries,home:L.home,knowledge:L.knowledge,fatimids:L.fatimids,library:L.library,articles:L.articles,
       researchers:L.researchers,sources:L.sources,explorer:L.explorer,people:L.people,women:L.women,men:L.men,imams:L.imams,about:L.about,founder:L.founder,impact:L.impact,involved:L.involved,support:L.support,contact:L.contact
     };
     Object.entries(map).forEach(([k,v])=>{
