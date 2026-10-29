@@ -2867,3 +2867,7 @@ html[data-theme] body > .hskrc-global-header .hskrc-global-more > summary{
 .editorial-note{border-inline-start:3px solid #b99a62;padding:1rem;margin:1.5rem 0;font-size:.95rem}
 .review-guide{padding-block:24px}.review-guide .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:18px}
 @media(max-width:600px){.content{font-size:17px}.metric-grid,.live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{min-width:0;overflow-wrap:anywhere}}
+
+/* Dropdown must escape the desktop navigation scroll container. */
+@media(min-width:901px){body .hskrc-global-nav{overflow:visible !important}}
+body .hskrc-global-more-menu{max-height:70vh !important;overflow-x:hidden !important;overflow-y:auto !important}
