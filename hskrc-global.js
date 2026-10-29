@@ -95,7 +95,7 @@
     if(f==="men-ismaili.html") return "men";
     if(f==="imams-ismaili.html") return "imams";
     if(["people.html","ibn-sina.html","nasir-khusraw.html","qadi-al-numan.html","abu-yaqub-al-sijistani.html","hamid-al-din-al-kirmani.html"].includes(f)) return "people";
-    if(["fatimids.html","fatimid-cairo.html","fatimid-al-azhar.html","fatimid-dar-al-ilm.html"].includes(f)) return "fatimids";
+    if(["fatimids.html","fatimid-cairo.html","fatimid-al-azhar.html","fatimid-dar-al-ilm.html","fatimid-rulers.html","fatimid-cities.html","fatimid-scholars.html","fatimid-al-muayyad.html","fatimid-architecture.html","fatimid-al-hakim.html","fatimid-al-aqmar.html","fatimid-walls.html","fatimid-source-guide.html","fatimid-culture.html"].includes(f)) return "fatimids";
     if(f==="knowledge-node.html") return "knowledge";
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
