@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "scripts/generate-articles.mjs"
+      - "editorial/article-overrides.json"
       - "scripts/generate-catalogs.mjs"
   schedule:
     - cron: "17 */6 * * *"
