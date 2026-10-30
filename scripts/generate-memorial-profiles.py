@@ -79,3 +79,8 @@ s=re.sub(pattern,lambda m:m[1]+json.dumps(entries,ensure_ascii=False).replace('<
 p=ROOT/'sitemap.xml';s=p.read_text();s=re.sub(r'\s*<url>\s*<loc>https://hskrc\.org/firqah-80-[\s\S]*?</url>','',s)
 urls=[p['id']+'.html' for p in PEOPLE]+['firqah-80-source.html'];s=s.replace('</urlset>',''.join(f'  <url><loc>https://hskrc.org/{url}</loc><lastmod>2026-10-25</lastmod><changefreq>monthly</changefreq></url>\n' for url in urls)+'</urlset>');p.write_text(s)
 print('Generated 44 profiles, one source record, directory/search entries and sitemap links.')
+
+# Restore the shared citation/provenance layer after rebuilding memorial HTML.
+if (ROOT/"editorial/scholarly-records.json").exists():
+ import subprocess
+ subprocess.run(["node", str(ROOT/"scripts/render-scholarly-records.mjs")], cwd=ROOT, check=True)

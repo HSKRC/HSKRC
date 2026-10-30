@@ -1,0 +1,796 @@
+{
+  "records": [
+    {
+      "id": "HSKRC-abu-yaqub-al-sijistani",
+      "path": "abu-yaqub-al-sijistani.html",
+      "title": "Abu Ya'qub al-Sijistani",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-alamut",
+      "path": "alamut.html",
+      "title": "<span>Alamut</span>",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-al-aqmar",
+      "path": "fatimid-al-aqmar.html",
+      "title": "The al-Aqmar Mosque and its Fatimid Facade",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-al-azhar",
+      "path": "fatimid-al-azhar.html",
+      "title": "Al-Azhar: Fatimid Origins and Learning",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-al-hakim",
+      "path": "fatimid-al-hakim.html",
+      "title": "The Mosque of al-Hakim in Cairo",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-al-muayyad",
+      "path": "fatimid-al-muayyad.html",
+      "title": "al-Muʾayyad fi’l-Din al-Shirazi",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-architecture",
+      "path": "fatimid-architecture.html",
+      "title": "Fatimid Architecture and Historic Cairo",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-cairo",
+      "path": "fatimid-cairo.html",
+      "title": "Cairo under the Fatimids",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-cities",
+      "path": "fatimid-cities.html",
+      "title": "Cities of the Fatimid World",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-culture",
+      "path": "fatimid-culture.html",
+      "title": "Fatimid Culture, Learning and Urban Life",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-dar-al-ilm",
+      "path": "fatimid-dar-al-ilm.html",
+      "title": "Dar al-Ilm: The Fatimid House of Knowledge",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-rulers",
+      "path": "fatimid-rulers.html",
+      "title": "Fatimid Imam-Caliphs and the 1094 Succession",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-scholars",
+      "path": "fatimid-scholars.html",
+      "title": "Fatimid Scholars, Libraries and Learning",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-source-guide",
+      "path": "fatimid-source-guide.html",
+      "title": "Fatimid Historical Sources and Research Guide",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimid-walls",
+      "path": "fatimid-walls.html",
+      "title": "The Fatimid Walls and Gates of Cairo",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-fatimids",
+      "path": "fatimids.html",
+      "title": "The Fatimid Era: History, Cities and Scholarship",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-firqah-80-001",
+      "path": "firqah-80-001.html",
+      "title": "دگروال شاد محمد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-002",
+      "path": "firqah-80-002.html",
+      "title": "تورن سید عنایت الله",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-003",
+      "path": "firqah-80-003.html",
+      "title": "تورن محمد علی",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-004",
+      "path": "firqah-80-004.html",
+      "title": "تورن سید اقبال شاه",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-005",
+      "path": "firqah-80-005.html",
+      "title": "دگر جنرال نور احمد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-006",
+      "path": "firqah-80-006.html",
+      "title": "جنرال بای نظر",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-007",
+      "path": "firqah-80-007.html",
+      "title": "دگروال ذوالملکان",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-008",
+      "path": "firqah-80-008.html",
+      "title": "دگروال عبدالعلی",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-009",
+      "path": "firqah-80-009.html",
+      "title": "جگرن علی بخش",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-010",
+      "path": "firqah-80-010.html",
+      "title": "جنرال نثارالدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-011",
+      "path": "firqah-80-011.html",
+      "title": "دگرمن انعام الدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-012",
+      "path": "firqah-80-012.html",
+      "title": "جگرن سید مراد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-013",
+      "path": "firqah-80-013.html",
+      "title": "قوماندان محلی علی داد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-014",
+      "path": "firqah-80-014.html",
+      "title": "قوماندان محلی خان میر",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-015",
+      "path": "firqah-80-015.html",
+      "title": "دگروال غلام حضرت",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-016",
+      "path": "firqah-80-016.html",
+      "title": "دگر جنرال شاه قدم",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-017",
+      "path": "firqah-80-017.html",
+      "title": "جنرال سید نور علی شاه",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-018",
+      "path": "firqah-80-018.html",
+      "title": "قوماندان محلی قوماندان قربان",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-019",
+      "path": "firqah-80-019.html",
+      "title": "قوماندان محلی ملا غلام رسول",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-020",
+      "path": "firqah-80-020.html",
+      "title": "قوماندان محلی یار محمد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-021",
+      "path": "firqah-80-021.html",
+      "title": "قوماندان محلی جوره",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-022",
+      "path": "firqah-80-022.html",
+      "title": "غورندکی حبیب الدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-023",
+      "path": "firqah-80-023.html",
+      "title": "قوماندان محلی جمعه خان",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-024",
+      "path": "firqah-80-024.html",
+      "title": "دگروال عبدالرسول",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-025",
+      "path": "firqah-80-025.html",
+      "title": "دگروال محمد سعید",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-026",
+      "path": "firqah-80-026.html",
+      "title": "دگروال عبدالقدیر",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-027",
+      "path": "firqah-80-027.html",
+      "title": "دگروال محمد نعیم",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-028",
+      "path": "firqah-80-028.html",
+      "title": "جنرال فرامرز",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-029",
+      "path": "firqah-80-029.html",
+      "title": "جگرن غیب علی",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-030",
+      "path": "firqah-80-030.html",
+      "title": "دگروال سید سعدالدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-031",
+      "path": "firqah-80-031.html",
+      "title": "نظام",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-032",
+      "path": "firqah-80-032.html",
+      "title": "تورن جنرال امیر خان",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-033",
+      "path": "firqah-80-033.html",
+      "title": "دگروال عبدالحسین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-034",
+      "path": "firqah-80-034.html",
+      "title": "شکور عادل",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-035",
+      "path": "firqah-80-035.html",
+      "title": "میر احمد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-036",
+      "path": "firqah-80-036.html",
+      "title": "اکرام الدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-037",
+      "path": "firqah-80-037.html",
+      "title": "رجب",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-038",
+      "path": "firqah-80-038.html",
+      "title": "سید عبدالواحد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-039",
+      "path": "firqah-80-039.html",
+      "title": "عبدالاحمد",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-040",
+      "path": "firqah-80-040.html",
+      "title": "دگروال عبدالجلیل",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-041",
+      "path": "firqah-80-041.html",
+      "title": "دگروال میرزا حسین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-042",
+      "path": "firqah-80-042.html",
+      "title": "رحم دل",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-043",
+      "path": "firqah-80-043.html",
+      "title": "غلام محی الدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-044",
+      "path": "firqah-80-044.html",
+      "title": "صوفی یاور",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-firqah-80-source",
+      "path": "firqah-80-source.html",
+      "title": "Printed memorial list: 44 individual records",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-ARTICLE-0dfd3c06",
+      "path": "generated-articles/a-legacy-of-faith-knowledge-and-hope-the-55th-birthday-of-mawlana-shah-rahim-al-hussaini-0dfd3c06.html",
+      "title": "A Legacy of Faith, Knowledge and Hope: The 55th Birthday of Mawlana Shah Rahim al-Hussaini",
+      "type": "commemorative",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-90ed5861",
+      "path": "generated-articles/alamut-and-the-preservation-of-knowledge-from-medieval-manuscripts-to-digital-heritage-90ed5861.html",
+      "title": "Alamut and the Preservation of Knowledge: From Medieval Manuscripts to Digital Heritage",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "Revised method, source-specific citations and explicit distinction between catalogue descriptions and direct manuscript examination.",
+      "note_fa": "روش بررسی، ارجاع مشخص و تفکیک معرفی فهرست از مشاهدهٔ مستقیم نسخه بازنگری شده است."
+    },
+    {
+      "id": "HSKRC-ARTICLE-1e190925",
+      "path": "generated-articles/alamut-beyond-the-legend-a-historical-and-research-guide-to-the-nizari-ismaili-centre-1e190925.html",
+      "title": "Alamut Beyond the Legend: A Historical and Research Guide to the Nizari Ismaili Centre",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-4437a1cb",
+      "path": "generated-articles/alamut-s-unesco-world-heritage-inscription-from-the-legacy-of-hassan-sabbah-to-the-global--4437a1cb.html",
+      "title": "Alamut’s UNESCO World Heritage Inscription: From the Legacy of Hassan Sabbah to the Global Value of Nizari Ismaili Culture",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-eceadf27",
+      "path": "generated-articles/hassan-sabbah-alamut-and-nizari-ismaili-culture-a-historical-and-cultural-study-eceadf27.html",
+      "title": "Hassan Sabbah, Alamut, and Nizari Ismaili Culture: A Historical and Cultural Study",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-1d995dd2",
+      "path": "generated-articles/الموت-فراتر-از-افسانه-راهنمای-تاریخی-و-پژوهشی-مرکز-نزاری-اسماعیلی-1d995dd2.html",
+      "title": "الموت فراتر از افسانه: راهنمای تاریخی و پژوهشی مرکز نزاری اسماعیلی",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-78eec163",
+      "path": "generated-articles/الموت-و-پاسداری-از-دانش-از-نسخه-های-خطی-قرون-وسطی-تا-میراث-دیجیتال-78eec163.html",
+      "title": "الموت و پاسداری از دانش: از نسخه‌های خطی قرون وسطی تا میراث دیجیتال",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "Revised method, source-specific citations and explicit distinction between catalogue descriptions and direct manuscript examination.",
+      "note_fa": "روش بررسی، ارجاع مشخص و تفکیک معرفی فهرست از مشاهدهٔ مستقیم نسخه بازنگری شده است."
+    },
+    {
+      "id": "HSKRC-ARTICLE-64250aa0",
+      "path": "generated-articles/ثبت-جهانی-الموت-در-یونسکو-از-میراث-حسن-صباح-تا-ارزش-جهانی-فرهنگ-نزاری-اسماعیلی-64250aa0.html",
+      "title": "ثبت جهانی الموت در یونسکو؛ از میراث حسن صباح تا ارزش جهانی فرهنگ نزاری اسماعیلی",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-23a5fc79",
+      "path": "generated-articles/حسن-صباح-الموت-و-فرهنگ-ن-زاری-اسماعیلی-مطالعه-ای-تاریخی-و-فرهنگی-23a5fc79.html",
+      "title": "حسن صباح، الموت و فرهنگ نِزاری اسماعیلی: مطالعه‌ای تاریخی و فرهنگی",
+      "type": "review",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ARTICLE-f035b1f5",
+      "path": "generated-articles/فروغ-امامت-و-افق-های-امید-پنجاه-وپنجمین-زادروز-حضرت-مولانا-شاه-رحیم-الحسینی-f035b1f5.html",
+      "title": "فروغ امامت و افق‌های امید؛ پنجاه‌وپنجمین زادروز حضرت مولانا شاه رحیم الحسینی",
+      "type": "commemorative",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-hamid-al-din-al-kirmani",
+      "path": "hamid-al-din-al-kirmani.html",
+      "title": "Hamid al-Din al-Kirmani",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-hassan-sabbah",
+      "path": "hassan-sabbah.html",
+      "title": "Hassan <span>Sabbah</span>",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ibn-sina",
+      "path": "ibn-sina.html",
+      "title": "Ibn Sina (Avicenna)",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-ilan",
+      "path": "ilan.html",
+      "title": "<span>Ilān</span> Fortification",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-imams-ismaili",
+      "path": "imams-ismaili.html",
+      "title": "The Nizari Ismaili Imams",
+      "type": "collection",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-lakhshom-qala",
+      "path": "lakhshom-qala.html",
+      "title": "Lakhshom Qala",
+      "type": "heritage",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-lambesar",
+      "path": "lambesar.html",
+      "title": "<span>Lambesar</span> Castle",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-men-ismaili",
+      "path": "men-ismaili.html",
+      "title": "Influential Nizari Ismaili Men",
+      "type": "collection",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-nasir-khusraw",
+      "path": "nasir-khusraw.html",
+      "title": "Nasir Khusraw",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-navizarshah",
+      "path": "navizarshah.html",
+      "title": "<span>Navizaršāh</span> Castle",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-qadi-al-numan",
+      "path": "qadi-al-numan.html",
+      "title": "Qadi al-Nu'man",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-qostinlar",
+      "path": "qostinlar.html",
+      "title": "<span>Qosṭinlār</span> Fortification",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-sayed-nuruddin-ronaq-naderi",
+      "path": "sayed-nuruddin-ronaq-naderi.html",
+      "title": "Sayed Nuruddin Ronaq Naderi",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-shams-kelaye",
+      "path": "shams-kelaye.html",
+      "title": "<span>Šams Kelāyeh</span> Fortification",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-shamsuddin-khokushte",
+      "path": "shamsuddin-khokushte.html",
+      "title": "شمس‌الدین",
+      "type": "memorial",
+      "revised": "2026-10-30",
+      "note_en": "The record preserves submitted testimony or a printed list. Unit affiliation, dates and circumstances require independent evidence.",
+      "note_fa": "این مدخل معرفی ارائه‌شده یا فهرست چاپی را حفظ می‌کند. وابستگی نظامی، تاریخ‌ها و چگونگی رویداد به سند مستقل نیاز دارد."
+    },
+    {
+      "id": "HSKRC-shirkuh",
+      "path": "shirkuh.html",
+      "title": "<span>Širkūh</span> Fortification",
+      "type": "reference",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    },
+    {
+      "id": "HSKRC-women-ismaili",
+      "path": "women-ismaili.html",
+      "title": "Women in Ismaili History",
+      "type": "collection",
+      "revised": "2026-10-30",
+      "note_en": "This update adds provenance and citation information; it does not complete all outstanding source checks.",
+      "note_fa": "این بازنگری اطلاعات منشأ و استناد را افزوده است؛ تمام بررسی‌های باقی‌ماندهٔ منابع را تکمیل نمی‌کند."
+    }
+  ]
+}
