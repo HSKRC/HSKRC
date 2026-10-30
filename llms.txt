@@ -14,6 +14,8 @@ HSKRC aims to present historical research with traceable sources. It distinguish
 - [Alamut](https://hskrc.org/alamut.html): history, geography, and heritage documentation.
 - [Digital Library](https://hskrc.org/library.html): bibliographic records and lawful access information.
 - [Articles and Research](https://hskrc.org/articles.html): published research archive.
+- [Scientific Research Standards](https://hskrc.org/academic-standards.html): evidence classes, source checking, peer review, permissions, revisions and archival requirements.
+- [Scientific Review Register](https://hskrc.org/academic-register.html): actual review status of 20 priority HSKRC dossiers; registration does not mean peer review has taken place.
 - [Research Explorer](https://hskrc.org/research-explorer.html): discovery across knowledge nodes, articles, sources, researchers, and library records.
 - [Researchers and Scholars](https://hskrc.org/researchers.html): researchers whose work is represented in the archive.
 - [Sources and References](https://hskrc.org/sources.html): registered scholarly, primary, and institutional references.
