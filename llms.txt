@@ -7,6 +7,7 @@ HSKRC aims to present historical research with traceable sources. It distinguish
 ## Main sections
 
 - [Home](https://hskrc.org/)
+- [Who Are the Ismailis? English–Persian Introduction](https://hskrc.org/ismaili-introduction.html): source-based overview of origins, the Fatimids, the 1094 succession dispute, Nizari Alamut, and the present, with explicit research limits.
 - [About and Research Standards](https://hskrc.org/about.html): editorial principles, evidence standards, and research method.
 - [Alamut Knowledge Base](https://hskrc.org/alamut-knowledge-base.html): connected research on Alamut, Hassan Sabbah, and related fortifications.
 - [Hassan Sabbah](https://hskrc.org/hassan-sabbah.html): source-linked biographical research.
