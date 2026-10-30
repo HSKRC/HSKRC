@@ -157,13 +157,30 @@ function renderMarkdownBody(value) {
   return out.join("\n");
 }
 
+function linkRegisteredBibliography(html) {
+  const references = [
+    [/The Isma&#39;ilis: Their History and Doctrines/i, "HSKRC-SRC-0001"],
+    [/Dustur al-munajjimin/i, "HSKRC-SRC-0007"],
+    [/Wafi A\. Momin.+Texts, Scribes and Transmission/i, "HSKRC-SRC-0018"],
+    [/Karim Javan.+Catalogue of Persian Manuscripts/i, "HSKRC-SRC-0020"],
+    [/Institute of Ismaili Studies, Alamut/i, "HSKRC-SRC-0014"],
+    [/Institute of Ismaili Studies, Ismaili Special Collections/i, "HSKRC-SRC-0019"],
+    [/UNESCO, Charter on the Preservation of Digital Heritage/i, "HSKRC-SRC-0017"]
+  ];
+  return html.replace(/<li>([^<]+)<\/li>/g, (full, item) => {
+    if (item.includes("sources.html#")) return full;
+    const match = references.find(([pattern]) => pattern.test(item));
+    return match ? '<li>' + item + ' <a href="../sources.html#' + match[1] + '" aria-label="HSKRC source record ' + match[1] + '">[' + match[1] + ']</a></li>' : full;
+  });
+}
+
 function articleBody(content = "", language = "en") {
   const body = String(content || "");
   if (/class=["']editorial-note["']/.test(body) || body.includes("data-hskrc-editorial-status")) return body;
   const note = language === "fa"
     ? "یادداشت تحریریه: این مقاله در آرشیف HSKRC نشر شده است؛ داوری مستقل دانشگاهی برای این نسخه ثبت نشده است. ادعاهای تاریخی باید با منابع ذکرشده بررسی شوند و نظر نویسنده از سند اولیه تفکیک گردد."
     : "Editorial status: HSKRC archive article. No independent scholarly peer-review record is documented for this version. Historical claims should be checked against the cited sources and distinguished from interpretation.";
-  return '<aside data-hskrc-editorial-status="unverified-review" style="padding:14px 18px;margin:16px 0;border:1px solid rgba(160,160,160,.3);border-radius:10px;font-size:.93em;line-height:1.7"><p>' + note + '</p><p><a href="../editorial-policy.html#evidence-levels">HSKRC evidence standards</a></p></aside>' + renderMarkdownBody(body);
+  return '<aside data-hskrc-editorial-status="unverified-review" style="padding:14px 18px;margin:16px 0;border:1px solid rgba(160,160,160,.3);border-radius:10px;font-size:.93em;line-height:1.7"><p>' + note + '</p><p><a href="../editorial-policy.html#evidence-levels">HSKRC evidence standards</a></p></aside>' + linkRegisteredBibliography(renderMarkdownBody(body));
 }
 
 function buildHtml(article, slug, translations = {}) {
