@@ -94,8 +94,13 @@ function coverUrl(article) {
   );
 }
 
-function articleBody(content = "") {
-  return String(content || "");
+function articleBody(content = "", language = "en") {
+  const body = String(content || "");
+  if (/class=["']editorial-note["']/.test(body) || body.includes("data-hskrc-editorial-status")) return body;
+  const note = language === "fa"
+    ? "یادداشت تحریریه: این مقاله در آرشیف HSKRC نشر شده است؛ داوری مستقل دانشگاهی برای این نسخه ثبت نشده است. ادعاهای تاریخی باید با منابع ذکرشده بررسی شوند و نظر نویسنده از سند اولیه تفکیک گردد."
+    : "Editorial status: HSKRC archive article. No independent scholarly peer-review record is documented for this version. Historical claims should be checked against the cited sources and distinguished from interpretation.";
+  return '<aside data-hskrc-editorial-status="unverified-review" style="padding:14px 18px;margin:16px 0;border:1px solid rgba(160,160,160,.3);border-radius:10px;font-size:.93em;line-height:1.7"><p>' + note + '</p><p><a href="../editorial-policy.html#evidence-levels">HSKRC evidence standards</a></p></aside>' + body;
 }
 
 function buildHtml(article, slug, translations = {}) {
@@ -675,7 +680,7 @@ ${image
   : ""}
 
 <div class="content">
-${articleBody(article.content)}
+${articleBody(article.content, lang)}
 </div>
 
 </article>
