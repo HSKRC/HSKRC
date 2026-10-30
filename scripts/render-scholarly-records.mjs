@@ -33,7 +33,7 @@ for(const record of manifest.records){
 </details></aside>
 <!-- scholarly-record:end -->`;
  if(!/<\/h1>/i.test(raw))throw Error('Missing heading: '+filename);
- raw=raw.replace(/<\/h1>/i,'</h1>\n'+card).replace(/<\/head>/i,`<link data-scholarly-style rel="stylesheet" href="${prefix}scholarly-records.css?v=20261030"></head>`);
+ raw=raw.replace(/<\/h1>\s*/i,'</h1>\n'+card).replace(/<\/head>/i,`<link data-scholarly-style rel="stylesheet" href="${prefix}scholarly-records.css?v=20261030"></head>`);
  await fs.writeFile(file,raw);
  const csl={id:record.id,type:'webpage',title,publisher:'HSKRC',URL:canonical,'issued':{'date-parts':[record.revised.split('-').map(Number)]},note:'Publication record updated '+record.revised+'. No independent peer-review report is linked to this edition. '+record.note_en};
  await fs.writeFile(new URL('citations/'+record.id+'.json',root),JSON.stringify([csl],null,2)+'\n');

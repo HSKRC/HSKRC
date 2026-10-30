@@ -17,5 +17,5 @@ for(const r of records){
  for(const m of card.matchAll(/href="([^"]+)"/g))if(!m[1].startsWith('https:'))await fs.access(new URL(path.posix.join(path.posix.dirname(r.path),m[1]),root));
 }
 execFileSync(process.execPath,[new URL('scripts/render-scholarly-records.mjs',root).pathname]);
-for(const [p,text]of before)assert.equal(await fs.readFile(new URL(p,root),'utf8'),text,'Renderer must be idempotent: '+p);
+for(const [p,text]of before)assert((await fs.readFile(new URL(p,root),'utf8'))===text,'Renderer must be idempotent: '+p);
 console.log(`PASS: ${records.length} records; citation exports, reference targets, local links and regeneration idempotence`);
