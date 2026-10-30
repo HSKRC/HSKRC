@@ -150,6 +150,7 @@ ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
 ${navLink("fatimids","fatimids.html",L.fatimids)}
 ${navLink("researchers","researchers.html",L.researchers)}
 ${navLink("explorer","research-explorer.html",L.explorer)}
+              <a class="hskrc-global-nav-link" href="${sitePath("academic-register.html")}">${lang()==="fa"?"اعتبار پژوهشی":"Research Integrity"}</a>
 ${navLink("women","women-ismaili.html",L.women)}
 ${navLink("men","men-ismaili.html",L.men)}
 ${navLink("imams","imams-ismaili.html",L.imams)}
@@ -194,7 +195,7 @@ ${navLink("imams","imams-ismaili.html",L.imams)}
       ["people.html","Historical figures","شخصیت‌های تاریخی"],["sources.html","Sources","منابع"],
       ["about.html","About HSKRC","درباره HSKRC"],["project-overview.html","Project overview","نمای کلی پروژه"],
       ["get-involved.html","Contribute","مشارکت"],["contact.html","Contact & feedback","تماس و بازخورد"],
-      ["editorial-policy.html","Editorial policy","سیاست نشر"],["privacy.html","Privacy","حریم خصوصی"],["terms.html","Terms","شرایط استفاده"]
+      ["academic-register.html","Research status","اعتبار پژوهشی"],["academic-standards.html","Research standards","معیارهای علمی"],["editorial-policy.html","Editorial policy","سیاست نشر"],["privacy.html","Privacy","حریم خصوصی"],["terms.html","Terms","شرایط استفاده"]
     ];
     footer.innerHTML=`<div class="hskrc-global-footer-inner">
       <div class="hskrc-footer-intro"><a class="hskrc-footer-brand" href="${sitePath("index.html")}"><img src="${sitePath("assets/hskrc-logo.svg")}" alt="" width="48" height="48"><strong>HSKRC</strong></a><p>${fa?"مرکز مستقل دانش و پژوهش حسن صباح؛ تحقیقات علمی، گردآوری منابع و مستندسازی میراث فکری.":"Hassan Sabbah Knowledge & Research Centre. Independent research, source collection and documentation of intellectual heritage."}</p>
