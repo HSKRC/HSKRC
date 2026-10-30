@@ -91,6 +91,7 @@
     if(f==="researchers.html" || f==="researcher.html") return "researchers";
     if(f==="sources.html" || f==="source.html") return "sources";
     if(f==="research-explorer.html") return "explorer";
+    if(f==="academic-register.html" || f==="academic-standards.html") return "academic";
     if(f==="women-ismaili.html") return "women";
     if(f==="men-ismaili.html") return "men";
     if(f==="imams-ismaili.html") return "imams";
@@ -150,7 +151,7 @@ ${navLink("knowledge","alamut-knowledge-base.html",L.knowledge)}
 ${navLink("fatimids","fatimids.html",L.fatimids)}
 ${navLink("researchers","researchers.html",L.researchers)}
 ${navLink("explorer","research-explorer.html",L.explorer)}
-              <a class="hskrc-global-nav-link" href="${sitePath("academic-register.html")}">${lang()==="fa"?"اعتبار پژوهشی":"Research Integrity"}</a>
+              ${navLink("academic","academic-register.html",lang()==="fa"?"اعتبار پژوهشی":"Research Integrity")}
 ${navLink("women","women-ismaili.html",L.women)}
 ${navLink("men","men-ismaili.html",L.men)}
 ${navLink("imams","imams-ismaili.html",L.imams)}
