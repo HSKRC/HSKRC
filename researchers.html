@@ -227,7 +227,9 @@ async function loadDirectory(){
     render();
   }catch(e){
     console.error("Researchers directory error:",e);
-    grid.innerHTML=`<article class="card"><div class="initial">!</div><h3>${lang==="fa"?"خطا در اتصال":"Directory Connection Error"}</h3><p>${lang==="fa"?"اطلاعات پژوهشگران از Supabase دریافت نشد.":"Researchers could not be loaded from Supabase."} ${esc(e?.message||"")}</p></article>`;
+    // Preserve crawlable researcher profiles already included in the HTML.
+    // A temporary database error must not replace the directory with an error card.
+    grid.setAttribute("data-live-unavailable","true");
   }
 }
 function apply(l){
