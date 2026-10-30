@@ -94,13 +94,76 @@ function coverUrl(article) {
   );
 }
 
+function escapeMarkdownHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function markdownInline(value) {
+  const links = [];
+  let text = escapeMarkdownHtml(value);
+  text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_match, label, url) => {
+    const key = "@@LINK" + links.length + "@@";
+    links.push('<a href="' + escapeMarkdownHtml(url) + '" target="_blank" rel="noopener noreferrer">' + label + '</a>');
+    return key;
+  });
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(?<!\*)\*([^\*\n]+)\*(?!\*)/g, "<em>$1</em>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
+  text = text.replace(/(?<!["'=])https?:\/\/[^\s&lt;&]+/g, url => {
+    const key = "@@LINK" + links.length + "@@";
+    links.push('<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>');
+    return key;
+  });
+  return text.replace(/@@LINK(\d+)@@/g, (_match, id) => links[Number(id)]);
+}
+function renderMarkdownBody(value) {
+  const raw = String(value || "");
+  // Leave already structured article HTML unchanged; convert plain Markdown only.
+  if (!/^\s*#{1,6}\s/m.test(raw) || /<(?:h[1-6]|section|article|div)\b/i.test(raw)) return raw;
+  const out = [];
+  let paragraph = [];
+  let list = null;
+  function flushParagraph() {
+    if (paragraph.length) {
+      out.push("<p>" + markdownInline(paragraph.join(" ")) + "</p>");
+      paragraph = [];
+    }
+  }
+  function closeList() {
+    if (list) { out.push("</" + list + ">"); list = null; }
+  }
+  for (const line of raw.replace(/\r\n/g, "\n").split("\n")) {
+    const text = line.trim();
+    if (!text) { flushParagraph(); closeList(); continue; }
+    const heading = text.match(/^(#{1,6})\s+(.+)$/);
+    if (heading) {
+      flushParagraph(); closeList();
+      const n = Math.max(2, Math.min(6, heading[1].length));
+      out.push("<h" + n + ">" + markdownInline(heading[2]) + "</h" + n + ">");
+      continue;
+    }
+    const bullet = text.match(/^[-*]\s+(.+)$/);
+    const numbered = text.match(/^\d+[.)]\s+(.+)$/);
+    if (bullet || numbered) {
+      flushParagraph();
+      const tag = bullet ? "ul" : "ol";
+      if (list !== tag) { closeList(); out.push("<" + tag + ">"); list = tag; }
+      out.push("<li>" + markdownInline((bullet || numbered)[1]) + "</li>");
+      continue;
+    }
+    if (text === "---") { flushParagraph(); closeList(); out.push("<hr>"); continue; }
+    closeList(); paragraph.push(text);
+  }
+  flushParagraph(); closeList();
+  return out.join("\n");
+}
+
 function articleBody(content = "", language = "en") {
   const body = String(content || "");
   if (/class=["']editorial-note["']/.test(body) || body.includes("data-hskrc-editorial-status")) return body;
   const note = language === "fa"
     ? "یادداشت تحریریه: این مقاله در آرشیف HSKRC نشر شده است؛ داوری مستقل دانشگاهی برای این نسخه ثبت نشده است. ادعاهای تاریخی باید با منابع ذکرشده بررسی شوند و نظر نویسنده از سند اولیه تفکیک گردد."
     : "Editorial status: HSKRC archive article. No independent scholarly peer-review record is documented for this version. Historical claims should be checked against the cited sources and distinguished from interpretation.";
-  return '<aside data-hskrc-editorial-status="unverified-review" style="padding:14px 18px;margin:16px 0;border:1px solid rgba(160,160,160,.3);border-radius:10px;font-size:.93em;line-height:1.7"><p>' + note + '</p><p><a href="../editorial-policy.html#evidence-levels">HSKRC evidence standards</a></p></aside>' + body;
+  return '<aside data-hskrc-editorial-status="unverified-review" style="padding:14px 18px;margin:16px 0;border:1px solid rgba(160,160,160,.3);border-radius:10px;font-size:.93em;line-height:1.7"><p>' + note + '</p><p><a href="../editorial-policy.html#evidence-levels">HSKRC evidence standards</a></p></aside>' + renderMarkdownBody(body);
 }
 
 function buildHtml(article, slug, translations = {}) {
