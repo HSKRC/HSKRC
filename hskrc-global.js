@@ -6,12 +6,12 @@
     en:{
       entries:"Entries", home:"Home", knowledge:"Knowledge Base", fatimids:"Fatimid era", library:"Library", articles:"Articles",
       researchers:"Researchers", sources:"Sources", explorer:"Explorer", people:"People", women:"Women", men:"Men", imams:"Imams", about:"About", founder:"Founder & CEO",
-      impact:"Community Impact", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
+      impact:"Community Impact", sustainability:"Sustainability & Learning", involved:"Get Involved", support:"Support", contact:"Feedback", account:"Account", myAccount:"My Account", more:"More", lang:"فارسی", themeOn:"Dark", themeOff:"Light"
     },
     fa:{
       entries:"مدخل‌ها", home:"خانه", knowledge:"پایگاه دانش", fatimids:"فاطمیان", library:"کتابخانه", articles:"مقالات",
       researchers:"پژوهشگران", sources:"منابع", explorer:"کاوشگر", people:"شخصیت‌ها", women:"زنان", men:"مردان", imams:"امامان", about:"درباره", founder:"بنیان‌گذار و مدیرعامل",
-      impact:"تأثیر اجتماعی", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
+      impact:"تأثیر اجتماعی", sustainability:"پایداری و آموزش", involved:"مشارکت", support:"حمایت", contact:"بازخورد", account:"حساب کاربری", myAccount:"حساب من", more:"بیشتر", lang:"English", themeOn:"تاریک", themeOff:"روشن"
     }
   };
 
@@ -101,6 +101,7 @@
     if(f==="about.html") return "about";
     if(f==="founder.html") return "founder";
     if(f==="community-impact.html") return "impact";
+    if(f==="sustainability-learning.html") return "sustainability";
     if(f==="get-involved.html") return "involved";
     if(f==="support.html") return "support";
     if(f==="contact.html") return "contact";
@@ -155,6 +156,7 @@ ${navLink("explorer","research-explorer.html",L.explorer)}
 ${navLink("women","women-ismaili.html",L.women)}
 ${navLink("men","men-ismaili.html",L.men)}
 ${navLink("imams","imams-ismaili.html",L.imams)}
+              ${navLink("sustainability","sustainability-learning.html",L.sustainability)}
               ${navLink("about","about.html",L.about)}
               ${navLink("founder","founder.html",L.founder)}
               ${navLink("impact","community-impact.html",L.impact)}
