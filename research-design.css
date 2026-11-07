@@ -429,11 +429,11 @@ html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more{grid-column:7!important;grid-row:1!important}
 }
 @media(max-width:760px){
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{width:calc(100% - 28px)!important;min-height:70px!important;gap:8px!important;padding:10px 0!important}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{width:calc(100% - 28px)!important;min-height:70px!important;gap:8px!important;padding:10px 0!important;flex-wrap:wrap!important}
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-brand{min-width:0!important;gap:8px!important}
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-brandcopy small{display:none!important}
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-brandcopy strong{font-size:12px!important}
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-emblem{width:32px!important;height:32px!important}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-emblem{width:32px!important;height:32px!important;flex-basis:32px!important}
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav{display:none!important}
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav.is-open{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important}
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-actions{gap:5px!important;margin-inline-start:0!important}

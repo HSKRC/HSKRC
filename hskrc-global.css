@@ -2810,18 +2810,18 @@ html[dir="rtl"] :is(h1,h2,h3){letter-spacing:0!important;line-height:1.6!importa
  body > .hskrc-global-header .hskrc-global-nav{order:3!important;width:100%!important;flex:1 0 100%!important;justify-content:center!important;border:0!important}
 }
 @media(max-width:760px){
- body > .hskrc-global-header .hskrc-global-shell{width:calc(100% - 28px)!important;min-height:70px!important;gap:8px!important;padding:10px 0!important}
+ body > .hskrc-global-header .hskrc-global-shell{width:calc(100% - 28px)!important;min-height:70px!important;gap:8px!important;padding:10px 0!important;flex-wrap:wrap!important}
  body > .hskrc-global-header .hskrc-global-brand{min-width:0!important;gap:8px!important}
  body > .hskrc-global-header .hskrc-global-brandcopy small{display:none!important}
  body > .hskrc-global-header .hskrc-global-brandcopy strong{font-size:12px!important}
- .hskrc-global-emblem{width:32px;height:32px}
+ .hskrc-global-emblem{width:32px;height:32px;flex-basis:32px}
  .hskrc-menu-toggle{display:flex;align-items:center;gap:7px;min-height:44px;margin-inline-start:auto;font-size:12px}
  body > .hskrc-global-header .hskrc-global-actions{gap:5px!important;margin-inline-start:0!important}
  html[data-theme] body > .hskrc-global-header .hskrc-global-actions :is(a,button){padding:7px 9px!important;min-width:0!important;font-size:11px!important}
  #hskrcGlobalThemeLabel{display:none!important}
  /* The shared phone menu takes precedence over the page-specific header styles. */
  #hskrcPrimaryNav{
-   display:none!important;order:3!important;flex:1 0 100%!important;width:100%!important;
+   display:none!important;order:3!important;flex:1 0 100%!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;
    grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;align-items:stretch!important;
    max-height:65vh;max-height:65dvh;overflow:auto!important;overscroll-behavior:contain;
    padding:6px!important;direction:ltr!important;
