@@ -138,7 +138,7 @@
         </a>
 
         <button class="hskrc-menu-toggle" id="hskrcMenuToggle" aria-expanded="false" aria-controls="hskrcPrimaryNav" type="button">${lang()==="fa"?"منو":"Menu"} <span aria-hidden="true">☰</span></button>
-        <nav id="hskrcPrimaryNav" class="hskrc-global-nav" aria-label="${lang()==="fa"?"منوی اصلی":"Primary navigation"}">
+        <nav id="hskrcPrimaryNav" class="hskrc-global-nav" dir="${lang()==="fa"?"rtl":"ltr"}" aria-label="${lang()==="fa"?"منوی اصلی":"Primary navigation"}">
           ${navLink("home","index.html",L.home)}
           ${navLink("people","people.html",L.people)}
           ${navLink("entries","entries.html",L.entries)}
@@ -247,7 +247,10 @@ ${navLink("imams","imams-ismaili.html",L.imams)}
     if(skip) skip.textContent=lang()==="fa"?"رفتن به محتوا":"Skip to content";
     document.querySelectorAll("[data-placeholder-en][data-placeholder-fa]").forEach(el=>el.placeholder=el.dataset[lang()==="fa"?"placeholderFa":"placeholderEn"]);
     const nav=document.getElementById("hskrcPrimaryNav");
-    if(nav) nav.setAttribute("aria-label",lang()==="fa"?"منوی اصلی":"Primary navigation");
+    if(nav){
+      nav.dir=lang()==="fa"?"rtl":"ltr";
+      nav.setAttribute("aria-label",lang()==="fa"?"منوی اصلی":"Primary navigation");
+    }
     renderFooter();
     syncAccount();
     syncThemeButton();
@@ -298,7 +301,8 @@ ${navLink("imams","imams-ismaili.html",L.imams)}
     const menu=details?.querySelector(".hskrc-global-more-menu");
     if(!details || !summary || !menu) return;
 
-    const mq=window.matchMedia("(max-width: 900px)");
+    // The phone disclosure sits inside the scrolling navigation grid.
+    const mq=window.matchMedia("(min-width: 761px) and (max-width: 900px)");
 
     function clearMobilePosition(){
       ["position","top","left","right","width","max-height","overflow-y"].forEach(p=>menu.style.removeProperty(p));
@@ -336,6 +340,7 @@ ${navLink("imams","imams-ismaili.html",L.imams)}
 
     document.addEventListener("keydown",(event)=>{
       if(event.key==="Escape" && details.open){
+        event.preventDefault();
         details.open=false;
         summary.focus();
       }
@@ -386,7 +391,7 @@ ${navLink("imams","imams-ismaili.html",L.imams)}
       menuToggle.setAttribute("aria-expanded",String(open));primaryNav.classList.toggle("is-open",open);
     });
     document.addEventListener("keydown",e=>{
-      if(e.key==="Escape" && menuToggle.getAttribute("aria-expanded")==="true"){
+      if(!e.defaultPrevented && e.key==="Escape" && menuToggle.getAttribute("aria-expanded")==="true"){
         menuToggle.setAttribute("aria-expanded","false");primaryNav.classList.remove("is-open");menuToggle.focus();
       }
     });

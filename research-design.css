@@ -231,7 +231,7 @@ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-mo
   }
   html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-nav>.hskrc-global-more{
     grid-column:7!important;
-    grid-row:2!important;
+    grid-row:1!important;
   }
 }
 
@@ -426,7 +426,7 @@ html[data-theme="dark"] body.hskrc-unified > .hskrc-global-header .hskrc-global-
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more>summary{
   display:flex!important;width:100%!important;min-width:0!important;min-height:36px!important;padding:5px 6px!important;font-size:11px!important;line-height:1.15!important;
  }
- html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more{grid-column:7!important;grid-row:2!important}
+ html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-more{grid-column:7!important;grid-row:1!important}
 }
 @media(max-width:760px){
  html:root[data-theme] body.hskrc-unified > .hskrc-global-header .hskrc-global-shell{width:calc(100% - 28px)!important;min-height:70px!important;gap:8px!important;padding:10px 0!important}
