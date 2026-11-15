@@ -325,6 +325,8 @@ html[data-theme="dark"] .submit-person{
 html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
 @media(max-width:900px){.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-card:last-child{grid-column:1/-1}}
 @media(max-width:620px){.collection-heading{align-items:flex-start;flex-direction:column;gap:8px}.collection-grid{grid-template-columns:1fr}.collection-card:last-child{grid-column:auto}.collection-card{min-height:190px}}
+#peopleResults[hidden],#peopleSearchFilters[hidden]{display:none!important}
+#peopleSearchFilters{margin-top:16px}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"People & Historical Figures","url":"https://hskrc.org/people.html","isPartOf":{"@type":"WebSite","name":"HSKRC","url":"https://hskrc.org/"}}
@@ -376,6 +378,21 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
   </section>
 
   <section class="toolbar" aria-label="People filters">
+    <div class="category-heading">
+      <span data-en="Choose a category to see its profiles" data-fa="برای دیدن شخصیت‌ها، یک دسته را انتخاب کنید">Choose a category to see its profiles</span>
+    </div>
+    <div class="filters" id="peopleFilters" role="group" aria-label="People categories">
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="hujjats" data-en="01 · Hujjats" data-fa="۱ · حجت‌ها">01 · Hujjats</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="dais" data-en="02 · Da'is" data-fa="۲ · داعیان">02 · Da'is</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="scholars" data-en="03 · Scholars" data-fa="۳ · دانشمندان">03 · Scholars</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="poets" data-en="04 · Poets" data-fa="۴ · شاعران">04 · Poets</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="fighters" data-en="05 · Resistance Figures" data-fa="۵ · مبارزین">05 · Resistance Figures</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="ismaili-firqah-80" data-en="06 · Firqah 80 Fighters & Martyrs" data-fa="۶ · مبارزین و شهدای فرقهٔ هشتاد">06 · Firqah 80 Fighters & Martyrs</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="yakawlang-ismaili-martyrs" data-en="07 · Ismaili Martyrs of Yakawlang" data-fa="۷ · شهدای اسماعیلی یکاولنگ">07 · Ismaili Martyrs of Yakawlang</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="imams" data-en="08 · Nizari Imams" data-fa="۸ · امامان نزاری">08 · Nizari Imams</button>
+      <button class="filter" type="button" aria-pressed="false" aria-controls="peopleResults" data-filter="other" data-en="09 · Other profiles" data-fa="۹ · دیگر شخصیت‌ها">09 · Other profiles</button>
+    </div>
+    <div id="peopleSearchFilters" hidden>
     <div class="search-wrap">
       <input id="peopleSearch" class="search" type="search"
         placeholder="Search people…"
@@ -404,20 +421,6 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
       </select></label>
     </div>
     <p data-en="For historical figures, country filters refer to documented places of life or work using present-day geography, not nationality. Uncertain regions are listed separately." data-fa="برای شخصیت‌های تاریخی، کشور به محل مستند زندگی یا فعالیت بر اساس جغرافیای امروزی اشاره دارد، نه تابعیت. مناطق نامشخص جداگانه نمایش داده می‌شوند.">For historical figures, country filters refer to documented places of life or work using present-day geography, not nationality. Uncertain regions are listed separately.</p>
-    <div class="category-heading">
-      <span data-en="Browse nine profile categories" data-fa="مرور نه دستهٔ پروفایل">Browse nine profile categories</span>
-      <button type="button" id="peopleShowAll" class="show-all" data-en="Show all profiles" data-fa="نمایش همه پروفایل‌ها">Show all profiles</button>
-    </div>
-    <div class="filters" id="peopleFilters" role="group" aria-label="People categories">
-      <button class="filter" type="button" aria-pressed="false" data-filter="hujjats" data-en="01 · Hujjats" data-fa="۱ · حجت‌ها">01 · Hujjats</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="dais" data-en="02 · Da'is" data-fa="۲ · داعیان">02 · Da'is</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="scholars" data-en="03 · Scholars" data-fa="۳ · دانشمندان">03 · Scholars</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="poets" data-en="04 · Poets" data-fa="۴ · شاعران">04 · Poets</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="fighters" data-en="05 · Resistance Figures" data-fa="۵ · مبارزین">05 · Resistance Figures</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="ismaili-firqah-80" data-en="06 · Firqah 80 Fighters & Martyrs" data-fa="۶ · مبارزین و شهدای فرقهٔ هشتاد">06 · Firqah 80 Fighters & Martyrs</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="yakawlang-ismaili-martyrs" data-en="07 · Ismaili Martyrs of Yakawlang" data-fa="۷ · شهدای اسماعیلی یکاولنگ">07 · Ismaili Martyrs of Yakawlang</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="imams" data-en="08 · Nizari Imams" data-fa="۸ · امامان نزاری">08 · Nizari Imams</button>
-      <button class="filter" type="button" aria-pressed="false" data-filter="other" data-en="09 · Other profiles" data-fa="۹ · دیگر شخصیت‌ها">09 · Other profiles</button>
     </div>
   </section>
 
@@ -535,8 +538,9 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
     </form>
   </details>
 
+  <div id="peopleResults" hidden>
   <div class="meta">
-    <span id="peopleCount" role="status" aria-live="polite" aria-atomic="true">52 profiles</span>
+    <span id="peopleCount" role="status" aria-live="polite" aria-atomic="true"></span>
     <span data-en="Profiles may appear in multiple relevant categories. Biographies follow a neutral, source-based approach." data-fa="هر پروفایل می‌تواند در چند دسته مرتبط ظاهر شود. زندگی‌نامه‌ها با رویکرد بی‌طرفانه و مبتنی بر منابع نوشته می‌شوند.">Profiles are written with source-based, neutral historical framing.</span>
   </div>
 
@@ -1184,7 +1188,9 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
 
   <div id="peopleEmpty" class="empty" role="status" aria-live="polite">
     <p id="peopleEmptyText" data-en="No verified profiles are available for this selection yet. You can suggest a person with reliable sources." data-fa="هنوز پروفایل تأییدشده‌ای برای این بخش ثبت نشده است. می‌توانید شخصیتی را همراه با منابع معتبر پیشنهاد کنید.">No verified profiles are available for this selection yet. You can suggest a person with reliable sources.</p>
-    <button id="peopleReset" class="reset-filter" type="button" data-en="Show all figures" data-fa="نمایش همه شخصیت‌ها">Show all figures</button>
+    <button id="peopleReset" class="reset-filter" type="button" data-en="Clear filters" data-fa="پاک‌کردن فیلترها">Clear filters</button>
+  </div>
+
   </div>
 
   <div class="note"
@@ -1204,8 +1210,9 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
   const count=document.getElementById("peopleCount");
   const empty=document.getElementById("peopleEmpty");
   const reset=document.getElementById("peopleReset");
-  const showAll=document.getElementById("peopleShowAll");
-  let active="all";
+  const results=document.getElementById("peopleResults");
+  const searchFilters=document.getElementById("peopleSearchFilters");
+  let active=null;
   const SERVICE_LABELS={
     education:["Education","آموزش"],scholarship:["Scholarship & research","دانش و پژوهش"],
     "community-service":["Community service","خدمت اجتماعی"],leadership:["Leadership","رهبری"],
@@ -1269,6 +1276,8 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
     });
   }
   function apply(){
+    results.hidden=searchFilters.hidden=active===null;
+    if(active===null)return;
     const q=normalize(search?.value||"");
     let visible=0;
     cards.forEach(card=>{
@@ -1277,7 +1286,7 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
       card.querySelectorAll("[data-en],[data-fa]").forEach(el=>{
         texts.push(el.dataset.en||"",el.dataset.fa||"");
       });
-      const matchesCategory=active==="all"||categories.includes(active);
+      const matchesCategory=categories.includes(active);
       const matchesSearch=!q||normalize(texts.join(" ")).includes(q);
       const matchesCountry=!countryFilter?.value||(card.dataset.country||"unknown").split("|").includes(countryFilter.value);
       const matchesService=!serviceFilter?.value||(card.dataset.services||"").split(/\s+/).includes(serviceFilter.value);
@@ -1303,7 +1312,7 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
   }
 
   buttons.forEach(btn=>btn.addEventListener("click",()=>{
-    setActive(btn.dataset.filter||"all");
+    setActive(btn.dataset.filter===active?null:btn.dataset.filter);
     apply();
   }));
   search?.addEventListener("input",apply);
@@ -1316,21 +1325,20 @@ html[dir="rtl"] .collection-eyebrow{letter-spacing:0}
   clearSearch?.addEventListener("click",()=>{
     search.value="";search.focus();apply();
   });
-  function showAllProfiles(){
+  function clearFilters(){
     if(search)search.value="";
     if(countryFilter)countryFilter.value="";if(serviceFilter)serviceFilter.value="";
-    setActive("all");apply();
+    apply();
   }
   countryFilter?.addEventListener("change",apply);serviceFilter?.addEventListener("change",apply);
-  reset?.addEventListener("click",()=>{if(countryFilter)countryFilter.value="";if(serviceFilter)serviceFilter.value="";showAllProfiles();search?.focus();});
-  showAll?.addEventListener("click",showAllProfiles);
+  reset?.addEventListener("click",()=>{clearFilters();search?.focus();});
 
   updateCountryOptions();
   updateServiceOptions();
   updatePlaceholder();
   updateCategoryCounts();
   const requestedCategory=new URLSearchParams(location.search).get("category");
-  setActive(buttons.some(btn=>btn.dataset.filter===requestedCategory)?requestedCategory:"all");
+  setActive(buttons.some(btn=>btn.dataset.filter===requestedCategory)?requestedCategory:null);
   apply();
   window.addEventListener("storage",event=>{
     if(event.key==="hskrc_language")setTimeout(()=>{updatePlaceholder();updateCountryOptions();updateServiceOptions();updateCategoryCounts();apply();updateFormPlaceholders();},40);
